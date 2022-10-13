@@ -19,17 +19,15 @@ class SignUpViewController: UIViewController {
     let passwordTextField = UnderlinedTextField(font: .galvji20())
     let confirmPasswordtextField = UnderlinedTextField(font: .galvji20())
     
-    let signUpButon = UIButton(title: "Sign up", titleColor: .white, backgroundColor: .signUpButtonColor())
+    let signUpButon = UIButton(title: "Sign up", titleColor: .white, backgroundColor: .darkButtonColor())
     let loginButton = UIButton(title: "Login", titleColor: .loginButtonTitleColor(), backgroundColor: nil)
     
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //emailextField.backgroundColor = .blue
         
-//        loginButton.backgroundColor = .red
-        view.backgroundColor = .systemGray
+        view.backgroundColor = .white
         setUpViews()
     }
 }
@@ -56,7 +54,7 @@ extension SignUpViewController {
         ], axis: .vertical, spacing: 40)
         
         let bottomStackView = UIStackView(arrangedSubviews: [alreadyWithUsLabel, loginButton],
-                                          axis: .horizontal, spacing: -1)
+                                          axis: .horizontal, spacing: 0)
         
         greetingLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false

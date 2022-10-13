@@ -11,16 +11,16 @@ import SwiftUI
 
 extension UIColor {
     
-    static func emailButtonColor() -> UIColor {
-        return UIColor(red: 97/255, green: 97/255, blue: 97/255, alpha: 1)
+    static func darkButtonColor() -> UIColor {
+        return UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1)
     }
     
     static func loginButtonTitleColor() -> UIColor {
         return UIColor(red: 85/255, green: 230/255, blue: 226/255, alpha: 1)
     }
     
-    static func signUpButtonColor() -> UIColor {
-        return UIColor(red: 90/255, green: 90/255, blue: 90/255, alpha: 1)
+    static func signUpButonTitleColor() -> UIColor {
+        return UIColor(red: 153/255, green: 15/255, blue: 255/255, alpha: 1)
     }
     
     static func tfLine() -> UIColor {
