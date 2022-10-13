@@ -17,7 +17,12 @@ extension UIImageView {
 }
 
 extension UIImage {
+    
     static func inSociety() -> UIImage? {
         return UIImage(named: "inSociety")
+    }
+    
+    static func authVCBackground() -> UIImage? {
+        return UIImage(named: "authVCBackground")
     }
 }
