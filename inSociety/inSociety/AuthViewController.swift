@@ -18,8 +18,8 @@ class AuthViewController: UIViewController {
     let loginLabel = UILabel(text: "Already on board?")
     
     let googleButton = UIButton(title: "Google", titleColor: .black, backgroundColor: .white, isShadow: true)
-    let emailButton = UIButton(title: "Email", titleColor: .white, backgroundColor: .emailButtonColor())
-    let loginButton = UIButton(title: "Login", titleColor: .loginButtonColor(), backgroundColor: .white, isShadow: true)
+    let emailButton = UIButton(title: "email", titleColor: .white, backgroundColor: .emailButtonColor())
+    let loginButton = UIButton(title: "Login", titleColor: .loginButtonTitleColor(), backgroundColor: .white, isShadow: true)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +27,12 @@ class AuthViewController: UIViewController {
         view.backgroundColor = .systemGray
         setupViews()
     }
+}
+
+
+
+//MARK: - Setup views
+extension AuthViewController {
     
     private func setupViews() {
         
@@ -56,18 +62,17 @@ class AuthViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             googleView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 100),
-            googleView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            googleView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            googleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            googleView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
             emailView.topAnchor.constraint(equalTo: googleView.bottomAnchor, constant: 40),
-            emailView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            emailView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            emailView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            emailView.widthAnchor.constraint(equalTo: googleView.widthAnchor),
             
             loginView.topAnchor.constraint(equalTo: emailView.bottomAnchor, constant: 40),
-            loginView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            loginView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            loginView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginView.widthAnchor.constraint(equalTo: googleView.widthAnchor),
         ])
-        
     }
 }
 

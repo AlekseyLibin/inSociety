@@ -18,6 +18,9 @@
 		43D47F9B28F71153006235B0 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D47F9A28F71153006235B0 /* UILabel + Extension.swift */; };
 		43D47F9D28F7137D006235B0 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D47F9C28F7137D006235B0 /* UIImageView + Extension.swift */; };
 		43D47FA128F73C7C006235B0 /* LabelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D47FA028F73C7C006235B0 /* LabelButtonView.swift */; };
+		43F2F22228F83A47004F6604 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F22128F83A47004F6604 /* SignUpViewController.swift */; };
+		43F2F22428F8459E004F6604 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F22328F8459E004F6604 /* UnderlinedTextField.swift */; };
+		43F2F22628F84920004F6604 /* StackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F22528F84920004F6604 /* StackView + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		43D47F9A28F71153006235B0 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		43D47F9C28F7137D006235B0 /* UIImageView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView + Extension.swift"; sourceTree = "<group>"; };
 		43D47FA028F73C7C006235B0 /* LabelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButtonView.swift; sourceTree = "<group>"; };
+		43F2F22128F83A47004F6604 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		43F2F22328F8459E004F6604 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
+		43F2F22528F84920004F6604 /* StackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +75,7 @@
 				43D47F2028F6EE2A006235B0 /* AppDelegate.swift */,
 				43D47F2228F6EE2A006235B0 /* SceneDelegate.swift */,
 				43D47F2428F6EE2A006235B0 /* AuthViewController.swift */,
-				43D47FA028F73C7C006235B0 /* LabelButtonView.swift */,
+				43F2F22128F83A47004F6604 /* SignUpViewController.swift */,
 				43D47F9F28F72365006235B0 /* Exttensions */,
 				43D47F2928F6EE2C006235B0 /* Assets.xcassets */,
 				43D47F2B28F6EE2C006235B0 /* LaunchScreen.storyboard */,
@@ -86,6 +92,7 @@
 				43D47F7628F70682006235B0 /* UIFont + Extension.swift */,
 				43D47F9828F70AF4006235B0 /* UIColor + Extension.swift */,
 				43D47F9C28F7137D006235B0 /* UIImageView + Extension.swift */,
+				43F2F22528F84920004F6604 /* StackView + Extension.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -93,6 +100,8 @@
 		43D47F9F28F72365006235B0 /* Exttensions */ = {
 			isa = PBXGroup;
 			children = (
+				43D47FA028F73C7C006235B0 /* LabelButtonView.swift */,
+				43F2F22328F8459E004F6604 /* UnderlinedTextField.swift */,
 				43D47F9E28F72357006235B0 /* UIKit */,
 			);
 			path = Exttensions;
@@ -171,12 +180,15 @@
 				43D47F7728F70682006235B0 /* UIFont + Extension.swift in Sources */,
 				43D47F2528F6EE2A006235B0 /* AuthViewController.swift in Sources */,
 				43D47F2128F6EE2A006235B0 /* AppDelegate.swift in Sources */,
+				43F2F22628F84920004F6604 /* StackView + Extension.swift in Sources */,
 				43D47F9B28F71153006235B0 /* UILabel + Extension.swift in Sources */,
+				43F2F22228F83A47004F6604 /* SignUpViewController.swift in Sources */,
 				43D47F9D28F7137D006235B0 /* UIImageView + Extension.swift in Sources */,
 				43D47FA128F73C7C006235B0 /* LabelButtonView.swift in Sources */,
 				43D47F9928F70AF4006235B0 /* UIColor + Extension.swift in Sources */,
 				43D47F2328F6EE2A006235B0 /* SceneDelegate.swift in Sources */,
 				43D47F7528F703AF006235B0 /* UIButton + Extension.swift in Sources */,
+				43F2F22428F8459E004F6604 /* UnderlinedTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

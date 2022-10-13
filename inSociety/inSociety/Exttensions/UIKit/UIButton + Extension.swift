@@ -12,8 +12,8 @@ extension UIButton {
     
     convenience init(title: String,
                      titleColor: UIColor,
-                     font: UIFont? = .pingFang20(),
-                     backgroundColor: UIColor,
+                     font: UIFont? = .galvji20(),
+                     backgroundColor: UIColor?,
                      cornerRadius: CGFloat = 4,
                      isShadow: Bool = false) {
         self.init(type: .system)

@@ -9,11 +9,11 @@ import UIKit
 
 extension UIFont {
     
-    static func pingFang20() -> UIFont? {
-        return UIFont(name: "PingFang HK", size: 20)
+    static func galvji20() -> UIFont? {
+        return UIFont(name: "Galvji", size: 20)
     }
     
-    static func pingFang26() -> UIFont? {
-        return UIFont(name: "PingFang HK", size: 26)
+    static func galvji26() -> UIFont? {
+        return UIFont(name: "Galvji", size: 26)
     }
 }
