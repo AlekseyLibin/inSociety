@@ -14,7 +14,6 @@ class LoginViewController: UIViewController {
     let orLabel = UILabel(text: "or")
     let emailLabel = UILabel(text: "Email")
     let passwordLabel = UILabel(text: "Password")
-    //let noAccauntLabel = UILabel(text: "Need an account?")
     
     let emailextField = UnderlinedTextField(font: .galvji20())
     let passwordTextField = UnderlinedTextField(font: .galvji20())
@@ -41,7 +40,8 @@ class LoginViewController: UIViewController {
 extension LoginViewController {
     
     private func setUpViews() {
-        
+        googleButton.customizedGoogleButton()
+
         let loginView = LabelButtonView(label: loginWithLabel, button: googleButton)
         let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailextField],
                                          axis: .vertical, spacing: 10)

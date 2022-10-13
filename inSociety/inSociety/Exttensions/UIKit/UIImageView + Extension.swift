@@ -9,20 +9,10 @@ import UIKit
 
 extension UIImageView {
     
-    convenience init(image: UIImage?, contentMode: UIImageView.ContentMode) {
+    convenience init(named: String, contentMode: UIImageView.ContentMode) {
         self.init()
-        self.image = image
+        self.image = UIImage(named: named)
         self.contentMode = contentMode
     }
 }
 
-extension UIImage {
-    
-    static func inSociety() -> UIImage? {
-        return UIImage(named: "inSociety")
-    }
-    
-    static func authVCBackground() -> UIImage? {
-        return UIImage(named: "authVCBackground")
-    }
-}

@@ -8,10 +8,8 @@
 import UIKit
 
 class AuthViewController: UIViewController {
-    
-//    let backgroundImage = UIImageView(image: .authVCBackground(), contentMode: .scaleAspectFill)
-    
-    let logoImage = UIImageView(image: .inSociety(), contentMode: .scaleAspectFit)
+        
+    let logoImage = UIImageView(named: "inSociety", contentMode: .scaleAspectFit)
     
     let googleLabel = UILabel(text: "Get started with")
     let emailLabel = UILabel(text: "Or sign up with")
@@ -23,7 +21,7 @@ class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-         
+        
         view.backgroundColor = .systemGray
         setupViews()
     }
@@ -35,6 +33,7 @@ class AuthViewController: UIViewController {
 extension AuthViewController {
     
     private func setupViews() {
+        googleButton.customizedGoogleButton()
         
         view.addSubview(logoImage)
         
