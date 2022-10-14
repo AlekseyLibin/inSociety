@@ -9,7 +9,7 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
-    let greetingLabel = UILabel(text: "Welcome back!", font: .galvji26())
+    let greetingLabel = UILabel(text: "Welcome back!", font: .galvji30())
     let loginWithLabel = UILabel(text: "Login with")
     let orLabel = UILabel(text: "or")
     let emailLabel = UILabel(text: "Email")

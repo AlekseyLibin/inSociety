@@ -50,28 +50,17 @@ extension AuthViewController {
         let emailView = LabelButtonView(label: emailLabel, button: emailButton)
         let loginView = LabelButtonView(label: loginLabel, button: loginButton)
         
-        
-        view.addSubview(googleView)
-        view.addSubview(emailView)
-        view.addSubview(loginView)
-        
-        googleView.translatesAutoresizingMaskIntoConstraints = false
-        emailView.translatesAutoresizingMaskIntoConstraints = false
-        loginView.translatesAutoresizingMaskIntoConstraints = false
-        
+        let stackView = UIStackView(arrangedSubviews: [googleView, emailView, loginView],
+                                    axis: .vertical, spacing: 40)
+        view.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            googleView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 100),
-            googleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            googleView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            
-            emailView.topAnchor.constraint(equalTo: googleView.bottomAnchor, constant: 40),
-            emailView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            emailView.widthAnchor.constraint(equalTo: googleView.widthAnchor),
-            
-            loginView.topAnchor.constraint(equalTo: emailView.bottomAnchor, constant: 40),
-            loginView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginView.widthAnchor.constraint(equalTo: googleView.widthAnchor),
+            stackView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 100),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
         ])
+        
     }
 }
 

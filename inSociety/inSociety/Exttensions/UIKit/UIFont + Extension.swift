@@ -13,7 +13,7 @@ extension UIFont {
         return UIFont(name: "Galvji", size: 20)
     }
     
-    static func galvji26() -> UIFont? {
-        return UIFont(name: "Galvji", size: 26)
+    static func galvji30() -> UIFont? {
+        return UIFont(name: "Galvji", size: 30)
     }
 }

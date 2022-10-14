@@ -9,7 +9,7 @@ import UIKit
 
 class SignUpViewController: UIViewController {
     
-    let greetingLabel = UILabel(text: "Pleased to see you!", font: .galvji26())
+    let greetingLabel = UILabel(text: "Pleased to see you!", font: .galvji30())
     let emailLabel = UILabel(text: "Email")
     let passwordLabel = UILabel(text: "Password")
     let confirmPasswordLabel = UILabel(text: "Confirm password")
