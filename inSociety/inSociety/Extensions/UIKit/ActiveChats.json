@@ -1,0 +1,47 @@
+
+[
+    {
+        "userName": "Kenya Moyer",
+        "userImageString": "Woman1",
+        "lastMessage": "Do we go to university this Monday?",
+        "id": 1
+    },
+    {
+        "userName": "Colin Wells",
+        "userImageString": "Man1",
+        "lastMessage": "I am ill. Not today, sorry",
+        "id": 2
+    },
+    {
+        "userName": "Emelia Walker",
+        "userImageString": "Woman2",
+        "lastMessage": "Do you go to Alan's HB?",
+        "id": 3
+    },
+    {
+        "userName": "Nicolle Robins",
+        "userImageString": "Woman3",
+        "lastMessage": "See you soon",
+        "id": 4
+    },
+    {
+        "userName": "Loki Gilliam",
+        "userImageString": "Man2",
+        "lastMessage": "Waiting for you at the gym",
+        "id": 5
+    },
+    {
+        "userName": "Ann-Marie Bouvet",
+        "userImageString": "Woman4",
+        "lastMessage": "Your plans for tomorrow?",
+        "id": 6
+    },
+    {
+        "userName": "Dawid Klein",
+        "userImageString": "Man3",
+        "lastMessage": "Need your help, call quick",
+        "id": 7
+    },
+]
+
+

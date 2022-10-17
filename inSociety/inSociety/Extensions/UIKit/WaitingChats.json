@@ -1,0 +1,46 @@
+
+[
+    {
+        "userName": "Peter Brown",
+        "userImageString": "Man4",
+        "lastMessage": "Are you going to ride a bike with us?",
+        "id": 8
+    },
+    {
+        "userName": "Sarah White",
+        "userImageString": "Woman5",
+        "lastMessage": "Are you free tomorrow?",
+        "id": 9
+    },
+    {
+        "userName": "Angelina Newton",
+        "userImageString": "Woman6",
+        "lastMessage": "Give me Alan's number pls",
+        "id": 10
+    },
+    {
+        "userName": "Mattie Schaefer",
+        "userImageString": "Man6",
+        "lastMessage": "Party today, come with us",
+        "id": 11
+    },
+    {
+        "userName": "Amelia-Grace Drew",
+        "userImageString": "Woman7",
+        "lastMessage": "Hey! How are you?",
+        "id": 12
+    },
+    {
+        "userName": "Blane Bartlett",
+        "userImageString": "Man5",
+        "lastMessage": "Are you good at Science?",
+        "id": 13
+    },
+    {
+        "userName": "Walter Lynn",
+        "userImageString": "Man7",
+        "lastMessage": "Tommy is waiting, call him",
+        "id": 14
+    }
+]
+

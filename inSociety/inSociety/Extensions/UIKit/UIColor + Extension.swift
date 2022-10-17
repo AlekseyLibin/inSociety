@@ -11,6 +11,10 @@ import SwiftUI
 
 extension UIColor {
     
+    static func mainWhite() -> UIColor {
+        return UIColor(red: 245/255, green: 240/255, blue: 245/255, alpha: 1)
+    }
+    
     static func darkButtonColor() -> UIColor {
         return UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1)
     }
