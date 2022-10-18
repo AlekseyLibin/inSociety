@@ -10,12 +10,14 @@ import UIKit
 class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     
     static var reuseId = "ActiveChatCell"
-    func configure(with value: ActiveChatModel) {
+    
+    func configure<U>(with value: U) where U : Hashable {
+        guard let user: ActiveChatModel = value as? ActiveChatModel else { return }
         
         backgroundColor = .white
-        userImageView.image = UIImage(named: value.userImageString)
-        userName.text = value.userName
-        lastMessage.text = value.lastMessage
+        userImageView.image = UIImage(named: user.userAvatarString)
+        userName.text = user.userName
+        lastMessage.text = user.lastMessage
 //        gradientView.backgroundColor = .systemYellow
         
         let gradient = CAGradientLayer()
@@ -23,6 +25,8 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
         gradient.frame = self.frame
     }
     
+    
+        
     let userImageView = UIImageView()
     let userName = UILabel(text: "User name", font: .laoSangamMN20())
     let lastMessage = UILabel(text: "Last message", font: .laoSangamMN18())

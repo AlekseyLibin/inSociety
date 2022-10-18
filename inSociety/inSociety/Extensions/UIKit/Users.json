@@ -1,46 +1,74 @@
 
 [
     {
+        "userName": "Kenya Moyer",
+        "userAvatarString": "Woman1",
+        "id": 1
+    },
+    {
+        "userName": "Colin Wells",
+        "userAvatarString": "Man1",
+        "id": 2
+    },
+    {
+        "userName": "Emelia Walker",
+        "userAvatarString": "Woman2",
+        "id": 3
+    },
+    {
+        "userName": "Nicolle Robins",
+        "userAvatarString": "Woman3",
+        "id": 4
+    },
+    {
+        "userName": "Loki Gilliam",
+        "userAvatarString": "Man2",
+        "id": 5
+    },
+    {
+        "userName": "Ann-Marie Bouvet",
+        "userAvatarString": "Woman4",
+        "id": 6
+    },
+    {
+        "userName": "Dawid Klein",
+        "userAvatarString": "Man3",
+        "id": 7
+    },
+    {
         "userName": "Peter Brown",
         "userAvatarString": "Man4",
-        "lastMessage": "Are you going to ride a bike with us?",
         "id": 8
     },
     {
         "userName": "Sarah White",
         "userAvatarString": "Woman5",
-        "lastMessage": "Are you free tomorrow?",
         "id": 9
     },
     {
         "userName": "Angelina Newton",
         "userAvatarString": "Woman6",
-        "lastMessage": "Give me Alan's number pls",
         "id": 10
     },
     {
         "userName": "Mattie Schaefer",
         "userAvatarString": "Man6",
-        "lastMessage": "Party today, come with us",
         "id": 11
     },
     {
         "userName": "Amelia-Grace Drew",
         "userAvatarString": "Woman7",
-        "lastMessage": "Hey! How are you?",
         "id": 12
     },
     {
         "userName": "Blane Bartlett",
         "userAvatarString": "Man5",
-        "lastMessage": "Are you good at Science?",
         "id": 13
     },
     {
         "userName": "Walter Lynn",
         "userAvatarString": "Man7",
-        "lastMessage": "Tommy is waiting, call him",
         "id": 14
     }
 ]
-
+    

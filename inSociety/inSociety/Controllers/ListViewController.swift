@@ -7,21 +7,6 @@
 
 import UIKit
 
-struct ActiveChatModel: Hashable, Decodable {
-    var userName: String
-    var userImageString: String
-    var lastMessage: String
-    var id: Int
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: ActiveChatModel, rhs: ActiveChatModel) -> Bool {
-        return lhs.id == rhs.id
-    }
-}
-
 class ListViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
@@ -85,7 +70,7 @@ class ListViewController: UIViewController {
         
     }
     
-    func reloadData() {
+    private func reloadData() {
         var snapshot = NSDiffableDataSourceSnapshot<Section, ActiveChatModel>()
         snapshot.appendSections([.waitingChats, .activeChats])
         snapshot.appendItems(waitingChats, toSection: .waitingChats)
@@ -100,16 +85,6 @@ class ListViewController: UIViewController {
 //MARK: - Data Source
 extension ListViewController {
     
-    private func configure<T: SelfConfiguringCell>(cellType: T.Type, with value: ActiveChatModel, for indexPath: IndexPath) -> T {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseId, for: indexPath) as? T else { fatalError("Unable to dequeue \(cellType)") }
-        
-        cell.configure(with: value)
-        return cell
-        
-        
-    }
-    
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, ActiveChatModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
             
@@ -120,13 +95,15 @@ extension ListViewController {
             
             switch section {
             case .waitingChats:
-                return self.configure(cellType: WaitingChatCell.self,
+                return self.configure(collectionView: collectionView,
+                                      cellType: WaitingChatCell.self,
                                       with: itemIdentifier,
                                       for: indexPath)
             case .activeChats:
-                return self.configure(cellType: ActiveChatCell.self,
-                                 with: itemIdentifier,
-                                 for: indexPath)
+                return self.configure(collectionView: collectionView,
+                                      cellType: ActiveChatCell.self,
+                                      with: itemIdentifier,
+                                      for: indexPath)
             }
         })
         

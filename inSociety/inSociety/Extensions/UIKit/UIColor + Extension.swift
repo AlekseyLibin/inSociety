@@ -19,6 +19,10 @@ extension UIColor {
         return UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1)
     }
     
+    static func shadowColor() -> UIColor? {
+        return UIColor(red: 189/255, green: 189/255, blue: 189/255, alpha: 1)
+    }
+    
     static func loginButtonTitleColor() -> UIColor {
         return UIColor(red: 85/255, green: 230/255, blue: 226/255, alpha: 1)
     }
