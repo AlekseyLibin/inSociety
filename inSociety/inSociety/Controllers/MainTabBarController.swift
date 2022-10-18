@@ -15,6 +15,7 @@ class MainTabBarController: UITabBarController {
         let peopleViewController = PeopleViewController()
         
         tabBar.tintColor = .black
+//        tabBar.backgroundColor = .black
         
         guard
             let peopleImage = UIImage(named: "PeopleTabBarLogo"),

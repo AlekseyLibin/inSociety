@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol SelfConfiguringCell {
-    static var reuseId: String { get }
-    func configure(with value: ActiveChatModel)
-}
-
 class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     
     static var reuseId = "ActiveChatCell"
@@ -21,6 +16,11 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
         userImageView.image = UIImage(named: value.userImageString)
         userName.text = value.userName
         lastMessage.text = value.lastMessage
+//        gradientView.backgroundColor = .systemYellow
+        
+        let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
+        gradient.frame = self.frame
     }
     
     let userImageView = UIImageView()
@@ -28,10 +28,12 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     let lastMessage = UILabel(text: "Last message", font: .laoSangamMN18())
     let gradientView = UIView()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         gradientView.backgroundColor = .systemPurple
+        
         
         self.layer.cornerRadius = 4
         self.clipsToBounds = true
