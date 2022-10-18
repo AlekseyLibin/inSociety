@@ -1,5 +1,5 @@
 //
-//  StackView + Extension.swift
+//  UIStackView + Extension.swift
 //  inSociety
 //
 //  Created by Aleksey Libin on 13.10.2022.

@@ -12,7 +12,7 @@
 		436691D028FDE14200B729D8 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691C928FDE14200B729D8 /* UIFont + Extension.swift */; };
 		436691D128FDE14200B729D8 /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691CA28FDE14200B729D8 /* UIButton + Extension.swift */; };
 		436691D228FDE14200B729D8 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691CB28FDE14200B729D8 /* UILabel + Extension.swift */; };
-		436691D328FDE14200B729D8 /* StackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691C828FDE14200B729D8 /* StackView + Extension.swift */; };
+		436691D328FDE14200B729D8 /* UIStackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691C828FDE14200B729D8 /* UIStackView + Extension.swift */; };
 		436691D428FDE14200B729D8 /* SegmentedControl + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691CD28FDE14200B729D8 /* SegmentedControl + Extension.swift */; };
 		436691D628FDE1F600B729D8 /* ActiveChats.json in Resources */ = {isa = PBXBuildFile; fileRef = 436691D528FDE1F600B729D8 /* ActiveChats.json */; };
 		436841F028FDC97E00DE7600 /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436841EF28FDC97E00DE7600 /* Bundle-Decodable.swift */; };
@@ -35,6 +35,9 @@
 		43D81A4C28FEDA8300A006AC /* UserNearbyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D81A4B28FEDA8300A006AC /* UserNearbyModel.swift */; };
 		43D81A4F28FEFA0800A006AC /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D81A4E28FEFA0800A006AC /* UserCell.swift */; };
 		43D81A5128FEFC1800A006AC /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D81A5028FEFC1800A006AC /* UIViewController + Extension.swift */; };
+		43D81A5328FF1B2800A006AC /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D81A5228FF1B2800A006AC /* ProfileViewController.swift */; };
+		43D81A5528FF270700A006AC /* SendMessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D81A5428FF270700A006AC /* SendMessageTextField.swift */; };
+		43D81A5728FF42B800A006AC /* ChatRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43D81A5628FF42B800A006AC /* ChatRequestViewController.swift */; };
 		43DDF94228F8B45B007E2DF5 /* SetupProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDF94128F8B45B007E2DF5 /* SetupProfileViewController.swift */; };
 		43DDF94428F8BEA3007E2DF5 /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43DDF94328F8BEA3007E2DF5 /* AddPhotoView.swift */; };
 		43F2F22228F83A47004F6604 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F22128F83A47004F6604 /* SignUpViewController.swift */; };
@@ -44,7 +47,7 @@
 
 /* Begin PBXFileReference section */
 		436691C728FDE14200B729D8 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
-		436691C828FDE14200B729D8 /* StackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StackView + Extension.swift"; sourceTree = "<group>"; };
+		436691C828FDE14200B729D8 /* UIStackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extension.swift"; sourceTree = "<group>"; };
 		436691C928FDE14200B729D8 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
 		436691CA28FDE14200B729D8 /* UIButton + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
 		436691CB28FDE14200B729D8 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
@@ -73,6 +76,9 @@
 		43D81A4B28FEDA8300A006AC /* UserNearbyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNearbyModel.swift; sourceTree = "<group>"; };
 		43D81A4E28FEFA0800A006AC /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		43D81A5028FEFC1800A006AC /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		43D81A5228FF1B2800A006AC /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		43D81A5428FF270700A006AC /* SendMessageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageTextField.swift; sourceTree = "<group>"; };
+		43D81A5628FF42B800A006AC /* ChatRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRequestViewController.swift; sourceTree = "<group>"; };
 		43DDF94128F8B45B007E2DF5 /* SetupProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileViewController.swift; sourceTree = "<group>"; };
 		43DDF94328F8BEA3007E2DF5 /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
 		43F2F22128F83A47004F6604 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +103,8 @@
 				43974D0C28F9844400A5C426 /* MainTabBarController.swift */,
 				43974D0728F97F6A00A5C426 /* ListViewController.swift */,
 				43974D0A28F9842B00A5C426 /* PeopleViewController.swift */,
+				43D81A5228FF1B2800A006AC /* ProfileViewController.swift */,
+				43D81A5628FF42B800A006AC /* ChatRequestViewController.swift */,
 				4372912E28FDF93300781327 /* Cell */,
 				43D81A4628FED65000A006AC /* Header */,
 			);
@@ -161,13 +169,14 @@
 			isa = PBXGroup;
 			children = (
 				436691CD28FDE14200B729D8 /* SegmentedControl + Extension.swift */,
-				436691C828FDE14200B729D8 /* StackView + Extension.swift */,
+				436691C828FDE14200B729D8 /* UIStackView + Extension.swift */,
 				436691CA28FDE14200B729D8 /* UIButton + Extension.swift */,
 				436691C728FDE14200B729D8 /* UIColor + Extension.swift */,
 				436691C928FDE14200B729D8 /* UIFont + Extension.swift */,
 				436691CC28FDE14200B729D8 /* UIImageView + Extension.swift */,
 				436691CB28FDE14200B729D8 /* UILabel + Extension.swift */,
 				43D81A5028FEFC1800A006AC /* UIViewController + Extension.swift */,
+				43D81A5428FF270700A006AC /* SendMessageTextField.swift */,
 				436691D528FDE1F600B729D8 /* ActiveChats.json */,
 				4372912728FDEAF900781327 /* WaitingChats.json */,
 				43D81A4728FED81A00A006AC /* Users.json */,
@@ -294,11 +303,14 @@
 				436691CE28FDE14200B729D8 /* UIImageView + Extension.swift in Sources */,
 				4372912B28FDF92200781327 /* ActiveChatCell.swift in Sources */,
 				43D47F2128F6EE2A006235B0 /* AppDelegate.swift in Sources */,
-				436691D328FDE14200B729D8 /* StackView + Extension.swift in Sources */,
+				436691D328FDE14200B729D8 /* UIStackView + Extension.swift in Sources */,
 				43D81A5128FEFC1800A006AC /* UIViewController + Extension.swift in Sources */,
 				43974D0B28F9842B00A5C426 /* PeopleViewController.swift in Sources */,
 				436691D228FDE14200B729D8 /* UILabel + Extension.swift in Sources */,
+				43D81A5328FF1B2800A006AC /* ProfileViewController.swift in Sources */,
 				43DDF94228F8B45B007E2DF5 /* SetupProfileViewController.swift in Sources */,
+				43D81A5728FF42B800A006AC /* ChatRequestViewController.swift in Sources */,
+				43D81A5528FF270700A006AC /* SendMessageTextField.swift in Sources */,
 				43F2F22228F83A47004F6604 /* SignUpViewController.swift in Sources */,
 				436691D428FDE14200B729D8 /* SegmentedControl + Extension.swift in Sources */,
 				43DDF94428F8BEA3007E2DF5 /* AddPhotoView.swift in Sources */,
