@@ -37,7 +37,7 @@ class ListViewController: UIViewController {
         setupCollectionView()
         setupSearchController()
         createDataSource()
-        reloadData()
+        reloadData(with: nil)
         
         
     }
@@ -70,11 +70,16 @@ class ListViewController: UIViewController {
         
     }
     
-    private func reloadData() {
+    private func reloadData(with searchText: String?) {
+        
+        let filteredActiveChats = activeChats.filter { (chat) -> Bool in
+            chat.contains(filter: searchText)
+        }
+        
         var snapshot = NSDiffableDataSourceSnapshot<Section, ActiveChatModel>()
         snapshot.appendSections([.waitingChats, .activeChats])
         snapshot.appendItems(waitingChats, toSection: .waitingChats)
-        snapshot.appendItems(activeChats, toSection: .activeChats)
+        snapshot.appendItems(filteredActiveChats, toSection: .activeChats)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
@@ -122,6 +127,16 @@ extension ListViewController {
         }
     }
 }
+
+
+
+//MARK: - UISearchBarDelegate
+extension ListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        reloadData(with: searchText)
+    }
+}
+
 
 
 //MARK: - Setup CollectionView
@@ -199,15 +214,6 @@ extension ListViewController {
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: sectionHeaderSize,
                                                                         elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return sectionHeader
-    }
-}
-
-
-
-//MARK: - UISearchBarDelegate
-extension ListViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
     }
 }
 

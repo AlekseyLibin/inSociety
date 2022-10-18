@@ -15,6 +15,15 @@ struct ActiveChatModel: Hashable, Decodable {
     var id: Int
     
     
+    
+    func contains(filter: String?) -> Bool {
+        guard let filter = filter, filter.isEmpty == false else { return true }
+        
+        let lowercasedFilter = filter.lowercased()
+        return userName.lowercased().contains(lowercasedFilter)
+    }
+    
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
