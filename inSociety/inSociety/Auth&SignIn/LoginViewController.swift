@@ -9,6 +9,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     
+    weak var delegate: AuthNavigationDelegate?
+    
     let greetingLabel = UILabel(text: "Welcome back!", font: .galvji30())
     let loginWithLabel = UILabel(text: "Login with")
     let orLabel = UILabel(text: "or")
@@ -19,8 +21,8 @@ class LoginViewController: UIViewController {
     let passwordTextField = UnderlinedTextField(font: .galvji20())
     
     
-    let loginButon = UIButton(title: "Login",
-                              titleColor: .white, backgroundColor: .darkButtonColor())
+    let loginButton = UIButton(title: "Login",
+                               titleColor: .white, backgroundColor: .darkButtonColor())
     let googleButton = UIButton(title: "Google",
                                 titleColor: .black, backgroundColor: .white, isShadow: true)
     let signUpButton = UIButton(title: "Create new account",
@@ -32,6 +34,28 @@ class LoginViewController: UIViewController {
         
         view.backgroundColor = .white
         setUpViews()
+        
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
+    }
+    
+    @objc private func loginButtonPressed() {
+        AuthService.shared.login(email: emailextField.text,
+                                 password: passwordTextField.text) { result in
+            switch result {
+                
+            case .success(_):
+                self.showAlert(with: "Success", and: "You have successfully logged in")
+            case .failure(let error):
+                self.showAlert(with: "Failure", and: error.localizedDescription)
+            }
+        }
+    }
+    
+    @objc private func signUpButtonPressed() {
+        dismiss(animated: true) {
+            self.delegate?.toSignUpVC()
+        }
     }
 }
 
@@ -48,7 +72,7 @@ extension LoginViewController {
         let passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField],
                                             axis: .vertical, spacing: 10)
         let stackView = UIStackView(arrangedSubviews: [
-            loginView, orLabel, emailStackView, passwordStackView, loginButon, signUpButton
+            loginView, orLabel, emailStackView, passwordStackView, loginButton, signUpButton
         ], axis: .vertical, spacing: 50)
         
         view.addSubview(greetingLabel)
@@ -58,14 +82,14 @@ extension LoginViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             
-            greetingLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            greetingLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 75),
             greetingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 100),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            loginButon.heightAnchor.constraint(equalToConstant: 60)
+            loginButton.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 }

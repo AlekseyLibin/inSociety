@@ -9,6 +9,8 @@ import UIKit
 
 class SignUpViewController: UIViewController {
     
+    weak var delegate: AuthNavigationDelegate?
+    
     let greetingLabel = UILabel(text: "Pleased to see you!", font: .galvji30())
     let emailLabel = UILabel(text: "Email")
     let passwordLabel = UILabel(text: "Password")
@@ -29,6 +31,31 @@ class SignUpViewController: UIViewController {
         
         view.backgroundColor = .white
         setUpViews()
+        
+        signUpButon.addTarget(self, action: #selector(signUpButonPressed), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+    }
+    
+    @objc private func signUpButonPressed() {
+        AuthService.shared.register(email: emailextField.text,
+                                    password: passwordTextField.text,
+                                    confirmPassword: confirmPasswordtextField.text) { result in
+            switch result {
+            
+            case .success(_):
+                self.showAlert(with: "Success", and: "You have been registrated") {
+                    self.present(SetupProfileViewController(), animated: true)
+                }
+            case .failure(let error ):
+                self.showAlert(with: "Failure!", and: error.localizedDescription)
+            }
+        }
+    }
+    
+    @objc private func loginButtonPressed() {
+        dismiss(animated: true) {
+            self.delegate?.toLoginVC()
+        }
     }
 }
 

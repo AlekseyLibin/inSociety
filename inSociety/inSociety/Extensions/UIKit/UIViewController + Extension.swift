@@ -7,6 +7,21 @@
 
 import UIKit
 
+//MARK: - ShowAlert method
+extension UIViewController {
+    func showAlert(with title: String, and message: String, completion: @escaping () -> Void = {} ) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let sumbitButton = UIAlertAction(title: "Submit", style: .default) { _ in
+            completion()
+        }
+        alert.addAction(sumbitButton)
+        present(alert, animated: true)
+    }
+}
+
+
+
+//MARK: - Configure CollectionViewCell
 extension UIViewController {
      func configure<T: SelfConfiguringCell, U: Hashable>(collectionView: UICollectionView,
                                                                 cellType: T.Type,
@@ -17,7 +32,5 @@ extension UIViewController {
         
         cell.configure(with: value)
         return cell
-        
-        
     }
 }

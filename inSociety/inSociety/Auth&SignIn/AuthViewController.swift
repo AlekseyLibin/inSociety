@@ -10,7 +10,6 @@ import UIKit
 class AuthViewController: UIViewController {
         
     let logoImage = UIImageView(named: "inSociety", contentMode: .scaleAspectFit)
-    
     let googleLabel = UILabel(text: "Get started with")
     let emailLabel = UILabel(text: "Or sign up with")
     let loginLabel = UILabel(text: "Already on board?")
@@ -19,11 +18,31 @@ class AuthViewController: UIViewController {
     let emailButton = UIButton(title: "email", titleColor: .white, backgroundColor: .darkButtonColor())
     let loginButton = UIButton(title: "Login", titleColor: .loginButtonTitleColor(), backgroundColor: .white, isShadow: true)
     
+    let signUpVC = SignUpViewController()
+    let loginVC = LoginViewController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemGray
         setupViews()
+        
+        emailButton.addTarget(self, action: #selector(emailButtonPressed), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        
+        signUpVC.delegate = self
+        loginVC.delegate = self
+        
+    }
+    
+    @objc private func emailButtonPressed() {
+        print(#function)
+        present(signUpVC, animated: true)
+    }
+    
+    @objc private func loginButtonPressed() {
+        print(#function)
+        present(loginVC, animated: true)
     }
 }
 
@@ -61,6 +80,19 @@ extension AuthViewController {
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
         ])
         
+    }
+}
+
+
+
+//MARK: - AuthNavigationDelegate
+extension AuthViewController: AuthNavigationDelegate {
+    func toLoginVC() {
+        present(loginVC, animated: true)
+    }
+    
+    func toSignUpVC() {
+        present(signUpVC, animated: true)
     }
 }
 
