@@ -1,0 +1,6 @@
+framework module Pods_inSociety {
+  umbrella header "Pods-inSociety-umbrella.h"
+
+  export *
+  module * { export * }
+}

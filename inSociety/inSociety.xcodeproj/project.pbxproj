@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43112A592900165000E8345A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 43112A582900165000E8345A /* GoogleService-Info.plist */; };
 		436691CE28FDE14200B729D8 /* UIImageView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691CC28FDE14200B729D8 /* UIImageView + Extension.swift */; };
 		436691CF28FDE14200B729D8 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691C728FDE14200B729D8 /* UIColor + Extension.swift */; };
 		436691D028FDE14200B729D8 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 436691C928FDE14200B729D8 /* UIFont + Extension.swift */; };
@@ -43,9 +44,13 @@
 		43F2F22228F83A47004F6604 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F22128F83A47004F6604 /* SignUpViewController.swift */; };
 		43F2F22428F8459E004F6604 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F22328F8459E004F6604 /* UnderlinedTextField.swift */; };
 		43F2F22828F86C6A004F6604 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43F2F22728F86C6A004F6604 /* LoginViewController.swift */; };
+		F18F1C8DE70510430F23CC44 /* Pods_inSociety.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F707CF683B7660DB9EADC3E /* Pods_inSociety.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E5BEB44D1453448328E080B /* Pods-inSociety.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inSociety.debug.xcconfig"; path = "Target Support Files/Pods-inSociety/Pods-inSociety.debug.xcconfig"; sourceTree = "<group>"; };
+		3F707CF683B7660DB9EADC3E /* Pods_inSociety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_inSociety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		43112A582900165000E8345A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		436691C728FDE14200B729D8 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		436691C828FDE14200B729D8 /* UIStackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extension.swift"; sourceTree = "<group>"; };
 		436691C928FDE14200B729D8 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
@@ -84,6 +89,7 @@
 		43F2F22128F83A47004F6604 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		43F2F22328F8459E004F6604 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		43F2F22728F86C6A004F6604 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4546ABC711BB2700F3C844BF /* Pods-inSociety.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inSociety.release.xcconfig"; path = "Target Support Files/Pods-inSociety/Pods-inSociety.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F18F1C8DE70510430F23CC44 /* Pods_inSociety.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +144,8 @@
 			children = (
 				43D47F1F28F6EE2A006235B0 /* inSociety */,
 				43D47F1E28F6EE2A006235B0 /* Products */,
+				7F138C85B851CDC30A0B3127 /* Pods */,
+				74ACE0EC855E417806727D18 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,6 +169,7 @@
 				43D81A4328FEC0FE00A006AC /* Protocols */,
 				43D47F2928F6EE2C006235B0 /* Assets.xcassets */,
 				43D47F2B28F6EE2C006235B0 /* LaunchScreen.storyboard */,
+				43112A582900165000E8345A /* GoogleService-Info.plist */,
 				43D47F2E28F6EE2C006235B0 /* Info.plist */,
 			);
 			path = inSociety;
@@ -221,6 +231,24 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		74ACE0EC855E417806727D18 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F707CF683B7660DB9EADC3E /* Pods_inSociety.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F138C85B851CDC30A0B3127 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0E5BEB44D1453448328E080B /* Pods-inSociety.debug.xcconfig */,
+				4546ABC711BB2700F3C844BF /* Pods-inSociety.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -228,9 +256,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 43D47F3128F6EE2C006235B0 /* Build configuration list for PBXNativeTarget "inSociety" */;
 			buildPhases = (
+				16BB649CE4C5722439638FCC /* [CP] Check Pods Manifest.lock */,
 				43D47F1928F6EE2A006235B0 /* Sources */,
 				43D47F1A28F6EE2A006235B0 /* Frameworks */,
 				43D47F1B28F6EE2A006235B0 /* Resources */,
+				9D8978565E2F43E39804DABD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -284,10 +314,53 @@
 				4372912828FDEAF900781327 /* WaitingChats.json in Resources */,
 				43D81A4828FED81A00A006AC /* Users.json in Resources */,
 				43D47F2A28F6EE2C006235B0 /* Assets.xcassets in Resources */,
+				43112A592900165000E8345A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16BB649CE4C5722439638FCC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-inSociety-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9D8978565E2F43E39804DABD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-inSociety/Pods-inSociety-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-inSociety/Pods-inSociety-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-inSociety/Pods-inSociety-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		43D47F1928F6EE2A006235B0 /* Sources */ = {
@@ -458,6 +531,7 @@
 		};
 		43D47F3228F6EE2C006235B0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0E5BEB44D1453448328E080B /* Pods-inSociety.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -485,6 +559,7 @@
 		};
 		43D47F3328F6EE2C006235B0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4546ABC711BB2700F3C844BF /* Pods-inSociety.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
