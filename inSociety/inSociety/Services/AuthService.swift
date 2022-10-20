@@ -18,6 +18,13 @@ class AuthService {
                password: String?,
                completion: @escaping (Result<User, Error>) -> Void) {
         
+        
+        let error = Validator.checkLoginValidation(email: email, password: password)
+        if let error = error {
+            completion(.failure(error))
+            return
+        }
+        
         auth.signIn(withEmail: email!, password: password!) { result, error in
             guard let result = result else {
                 completion(.failure(error!))
@@ -32,6 +39,14 @@ class AuthService {
                   password: String?,
                   confirmPassword: String?,
                   completion: @escaping (Result<User, Error>) -> Void) {
+        
+        let error = Validator.checkRegisterValidation(email: email,
+                                                  password: password,
+                                                  confirmPassword: confirmPassword)
+        if let error = error {
+            completion(.failure(error))
+            return
+        }
         
         auth.createUser(withEmail: email!, password: password!) { result, error in
             guard let result = result else {
