@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseCore
+import GoogleSignIn
 
 class AuthViewController: UIViewController {
         
@@ -29,6 +32,7 @@ class AuthViewController: UIViewController {
         
         emailButton.addTarget(self, action: #selector(emailButtonPressed), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
         
         signUpVC.delegate = self
         loginVC.delegate = self
@@ -43,6 +47,32 @@ class AuthViewController: UIViewController {
     @objc private func loginButtonPressed() {
         print(#function)
         present(loginVC, animated: true)
+    }
+    
+    @objc private func googleButtonPressed() {
+        let clientID = FirebaseApp.app()?.options.clientID
+        AuthService.shared.googleLogin(clientID: clientID, presentingVC: self) { result in
+            switch result {
+            case .success(let user):
+                FirestoreService.shared.getUserData(user: user) { result in
+                    switch result {
+                    case .success(let userModel):
+                        self.showAlert(with: "You have successfully logged in", and: "") {
+                            
+                            let main = MainTabBarController(currentUser: userModel)
+                            main.modalPresentationStyle = .fullScreen
+                            self.present(main, animated: true)
+                        }
+                    case .failure(_):
+                        self.showAlert(with: "You have successfully registrated", and: "") {
+                            self.present(SetupProfileViewController(currentUser: user), animated: true)
+                        }
+                    }
+                }
+            case .failure(let failure):
+                self.showAlert(with: "Error", and: failure.localizedDescription)
+            }
+        }
     }
 }
 

@@ -19,6 +19,7 @@ enum AuthError {
     case passwordContainsSpecificSymbols
     case passwordsDoNotMatch
     
+    case couldNotAuthWithGoogle
 }
 
 extension AuthError: LocalizedError {
@@ -39,6 +40,8 @@ extension AuthError: LocalizedError {
            return NSLocalizedString("Confirm password field is empty", comment: "")
        case .emailFieldIsEmpty:
            return NSLocalizedString("Email field is empty", comment: "")
+       case .couldNotAuthWithGoogle:
+           return NSLocalizedString("Could not authorize with Goole", comment: "")
        }
    }
 }

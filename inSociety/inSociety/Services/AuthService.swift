@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseCore
 import FirebaseAuth
+import GoogleSignIn
 
 class AuthService {
     
@@ -32,6 +33,42 @@ class AuthService {
             }
             
             completion(.success(result.user))
+        }
+    }
+    
+    func googleLogin(clientID: String?, presentingVC: UIViewController, completion: @escaping (Result<User, Error>) -> Void) {
+        guard let clientID = clientID else { return }
+        
+        let config = GIDConfiguration(clientID: clientID)
+        
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { [unowned self] user, error in
+            
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            
+            guard
+                let auth = user?.authentication,
+                let idToken = auth.idToken
+            else { return }
+            
+            let credential = GoogleAuthProvider.credential(withIDToken: idToken,
+                                                           accessToken: auth.accessToken)
+            
+            self.auth.signIn(with: credential) { result, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                switch result {
+                case .none:
+                    completion(.failure(AuthError.couldNotAuthWithGoogle))
+                case .some(let success):
+                    completion(.success(success.user))
+                }
+            }
         }
     }
     

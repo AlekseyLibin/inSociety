@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseCore
 
 class LoginViewController: UIViewController {
     
@@ -37,6 +38,7 @@ class LoginViewController: UIViewController {
         
         loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
+        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
     }
     
     @objc private func loginButtonPressed() {
@@ -65,6 +67,32 @@ class LoginViewController: UIViewController {
     @objc private func signUpButtonPressed() {
         dismiss(animated: true) {
             self.delegate?.toSignUpVC()
+        }
+    }
+    
+    @objc private func googleButtonPressed() {
+        let clientID = FirebaseApp.app()?.options.clientID
+        AuthService.shared.googleLogin(clientID: clientID, presentingVC: self) { result in
+            switch result {
+            case .success(let user):
+                FirestoreService.shared.getUserData(user: user) { result in
+                    switch result {
+                    case .success(let userModel):
+                        self.showAlert(with: "You have successfully logged in", and: "") {
+                            
+                            let main = MainTabBarController(currentUser: userModel)
+                            main.modalPresentationStyle = .fullScreen
+                            self.present(main, animated: true)
+                        }
+                    case .failure(_):
+                        self.showAlert(with: "You have successfully registrated", and: "") {
+                            self.present(SetupProfileViewController(currentUser: user), animated: true)
+                        }
+                    }
+                }
+            case .failure(let failure):
+                self.showAlert(with: "Error", and: failure.localizedDescription)
+            }
         }
     }
 }
