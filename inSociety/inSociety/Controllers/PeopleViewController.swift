@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class PeopleViewController: UIViewController {
     
@@ -14,7 +15,6 @@ class PeopleViewController: UIViewController {
         case users
         
         func description(usersCount: Int) -> String {
-            
             switch self {
             case .users:
                 return "\(usersCount) people nearby"
@@ -22,8 +22,9 @@ class PeopleViewController: UIViewController {
         }
     }
     
-//    let users = Bundle.main.decode([UserModel].self, from: "Users.json")
-    let users = [UserModel]()
+    var users = [UserModel]()
+    private var usersListener: ListenerRegistration?
+    
     private let currentUser: UserModel
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, UserModel>!
@@ -33,6 +34,10 @@ class PeopleViewController: UIViewController {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
         title = currentUser.userName
+    }
+    
+    deinit {
+        usersListener?.remove()
     }
     
     required init?(coder: NSCoder) {
@@ -45,8 +50,17 @@ class PeopleViewController: UIViewController {
         setupSearchController()
         setupCollectionView()
         createDataSource()
-        reloadData(with: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logOutButton))
+        usersListener = ListenerService.shared.usersObserve(users: users, completion: { result in
+            switch result {
+            case .success(let updatedUsers):
+                self.users = updatedUsers
+                self.reloadData(with: nil)
+            case .failure(let error):
+                self.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        })
+        
         view.backgroundColor = .mainWhite()
     }
     

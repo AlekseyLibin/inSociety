@@ -5,6 +5,7 @@
 //  Created by Aleksey Libin on 21.10.2022.
 //
 
+import UIKit
 import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
@@ -35,7 +36,7 @@ class FirestoreService {
     }
     
     func saveProfileWith(userName: String?,
-                         avatarImageString: String?,
+                         avatarImage: UIImage?,
                          email: String,
                          description: String?,
                          sex: String?,
@@ -44,22 +45,37 @@ class FirestoreService {
         
         guard Validator.isFilled(userName: userName, description: description, sex: sex) else {
             completion(.failure(UserError.notFilled))
+            
+            guard avatarImage != UIImage(named: "ProfilePhoto") else {
+                completion(.failure(UserError.noPhoto))
+                return
+            }
             return
         }
         
         
-        let userModel = UserModel(userName: userName!,
+        var userModel = UserModel(userName: userName!,
                                   userAvatarString: "not exist",
                                   email: email,
                                   description: description!,
                                   sex: sex!,
                                   id: id)
-        self.usersRef.document(userModel.id).setData(userModel.representationDict) { error in
-            if let error = error {
+        StorageService.shared.upload(image: avatarImage!) { result in
+            switch result {
+            case .success(let avatatarURL):
+                userModel.userAvatarString = avatatarURL.absoluteString
+                self.usersRef.document(userModel.id).setData(userModel.representationDict) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(userModel))
+                    }
+                }
+            case .failure(let error):
                 completion(.failure(error))
-            } else {
-                completion(.success(userModel))
             }
         }
     }
+    
+    
 }

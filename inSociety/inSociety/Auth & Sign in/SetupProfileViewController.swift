@@ -45,12 +45,20 @@ class SetupProfileViewController: UIViewController {
         
         view.backgroundColor = .white
         submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchUpInside)
+        fillImageView.addProfilePhoto.addTarget(self, action: #selector(addProfilePhoto), for: .touchUpInside)
         setupConstraints()
+    }
+    
+    @objc private func addProfilePhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true)
     }
     
     @objc private func submitButtonPressed() {
         FirestoreService.shared.saveProfileWith(userName: fullNameTextField.text,
-                                                avatarImageString: "no image",
+                                                avatarImage: fillImageView.profileImageView.image,
                                                 email: currentUser.email ?? "no email",
                                                 description: aboutMeTextField.text,
     sex: sexSegmentedControl.titleForSegment(at:sexSegmentedControl.selectedSegmentIndex),
@@ -67,6 +75,20 @@ class SetupProfileViewController: UIViewController {
                 print(failure.localizedDescription)
             }
         }
+    }
+}
+
+
+
+
+//MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
+extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        picker.dismiss(animated: true)
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        fillImageView.profileImageView.image = image
     }
 }
 

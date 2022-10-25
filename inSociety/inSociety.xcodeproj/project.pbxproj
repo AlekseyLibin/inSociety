@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4367D0B02907F7100056C307 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0AF2907F7100056C307 /* StorageService.swift */; };
+		4367D0B22907FC970056C307 /* UIIMage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0B12907FC970056C307 /* UIIMage + Extension.swift */; };
+		4367D0B4290849BE0056C307 /* ListenerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0B3290849BE0056C307 /* ListenerService.swift */; };
 		4397FB2E290702BE00FED534 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2D290702BE00FED534 /* Assets.xcassets */; };
 		4397FB31290702BE00FED534 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2F290702BE00FED534 /* LaunchScreen.storyboard */; };
 		4397FB3A2907031900FED534 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4397FB392907031900FED534 /* FirebaseAnalytics */; };
@@ -58,6 +61,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4367D0AF2907F7100056C307 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		4367D0B12907FC970056C307 /* UIIMage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIIMage + Extension.swift"; sourceTree = "<group>"; };
+		4367D0B3290849BE0056C307 /* ListenerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenerService.swift; sourceTree = "<group>"; };
 		4397FB21290702BC00FED534 /* inSociety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inSociety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4397FB2D290702BE00FED534 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4397FB30290702BE00FED534 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -222,6 +228,7 @@
 				4397FB7A2907080B00FED534 /* UILabel + Extension.swift */,
 				4397FB7C2907083000FED534 /* UIButton + Extension.swift */,
 				4397FB802907087400FED534 /* UIImageView + Extension.swift */,
+				4367D0B12907FC970056C307 /* UIIMage + Extension.swift */,
 				4397FB822907089E00FED534 /* UISegmentedControl + Extension.swift */,
 				4397FB84290708B800FED534 /* UIStackView + Extension.swift */,
 			);
@@ -271,6 +278,8 @@
 			children = (
 				4397FBA229070B4500FED534 /* AuthService.swift */,
 				4397FBA429070B5800FED534 /* FirestoreService.swift */,
+				4367D0AF2907F7100056C307 /* StorageService.swift */,
+				4367D0B3290849BE0056C307 /* ListenerService.swift */,
 				4397FBAA29070B8E00FED534 /* Models */,
 			);
 			path = Services;
@@ -367,6 +376,7 @@
 				4397FB6C290706D900FED534 /* PeopleViewController.swift in Sources */,
 				4397FB85290708B800FED534 /* UIStackView + Extension.swift in Sources */,
 				4397FB572907058B00FED534 /* SignUpViewController.swift in Sources */,
+				4367D0B02907F7100056C307 /* StorageService.swift in Sources */,
 				4397FB68290706AE00FED534 /* ListViewController.swift in Sources */,
 				4397FB77290707C500FED534 /* UnderlinedTextField.swift in Sources */,
 				4397FBA929070B8400FED534 /* UserModel.swift in Sources */,
@@ -377,6 +387,7 @@
 				4397FB4D290704F600FED534 /* AppDelegate.swift in Sources */,
 				4397FB812907087400FED534 /* UIImageView + Extension.swift in Sources */,
 				4397FB8B2907093100FED534 /* UIFont + Extension.swift in Sources */,
+				4367D0B22907FC970056C307 /* UIIMage + Extension.swift in Sources */,
 				4397FB732907079900FED534 /* Bundle-Decodable.swift in Sources */,
 				4397FBA029070B0700FED534 /* SelfConfiguringCell.swift in Sources */,
 				4397FB5C290705F800FED534 /* WaitingChatCell.swift in Sources */,
@@ -399,6 +410,7 @@
 				4397FBA329070B4500FED534 /* AuthService.swift in Sources */,
 				4397FB552907056F00FED534 /* SetupProfileViewController.swift in Sources */,
 				4397FB4F2907051600FED534 /* SceneDelegate.swift in Sources */,
+				4367D0B4290849BE0056C307 /* ListenerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

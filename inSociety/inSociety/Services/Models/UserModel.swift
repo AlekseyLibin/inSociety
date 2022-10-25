@@ -44,6 +44,24 @@ struct UserModel: Hashable, Decodable {
         self.id = id
     }
     
+    init?(queryDocument: QueryDocumentSnapshot) {
+        let data = queryDocument.data()
+        guard let userName = data["userName"] as? String,
+              let userAvatarString = data["userAvatarString"] as? String,
+              let email = data["email"] as? String,
+              let description = data["description"] as? String,
+              let sex = data["sex"] as? String,
+              let id = data["uid"] as? String
+        else { return nil }
+        
+        self.userName = userName
+        self.userAvatarString = userAvatarString
+        self.email = email
+        self.description = description
+        self.sex = sex
+        self.id = id
+    }
+    
     var representationDict: [String: Any] {
         var rep = ["userName": userName]
         rep["userAvatarString"] = userAvatarString
