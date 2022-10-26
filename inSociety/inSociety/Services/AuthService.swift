@@ -44,7 +44,7 @@ class AuthService {
         GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { [unowned self] user, error in
             
             if let error = error {
-                print(error.localizedDescription)
+                completion(.failure(error))
                 return
             }
             

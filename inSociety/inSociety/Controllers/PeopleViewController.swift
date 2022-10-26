@@ -24,6 +24,7 @@ class PeopleViewController: UIViewController {
     
     var users = [UserModel]()
     private var usersListener: ListenerRegistration?
+    private var numberOfUsersListener: ListenerRegistration?
     
     private let currentUser: UserModel
     var collectionView: UICollectionView!
@@ -37,6 +38,7 @@ class PeopleViewController: UIViewController {
     }
     
     deinit {
+        numberOfUsersListener?.remove()
         usersListener?.remove()
     }
     
@@ -51,6 +53,7 @@ class PeopleViewController: UIViewController {
         setupCollectionView()
         createDataSource()
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logOutButton))
+        
         usersListener = ListenerService.shared.usersObserve(users: users, completion: { result in
             switch result {
             case .success(let updatedUsers):
@@ -72,7 +75,7 @@ class PeopleViewController: UIViewController {
                 try Auth.auth().signOut()
                 UIApplication.shared.keyWindow?.rootViewController = AuthViewController()
             } catch {
-                print(error.localizedDescription)
+                self.showAlert(with: "Error", and: error.localizedDescription)
             }
             
         }))
@@ -152,13 +155,23 @@ extension PeopleViewController {
             collectionView, kind, indexPath in
             
             guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                                withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
-            else { fatalError("Cannot create neu section header")}
+                                                                                      withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
+            else { fatalError("Cannot create new section header")}
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
-            let numberOfUsers = self.dataSource.snapshot().numberOfItems(inSection: .users)
-            sectionHeader.configure(text: section.description(usersCount: numberOfUsers),
-                                    font: .systemFont(ofSize: 36, weight: .light),
-                                    textColor: .black)
+            self.numberOfUsersListener = ListenerService.shared.usersObserve(users: self.users) { result in
+                switch result {
+                case .success(let allUsers):
+                    sectionHeader.configure(text: section.description(usersCount: allUsers.count),
+                                            font: .systemFont(ofSize: 36, weight: .light),
+                                            textColor: .black)
+                case .failure(let error):
+                    self.showAlert(with: "Error", and: error.localizedDescription)
+                }
+            }
+//            let numberOfUsers = self.dataSource.snapshot().numberOfItems(inSection: .users)
+//            sectionHeader.configure(text: section.description(usersCount: numberOfUsers),
+//                                    font: .systemFont(ofSize: 36, weight: .light),
+//                                    textColor: .black)
             
             return sectionHeader
         }

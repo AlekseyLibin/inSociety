@@ -41,7 +41,6 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func sendButtonPressed() {
-        print(#function)
     }
 }
 

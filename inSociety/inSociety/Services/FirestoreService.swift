@@ -45,11 +45,11 @@ class FirestoreService {
         
         guard Validator.isFilled(userName: userName, description: description, sex: sex) else {
             completion(.failure(UserError.notFilled))
-            
-            guard avatarImage != UIImage(named: "ProfilePhoto") else {
-                completion(.failure(UserError.noPhoto))
-                return
-            }
+            return
+        }
+        
+        guard avatarImage != UIImage(named: "ProfilePhoto") else {
+            completion(.failure(UserError.noPhoto))
             return
         }
         

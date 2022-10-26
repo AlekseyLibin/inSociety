@@ -8,7 +8,9 @@
 import UIKit
 
 class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
-    func configure<U>(with value: U) where U : Hashable {
+    
+    //HCell - Hashable cell
+    func configure<HCell>(with value: HCell) where HCell : Hashable {
         guard let user: ActiveChatModel = value as? ActiveChatModel else { return }
         userImage.image = UIImage(named: user.userAvatarString)
     }

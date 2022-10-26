@@ -11,7 +11,8 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     
     static var reuseId = "ActiveChatCell"
     
-    func configure<U>(with value: U) where U : Hashable {
+    //HCell - Hashable cell
+    func configure<HCell>(with value: HCell) where HCell : Hashable {
         guard let user: ActiveChatModel = value as? ActiveChatModel else { return }
         
         backgroundColor = .white

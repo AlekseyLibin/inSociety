@@ -6,22 +6,33 @@
 //
 
 import UIKit
+import SDWebImage
 
 class UserCell: UICollectionViewCell, SelfConfiguringCell {
     
-    let userImageView = UIImageView()
+    var userImageView = UIImageView()
     let userNameLabel = UILabel(text: "Aleksey Libin", font: .laoSangamMN20())
     let containerView = UIView()
     
     static var reuseId: String = "UserCell"
-
-    func configure<U>(with value: U) where U : Hashable {
-        guard let user: UserModel = value as? UserModel else { return }
-        userImageView.image = UIImage(named: user.userAvatarString)
-        userNameLabel.text = user.userName
-        userNameLabel.textAlignment = .center
-        
+    
+    override func prepareForReuse() {
+        userImageView.image = nil
     }
+    
+    //HCell - Hashable cell.
+    func configure<HCell>(with value: HCell) where HCell : Hashable {
+        guard let user: UserModel = value as? UserModel else { return }
+        userNameLabel.text = user.userName
+        userNameLabel.backgroundColor = self.backgroundColor
+        userNameLabel.textAlignment = .center
+        guard let url = URL(string: user.userAvatarString) else { return }
+        userImageView.sd_setImage(with: url)
+        userImageView.backgroundColor = .red
+        userImageView.contentMode = .scaleAspectFill
+    }
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)

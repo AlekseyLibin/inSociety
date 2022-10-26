@@ -40,12 +40,10 @@ class AuthViewController: UIViewController {
     }
     
     @objc private func emailButtonPressed() {
-        print(#function)
         present(signUpVC, animated: true)
     }
     
     @objc private func loginButtonPressed() {
-        print(#function)
         present(loginVC, animated: true)
     }
     
