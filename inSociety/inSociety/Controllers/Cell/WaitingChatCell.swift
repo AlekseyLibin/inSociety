@@ -11,13 +11,13 @@ class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
     
     //HCell - Hashable cell
     func configure<HCell>(with value: HCell) where HCell : Hashable {
-        guard let user: ChatModel = value as? ChatModel else { return }
-        userImage.image = UIImage(named: user.friendAvatarString)
+        guard let chat: ChatModel = value as? ChatModel else { return }
+        friendImageView.sd_setImage(with: URL(string: chat.friendAvatarString))
     }
     
     static var reuseId: String = "WaitingChatCell"
     
-    let userImage = UIImageView()
+    let friendImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,14 +28,14 @@ class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
     
     private func setupConstraints() {
         
-        userImage.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(userImage)
+        friendImageView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(friendImageView)
         
         NSLayoutConstraint.activate([
-            userImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            userImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            userImage.widthAnchor.constraint(equalTo: self.widthAnchor),
-            userImage.heightAnchor.constraint(equalTo: self.heightAnchor)
+            friendImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            friendImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            friendImageView.widthAnchor.constraint(equalTo: self.widthAnchor),
+            friendImageView.heightAnchor.constraint(equalTo: self.heightAnchor)
         ])
     }
     

@@ -22,6 +22,10 @@ class FirestoreService {
         return db.collection("users")
     }
     
+    private var waitingChatsReference: CollectionReference {
+        return db.collection("users/\(currentUser!.id)/waitingChats")
+    }
+    
     func getUserData(user: User, completion: @escaping (Result<UserModel, Error>) -> Void) {
         let docRef = usersRef.document(user.uid)
         docRef.getDocument { document, error in
@@ -105,6 +109,56 @@ class FirestoreService {
                     return
                 }
                 completion(.success(Void()))
+            }
+        }
+    }
+    
+    
+    func deleteWaitingChat(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        waitingChatsReference.document(chat.friendID).delete { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            completion(.success(Void()))
+        }
+    }
+    
+    func getWaitingChatMessages(chat: ChatModel, completion: @escaping (Result<[MessageModel], Error>) -> Void) {
+        let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
+        var messages = [MessageModel]()
+        messagesReference.getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            for document in querySnapshot!.documents {
+                guard let message = MessageModel(document: document) else { return }
+                messages.append(message)
+            }
+            completion(.success(messages))
+        }
+    }
+    
+    func deleteMessages(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
+        getWaitingChatMessages(chat: chat) { result in
+            switch result {
+            case .success(let messages):
+                for message in messages {
+                    guard let documentID = message.id else { return }
+                    let messageReference = messagesReference.document(documentID)
+                    messageReference.delete { error in
+                        if let error = error {
+                            completion(.failure(error))
+                            return
+                        }
+                        self.deleteWaitingChat(chat: chat, completion: completion)
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

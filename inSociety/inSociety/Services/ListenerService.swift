@@ -50,4 +50,38 @@ class ListenerService {
         }
         return usersListener
     }
+    
+    
+    func waitingChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
+        
+        var allChats = chats
+        guard let currentUserId = currentUserId else { return nil }
+        let chatsReference = db.collection("users/\(currentUserId)/waitingChats")
+        let chatsListener = chatsReference.addSnapshotListener { querySnapshot, error in
+            guard let querySnapshot = querySnapshot else {
+                completion(.failure(error!))
+                return
+            }
+            
+            querySnapshot.documentChanges.forEach { difference in
+                guard let modifiedChat = ChatModel(document: difference.document) else { return }
+                switch difference.type {
+                case .added:
+                    guard
+                        !allChats.contains(modifiedChat)
+                    else { return }
+                    allChats.append(modifiedChat)
+                case .modified:
+                    guard let index = allChats.firstIndex(of: modifiedChat) else { return }
+                    allChats[index] = modifiedChat
+                case .removed:
+                    guard let index = allChats.firstIndex(of: modifiedChat) else { return }
+                    allChats.remove(at: index)
+                }
+            }
+            completion(.success(allChats))
+        }
+        
+        return chatsListener
+    }
 }

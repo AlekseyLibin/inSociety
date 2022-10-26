@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class ListViewController: UIViewController {
+    
+    private var waitingChatsListener: ListenerRegistration?
     
     enum Section: Int, CaseIterable {
         case waitingChats, activeChats
@@ -25,7 +28,7 @@ class ListViewController: UIViewController {
     }
     
     private let currentUser: UserModel
-    let waitingChats = [ChatModel]()
+    var waitingChats = [ChatModel]()
     let activeChats = [ChatModel]()
 
     
@@ -37,6 +40,10 @@ class ListViewController: UIViewController {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
         title = currentUser.userName
+    }
+    
+    deinit {
+        waitingChatsListener?.remove()
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +58,21 @@ class ListViewController: UIViewController {
         createDataSource()
         reloadData(with: nil)
         
-        
+        waitingChatsListener = ListenerService.shared.waitingChatsObserve(chats: waitingChats, completion: { difference in
+            switch difference {
+            case .success(let updatedWaitingChats):
+                if
+                    self.waitingChats != [], self.waitingChats.count <= updatedWaitingChats.count {
+                    let chatRequestVC = ChatRequestViewController(chat: updatedWaitingChats.last!)
+                    chatRequestVC.delegate = self
+                    self.present(chatRequestVC, animated: true)
+                }
+                self.waitingChats = updatedWaitingChats
+                self.reloadData(with: nil)
+            case .failure(let error):
+                self.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        })
     }
     
     private func setupSearchController() {
@@ -79,6 +100,8 @@ class ListViewController: UIViewController {
         
         collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseId)
         collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseId)
+        
+        collectionView.delegate = self
         
     }
     
@@ -147,6 +170,51 @@ extension ListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         reloadData(with: searchText)
     }
+}
+
+
+
+
+//MARK: - UICollectionViewDelegate
+extension ListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard
+            let chat = self.dataSource?.itemIdentifier(for: indexPath),
+            let section = Section(rawValue: indexPath.section)
+        else { return }
+        
+        switch section {
+        case .waitingChats:
+            let chatRequestVC = ChatRequestViewController(chat: chat)
+            chatRequestVC.delegate = self
+            present(chatRequestVC, animated: true)
+        case .activeChats:
+            print(indexPath)
+        }
+        
+    }
+}
+
+
+
+//MARK: - WaitingChatsNavigation
+extension ListViewController: WaitingChatsNavigation {
+    func removeWaitingChat(chat: ChatModel) {
+        FirestoreService.shared.deleteWaitingChat(chat: chat) { result in
+            switch result {
+            case .success:
+                self.showAlert(with: "Success", and: "Chat request has been denied")
+            case .failure(let error):
+                self.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        }
+    }
+    
+    func moveToActive(chat: ChatModel) {
+        print(#function)
+    }
+    
+    
 }
 
 

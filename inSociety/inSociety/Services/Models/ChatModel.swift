@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Foundation
+import FirebaseFirestore
 
 struct ChatModel: Hashable, Decodable {
     var friendName: String
@@ -15,14 +15,38 @@ struct ChatModel: Hashable, Decodable {
     var friendID: String
     
     
+    init(friendName: String, friendAvatarString: String, lastMessageContent: String, friendID: String) {
+        self.friendName = friendName
+        self.friendAvatarString = friendAvatarString
+        self.lastMessageContent = lastMessageContent
+        self.friendID = friendID
+    }
+    
+    
+    
+    init?(document: QueryDocumentSnapshot) {
+        let data = document.data()
+        guard let friendName = data["friendName"] as? String,
+              let friendAvatarString = data["friendAvatarURL"] as? String,
+              let lastMessageContent = data["lastMessage"] as? String,
+              let friendID = data["friendID"] as? String
+        else { return nil }
+        
+        self.friendName = friendName
+        self.friendAvatarString = friendAvatarString
+        self.lastMessageContent = lastMessageContent
+        self.friendID = friendID
+
+    }
+    
+    
     var representation: [String: Any] {
-        var rep: [String: Any] = [
+        let rep: [String: Any] = [
             "friendName": friendName,
             "friendAvatarURL": friendAvatarString,
             "lastMessage": lastMessageContent,
             "friendID": friendID
         ]
-        
         return rep
     }
     

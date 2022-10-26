@@ -13,6 +13,7 @@
 		4367D0B72908552C0056C307 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 4367D0B62908552C0056C307 /* SDWebImage */; };
 		4367D0D92909762B0056C307 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0D82909762B0056C307 /* MessageModel.swift */; };
 		4367D0DB29097E2C0056C307 /* UIApplication + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0DA29097E2C0056C307 /* UIApplication + Extension.swift */; };
+		4367D0DD2909BA3B0056C307 /* WaitingChatsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */; };
 		4397FB2E290702BE00FED534 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2D290702BE00FED534 /* Assets.xcassets */; };
 		4397FB31290702BE00FED534 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2F290702BE00FED534 /* LaunchScreen.storyboard */; };
 		4397FB3A2907031900FED534 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4397FB392907031900FED534 /* FirebaseAnalytics */; };
@@ -69,6 +70,7 @@
 		4367D0B3290849BE0056C307 /* ListenerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenerService.swift; sourceTree = "<group>"; };
 		4367D0D82909762B0056C307 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		4367D0DA29097E2C0056C307 /* UIApplication + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extension.swift"; sourceTree = "<group>"; };
+		4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingChatsNavigation.swift; sourceTree = "<group>"; };
 		4397FB21290702BC00FED534 /* inSociety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inSociety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4397FB2D290702BE00FED534 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4397FB30290702BE00FED534 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 			children = (
 				4397FB9D29070AEF00FED534 /* AuthNavigationDelegate.swift */,
 				4397FB9F29070B0700FED534 /* SelfConfiguringCell.swift */,
+				4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				4397FB77290707C500FED534 /* UnderlinedTextField.swift in Sources */,
 				4397FBA929070B8400FED534 /* UserModel.swift in Sources */,
 				4397FB532907055600FED534 /* LoginViewController.swift in Sources */,
+				4367D0DD2909BA3B0056C307 /* WaitingChatsNavigation.swift in Sources */,
 				4397FB7B2907080B00FED534 /* UILabel + Extension.swift in Sources */,
 				4397FBA729070B7100FED534 /* ChatModel.swift in Sources */,
 				4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */,
