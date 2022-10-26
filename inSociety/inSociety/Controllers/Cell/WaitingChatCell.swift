@@ -11,8 +11,8 @@ class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
     
     //HCell - Hashable cell
     func configure<HCell>(with value: HCell) where HCell : Hashable {
-        guard let user: ActiveChatModel = value as? ActiveChatModel else { return }
-        userImage.image = UIImage(named: user.userAvatarString)
+        guard let user: ChatModel = value as? ChatModel else { return }
+        userImage.image = UIImage(named: user.friendAvatarString)
     }
     
     static var reuseId: String = "WaitingChatCell"

@@ -25,12 +25,12 @@ class ListViewController: UIViewController {
     }
     
     private let currentUser: UserModel
-    let waitingChats = Bundle.main.decode([ActiveChatModel].self, from: "WaitingChats.json")
-    let activeChats = Bundle.main.decode([ActiveChatModel].self, from: "ActiveChats.json")
+    let waitingChats = [ChatModel]()
+    let activeChats = [ChatModel]()
 
     
     var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, ActiveChatModel>?
+    var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
     
     
     init(currentUser: UserModel) {
@@ -88,7 +88,7 @@ class ListViewController: UIViewController {
             chat.contains(filter: searchText)
         }
         
-        var snapshot = NSDiffableDataSourceSnapshot<Section, ActiveChatModel>()
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ChatModel>()
         snapshot.appendSections([.waitingChats, .activeChats])
         snapshot.appendItems(waitingChats, toSection: .waitingChats)
         snapshot.appendItems(filteredActiveChats, toSection: .activeChats)
@@ -103,7 +103,7 @@ class ListViewController: UIViewController {
 extension ListViewController {
     
     private func createDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, ActiveChatModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
+        dataSource = UICollectionViewDiffableDataSource<Section, ChatModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
             
             guard let section = Section(rawValue: indexPath.section) else {
                 fatalError("No such section foud")

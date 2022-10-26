@@ -13,12 +13,12 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     
     //HCell - Hashable cell
     func configure<HCell>(with value: HCell) where HCell : Hashable {
-        guard let user: ActiveChatModel = value as? ActiveChatModel else { return }
+        guard let user: ChatModel = value as? ChatModel else { return }
         
         backgroundColor = .white
-        userImageView.image = UIImage(named: user.userAvatarString)
-        userName.text = user.userName
-        lastMessage.text = user.lastMessage
+        userImageView.image = UIImage(named: user.friendAvatarString)
+        userName.text = user.friendName
+        lastMessage.text = user.lastMessageContent
 //        gradientView.backgroundColor = .systemYellow
         
         let gradient = CAGradientLayer()

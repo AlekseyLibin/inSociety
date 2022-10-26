@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ProfileViewController: UIViewController {
     
@@ -16,6 +17,23 @@ class ProfileViewController: UIViewController {
     let descriptionLabel = UILabel(text: "I like flowers, music, pankaces and you",
                                    font: .systemFont(ofSize: 16, weight: .light))
     let sendMessageTextField = SendMessageTextField()
+    
+    
+    let user: UserModel
+    
+    init(user: UserModel) {
+        self.user = user
+        
+        self.nameLabel.text = user.userName
+        self.descriptionLabel.text = user.description
+        self.imageView.sd_setImage(with: URL(string: user.userAvatarString))
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +59,21 @@ class ProfileViewController: UIViewController {
     }
     
     @objc private func sendButtonPressed() {
+        guard
+            let message = sendMessageTextField.text,
+            !message.isEmpty
+        else { return }
+        
+        self.dismiss(animated: true) {
+            FirestoreService.shared.createWaitingChat(message: message, receiver: self.user) { result in
+                switch result {
+                case .success:
+                    UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(self.user.userName)")
+                case .failure(let error):
+                    UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription)
+                }
+            }
+        }
     }
 }
 
@@ -83,27 +116,4 @@ extension ProfileViewController {
 
     }
     
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct ProfileVCProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let profileViewController = ProfileViewController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return profileViewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
 }

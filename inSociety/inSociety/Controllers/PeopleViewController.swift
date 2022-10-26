@@ -105,7 +105,8 @@ class PeopleViewController: UIViewController {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
         
         
-        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseId )
+        collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseId)
+        collectionView.delegate = self
         
     }
     
@@ -127,6 +128,17 @@ class PeopleViewController: UIViewController {
 
 
 
+//MARK: - UICollectionViewDelegate
+extension PeopleViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let user = self.dataSource.itemIdentifier(for: indexPath) else { return }
+        let profileVC = ProfileViewController(user: user)
+        present(profileVC, animated: true)
+    }
+}
+
+
+
 //MARK: - UISearchBarDelegate
 extension PeopleViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -135,8 +147,9 @@ extension PeopleViewController: UISearchBarDelegate {
 }
 
 
+
+//MARK: - Create Data Source
 extension PeopleViewController {
-    
     private func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, UserModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
             

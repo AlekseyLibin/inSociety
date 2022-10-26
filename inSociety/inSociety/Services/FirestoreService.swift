@@ -16,6 +16,8 @@ class FirestoreService {
     
     let db = Firestore.firestore()
     
+    var currentUser: UserModel?
+    
     private var usersRef: CollectionReference {
         return db.collection("users")
     }
@@ -28,6 +30,7 @@ class FirestoreService {
                     completion(.failure(UserError.cannotUnwrapFBDataToUserModel))
                     return
                 }
+                self.currentUser = user
                 completion(.success(user))
             } else {
                 completion(.failure(UserError.cannotGetUserInfo))
@@ -73,6 +76,35 @@ class FirestoreService {
                 }
             case .failure(let error):
                 completion(.failure(error))
+            }
+        }
+    }
+    
+    
+    func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let waitingChatsReference = db.collection("users/\(receiver.id)/waitingChats")
+        
+        guard let currentUser = self.currentUser else { return }
+        let messageReference = waitingChatsReference.document(currentUser.id).collection("messages")
+        waitingChatsReference.document(currentUser.id)
+        
+        let message = MessageModel(user: currentUser, content: message)
+        let chat = ChatModel(friendName: currentUser.userName,
+                             friendAvatarString: currentUser.userAvatarString,
+                             lastMessageContent: message.content,
+                             friendID: currentUser.id)
+        waitingChatsReference.document(currentUser.id).setData(chat.representation) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            messageReference.addDocument(data: message.representation) { error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(Void()))
             }
         }
     }
