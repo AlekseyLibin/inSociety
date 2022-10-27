@@ -16,15 +16,16 @@ class FirestoreService {
     
     let db = Firestore.firestore()
     
-    var currentUser: UserModel?
-    
     private var usersRef: CollectionReference {
         return db.collection("users")
     }
     
     private var waitingChatsReference: CollectionReference {
-        return db.collection("users/\(currentUser!.id)/waitingChats")
+        return db.collection("users/\(currentUser.id)/waitingChats")
     }
+    
+    var currentUser: UserModel!
+
     
     func getUserData(user: User, completion: @escaping (Result<UserModel, Error>) -> Void) {
         let docRef = usersRef.document(user.uid)
@@ -76,6 +77,7 @@ class FirestoreService {
                         completion(.failure(error))
                     } else {
                         completion(.success(userModel))
+                        self.currentUser = userModel
                     }
                 }
             case .failure(let error):
@@ -88,10 +90,8 @@ class FirestoreService {
     func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let waitingChatsReference = db.collection("users/\(receiver.id)/waitingChats")
         
-        guard let currentUser = self.currentUser else { return }
         let messageReference = waitingChatsReference.document(currentUser.id).collection("messages")
-        waitingChatsReference.document(currentUser.id)
-        
+
         let message = MessageModel(user: currentUser, content: message)
         let chat = ChatModel(friendName: currentUser.userName,
                              friendAvatarString: currentUser.userAvatarString,
@@ -102,7 +102,7 @@ class FirestoreService {
                 completion(.failure(error))
                 return
             }
-            
+
             messageReference.addDocument(data: message.representation) { error in
                 if let error = error {
                     completion(.failure(error))
@@ -120,7 +120,7 @@ class FirestoreService {
                 completion(.failure(error))
                 return
             }
-            completion(.success(Void()))
+            self.deleteMessages(chat: chat, completion: completion)
         }
     }
     
@@ -154,7 +154,7 @@ class FirestoreService {
                             completion(.failure(error))
                             return
                         }
-                        self.deleteWaitingChat(chat: chat, completion: completion)
+                        completion(.success(Void()))
                     }
                 }
             case .failure(let error):

@@ -78,6 +78,7 @@ class SetupProfileViewController: UIViewController {
             }
         }
     }
+    
 }
 
 
@@ -91,6 +92,7 @@ extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePic
         picker.dismiss(animated: true)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         fillImageView.profileImageView.image = image
+        
     }
 }
 

@@ -61,12 +61,18 @@ class ListViewController: UIViewController {
         waitingChatsListener = ListenerService.shared.waitingChatsObserve(chats: waitingChats, completion: { difference in
             switch difference {
             case .success(let updatedWaitingChats):
-                if
-                    self.waitingChats != [], self.waitingChats.count <= updatedWaitingChats.count {
+                if updatedWaitingChats.count > self.waitingChats.count {
                     let chatRequestVC = ChatRequestViewController(chat: updatedWaitingChats.last!)
                     chatRequestVC.delegate = self
                     self.present(chatRequestVC, animated: true)
                 }
+//                if
+//                    self.waitingChats != [], self.waitingChats.count <= updatedWaitingChats.count {
+//                    let chatRequestVC = ChatRequestViewController(chat: updatedWaitingChats.last!)
+//                    chatRequestVC.delegate = self
+//                    self.present(chatRequestVC, animated: true)
+//                }
+                
                 self.waitingChats = updatedWaitingChats
                 self.reloadData(with: nil)
             case .failure(let error):
