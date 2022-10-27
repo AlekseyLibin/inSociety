@@ -16,9 +16,10 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
         guard let user: ChatModel = value as? ChatModel else { return }
         
         backgroundColor = .white
-        userImageView.image = UIImage(named: user.friendAvatarString)
+        userImageView.sd_setImage(with: URL(string: user.friendAvatarString))
         userName.text = user.friendName
         lastMessage.text = user.lastMessageContent
+        
 //        gradientView.backgroundColor = .systemYellow
         
         let gradient = CAGradientLayer()

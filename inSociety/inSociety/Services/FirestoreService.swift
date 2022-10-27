@@ -24,6 +24,10 @@ class FirestoreService {
         return db.collection("users/\(currentUser.id)/waitingChats")
     }
     
+    private var activeChatsReference: CollectionReference {
+        return db.collection("users/\(currentUser.id)/activeChats")
+    }
+    
     var currentUser: UserModel!
 
     
@@ -86,7 +90,6 @@ class FirestoreService {
         }
     }
     
-    
     func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let waitingChatsReference = db.collection("users/\(receiver.id)/waitingChats")
         
@@ -112,7 +115,6 @@ class FirestoreService {
             }
         }
     }
-    
     
     func deleteWaitingChat(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
         waitingChatsReference.document(chat.friendID).delete { error in
@@ -163,5 +165,47 @@ class FirestoreService {
         }
     }
     
+    func moveToActive(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        getWaitingChatMessages(chat: chat) { result in
+            switch result {
+            case .success(let messages):
+                self.deleteWaitingChat(chat: chat) { result in
+                    switch result {
+                    case .success:
+                        self.createActiveChat(chat: chat, messages: messages) { result in
+                            switch result {
+                            case .success:
+                                completion(.success(Void()))
+                            case .failure(let error):
+                                completion(.failure(error))
+                            }
+                        }
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
     
+    func createActiveChat(chat: ChatModel, messages: [MessageModel], completion: @escaping (Result<Void, Error>) -> Void) {
+        let messageReference = activeChatsReference.document(chat.friendID).collection("messages")
+        activeChatsReference.document(chat.friendID).setData(chat.representation) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            for message in messages {
+                messageReference.addDocument(data: message.representation) { erorr in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(Void()))
+                }
+            }
+        }
+    }
 }
