@@ -14,25 +14,25 @@ class FirestoreService {
     
     static let shared = FirestoreService()
     
-    let db = Firestore.firestore()
+    let dataBase = Firestore.firestore()
     
-    private var usersRef: CollectionReference {
-        return db.collection("users")
+    private var usersReference: CollectionReference {
+        return dataBase.collection("users")
     }
     
     private var waitingChatsReference: CollectionReference {
-        return db.collection("users/\(currentUser.id)/waitingChats")
+        return dataBase.collection("users/\(currentUser.id)/waitingChats")
     }
     
     private var activeChatsReference: CollectionReference {
-        return db.collection("users/\(currentUser.id)/activeChats")
+        return dataBase.collection("users/\(currentUser.id)/activeChats")
     }
     
     var currentUser: UserModel!
 
     
     func getUserData(user: User, completion: @escaping (Result<UserModel, Error>) -> Void) {
-        let docRef = usersRef.document(user.uid)
+        let docRef = usersReference.document(user.uid)
         docRef.getDocument { document, error in
             if let document = document, document.exists {
                 guard let user = UserModel(document: document) else {
@@ -76,7 +76,7 @@ class FirestoreService {
             switch result {
             case .success(let avatatarURL):
                 userModel.userAvatarString = avatatarURL.absoluteString
-                self.usersRef.document(userModel.id).setData(userModel.representationDict) { error in
+                self.usersReference.document(userModel.id).setData(userModel.representationDict) { error in
                     if let error = error {
                         completion(.failure(error))
                     } else {
@@ -91,7 +91,7 @@ class FirestoreService {
     }
     
     func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        let waitingChatsReference = db.collection("users/\(receiver.id)/waitingChats")
+        let waitingChatsReference = dataBase.collection("users/\(receiver.id)/waitingChats")
         
         let messageReference = waitingChatsReference.document(currentUser.id).collection("messages")
 
@@ -199,6 +199,36 @@ class FirestoreService {
             }
             for message in messages {
                 messageReference.addDocument(data: message.representation) { erorr in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(Void()))
+                }
+            }
+        }
+    }
+    
+    func sendMessage(chat: ChatModel, message: MessageModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let friendReference = usersReference.document(chat.friendID).collection("activeChats").document(currentUser.id)
+        let friendMessageReference = friendReference.collection("messages")
+        let myMessageReference = usersReference.document(currentUser.id).collection("activeChats").document(chat.friendID).collection("message")
+        
+        let chatForFriend = ChatModel(friendName: currentUser.userName,
+                                      friendAvatarString: currentUser.userAvatarString,
+                                      lastMessageContent: message.content,
+                                      friendID: currentUser.id)
+        friendReference.setData(chatForFriend.representation) { error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            friendMessageReference.addDocument(data: message.representation) { error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                myMessageReference.addDocument(data: message.representation) { error in
                     if let error = error {
                         completion(.failure(error))
                         return

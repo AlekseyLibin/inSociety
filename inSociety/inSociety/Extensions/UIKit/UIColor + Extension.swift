@@ -35,4 +35,15 @@ extension UIColor {
         return UIColor(red: 71/255, green: 71/255, blue: 71/255, alpha: 1)
     }
     
+    
+    
+    //I USE IT!
+    static func currentUserMessage() -> UIColor {
+        return UIColor.systemGray
+    }
+    
+    static func friendMessage() -> UIColor {
+        return UIColor.systemYellow
+    }
+    
 }

@@ -13,18 +13,18 @@ class ListenerService {
     static let shared = ListenerService()
     
     private let db = Firestore.firestore()
-    private var usersRef: CollectionReference {
+    private var usersReference: CollectionReference {
         return db.collection("users")
     }
-    private var currentUserId: String? {
-        return Auth.auth().currentUser?.uid
+    private var currentUserId: String {
+        return Auth.auth().currentUser!.uid
     }
     
     
     func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allUsers = users
-        let usersListener = usersRef.addSnapshotListener { querySnapshot, error in
+        let usersListener = usersReference.addSnapshotListener { querySnapshot, error in
             guard let snapshot = querySnapshot else {
                 completion(.failure(error!))
                 return
@@ -55,7 +55,7 @@ class ListenerService {
     func waitingChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allChats = chats
-        guard let currentUserId = currentUserId else { return nil }
+//        guard let currentUserId = currentUserId else { return nil }
         let chatsReference = db.collection("users/\(currentUserId)/waitingChats")
         let chatsListener = chatsReference.addSnapshotListener { querySnapshot, error in
             guard let querySnapshot = querySnapshot else {
@@ -88,7 +88,7 @@ class ListenerService {
     func activeChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allChats = chats
-        guard let currentUserId = currentUserId else { return nil }
+//        guard let currentUserId = currentUserId else { return nil }
         let chatsReference = db.collection("users/\(currentUserId)/activeChats")
         let chatsListener = chatsReference.addSnapshotListener { querySnapshot, error in
             guard let querySnapshot = querySnapshot else {
@@ -114,7 +114,31 @@ class ListenerService {
             }
             completion(.success(allChats))
         }
-        
         return chatsListener
+    }
+    
+    func messagesObserve(chat: ChatModel, completion: @escaping(Result<MessageModel, Error>) -> Void) -> ListenerRegistration {
+        let reference = usersReference.document(currentUserId).collection("activeChats").document(chat.friendID).collection("messages")
+        let messagesListener = reference.addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else {
+                completion(.failure(error!))
+                return
+            }
+            snapshot.documentChanges.forEach { difference in
+                guard let message = MessageModel(document: difference.document) else { return }
+                switch difference.type {
+                case .added:
+                    completion(.success(message))
+                case .modified:
+                    //Do any additional actions to expand project
+                    break
+                case .removed:
+                    //Do any additional actions to expand project
+                    break
+                }
+            }
+        }
+        
+        return messagesListener
     }
 }

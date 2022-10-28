@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4318BFDB290C0D1900F8E8AB /* MessageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4318BFDA290C0D1900F8E8AB /* MessageKit */; };
+		4318BFDD290C128300F8E8AB /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4318BFDC290C128300F8E8AB /* ChatViewController.swift */; };
 		4367D0B02907F7100056C307 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0AF2907F7100056C307 /* StorageService.swift */; };
 		4367D0B22907FC970056C307 /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0B12907FC970056C307 /* UIImage + Extension.swift */; };
 		4367D0B4290849BE0056C307 /* ListenerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0B3290849BE0056C307 /* ListenerService.swift */; };
@@ -62,9 +64,11 @@
 		4397FBA929070B8400FED534 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FBA829070B8400FED534 /* UserModel.swift */; };
 		4397FBAD29070F4600FED534 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4397FBAC29070F4600FED534 /* GoogleService-Info.plist */; };
 		4397FBB02907116600FED534 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 4397FBAF2907116600FED534 /* GoogleSignIn */; };
+		43AC54BC290C1AB200EF962C /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AC54BB290C1AB200EF962C /* Sender.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4318BFDC290C128300F8E8AB /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		4367D0AF2907F7100056C307 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		4367D0B12907FC970056C307 /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		4367D0B3290849BE0056C307 /* ListenerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenerService.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 		4397FBA629070B7100FED534 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
 		4397FBA829070B8400FED534 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		4397FBAC29070F4600FED534 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		43AC54BB290C1AB200EF962C /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +131,7 @@
 				4367D0B72908552C0056C307 /* SDWebImage in Frameworks */,
 				4397FBB02907116600FED534 /* GoogleSignIn in Frameworks */,
 				4397FB3A2907031900FED534 /* FirebaseAnalytics in Frameworks */,
+				4318BFDB290C0D1900F8E8AB /* MessageKit in Frameworks */,
 				4397FB402907031900FED534 /* FirebaseStorage in Frameworks */,
 				4397FB3C2907031900FED534 /* FirebaseAuth in Frameworks */,
 				4397FB3E2907031900FED534 /* FirebaseFirestore in Frameworks */,
@@ -199,6 +205,7 @@
 				4397FB67290706AE00FED534 /* ListViewController.swift */,
 				4397FB6D2907070A00FED534 /* ProfileViewController.swift */,
 				4397FB622907066400FED534 /* ChatRequestViewController.swift */,
+				4318BFDC290C128300F8E8AB /* ChatViewController.swift */,
 				4397FB662907068800FED534 /* Headers */,
 				4397FB602907062200FED534 /* Cell */,
 			);
@@ -280,6 +287,7 @@
 				4397FBA829070B8400FED534 /* UserModel.swift */,
 				4397FBA629070B7100FED534 /* ChatModel.swift */,
 				4367D0D82909762B0056C307 /* MessageModel.swift */,
+				43AC54BB290C1AB200EF962C /* Sender.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -319,6 +327,7 @@
 				4397FB3F2907031900FED534 /* FirebaseStorage */,
 				4397FBAF2907116600FED534 /* GoogleSignIn */,
 				4367D0B62908552C0056C307 /* SDWebImage */,
+				4318BFDA290C0D1900F8E8AB /* MessageKit */,
 			);
 			productName = inSociety;
 			productReference = 4397FB21290702BC00FED534 /* inSociety.app */;
@@ -353,6 +362,7 @@
 				4397FB382907031900FED534 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4397FBAE2907116600FED534 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				4367D0B52908552B0056C307 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				4318BFD9290C0D1900F8E8AB /* XCRemoteSwiftPackageReference "MessageKit" */,
 			);
 			productRefGroup = 4397FB22290702BC00FED534 /* Products */;
 			projectDirPath = "";
@@ -386,10 +396,12 @@
 			files = (
 				4397FB7F2907085200FED534 /* UIViewController + Extension.swift in Sources */,
 				4397FB632907066400FED534 /* ChatRequestViewController.swift in Sources */,
+				4318BFDD290C128300F8E8AB /* ChatViewController.swift in Sources */,
 				4397FB6C290706D900FED534 /* PeopleViewController.swift in Sources */,
 				4397FB85290708B800FED534 /* UIStackView + Extension.swift in Sources */,
 				4367D0D92909762B0056C307 /* MessageModel.swift in Sources */,
 				4397FB572907058B00FED534 /* SignUpViewController.swift in Sources */,
+				43AC54BC290C1AB200EF962C /* Sender.swift in Sources */,
 				4367D0B02907F7100056C307 /* StorageService.swift in Sources */,
 				4397FB68290706AE00FED534 /* ListViewController.swift in Sources */,
 				4397FB77290707C500FED534 /* UnderlinedTextField.swift in Sources */,
@@ -639,6 +651,15 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4318BFD9290C0D1900F8E8AB /* XCRemoteSwiftPackageReference "MessageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MessageKit/MessageKit";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 5.0.0;
+				minimumVersion = 4.0.0;
+			};
+		};
 		4367D0B52908552B0056C307 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
@@ -668,6 +689,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4318BFDA290C0D1900F8E8AB /* MessageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4318BFD9290C0D1900F8E8AB /* XCRemoteSwiftPackageReference "MessageKit" */;
+			productName = MessageKit;
+		};
 		4367D0B62908552C0056C307 /* SDWebImage */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4367D0B52908552B0056C307 /* XCRemoteSwiftPackageReference "SDWebImage" */;

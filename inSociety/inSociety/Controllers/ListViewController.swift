@@ -55,6 +55,7 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
         
         setupCollectionView()
         setupSearchController()
@@ -207,9 +208,10 @@ extension ListViewController: UICollectionViewDelegate {
             chatRequestVC.delegate = self
             present(chatRequestVC, animated: true)
         case .activeChats:
-            print(indexPath)
+            let chatVC = ChatViewController(currentUser: currentUser, chat: chat)
+            chatVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(chatVC, animated: true)
         }
-        
     }
 }
 

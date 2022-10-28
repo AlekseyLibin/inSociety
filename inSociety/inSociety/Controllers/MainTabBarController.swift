@@ -27,8 +27,10 @@ class MainTabBarController: UITabBarController {
     }
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         let listViewController = ListViewController(currentUser: currentUser)
         let peopleViewController = PeopleViewController(currentUser: currentUser)
