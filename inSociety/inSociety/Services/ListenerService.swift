@@ -5,7 +5,7 @@
 //  Created by Aleksey Libin on 25.10.2022.
 //
 
-import Firebase
+import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 

@@ -164,8 +164,8 @@ extension ChatViewController {
 
 //MARK: - MessagesDataSource
 extension ChatViewController: MessagesDataSource {
-    var currentSender: MessageKit.SenderType {
-        return Sender(senderID: currentUser.id, senderName: currentUser.userName)
+    func currentSender() -> MessageKit.SenderType {
+        Sender(senderID: currentUser.id, senderName: currentUser.userName)
     }
     
     func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessageKit.MessagesCollectionView) -> MessageKit.MessageType {
