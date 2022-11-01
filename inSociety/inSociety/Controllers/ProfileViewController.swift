@@ -14,7 +14,7 @@ class ProfileViewController: UIViewController {
     let imageView = UIImageView(named: "Woman4", contentMode: .scaleAspectFill)
     let nameLabel = UILabel(text: "Ann-Marie Bouvet",
                             font: .systemFont(ofSize: 20, weight: .light))
-    let descriptionLabel = UILabel(text: "I like flowers, music, pankaces and you",
+    let descriptionLabel = UILabel(text: "I am Ann-Marie",
                                    font: .systemFont(ofSize: 16, weight: .light))
     let sendMessageTextField = SendMessageTextField()
     
@@ -57,24 +57,6 @@ class ProfileViewController: UIViewController {
             button.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
         }
     }
-    
-//    @objc private func sendButtonPressed() {
-//        guard
-//            let message = sendMessageTextField.text,
-//            !message.isEmpty
-//        else { return }
-//
-//        self.dismiss(animated: true) {
-//            FirestoreService.shared.createWaitingChat(message: message, receiver: self.user) { result in
-//                switch result {
-//                case .success:
-//                    UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(self.user.userName)")
-//                case .failure(let error):
-//                    UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription)
-//                }
-//            }
-//        }
-//    }
     
      @objc private func sendButtonPressed() {
          guard

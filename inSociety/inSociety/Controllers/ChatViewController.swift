@@ -36,7 +36,7 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         configureMessageInputBar()
         messagesCollectionView.backgroundColor = .mainWhite()
         
@@ -77,6 +77,7 @@ class ChatViewController: MessagesViewController {
             }
         }
     }
+    
 }
 
 
@@ -165,6 +166,9 @@ extension ChatViewController {
 
 //MARK: - MessagesDataSource
 extension ChatViewController: MessagesDataSource {
+    
+
+    
     func currentSender() -> MessageKit.SenderType {
         Sender(senderID: currentUser.id, senderName: currentUser.userName)
     }
@@ -210,20 +214,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 }
 
 
-
-extension UIScrollView {
-    var isAtBottom: Bool {
-        return contentOffset.y >= verticalOffsetForBottom
-    }
-
-    var verticalOffsetForBottom: CGFloat {
-        let scrollViewHeight = bounds.height
-        let scrollContentSizeHeight = contentSize.height
-        let bottomInset = contentInset.bottom
-        let scrollViewBottomOffset = scrollContentSizeHeight + bottomInset - scrollViewHeight
-        return scrollViewBottomOffset
-    }
-}
 
 
 

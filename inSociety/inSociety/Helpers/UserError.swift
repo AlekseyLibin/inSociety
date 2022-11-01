@@ -13,6 +13,7 @@ enum UserError {
     case noPhoto
     case cannotGetUserInfo
     case cannotUnwrapFBDataToUserModel
+    case chatAlreadyExists
 }
 
 extension UserError: LocalizedError {
@@ -27,6 +28,8 @@ extension UserError: LocalizedError {
             return NSLocalizedString("Could not get user info", comment: "")
         case .cannotUnwrapFBDataToUserModel:
             return NSLocalizedString("Could not unwrap data from Firebase into UserModel. Maybe not all of the fields are filled", comment: "")
+        case .chatAlreadyExists:
+            return NSLocalizedString("You already have a chat with this this user", comment: "")
         }
     }
 }

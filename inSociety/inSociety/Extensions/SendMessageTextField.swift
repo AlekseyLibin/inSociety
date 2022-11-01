@@ -12,18 +12,12 @@ class SendMessageTextField: UITextField {
         super.init(frame: frame)
         
         backgroundColor = .white
-        placeholder = "Write something here..."
+        placeholder = "Aa"
         font = UIFont.systemFont(ofSize: 14)
         borderStyle = .none
         clearButtonMode = .whileEditing
         layer.cornerRadius = 18
         layer.masksToBounds = true
-        
-        let emojiImageView = UIImageView(named: "Emoji", contentMode: .scaleAspectFill)
-        emojiImageView.setupColor(.systemYellow)
-        leftView = emojiImageView
-        leftView?.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-        leftViewMode = .always
         
         let sendButton = UIButton(type: .system)
         sendButton.setImage(UIImage(named: "Send"), for: .normal)
@@ -33,27 +27,15 @@ class SendMessageTextField: UITextField {
     }
     
     override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 50, dy: 0)
+        return bounds.insetBy(dx: 30, dy: 0)
     }
     
     override func placeholderRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 50, dy: 0)
+        return bounds.insetBy(dx: 30, dy: 0)
     }
     
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return bounds.insetBy(dx: 50, dy: 0)
-    }
-    
-    override func leftViewRect(forBounds bounds: CGRect) -> CGRect {
-        var rect = super.leftViewRect(forBounds: bounds)
-        rect.origin.x += 15
-        return rect
-    }
-    
-    override func rightViewRect(forBounds bounds: CGRect) -> CGRect {
-        var rect = super.rightViewRect(forBounds: bounds)
-        rect.origin.x += -15
-        return rect
+        return bounds.insetBy(dx: 30, dy: 0)
     }
     
     

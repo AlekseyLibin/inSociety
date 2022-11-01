@@ -58,6 +58,7 @@
 		4397FBA929070B8400FED534 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FBA829070B8400FED534 /* UserModel.swift */; };
 		4397FBAD29070F4600FED534 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4397FBAC29070F4600FED534 /* GoogleService-Info.plist */; };
 		43AC54BC290C1AB200EF962C /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AC54BB290C1AB200EF962C /* Sender.swift */; };
+		43C4268729119B8B00205F5D /* UIScrollView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4268629119B8B00205F5D /* UIScrollView + Extension.swift */; };
 		EB997C75320CA2C7F9098481 /* Pods_inSociety.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF0D5792D26224B219A4702F /* Pods_inSociety.framework */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +117,7 @@
 		4397FBA829070B8400FED534 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		4397FBAC29070F4600FED534 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43AC54BB290C1AB200EF962C /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
+		43C4268629119B8B00205F5D /* UIScrollView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView + Extension.swift"; sourceTree = "<group>"; };
 		49AD0AD5EE98421D6AAE29DE /* Pods-inSociety.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inSociety.release.xcconfig"; path = "Target Support Files/Pods-inSociety/Pods-inSociety.release.xcconfig"; sourceTree = "<group>"; };
 		EF0D5792D26224B219A4702F /* Pods_inSociety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_inSociety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -255,6 +257,7 @@
 				4397FB7C2907083000FED534 /* UIButton + Extension.swift */,
 				4397FB802907087400FED534 /* UIImageView + Extension.swift */,
 				4367D0B12907FC970056C307 /* UIImage + Extension.swift */,
+				43C4268629119B8B00205F5D /* UIScrollView + Extension.swift */,
 				4397FB822907089E00FED534 /* UISegmentedControl + Extension.swift */,
 				4397FB84290708B800FED534 /* UIStackView + Extension.swift */,
 			);
@@ -451,6 +454,7 @@
 				4397FB7B2907080B00FED534 /* UILabel + Extension.swift in Sources */,
 				4397FBA729070B7100FED534 /* ChatModel.swift in Sources */,
 				4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */,
+				43C4268729119B8B00205F5D /* UIScrollView + Extension.swift in Sources */,
 				4397FB4D290704F600FED534 /* AppDelegate.swift in Sources */,
 				4397FB812907087400FED534 /* UIImageView + Extension.swift in Sources */,
 				4397FB8B2907093100FED534 /* UIFont + Extension.swift in Sources */,

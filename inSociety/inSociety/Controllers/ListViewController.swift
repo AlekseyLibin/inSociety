@@ -38,7 +38,7 @@ class ListViewController: UIViewController {
     init(currentUser: UserModel) {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
-        title = currentUser.userName
+        title = "Chats"
     }
     
     deinit {
@@ -53,12 +53,12 @@ class ListViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        lastMessageChatCell()
+        updateLastMessage()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         
         setupCollectionView()
         setupSearchController()
@@ -73,12 +73,6 @@ class ListViewController: UIViewController {
                     chatRequestVC.delegate = self
                     self.present(chatRequestVC, animated: true)
                 }
-//                if
-//                    self.waitingChats != [], self.waitingChats.count <= updatedWaitingChats.count {
-//                    let chatRequestVC = ChatRequestViewController(chat: updatedWaitingChats.last!)
-//                    chatRequestVC.delegate = self
-//                    self.present(chatRequestVC, animated: true)
-//                }
                 
                 self.waitingChats = updatedWaitingChats
                 self.reloadData(with: nil)
@@ -319,14 +313,13 @@ extension ListViewController {
         return section
     }
     
-    func lastMessageChatCell() {
+    func updateLastMessage() {
         for index in 0 ..< activeChats.count {
             FirestoreService.shared.getLastMessage(chat: activeChats[index]) { result in
                 switch result {
                 case .success(let message):
                     guard let cell = self.collectionView.cellForItem(at: [1, index]) as? ActiveChatCell else { return }
                     cell.lastMessage.text = message.content
-                    print(message.content)
                 case .failure(let error):
                     self.showAlert(with: "Error", and: error.localizedDescription)
                 }

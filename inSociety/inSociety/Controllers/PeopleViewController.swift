@@ -130,9 +130,16 @@ class PeopleViewController: UIViewController {
 //MARK: - UICollectionViewDelegate
 extension PeopleViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let user = self.dataSource.itemIdentifier(for: indexPath) else { return }
-        let profileVC = ProfileViewController(user: user)
-        present(profileVC, animated: true)
+        guard let selectedUser = self.dataSource.itemIdentifier(for: indexPath) else { return }
+        FirestoreService.shared.checkNoChats(with: selectedUser) { result in
+            switch result {
+            case .success:
+                let profileVC = ProfileViewController(user: selectedUser)
+                self.present(profileVC, animated: true)
+            case .failure(let error):
+                self.showAlert(with: error.localizedDescription, and: "")
+            }
+        }
     }
 }
 

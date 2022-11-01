@@ -64,7 +64,7 @@ class ChatRequestViewController: UIViewController {
         containerView.layer.cornerRadius = 30
         containerView.backgroundColor = .mainWhite()
         
-        descriptionLabel.text = "\(nameLabel.text ?? "") wants to chat with you"
+        descriptionLabel.text = "\(nameLabel.text ?? "Somebody") wants to chat with you"
         descriptionLabel.numberOfLines = 0
         
         acceptButton.setTitle("ACCEPT", for: .normal)
