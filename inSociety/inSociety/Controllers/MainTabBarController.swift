@@ -32,23 +32,29 @@ class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         
         
-        let listViewController = ListViewController(currentUser: currentUser)
         let peopleViewController = PeopleViewController(currentUser: currentUser)
+        let listViewController = ListViewController(currentUser: currentUser)
+        let profileViewController = ProfileViewController(currentUser: currentUser)
         
         tabBar.tintColor = .black
 //        tabBar.backgroundColor = .black
         
         guard
             let peopleImage = UIImage(named: "PeopleTabBarLogo"),
-            let chatImage = UIImage(named: "ChatTabBarLogo")
+            let chatImage = UIImage(named: "ChatTabBarLogo"),
+            let profileImage = UIImage(named: "ProfileTabBarLogo")
         else { return }
         
         viewControllers = [
+            
             generateViewController(rootViewControler: peopleViewController,
                                    title: "People", image: peopleImage),
             
             generateViewController(rootViewControler: listViewController,
-                                   title: "Conversations", image: chatImage)
+                                   title: "Chats", image: chatImage),
+            
+            generateViewController(rootViewControler: profileViewController,
+                                   title: "Profile", image: profileImage)
         ]
     }
     

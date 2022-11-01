@@ -52,7 +52,6 @@ class PeopleViewController: UIViewController {
         setupSearchController()
         setupCollectionView()
         createDataSource()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .plain, target: self, action: #selector(logOutButton))
         
         usersListener = ListenerService.shared.usersObserve(users: users, completion: { result in
             switch result {
@@ -67,21 +66,6 @@ class PeopleViewController: UIViewController {
         view.backgroundColor = .mainWhite()
     }
     
-    @objc private func logOutButton() {
-        let ac = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        ac.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in
-            do {
-                try Auth.auth().signOut()
-                UIApplication.shared.keyWindow?.rootViewController = AuthViewController()
-            } catch {
-                self.showAlert(with: "Error", and: error.localizedDescription)
-            }
-            
-        }))
-        present(ac, animated: true)
-    }
-    
     private func setupSearchController() {
 //        navigationController?.navigationBar.barTintColor = .mainWhite()
         
@@ -92,6 +76,8 @@ class PeopleViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.delegate = self
     }
+    
+    
     
     private func setupCollectionView() {
         
@@ -120,9 +106,6 @@ class PeopleViewController: UIViewController {
         snapshot.appendItems(filteredUsers, toSection: .users)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
-
-    
-    
 }
 
 
@@ -134,8 +117,8 @@ extension PeopleViewController: UICollectionViewDelegate {
         FirestoreService.shared.checkNoChats(with: selectedUser) { result in
             switch result {
             case .success:
-                let profileVC = ProfileViewController(user: selectedUser)
-                self.present(profileVC, animated: true)
+                let sendRequestVC = SendReqestViewController(user: selectedUser)
+                self.present(sendRequestVC, animated: true)
             case .failure(let error):
                 self.showAlert(with: error.localizedDescription, and: "")
             }
@@ -256,7 +239,7 @@ extension PeopleViewController {
 //MARK: - SwiftUI
 import SwiftUI
 
-struct PeopleVCProvider: PreviewProvider {
+struct SendRequestVCProvider: PreviewProvider {
     static var previews: some View {
         ContainerView().edgesIgnoringSafeArea(.all)
     }

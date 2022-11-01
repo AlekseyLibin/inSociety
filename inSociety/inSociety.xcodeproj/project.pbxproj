@@ -30,7 +30,7 @@
 		4397FB68290706AE00FED534 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB67290706AE00FED534 /* ListViewController.swift */; };
 		4397FB6A290706C400FED534 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB69290706C400FED534 /* MainTabBarController.swift */; };
 		4397FB6C290706D900FED534 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6B290706D900FED534 /* PeopleViewController.swift */; };
-		4397FB6E2907070A00FED534 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6D2907070A00FED534 /* ProfileViewController.swift */; };
+		4397FB6E2907070A00FED534 /* SendReqestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6D2907070A00FED534 /* SendReqestViewController.swift */; };
 		4397FB702907077500FED534 /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6F2907077500FED534 /* AddPhotoView.swift */; };
 		4397FB732907079900FED534 /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB722907079900FED534 /* Bundle-Decodable.swift */; };
 		4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB74290707AF00FED534 /* LabelButtonView.swift */; };
@@ -59,6 +59,7 @@
 		4397FBAD29070F4600FED534 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4397FBAC29070F4600FED534 /* GoogleService-Info.plist */; };
 		43AC54BC290C1AB200EF962C /* Sender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AC54BB290C1AB200EF962C /* Sender.swift */; };
 		43C4268729119B8B00205F5D /* UIScrollView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C4268629119B8B00205F5D /* UIScrollView + Extension.swift */; };
+		43C426892911A70400205F5D /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43C426882911A70400205F5D /* ProfileViewController.swift */; };
 		EB997C75320CA2C7F9098481 /* Pods_inSociety.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF0D5792D26224B219A4702F /* Pods_inSociety.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,7 +90,7 @@
 		4397FB67290706AE00FED534 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		4397FB69290706C400FED534 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		4397FB6B290706D900FED534 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
-		4397FB6D2907070A00FED534 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		4397FB6D2907070A00FED534 /* SendReqestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReqestViewController.swift; sourceTree = "<group>"; };
 		4397FB6F2907077500FED534 /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
 		4397FB722907079900FED534 /* Bundle-Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
 		4397FB74290707AF00FED534 /* LabelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButtonView.swift; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 		4397FBAC29070F4600FED534 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43AC54BB290C1AB200EF962C /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
 		43C4268629119B8B00205F5D /* UIScrollView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScrollView + Extension.swift"; sourceTree = "<group>"; };
+		43C426882911A70400205F5D /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		49AD0AD5EE98421D6AAE29DE /* Pods-inSociety.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inSociety.release.xcconfig"; path = "Target Support Files/Pods-inSociety/Pods-inSociety.release.xcconfig"; sourceTree = "<group>"; };
 		EF0D5792D26224B219A4702F /* Pods_inSociety.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_inSociety.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -215,7 +217,8 @@
 				4397FB69290706C400FED534 /* MainTabBarController.swift */,
 				4397FB6B290706D900FED534 /* PeopleViewController.swift */,
 				4397FB67290706AE00FED534 /* ListViewController.swift */,
-				4397FB6D2907070A00FED534 /* ProfileViewController.swift */,
+				43C426882911A70400205F5D /* ProfileViewController.swift */,
+				4397FB6D2907070A00FED534 /* SendReqestViewController.swift */,
 				4397FB622907066400FED534 /* ChatRequestViewController.swift */,
 				4318BFDC290C128300F8E8AB /* ChatViewController.swift */,
 				4397FB662907068800FED534 /* Headers */,
@@ -445,6 +448,7 @@
 				4367D0D92909762B0056C307 /* MessageModel.swift in Sources */,
 				4397FB572907058B00FED534 /* SignUpViewController.swift in Sources */,
 				43AC54BC290C1AB200EF962C /* Sender.swift in Sources */,
+				43C426892911A70400205F5D /* ProfileViewController.swift in Sources */,
 				4367D0B02907F7100056C307 /* StorageService.swift in Sources */,
 				4397FB68290706AE00FED534 /* ListViewController.swift in Sources */,
 				4397FB77290707C500FED534 /* UnderlinedTextField.swift in Sources */,
@@ -478,7 +482,7 @@
 				4397FB832907089E00FED534 /* UISegmentedControl + Extension.swift in Sources */,
 				4397FB652907068200FED534 /* SectionHeader.swift in Sources */,
 				4397FB7D2907083000FED534 /* UIButton + Extension.swift in Sources */,
-				4397FB6E2907070A00FED534 /* ProfileViewController.swift in Sources */,
+				4397FB6E2907070A00FED534 /* SendReqestViewController.swift in Sources */,
 				4397FBA329070B4500FED534 /* AuthService.swift in Sources */,
 				4397FB552907056F00FED534 /* SetupProfileViewController.swift in Sources */,
 				4397FB4F2907051600FED534 /* SceneDelegate.swift in Sources */,

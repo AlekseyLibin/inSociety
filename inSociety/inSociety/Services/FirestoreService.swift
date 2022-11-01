@@ -171,6 +171,32 @@ class FirestoreService {
         }
     }
     
+    func getNumberOfActiveChats(for user: UserModel, completion: @escaping (Result<Int, Error>) -> Void) {
+        let activeChatsReference = dataBase.collection("users/\(user.id)/activeChats")
+        let activeChats = activeChatsReference
+        activeChats.getDocuments { snapshot, error in
+            guard let snapshot = snapshot else {
+                completion(.failure(error!))
+                return
+            }
+            let count = snapshot.documents.count
+            completion(.success(count))
+        }
+    }
+    
+    func getNumberOfWaitingChats(for user: UserModel, completion: @escaping(Result<Int, Error>) -> Void) {
+        let waitingChatsReference = dataBase.collection("users/\(user.id)/waitingChats")
+        waitingChatsReference.getDocuments { snapshot, error in
+            guard let snapshot = snapshot else {
+                completion(.failure(error!))
+                return
+            }
+            
+            let count = snapshot.documents.count
+            completion(.success(count))
+        }
+    }
+    
     func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void) {
         let messagesReference = activeChatsReference.document(chat.friendID).collection("messages")
         var messages = [MessageModel]()
