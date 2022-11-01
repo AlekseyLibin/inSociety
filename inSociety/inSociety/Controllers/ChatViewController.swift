@@ -16,7 +16,7 @@ class ChatViewController: MessagesViewController {
     private var messageListener: ListenerRegistration?
     
     private let currentUser: UserModel
-    private let chat: ChatModel
+    private var chat: ChatModel
     
     init(currentUser: UserModel, chat: ChatModel) {
         self.currentUser = currentUser
@@ -36,14 +36,14 @@ class ChatViewController: MessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         configureMessageInputBar()
         messagesCollectionView.backgroundColor = .mainWhite()
         
-//        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
-//            layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
-//            layout.textMessageSizeCalculator.incomingAvatarSize = .zero
-//        }
+        if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
+            layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
+            layout.textMessageSizeCalculator.incomingAvatarSize = .zero
+        }
         
         messageInputBar.delegate = self
         messagesCollectionView.messagesDataSource = self
@@ -53,6 +53,7 @@ class ChatViewController: MessagesViewController {
         messageListener = ListenerService.shared.messagesObserve(chat: chat, completion: { result in
             switch result {
             case .success(let message):
+                self.chat.lastMessageContent = message.content
                 self.insertNewMessage(message: message)
             case .failure(let error):
                 self.showAlert(with: "Error", and: error.localizedDescription)
@@ -196,7 +197,6 @@ extension ChatViewController: MessagesDataSource {
 extension ChatViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MessageModel(user: currentUser, content: text)
-        insertNewMessage(message: message)
         FirestoreService.shared.sendMessage(chat: chat, message: message) { result in
             switch result {
             case .success:

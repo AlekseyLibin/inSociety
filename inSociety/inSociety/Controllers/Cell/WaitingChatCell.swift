@@ -15,7 +15,7 @@ class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
         friendImageView.sd_setImage(with: URL(string: chat.friendAvatarString))
     }
     
-    static var reuseId: String = "WaitingChatCell"
+    static var reuseID: String = "WaitingChatCell"
     
     let friendImageView = UIImageView()
     

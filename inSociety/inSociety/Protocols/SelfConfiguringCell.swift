@@ -8,6 +8,6 @@
 import Foundation
 
 protocol SelfConfiguringCell {
-    static var reuseId: String { get }
+    static var reuseID: String { get }
     func configure<HCell: Hashable>(with value: HCell)
 }

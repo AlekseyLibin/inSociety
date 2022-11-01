@@ -9,7 +9,7 @@ import UIKit
 
 class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     
-    static var reuseId = "ActiveChatCell"
+    static var reuseID = "ActiveChatCell"
     
     //HCell - Hashable cell
     func configure<HCell>(with value: HCell) where HCell : Hashable {
@@ -57,12 +57,6 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     }
 }
 
-extension ActiveChatCell {
-    func setupGradient() {
-        
-        
-    }
-}
 
 
 

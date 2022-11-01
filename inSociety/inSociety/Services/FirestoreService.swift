@@ -143,6 +143,25 @@ class FirestoreService {
         }
     }
     
+    func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void) {
+        let messagesReference = activeChatsReference.document(chat.friendID).collection("messages")
+        var messages = [MessageModel]()
+        messagesReference.getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            for document in querySnapshot!.documents {
+                guard let message = MessageModel(document: document) else { return }
+                messages.append(message)
+            }
+            messages.sort()
+            guard let lastMessage = messages.last else { return }
+            completion(.success(lastMessage))
+        }
+    }
+    
     func deleteMessages(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
         getWaitingChatMessages(chat: chat) { result in
@@ -212,7 +231,7 @@ class FirestoreService {
     func sendMessage(chat: ChatModel, message: MessageModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let friendReference = usersReference.document(chat.friendID).collection("activeChats").document(currentUser.id)
         let friendMessageReference = friendReference.collection("messages")
-        let myMessageReference = usersReference.document(currentUser.id).collection("activeChats").document(chat.friendID).collection("message")
+        let myMessageReference = usersReference.document(currentUser.id).collection("activeChats").document(chat.friendID).collection("messages")
         
         let chatForFriend = ChatModel(friendName: currentUser.userName,
                                       friendAvatarString: currentUser.userAvatarString,

@@ -12,9 +12,9 @@ import FirebaseFirestore
 class ListenerService {
     static let shared = ListenerService()
     
-    private let db = Firestore.firestore()
+    private let dataBase = Firestore.firestore()
     private var usersReference: CollectionReference {
-        return db.collection("users")
+        return dataBase.collection("users")
     }
     private var currentUserId: String {
         return Auth.auth().currentUser!.uid
@@ -56,7 +56,7 @@ class ListenerService {
         
         var allChats = chats
 //        guard let currentUserId = currentUserId else { return nil }
-        let chatsReference = db.collection("users/\(currentUserId)/waitingChats")
+        let chatsReference = dataBase.collection("users/\(currentUserId)/waitingChats")
         let chatsListener = chatsReference.addSnapshotListener { querySnapshot, error in
             guard let querySnapshot = querySnapshot else {
                 completion(.failure(error!))
@@ -88,8 +88,7 @@ class ListenerService {
     func activeChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allChats = chats
-//        guard let currentUserId = currentUserId else { return nil }
-        let chatsReference = db.collection("users/\(currentUserId)/activeChats")
+        let chatsReference = dataBase.collection("users/\(currentUserId)/activeChats")
         let chatsListener = chatsReference.addSnapshotListener { querySnapshot, error in
             guard let querySnapshot = querySnapshot else {
                 completion(.failure(error!))
@@ -116,6 +115,8 @@ class ListenerService {
         }
         return chatsListener
     }
+    
+    
     
     func messagesObserve(chat: ChatModel, completion: @escaping(Result<MessageModel, Error>) -> Void) -> ListenerRegistration {
         let reference = usersReference.document(currentUserId).collection("activeChats").document(chat.friendID).collection("messages")

@@ -14,7 +14,7 @@ class UserCell: UICollectionViewCell, SelfConfiguringCell {
     let userNameLabel = UILabel(text: "Aleksey Libin", font: .laoSangamMN20())
     let containerView = UIView()
     
-    static var reuseId: String = "UserCell"
+    static var reuseID: String = "UserCell"
     
     override func prepareForReuse() {
         userImageView.image = nil

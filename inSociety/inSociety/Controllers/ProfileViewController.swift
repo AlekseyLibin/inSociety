@@ -58,23 +58,56 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    @objc private func sendButtonPressed() {
-        guard
-            let message = sendMessageTextField.text,
-            !message.isEmpty
-        else { return }
-        
-        self.dismiss(animated: true) {
-            FirestoreService.shared.createWaitingChat(message: message, receiver: self.user) { result in
-                switch result {
-                case .success:
-                    UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(self.user.userName)")
-                case .failure(let error):
-                    UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription)
-                }
-            }
-        }
-    }
+//    @objc private func sendButtonPressed() {
+//        guard
+//            let message = sendMessageTextField.text,
+//            !message.isEmpty
+//        else { return }
+//
+//        self.dismiss(animated: true) {
+//            FirestoreService.shared.createWaitingChat(message: message, receiver: self.user) { result in
+//                switch result {
+//                case .success:
+//                    UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(self.user.userName)")
+//                case .failure(let error):
+//                    UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription)
+//                }
+//            }
+//        }
+//    }
+    
+     @objc private func sendButtonPressed() {
+         guard
+             let message = sendMessageTextField.text,
+             !message.isEmpty
+         else { return }
+         
+         self.dismiss(animated: true) {
+             FirestoreService.shared.createWaitingChat(message: message, receiver: self.user) { result in
+                 switch result {
+                 case .success:
+                     guard let currentUser = FirestoreService.shared.currentUser else { return }
+                     let chat = ChatModel(friendName: self.user.userName,
+                                          friendAvatarString: self.user.userAvatarString,
+                                          lastMessageContent: message,
+                                          friendID: self.user.id)
+                     let message = MessageModel(user: currentUser, content: message)
+                     FirestoreService.shared.createActiveChat(chat: chat, messages: [message]) { result in
+                         switch result {
+                         case .success:
+                             UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(self.user.userName)")
+                         case .failure(let error):
+                             UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription)
+                         }
+                     }
+                 case .failure(let error):
+                     UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription)
+                 }
+             }
+         }
+     }
+
+
 }
 
 

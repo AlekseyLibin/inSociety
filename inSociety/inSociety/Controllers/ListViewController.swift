@@ -14,9 +14,7 @@ class ListViewController: UIViewController {
         case waitingChats, activeChats
         
         func description() -> String {
-            
             switch self {
-                
             case .waitingChats:
                 return "Waiting chats"
             case .activeChats:
@@ -32,11 +30,10 @@ class ListViewController: UIViewController {
     
     private var waitingChatsListener: ListenerRegistration?
     private var activeChatsListener: ListenerRegistration?
-
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
-    
+        
     
     init(currentUser: UserModel) {
         self.currentUser = currentUser
@@ -53,9 +50,15 @@ class ListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        lastMessageChatCell()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         
         setupCollectionView()
         setupSearchController()
@@ -83,6 +86,7 @@ class ListViewController: UIViewController {
                 self.showAlert(with: "Error", and: error.localizedDescription)
             }
         })
+        
         activeChatsListener = ListenerService.shared.activeChatsObserve(chats: activeChats, completion: { difference in
             switch difference {
             case .success(let updatedActiveChats):
@@ -92,6 +96,7 @@ class ListViewController: UIViewController {
                 self.showAlert(with: "Error", and: error.localizedDescription)
             }
         })
+        
     }
     
     private func setupSearchController() {
@@ -107,7 +112,6 @@ class ListViewController: UIViewController {
     }
     
     private func setupCollectionView() {
-        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.backgroundColor = .mainWhite()
@@ -117,15 +121,14 @@ class ListViewController: UIViewController {
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
         
         
-        collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseId)
-        collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseId)
+        collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseID)
+        collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseID)
         
         collectionView.delegate = self
         
     }
     
     private func reloadData(with searchText: String?) {
-        
         let filteredActiveChats = activeChats.filter { (chat) -> Bool in
             chat.contains(filter: searchText)
         }
@@ -171,7 +174,8 @@ extension ListViewController {
             
             guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
-            else { fatalError("Cannot create neq section header")}
+            else { fatalError("Cannot create neq section header") }
+            
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
             sectionHeader.configure(text: section.description(),
                                     font: .laoSangamMN20(),
@@ -313,6 +317,21 @@ extension ListViewController {
         section.boundarySupplementaryItems = [sectionHeader]
         
         return section
+    }
+    
+    func lastMessageChatCell() {
+        for index in 0 ..< activeChats.count {
+            FirestoreService.shared.getLastMessage(chat: activeChats[index]) { result in
+                switch result {
+                case .success(let message):
+                    guard let cell = self.collectionView.cellForItem(at: [1, index]) as? ActiveChatCell else { return }
+                    cell.lastMessage.text = message.content
+                    print(message.content)
+                case .failure(let error):
+                    self.showAlert(with: "Error", and: error.localizedDescription)
+                }
+            }
+        }
     }
     
     private func  createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
