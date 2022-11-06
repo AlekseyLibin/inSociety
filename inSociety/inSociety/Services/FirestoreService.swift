@@ -32,8 +32,8 @@ class FirestoreService {
 
     
     func getUserData(user: User, completion: @escaping (Result<UserModel, Error>) -> Void) {
-        let docRef = usersReference.document(user.uid)
-        docRef.getDocument { document, error in
+        let documentReference = usersReference.document(user.uid)
+        documentReference.getDocument { document, error in
             if let document = document, document.exists {
                 guard let user = UserModel(document: document) else {
                     completion(.failure(UserError.cannotUnwrapFBDataToUserModel))

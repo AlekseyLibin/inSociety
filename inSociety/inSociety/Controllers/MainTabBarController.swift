@@ -46,15 +46,15 @@ class MainTabBarController: UITabBarController {
         else { return }
         
         viewControllers = [
+            generateViewController(rootViewControler: profileViewController,
+                                   title: "Profile", image: profileImage),
             
             generateViewController(rootViewControler: peopleViewController,
                                    title: "People", image: peopleImage),
             
             generateViewController(rootViewControler: listViewController,
-                                   title: "Chats", image: chatImage),
+                                   title: "Chats", image: chatImage)
             
-            generateViewController(rootViewControler: profileViewController,
-                                   title: "Profile", image: profileImage)
         ]
     }
     

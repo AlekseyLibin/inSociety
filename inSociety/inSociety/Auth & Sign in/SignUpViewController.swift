@@ -11,6 +11,8 @@ class SignUpViewController: UIViewController {
     
     weak var delegate: AuthNavigationDelegate?
     
+    let scrollView = UIScrollView()
+    
     let greetingLabel = UILabel(text: "Pleased to see you!", font: .galvji30())
     let emailLabel = UILabel(text: "Email")
     let passwordLabel = UILabel(text: "Password")
@@ -29,13 +31,24 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
         setUpViews()
         
         signUpButon.addTarget(self, action: #selector(signUpButonPressed), for: .touchUpInside)
         loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        scrollView.contentSize = view.frame.size
+    }
+    
+}
+
+
+
+//MARK: - Buttons realization
+extension SignUpViewController {
     @objc private func signUpButonPressed() {
         AuthService.shared.register(email: emailextField.text,
                                     password: passwordTextField.text,
@@ -66,6 +79,11 @@ extension SignUpViewController {
     
     private func setUpViews() {
         
+        view.backgroundColor = .mainWhite()
+        
+        scrollView.hideKeyboardWhenTappedOrSwiped()
+        scrollView.addKeyboardObservers()
+        scrollView.showsVerticalScrollIndicator = false
         
         emailextField.autocapitalizationType = .none
         passwordTextField.autocapitalizationType = .none
@@ -88,24 +106,32 @@ extension SignUpViewController {
         let bottomStackView = UIStackView(arrangedSubviews: [alreadyWithUsLabel, loginButton],
                                           axis: .horizontal, spacing: 0)
         
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         greetingLabel.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         bottomStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(greetingLabel)
-        view.addSubview(stackView)
-        view.addSubview(bottomStackView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(greetingLabel)
+        scrollView.addSubview(stackView)
+        scrollView.addSubview(bottomStackView)
         
         NSLayoutConstraint.activate([
-            greetingLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            greetingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            greetingLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 100),
+            greetingLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
             stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 100),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
             
             bottomStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 80),
-            bottomStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            bottomStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
             loginButton.widthAnchor.constraint(equalToConstant: 100)
         ])

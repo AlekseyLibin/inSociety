@@ -64,19 +64,27 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController {
     func setupViews() {
         
+        view.backgroundColor = .mainDark()
+        
+        avatarView.backgroundColor = .white
         avatarView.sd_setImage(with: URL(string: currentUser.userAvatarString))
         avatarView.contentMode = .scaleToFill
 
         fullNameLabel.text = currentUser.userName
-        fullNameLabel.backgroundColor = .green
+        fullNameLabel.font = .galvji30()
+        fullNameLabel.textColor = .mainYellow()
         fullNameLabel.textAlignment = .center
         
         descriptionLabel.text = currentUser.description
-        descriptionLabel.backgroundColor = .green
+        descriptionLabel.numberOfLines = 3
+        descriptionLabel.font = .galvji20()
+        descriptionLabel.textColor = .mainYellow()
         
+        activeChatsNumberLabel.font = .galvji25()
+        activeChatsNumberLabel.textColor = .mainYellow()
         
-        activeChatsNumberLabel.backgroundColor = .green
-        waitingChatsNumberLabel.backgroundColor = .green
+        waitingChatsNumberLabel.font = .galvji25()
+        waitingChatsNumberLabel.textColor = .mainYellow()
 
         logOutButton.backgroundColor = .systemGray
         logOutButton.setTitle("Log out", for: .normal)
@@ -110,15 +118,15 @@ extension ProfileViewController {
             descriptionLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            activeChatsNumberLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 50),
-            activeChatsNumberLabel.widthAnchor.constraint(equalToConstant: 200),
+            activeChatsNumberLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 120),
+            activeChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
             activeChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             
             waitingChatsNumberLabel.topAnchor.constraint(equalTo: activeChatsNumberLabel.bottomAnchor, constant: 20),
-            waitingChatsNumberLabel.widthAnchor.constraint(equalToConstant: 200),
+            waitingChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
             waitingChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
             
-            logOutButton.topAnchor.constraint(equalTo: waitingChatsNumberLabel.bottomAnchor, constant: 100),
+            logOutButton.topAnchor.constraint(equalTo: waitingChatsNumberLabel.bottomAnchor, constant: 70),
             logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logOutButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             logOutButton.heightAnchor.constraint(equalToConstant: 60)
@@ -153,23 +161,23 @@ extension ProfileViewController {
 
 
 
-////MARK: - SwiftUI
-//import SwiftUI
-//
-//struct ProfileVCProvider: PreviewProvider {
-//    static var previews: some View {
-//        ContainerView().edgesIgnoringSafeArea(.all)
-//    }
-//
-//    struct ContainerView: UIViewControllerRepresentable {
-//        let mainTabBarController = MainTabBarController()
-//
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            return mainTabBarController
-//        }
-//
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//
-//        }
-//    }
-//}
+//MARK: - SwiftUI
+import SwiftUI
+
+struct ProfileVCProvider: PreviewProvider {
+    static var previews: some View {
+        ContainerView().edgesIgnoringSafeArea(.all)
+    }
+
+    struct ContainerView: UIViewControllerRepresentable {
+        let mainTabBarController = MainTabBarController()
+
+        func makeUIViewController(context: Context) -> some UIViewController {
+            return mainTabBarController
+        }
+
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+
+        }
+    }
+}

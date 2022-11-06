@@ -46,4 +46,15 @@ extension UIColor {
         return UIColor.systemYellow
     }
     
+    //General
+    
+    
+    static func mainDark() -> UIColor {
+        return UIColor(red: 26/255, green: 19/255, blue: 63/255, alpha: 1)
+    }
+    
+    static func mainYellow() -> UIColor {
+        return UIColor(red: 239/255, green: 223/255, blue: 37/255, alpha: 1)
+    }
+    
 }

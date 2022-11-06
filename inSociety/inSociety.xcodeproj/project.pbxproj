@@ -14,6 +14,7 @@
 		4367D0D92909762B0056C307 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0D82909762B0056C307 /* MessageModel.swift */; };
 		4367D0DB29097E2C0056C307 /* UIApplication + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0DA29097E2C0056C307 /* UIApplication + Extension.swift */; };
 		4367D0DD2909BA3B0056C307 /* WaitingChatsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */; };
+		4396F66D2914518F00BB988F /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396F66C2914518F00BB988F /* UIView + Extension.swift */; };
 		4397FB2E290702BE00FED534 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2D290702BE00FED534 /* Assets.xcassets */; };
 		4397FB31290702BE00FED534 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2F290702BE00FED534 /* LaunchScreen.storyboard */; };
 		4397FB4D290704F600FED534 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB4C290704F600FED534 /* AppDelegate.swift */; };
@@ -30,7 +31,7 @@
 		4397FB68290706AE00FED534 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB67290706AE00FED534 /* ListViewController.swift */; };
 		4397FB6A290706C400FED534 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB69290706C400FED534 /* MainTabBarController.swift */; };
 		4397FB6C290706D900FED534 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6B290706D900FED534 /* PeopleViewController.swift */; };
-		4397FB6E2907070A00FED534 /* SendReqestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6D2907070A00FED534 /* SendReqestViewController.swift */; };
+		4397FB6E2907070A00FED534 /* SendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6D2907070A00FED534 /* SendRequestViewController.swift */; };
 		4397FB702907077500FED534 /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6F2907077500FED534 /* AddPhotoView.swift */; };
 		4397FB732907079900FED534 /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB722907079900FED534 /* Bundle-Decodable.swift */; };
 		4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB74290707AF00FED534 /* LabelButtonView.swift */; };
@@ -72,6 +73,7 @@
 		4367D0D82909762B0056C307 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		4367D0DA29097E2C0056C307 /* UIApplication + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extension.swift"; sourceTree = "<group>"; };
 		4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingChatsNavigation.swift; sourceTree = "<group>"; };
+		4396F66C2914518F00BB988F /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		4397FB21290702BC00FED534 /* inSociety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inSociety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4397FB2D290702BE00FED534 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4397FB30290702BE00FED534 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -90,7 +92,7 @@
 		4397FB67290706AE00FED534 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		4397FB69290706C400FED534 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		4397FB6B290706D900FED534 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
-		4397FB6D2907070A00FED534 /* SendReqestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReqestViewController.swift; sourceTree = "<group>"; };
+		4397FB6D2907070A00FED534 /* SendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequestViewController.swift; sourceTree = "<group>"; };
 		4397FB6F2907077500FED534 /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
 		4397FB722907079900FED534 /* Bundle-Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
 		4397FB74290707AF00FED534 /* LabelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButtonView.swift; sourceTree = "<group>"; };
@@ -218,7 +220,7 @@
 				4397FB6B290706D900FED534 /* PeopleViewController.swift */,
 				4397FB67290706AE00FED534 /* ListViewController.swift */,
 				43C426882911A70400205F5D /* ProfileViewController.swift */,
-				4397FB6D2907070A00FED534 /* SendReqestViewController.swift */,
+				4397FB6D2907070A00FED534 /* SendRequestViewController.swift */,
 				4397FB622907066400FED534 /* ChatRequestViewController.swift */,
 				4318BFDC290C128300F8E8AB /* ChatViewController.swift */,
 				4397FB662907068800FED534 /* Headers */,
@@ -254,6 +256,7 @@
 			children = (
 				4367D0DA29097E2C0056C307 /* UIApplication + Extension.swift */,
 				4397FB7E2907085200FED534 /* UIViewController + Extension.swift */,
+				4396F66C2914518F00BB988F /* UIView + Extension.swift */,
 				4397FB882907091800FED534 /* UIColor + Extension.swift */,
 				4397FB8A2907093100FED534 /* UIFont + Extension.swift */,
 				4397FB7A2907080B00FED534 /* UILabel + Extension.swift */,
@@ -460,6 +463,7 @@
 				4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */,
 				43C4268729119B8B00205F5D /* UIScrollView + Extension.swift in Sources */,
 				4397FB4D290704F600FED534 /* AppDelegate.swift in Sources */,
+				4396F66D2914518F00BB988F /* UIView + Extension.swift in Sources */,
 				4397FB812907087400FED534 /* UIImageView + Extension.swift in Sources */,
 				4397FB8B2907093100FED534 /* UIFont + Extension.swift in Sources */,
 				4367D0B22907FC970056C307 /* UIImage + Extension.swift in Sources */,
@@ -482,7 +486,7 @@
 				4397FB832907089E00FED534 /* UISegmentedControl + Extension.swift in Sources */,
 				4397FB652907068200FED534 /* SectionHeader.swift in Sources */,
 				4397FB7D2907083000FED534 /* UIButton + Extension.swift in Sources */,
-				4397FB6E2907070A00FED534 /* SendReqestViewController.swift in Sources */,
+				4397FB6E2907070A00FED534 /* SendRequestViewController.swift in Sources */,
 				4397FBA329070B4500FED534 /* AuthService.swift in Sources */,
 				4397FB552907056F00FED534 /* SetupProfileViewController.swift in Sources */,
 				4397FB4F2907051600FED534 /* SceneDelegate.swift in Sources */,

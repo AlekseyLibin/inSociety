@@ -59,7 +59,6 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
                 
-        
         setupCollectionView()
         setupSearchController()
         createDataSource()
@@ -168,7 +167,7 @@ extension ListViewController {
             
             guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
-            else { fatalError("Cannot create neq section header") }
+            else { fatalError("Cannot create neu section header") }
             
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
             sectionHeader.configure(text: section.description(),
@@ -334,6 +333,7 @@ extension ListViewController {
                                                                         elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return sectionHeader
     }
+    
 }
 
 

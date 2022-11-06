@@ -48,7 +48,7 @@ class PeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         setupSearchController()
         setupCollectionView()
         createDataSource()
@@ -78,7 +78,7 @@ class PeopleViewController: UIViewController {
     }
     
     
-    
+    //MARK: - Setup collectionView
     private func setupCollectionView() {
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
@@ -117,7 +117,7 @@ extension PeopleViewController: UICollectionViewDelegate {
         FirestoreService.shared.checkNoChats(with: selectedUser) { result in
             switch result {
             case .success:
-                let sendRequestVC = SendReqestViewController(user: selectedUser)
+                let sendRequestVC = SendRequestViewController(user: selectedUser)
                 self.present(sendRequestVC, animated: true)
             case .failure(let error):
                 self.showAlert(with: error.localizedDescription, and: "")
@@ -170,10 +170,6 @@ extension PeopleViewController {
                     self.showAlert(with: "Error", and: error.localizedDescription)
                 }
             }
-//            let numberOfUsers = self.dataSource.snapshot().numberOfItems(inSection: .users)
-//            sectionHeader.configure(text: section.description(usersCount: numberOfUsers),
-//                                    font: .systemFont(ofSize: 36, weight: .light),
-//                                    textColor: .black)
             
             return sectionHeader
         }

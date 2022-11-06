@@ -27,7 +27,6 @@ class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemGray
         setupViews()
         
         emailButton.addTarget(self, action: #selector(emailButtonPressed), for: .touchUpInside)
@@ -80,6 +79,11 @@ class AuthViewController: UIViewController {
 extension AuthViewController {
     
     private func setupViews() {
+        view.backgroundColor = #colorLiteral(red: 0.1737013757, green: 0.1767778397, blue: 0.278138876, alpha: 1)
+        
+        loginButton.backgroundColor = #colorLiteral(red: 1, green: 0.8288107514, blue: 0, alpha: 1)
+        
+        
         googleButton.customizedGoogleButton()
         
         view.addSubview(logoImage)
