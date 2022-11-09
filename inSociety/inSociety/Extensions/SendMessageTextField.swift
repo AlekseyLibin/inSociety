@@ -11,9 +11,10 @@ class SendMessageTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .white
+        backgroundColor = .secondaryDark()
         placeholder = "Aa"
         font = UIFont.systemFont(ofSize: 14)
+        textColor = .mainWhite()
         borderStyle = .none
         clearButtonMode = .whileEditing
         layer.cornerRadius = 18

@@ -15,16 +15,12 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     func configure<HCell>(with value: HCell) where HCell : Hashable {
         guard let user: ChatModel = value as? ChatModel else { return }
         
-        backgroundColor = .white
+        backgroundColor = .secondaryDark()
         userImageView.sd_setImage(with: URL(string: user.friendAvatarString))
         userName.text = user.friendName
         lastMessage.text = user.lastMessageContent
         
-//        gradientView.backgroundColor = .systemYellow
-        
-        let gradient = CAGradientLayer()
-        gradient.colors = [UIColor.red.cgColor, UIColor.blue.cgColor]
-        gradient.frame = self.frame
+
     }
     
     
@@ -32,25 +28,14 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     let userImageView = UIImageView()
     let userName = UILabel(text: "User name", font: .laoSangamMN20())
     let lastMessage = UILabel(text: "Last message", font: .laoSangamMN18())
-    let gradientView = UIView()
+    let stripView = UIView()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        gradientView.backgroundColor = .systemPurple
-        
-        
-        self.layer.cornerRadius = 4
-        self.clipsToBounds = true
-        
-        setupConstraints()
+        setupViews()
     }
-    
-    
-    
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -63,17 +48,20 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
 
 //MARK: - Setup Constraints
 extension ActiveChatCell {
-    private func setupConstraints() {
+    private func setupViews() {
         
-        userImageView.translatesAutoresizingMaskIntoConstraints = false
-        userName.translatesAutoresizingMaskIntoConstraints = false
-        lastMessage.translatesAutoresizingMaskIntoConstraints = false
-        gradientView.translatesAutoresizingMaskIntoConstraints = false
+        stripView.backgroundColor = .mainYellow()
         
-        self.addSubview(userImageView)
-        self.addSubview(userName)
-        self.addSubview(lastMessage)
-        self.addSubview(gradientView)
+        self.layer.cornerRadius = 4
+        self.clipsToBounds = true
+        
+        [userImageView, userName, lastMessage, stripView].forEach { view in
+            self.addSubview(view)
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
+        
+        userName.textColor = .lightGray
+        lastMessage.textColor = .systemGray
         
         NSLayoutConstraint.activate([
             userImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -82,9 +70,9 @@ extension ActiveChatCell {
             userImageView.widthAnchor.constraint(equalTo: heightAnchor),
             
             userName.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor,
-                                              constant: 30),
+                                              constant: 40),
             userName.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            userName.trailingAnchor.constraint(equalTo: gradientView.leadingAnchor, constant: -10),
+            userName.trailingAnchor.constraint(equalTo: stripView.leadingAnchor, constant: -10),
             
             lastMessage.leadingAnchor.constraint(equalTo: userImageView.trailingAnchor,
                                                  constant: 20),
@@ -92,10 +80,10 @@ extension ActiveChatCell {
                                              constant: 10),
             lastMessage.trailingAnchor.constraint(equalTo: userName.trailingAnchor),
             
-            gradientView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            gradientView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            gradientView.heightAnchor.constraint(equalTo: self.heightAnchor),
-            gradientView.widthAnchor.constraint(equalToConstant: 8)
+            stripView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            stripView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            stripView.heightAnchor.constraint(equalTo: self.heightAnchor),
+            stripView.widthAnchor.constraint(equalToConstant: 5)
         ])
     }
 }

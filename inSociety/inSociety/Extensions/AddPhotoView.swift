@@ -23,7 +23,7 @@ class AddPhotoView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "AddProfilePhoto")
         button.setImage(image, for: .normal)
-        button.tintColor = .black
+        button.tintColor = .mainYellow()
         return button
     }()
     

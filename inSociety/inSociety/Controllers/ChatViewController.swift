@@ -24,6 +24,7 @@ class ChatViewController: MessagesViewController {
         super.init(nibName: nil, bundle: nil)
         
         title = chat.friendName
+        
     }
     
     required init?(coder: NSCoder) {
@@ -37,8 +38,22 @@ class ChatViewController: MessagesViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.mainYellow()]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        
+        messageListener = ListenerService.shared.messagesObserve(chat: chat, completion: { result in
+            switch result {
+            case .success(let message):
+                self.chat.lastMessageContent = message.content
+                self.insertNewMessage(message: message)
+            case .failure(let error):
+                self.showAlert(with: "Error", and: error.localizedDescription)
+            }
+        })
+        
+        
         configureMessageInputBar()
-        messagesCollectionView.backgroundColor = .mainWhite()
+        messagesCollectionView.backgroundColor = .mainDark()
         
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
@@ -50,15 +65,6 @@ class ChatViewController: MessagesViewController {
         messagesCollectionView.messagesLayoutDelegate = self
         messagesCollectionView.messagesDisplayDelegate = self
         
-        messageListener = ListenerService.shared.messagesObserve(chat: chat, completion: { result in
-            switch result {
-            case .success(let message):
-                self.chat.lastMessageContent = message.content
-                self.insertNewMessage(message: message)
-            case .failure(let error):
-                self.showAlert(with: "Error", and: error.localizedDescription)
-            }
-        })
     }
     
     private func insertNewMessage(message: MessageModel) {
@@ -103,7 +109,6 @@ extension ChatViewController: MessagesDisplayDelegate {
     func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize? {
         return .zero
     }
-    //MARK: - FOR LATER: TRY OTHER STYLES AND DECIDE
     func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
         return .bubble
     }
@@ -132,9 +137,9 @@ extension ChatViewController {
     func configureMessageInputBar() {
         messageInputBar.isTranslucent = true
         messageInputBar.separatorLine.isHidden = true
-        messageInputBar.backgroundView.backgroundColor = .mainWhite()
-        messageInputBar.inputTextView.backgroundColor = .white
-        messageInputBar.inputTextView.placeholderTextColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 1)
+        messageInputBar.backgroundView.backgroundColor = .secondaryDark()
+        messageInputBar.inputTextView.backgroundColor = .secondaryDark()
+        messageInputBar.inputTextView.placeholderTextColor = .mainWhite()
         messageInputBar.inputTextView.textContainerInset = UIEdgeInsets(top: 14, left: 30, bottom: 14, right: 36)
         messageInputBar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 14, left: 36, bottom: 14, right: 36)
         messageInputBar.inputTextView.layer.borderColor = #colorLiteral(red: 0.7411764706, green: 0.7411764706, blue: 0.7411764706, alpha: 0.4033635232)
@@ -154,7 +159,6 @@ extension ChatViewController {
     
     func configureSendButton() {
         messageInputBar.sendButton.setImage(UIImage(named: "Send"), for: .normal)
-//            messageInputBar.sendButton.applyGradients(cornerRadius: 10)
         messageInputBar.setRightStackViewWidthConstant(to: 56, animated: false)
         messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 6, right: 30)
         messageInputBar.sendButton.setSize(CGSize(width: 48, height: 48), animated: false)
@@ -186,11 +190,14 @@ extension ChatViewController: MessagesDataSource {
     }
     
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
-        return NSAttributedString(
-            string: MessageKitDateFormatter.shared.string(from: message.sentDate),
-            attributes: [
-                NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10),
-                NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        if indexPath.item % 5 == 0 {
+            return NSAttributedString(
+                string: MessageKitDateFormatter.shared.string(from: message.sentDate),
+                attributes: [
+                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10),
+                    NSAttributedString.Key.foregroundColor: UIColor.darkGray])
+        }
+        else { return nil }
     }
     
 }

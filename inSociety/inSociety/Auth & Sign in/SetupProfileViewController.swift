@@ -24,8 +24,8 @@ class SetupProfileViewController: UIViewController {
     let aboutMeTextField = UnderlinedTextField(font: .galvji20())
     
     let sexSegmentedControl = UISegmentedControl(elements: ["Male", "Female", "Other"])
-    let submitButton = UIButton(title: "Submit",
-                              titleColor: .white, backgroundColor: .darkButtonColor())
+    let submitButton = UIButton(title: "Submit", titleColor: .white,
+                                backgroundColor: .darkButtonColor(), isShadow: false)
     
     private let currentUser: User
     
@@ -116,15 +116,25 @@ extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePic
 extension SetupProfileViewController {
     private func setupViews() {
         
-        view.backgroundColor = .mainWhite()
+        view.backgroundColor = .mainDark()
         
         scrollView.addKeyboardObservers()
         scrollView.hideKeyboardWhenTappedOrSwiped()
-        scrollView.showsVerticalScrollIndicator = false
+        
+        [setupLabel, fullNameLabel, aboutMeLabel, sexLabel].forEach { label in
+            label.textColor = .mainYellow()
+        }
+        
+
+        sexSegmentedControl.selectedSegmentTintColor = UIColor.mainYellow()
+        let yellowAttribute = [NSAttributedString.Key.foregroundColor: UIColor.mainYellow()]
+              sexSegmentedControl.setTitleTextAttributes(yellowAttribute, for:.normal)
+        let blackAttribute = [NSAttributedString.Key.foregroundColor: UIColor.black]
+              sexSegmentedControl.setTitleTextAttributes(blackAttribute, for:.selected)
+        
         
         fullNameTextField.autocapitalizationType = .none
         aboutMeTextField.autocapitalizationType = .none
-        
         
         
         let fullNameStackview = UIStackView(arrangedSubviews: [fullNameLabel, fullNameTextField],
@@ -133,38 +143,44 @@ extension SetupProfileViewController {
                                            axis: .vertical, spacing: 10)
         let sexStackView = UIStackView(arrangedSubviews: [sexLabel, sexSegmentedControl],
                                        axis: .vertical, spacing: 15)
-        
         let stackView = UIStackView(arrangedSubviews: [fullNameStackview, aboutMeStackView, sexStackView, submitButton],
                                     axis: .vertical, spacing: 50)
         
+        let secondaryView = UIView()
+        secondaryView.layer.cornerRadius = 20
+        secondaryView.backgroundColor = .secondaryDark()
         
         view.addSubview(scrollView)
         scrollView.addSubview(setupLabel)
+        scrollView.addSubview(secondaryView)
         scrollView.addSubview(fillImageView)
         scrollView.addSubview(stackView)
-
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        setupLabel.translatesAutoresizingMaskIntoConstraints = false
-        fillImageView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        [scrollView, setupLabel, secondaryView, fillImageView, stackView].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
                 
         NSLayoutConstraint.activate([
-            
             
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            setupLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 100),
+            setupLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50),
             setupLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
-            fillImageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 200),
+            fillImageView.topAnchor.constraint(equalTo: setupLabel.bottomAnchor, constant: 80),
             fillImageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
             stackView.topAnchor.constraint(equalTo: fillImageView.bottomAnchor, constant: 100),
             stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
+            
+            secondaryView.topAnchor.constraint(equalTo: fillImageView.topAnchor, constant: -35),
+            secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35),
             
             submitButton.heightAnchor.constraint(equalToConstant: 60)
         ])

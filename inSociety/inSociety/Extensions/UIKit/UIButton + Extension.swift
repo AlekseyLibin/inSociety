@@ -14,8 +14,8 @@ extension UIButton {
                      titleColor: UIColor,
                      font: UIFont? = .galvji20(),
                      backgroundColor: UIColor?,
-                     cornerRadius: CGFloat = 4,
-                     isShadow: Bool = false) {
+                     cornerRadius: CGFloat = 10,
+                     isShadow: Bool = true) {
         self.init(type: .system)
         
         self.setTitle(title, for: .normal)
@@ -25,15 +25,14 @@ extension UIButton {
         self.layer.cornerRadius = cornerRadius
         
         if isShadow {
-            self.layer.shadowColor = UIColor.black.cgColor
+            self.layer.shadowColor = UIColor.buttonShadowColor().cgColor
             self.layer.shadowRadius = 4
-            self.layer.shadowOpacity = 0.2
+            self.layer.shadowOpacity = 0.4
             self.layer.shadowOffset = CGSize(width: 0, height: 4)
         }
     }
     
-    func customizedGoogleButton() {
-        
+    func customizeGoogleButton() {
         let logo = UIImageView(named: "GoogleLogo", contentMode: .scaleAspectFit)
         self.addSubview(logo)
         logo.translatesAutoresizingMaskIntoConstraints = false

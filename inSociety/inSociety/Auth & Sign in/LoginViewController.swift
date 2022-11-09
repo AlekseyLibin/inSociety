@@ -25,11 +25,11 @@ class LoginViewController: UIViewController {
     
     
     let loginButton = UIButton(title: "Login",
-                               titleColor: .white, backgroundColor: .darkButtonColor())
+                               titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
     let googleButton = UIButton(title: "Google",
                                 titleColor: .black, backgroundColor: .white, isShadow: true)
     let signUpButton = UIButton(title: "Create new account",
-                                titleColor: .signUpButonTitleColor(), backgroundColor: nil)
+                                titleColor: .mainYellow(), backgroundColor: nil)
     
     
     
@@ -120,14 +120,20 @@ extension LoginViewController {
     
     private func setUpViews() {
         
-        view.backgroundColor = .mainWhite()
-        
-        googleButton.customizedGoogleButton()
+        view.backgroundColor = .mainDark()
         
         scrollView.hideKeyboardWhenTappedOrSwiped()
         scrollView.addKeyboardObservers()
-        scrollView.showsVerticalScrollIndicator = false
+                
+        [greetingLabel, emailLabel, passwordLabel].forEach { label in
+            label.textColor = .mainYellow()
+        }
         
+        loginWithLabel.textColor = .lightGray
+        orLabel.textColor = .lightGray
+        
+        
+        googleButton.customizeGoogleButton()
         
         emailTextField.autocapitalizationType = .none
         passwordTextField.autocapitalizationType = .none
@@ -139,17 +145,24 @@ extension LoginViewController {
                                             axis: .vertical, spacing: 10)
         let stackView = UIStackView(arrangedSubviews:
                                         [ loginView, orLabel, emailStackView, passwordStackView, loginButton, signUpButton ],
-                                    axis: .vertical, spacing: 50)
+                                    axis: .vertical, spacing: 40)
+        
+        let secondaryView = UIView()
+        secondaryView.layer.cornerRadius = 20
+        secondaryView.backgroundColor = .secondaryDark()
         
         view.addSubview(scrollView)
         scrollView.addSubview(greetingLabel)
+        scrollView.addSubview(secondaryView)
         scrollView.addSubview(stackView)
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        greetingLabel.translatesAutoresizingMaskIntoConstraints = false
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        [scrollView, greetingLabel, stackView, secondaryView].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
+            
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -161,6 +174,11 @@ extension LoginViewController {
             stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 100),
             stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
+            
+            secondaryView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -30),
+            secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
             
             loginButton.heightAnchor.constraint(equalToConstant: 60)
         ])

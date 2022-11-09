@@ -34,22 +34,15 @@ class PeopleViewController: UIViewController {
     init(currentUser: UserModel) {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
-        title = currentUser.userName
+        
     }
     
-    deinit {
-        numberOfUsersListener?.remove()
-        usersListener?.remove()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
         setupSearchController()
+        setupTabBar()
         setupCollectionView()
         createDataSource()
         
@@ -62,28 +55,27 @@ class PeopleViewController: UIViewController {
                 self.showAlert(with: "Error", and: error.localizedDescription)
             }
         })
-        
-        view.backgroundColor = .mainWhite()
     }
     
-    private func setupSearchController() {
-//        navigationController?.navigationBar.barTintColor = .mainWhite()
-        
-        let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.delegate = self
+    deinit {
+        numberOfUsersListener?.remove()
+        usersListener?.remove()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    //MARK: - Setup collectionView
+}
+
+
+
+//MARK: - Setup collectionView
+extension PeopleViewController {
     private func setupCollectionView() {
-        
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.backgroundColor = .mainWhite()
+        collectionView.backgroundColor = .mainDark()
         view.addSubview(collectionView)
         
         collectionView.register(SectionHeader.self,
@@ -94,7 +86,7 @@ class PeopleViewController: UIViewController {
         collectionView.delegate = self
         
     }
-    
+
     private func reloadData(with searchText: String?) {
         
         let filteredUsers = users.filter { (user) -> Bool in
@@ -128,15 +120,6 @@ extension PeopleViewController: UICollectionViewDelegate {
 
 
 
-//MARK: - UISearchBarDelegate
-extension PeopleViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        reloadData(with: searchText)
-    }
-}
-
-
-
 //MARK: - Create Data Source
 extension PeopleViewController {
     private func createDataSource() {
@@ -165,7 +148,7 @@ extension PeopleViewController {
                 case .success(let allUsers):
                     sectionHeader.configure(text: section.description(usersCount: allUsers.count),
                                             font: .systemFont(ofSize: 36, weight: .light),
-                                            textColor: .black)
+                                            textColor: .mainYellow())
                 case .failure(let error):
                     self.showAlert(with: "Error", and: error.localizedDescription)
                 }
@@ -203,10 +186,10 @@ extension PeopleViewController {
     
     private func createUsersSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
-                                            heightDimension: .fractionalHeight(1))
+                                              heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                            heightDimension: .fractionalWidth(0.6))
+                                               heightDimension: .fractionalWidth(0.6))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 2)
         group.interItemSpacing = .fixed(15)
         let section = NSCollectionLayoutSection(group: group)
@@ -227,7 +210,46 @@ extension PeopleViewController {
                                                                         elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return sectionHeader
     }
+}
 
+
+
+//MARK: - SetupSearchController
+extension PeopleViewController {
+    private func setupSearchController() {
+        navigationController?.navigationBar.barTintColor = .mainDark()
+        
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+    }
+}
+
+
+
+//MARK: - UISearchBarDelegate
+extension PeopleViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        reloadData(with: searchText)
+    }
+}
+
+
+
+//MARK: - SetupTabBar
+extension PeopleViewController {
+    private func setupTabBar() {
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .mainDark()
+        
+        self.tabBarController?.tabBar.standardAppearance = appearance
+        self.tabBarController?.tabBar.scrollEdgeAppearance = appearance
+    }
+    
 }
 
 

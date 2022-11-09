@@ -17,7 +17,7 @@ class UnderlinedTextField: UITextField {
         
         var lineView = UIView()
         lineView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 0, height: 0))
-        lineView.backgroundColor = .tfLine()
+        lineView.backgroundColor = .mainYellow()
         lineView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(lineView)
         

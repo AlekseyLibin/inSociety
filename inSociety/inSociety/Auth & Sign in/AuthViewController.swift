@@ -17,9 +17,9 @@ class AuthViewController: UIViewController {
     let emailLabel = UILabel(text: "Or sign up with")
     let loginLabel = UILabel(text: "Already on board?")
     
-    let googleButton = UIButton(title: "Google", titleColor: .black, backgroundColor: .white, isShadow: true)
-    let emailButton = UIButton(title: "email", titleColor: .white, backgroundColor: .darkButtonColor())
-    let loginButton = UIButton(title: "Login", titleColor: .loginButtonTitleColor(), backgroundColor: .white, isShadow: true)
+    let googleButton = UIButton(title: "Google", titleColor: .black, backgroundColor: .white)
+    let emailButton = UIButton(title: "email", titleColor: .black, backgroundColor: .mainYellow())
+    let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
     
     let signUpVC = SignUpViewController()
     let loginVC = LoginViewController()
@@ -37,6 +37,13 @@ class AuthViewController: UIViewController {
         loginVC.delegate = self
         
     }
+    
+}
+
+
+
+//MARK: - Buttons realization
+extension AuthViewController {
     
     @objc private func emailButtonPressed() {
         present(signUpVC, animated: true)
@@ -79,37 +86,57 @@ class AuthViewController: UIViewController {
 extension AuthViewController {
     
     private func setupViews() {
-        view.backgroundColor = #colorLiteral(red: 0.1737013757, green: 0.1767778397, blue: 0.278138876, alpha: 1)
         
-        loginButton.backgroundColor = #colorLiteral(red: 1, green: 0.8288107514, blue: 0, alpha: 1)
+        view.backgroundColor = .mainDark()
         
+        logoImage.setupColor(.mainYellow())
         
-        googleButton.customizedGoogleButton()
+        loginButton.layer.borderColor = UIColor.mainYellow().cgColor
+        loginButton.layer.borderWidth = 2
         
-        view.addSubview(logoImage)
+        googleButton.customizeGoogleButton()
         
-        logoImage.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            logoImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
-            logoImage.heightAnchor.constraint(equalTo: logoImage.widthAnchor, multiplier: 0.34)
-        ])
-        
+        [googleLabel, emailLabel, loginLabel].forEach { label in
+            label.textColor = .lightGray
+        }
         
         let googleView = LabelButtonView(label: googleLabel, button: googleButton)
         let emailView = LabelButtonView(label: emailLabel, button: emailButton)
         let loginView = LabelButtonView(label: loginLabel, button: loginButton)
         
         let stackView = UIStackView(arrangedSubviews: [googleView, emailView, loginView],
-                                    axis: .vertical, spacing: 40)
+                                    axis: .vertical, spacing: 50)
+        
+        let secondaryView = UIView()
+        secondaryView.layer.cornerRadius = 20
+        secondaryView.backgroundColor = .secondaryDark()
+        
+        
+        view.addSubview(logoImage)
+        view.addSubview(secondaryView)
         view.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        [logoImage, secondaryView, stackView].forEach { subView in
+            view.addSubview(subView)
+            subView.translatesAutoresizingMaskIntoConstraints = false
+        }
 
         NSLayoutConstraint.activate([
+            
+            logoImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
+            logoImage.heightAnchor.constraint(equalTo: logoImage.widthAnchor, multiplier: 0.34),
+            
             stackView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 100),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8)
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            
+            secondaryView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -35),
+            secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+            secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35)
         ])
         
     }

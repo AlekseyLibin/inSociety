@@ -58,6 +58,9 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tabBarController?.tabBar.backgroundColor = .mainDark()
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.gray]
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
                 
         setupCollectionView()
         setupSearchController()
@@ -93,8 +96,7 @@ class ListViewController: UIViewController {
     }
     
     private func setupSearchController() {
-//        navigationController?.navigationBar.barTintColor = .mainWhite()
-//        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.barTintColor = .mainDark()
         
         let searchController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchController
@@ -104,22 +106,6 @@ class ListViewController: UIViewController {
         searchController.searchBar.delegate = self
     }
     
-    private func setupCollectionView() {
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.backgroundColor = .mainWhite()
-        view.addSubview(collectionView)
-        
-        collectionView.register(SectionHeader.self,
-                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
-        
-        
-        collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseID)
-        collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseID)
-        
-        collectionView.delegate = self
-        
-    }
     
     private func reloadData(with searchText: String?) {
         let filteredActiveChats = activeChats.filter { (chat) -> Bool in
@@ -245,6 +231,23 @@ extension ListViewController: WaitingChatsNavigation {
 
 //MARK: - Setup CollectionView
 extension ListViewController {
+    
+    private func setupCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
+        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        collectionView.backgroundColor = .mainDark()
+        view.addSubview(collectionView)
+        
+        collectionView.register(SectionHeader.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
+        
+        
+        collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseID)
+        collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseID)
+        
+        collectionView.delegate = self
+        
+    }
     
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in

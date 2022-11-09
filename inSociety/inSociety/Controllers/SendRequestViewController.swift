@@ -102,16 +102,17 @@ extension SendRequestViewController {
         
         scrollView.hideKeyboardWhenTappedOrSwiped()
         scrollView.addKeyboardObservers()
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.contentSize.height = view.frame.height/1.07 //On a modally presented VC height is different
+        scrollView.contentSize.height = view.frame.height/1.07   //On a modally presented VC height is different
         scrollView.contentSize.width = view.frame.width
         
         containerView.layer.cornerRadius = 30
-        containerView.backgroundColor = .mainWhite()
+        containerView.backgroundColor = .mainDark()
         
         nameLabel.font = .systemFont(ofSize: 20, weight: .light)
+        nameLabel.textColor = .mainWhite()
         
         descriptionLabel.numberOfLines = 2
+        descriptionLabel.textColor = .mainWhite()
         descriptionLabel.font = .systemFont(ofSize: 16, weight: .light)
 
         view.addSubview(imageView)

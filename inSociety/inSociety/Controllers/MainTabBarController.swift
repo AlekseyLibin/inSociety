@@ -36,8 +36,9 @@ class MainTabBarController: UITabBarController {
         let listViewController = ListViewController(currentUser: currentUser)
         let profileViewController = ProfileViewController(currentUser: currentUser)
         
-        tabBar.tintColor = .black
-//        tabBar.backgroundColor = .black
+        
+        tabBar.tintColor = .mainYellow()
+        
         
         guard
             let peopleImage = UIImage(named: "PeopleTabBarLogo"),

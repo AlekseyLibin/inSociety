@@ -50,11 +50,23 @@ extension UIColor {
     
     
     static func mainDark() -> UIColor {
-        return UIColor(red: 26/255, green: 19/255, blue: 63/255, alpha: 1)
+        return UIColor(red: 27/255, green: 31/255, blue: 34/255, alpha: 1)
+    }
+    
+    static func secondaryDark() -> UIColor {
+        return UIColor(red: 34/255, green: 39/255, blue: 43/255, alpha: 1)
+    }
+    
+    static func thirdDark() -> UIColor {
+        return UIColor(red: 30/255, green: 35/255, blue: 39/255, alpha: 1)
     }
     
     static func mainYellow() -> UIColor {
         return UIColor(red: 239/255, green: 223/255, blue: 37/255, alpha: 1)
+    }
+    
+    static func buttonShadowColor() -> UIColor {
+        return UIColor(red: 235/255, green: 186/255, blue: 140/255, alpha: 1)
     }
     
 }
