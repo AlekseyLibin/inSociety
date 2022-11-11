@@ -7,17 +7,11 @@
 
 import UIKit
 
-class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
-    
-    //HCell - Hashable cell
-    func configure<HCell>(with value: HCell) where HCell : Hashable {
-        guard let chat: ChatModel = value as? ChatModel else { return }
-        friendImageView.sd_setImage(with: URL(string: chat.friendAvatarString))
-    }
+class WaitingChatCell: UICollectionViewCell {
     
     static var reuseID: String = "WaitingChatCell"
     
-    let friendImageView = UIImageView()
+    private let friendImageView = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,6 +20,28 @@ class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
         setupConstraints()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+}
+
+
+
+//MARK: - SelfConfiguringCell
+extension WaitingChatCell: SelfConfiguringCell {
+    
+    //HCell - Hashable cell
+    func configure<HCell>(with value: HCell) where HCell : Hashable {
+        guard let chat: ChatModel = value as? ChatModel else { return }
+        friendImageView.sd_setImage(with: URL(string: chat.friendAvatarString))
+    }
+}
+
+
+
+//MARK: - Setup constraints
+extension WaitingChatCell {
     private func setupConstraints() {
         
         friendImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,32 +53,5 @@ class WaitingChatCell: UICollectionViewCell, SelfConfiguringCell {
             friendImageView.widthAnchor.constraint(equalTo: self.widthAnchor),
             friendImageView.heightAnchor.constraint(equalTo: self.heightAnchor)
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct WaitingChatCellProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let mainTabBarController = MainTabBarController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return mainTabBarController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
     }
 }

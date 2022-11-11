@@ -32,12 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         window?.makeKeyAndVisible()
-        
-//        let window = UIWindow(windowScene: windowScene)
-//        window.rootViewController = AuthViewController()
-//        window.makeKeyAndVisible()
-//
-//        self.window = window
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

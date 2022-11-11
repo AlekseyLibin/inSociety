@@ -9,7 +9,6 @@ import UIKit
 
 class LabelButtonView: UIView {
     
-    
     init(label: UILabel, button: UIButton) {
         super.init(frame: .zero)
         

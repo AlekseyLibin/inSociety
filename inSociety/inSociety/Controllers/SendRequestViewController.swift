@@ -10,16 +10,16 @@ import SDWebImage
 
 class SendRequestViewController: UIViewController {
     
-    let scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     
-    let containerView = UIView()
-    let imageView = UIImageView()
-    let nameLabel = UILabel()
-    let descriptionLabel = UILabel()
-    let sendMessageTextField = SendMessageTextField()
+    private let containerView = UIView()
+    private let imageView = UIImageView()
+    private let nameLabel = UILabel()
+    private let descriptionLabel = UILabel()
+    private let sendMessageTextField = SendMessageTextField()
     
     
-    let user: UserModel
+    private let user: UserModel
     
     init(user: UserModel) {
         self.user = user
@@ -45,7 +45,7 @@ class SendRequestViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-                
+        
         scrollView.contentSize = view.frame.size
         
     }
@@ -114,7 +114,7 @@ extension SendRequestViewController {
         descriptionLabel.numberOfLines = 2
         descriptionLabel.textColor = .mainWhite()
         descriptionLabel.font = .systemFont(ofSize: 16, weight: .light)
-
+        
         view.addSubview(imageView)
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
@@ -122,12 +122,9 @@ extension SendRequestViewController {
         containerView.addSubview(descriptionLabel)
         containerView.addSubview(sendMessageTextField)
         
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        sendMessageTextField.translatesAutoresizingMaskIntoConstraints = false
+        [scrollView, containerView, imageView, nameLabel, descriptionLabel, sendMessageTextField].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
             
@@ -146,14 +143,14 @@ extension SendRequestViewController {
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-
+            
             nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 35),
             nameLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-
+            
             descriptionLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
             descriptionLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             descriptionLabel.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.9),
-
+            
             sendMessageTextField.heightAnchor.constraint(equalToConstant: 50),
             sendMessageTextField.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             sendMessageTextField.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.9),

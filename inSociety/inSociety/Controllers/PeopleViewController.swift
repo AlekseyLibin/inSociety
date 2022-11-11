@@ -22,13 +22,13 @@ class PeopleViewController: UIViewController {
         }
     }
     
-    var users = [UserModel]()
+    private var users = [UserModel]()
     private var usersListener: ListenerRegistration?
     private var numberOfUsersListener: ListenerRegistration?
     
     private let currentUser: UserModel
-    var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, UserModel>!
+    private var collectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, UserModel>!
     
     
     init(currentUser: UserModel) {
@@ -250,27 +250,4 @@ extension PeopleViewController {
         self.tabBarController?.tabBar.scrollEdgeAppearance = appearance
     }
     
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct SendRequestVCProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let mainTabBarController = MainTabBarController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return mainTabBarController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
 }

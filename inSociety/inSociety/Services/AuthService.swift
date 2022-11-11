@@ -13,7 +13,34 @@ import GoogleSignIn
 class AuthService {
     
     static let shared = AuthService()
+    private init() {}
+    
     private let auth = Auth.auth()
+    
+    
+    func register(email: String?,
+                  password: String?,
+                  confirmPassword: String?,
+                  completion: @escaping (Result<User, Error>) -> Void) {
+        
+        let error = Validator.checkRegisterValidation(email: email,
+                                                      password: password,
+                                                      confirmPassword: confirmPassword)
+        if let error = error {
+            completion(.failure(error))
+            return
+        }
+        
+        auth.createUser(withEmail: email!, password: password!) { result, error in
+            guard let result = result else {
+                completion(.failure(error!))
+                return
+            }
+            
+            completion(.success(result.user))
+        }
+    }
+    
     
     func login(email: String?,
                password: String?,
@@ -35,6 +62,8 @@ class AuthService {
             completion(.success(result.user))
         }
     }
+    
+    
     
     func googleLogin(clientID: String?, presentingVC: UIViewController, completion: @escaping (Result<User, Error>) -> Void) {
         guard let clientID = clientID else { return }
@@ -71,29 +100,5 @@ class AuthService {
             }
         }
     }
-    
-    func register(email: String?,
-                  password: String?,
-                  confirmPassword: String?,
-                  completion: @escaping (Result<User, Error>) -> Void) {
-        
-        let error = Validator.checkRegisterValidation(email: email,
-                                                  password: password,
-                                                  confirmPassword: confirmPassword)
-        if let error = error {
-            completion(.failure(error))
-            return
-        }
-        
-        auth.createUser(withEmail: email!, password: password!) { result, error in
-            guard let result = result else {
-                completion(.failure(error!))
-                return
-            }
-            
-            completion(.success(result.user))
-        }
-    }
-    
     
 }

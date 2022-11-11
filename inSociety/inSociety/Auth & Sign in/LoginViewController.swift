@@ -12,23 +12,23 @@ class LoginViewController: UIViewController {
     
     weak var delegate: AuthNavigationDelegate?
     
-    let scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     
-    let greetingLabel = UILabel(text: "Welcome back!", font: .galvji30())
-    let loginWithLabel = UILabel(text: "Login with")
-    let orLabel = UILabel(text: "or")
-    let emailLabel = UILabel(text: "Email")
-    let passwordLabel = UILabel(text: "Password")
+    private let greetingLabel = UILabel(text: "Welcome back!", font: .galvji30())
+    private let loginWithLabel = UILabel(text: "Login with")
+    private let orLabel = UILabel(text: "or")
+    private let emailLabel = UILabel(text: "Email")
+    private let passwordLabel = UILabel(text: "Password")
     
-    let emailTextField = UnderlinedTextField(font: .galvji20())
-    let passwordTextField = UnderlinedTextField(font: .galvji20())
+    private let emailTextField = UnderlinedTextField(font: .galvji20())
+    private let passwordTextField = UnderlinedTextField(font: .galvji20())
     
     
-    let loginButton = UIButton(title: "Login",
+    private let loginButton = UIButton(title: "Login",
                                titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
-    let googleButton = UIButton(title: "Google",
+    private let googleButton = UIButton(title: "Google",
                                 titleColor: .black, backgroundColor: .white, isShadow: true)
-    let signUpButton = UIButton(title: "Create new account",
+    private let signUpButton = UIButton(title: "Create new account",
                                 titleColor: .mainYellow(), backgroundColor: nil)
     
     
@@ -180,28 +180,5 @@ extension LoginViewController {
             
             loginButton.heightAnchor.constraint(equalToConstant: 60)
         ])
-    }
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct LoginVCProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let loginViewController = LoginViewController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return loginViewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
     }
 }

@@ -7,22 +7,6 @@
 
 import UIKit
 
-
-////MARK: - Hide keyboard tapping on UIScrollView
-//extension UIScrollView {
-//     func hideKeyboardWhenTappedAround() {
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-//        tap.cancelsTouchesInView = false
-//        self.addGestureRecognizer(tap)
-//    }
-//
-//    @objc func dismissKeyboard() {
-//        self.endEditing(true)
-//    }
-//}
-
-
-
 //MARK: - Keyboard observers on UIScrolLView
 extension UIScrollView {
     func addKeyboardObservers() {

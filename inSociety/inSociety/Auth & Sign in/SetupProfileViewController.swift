@@ -11,20 +11,20 @@ import SDWebImage
 
 class SetupProfileViewController: UIViewController {
     
-    let fillImageView = AddPhotoView()
+    private let fillImageView = AddPhotoView()
     
-    let scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     
-    let setupLabel = UILabel(text: "Setup profile", font: .galvji30())
-    let fullNameLabel = UILabel(text: "Full name")
-    let aboutMeLabel = UILabel(text: "About me")
-    let sexLabel = UILabel(text: "Sex")
+    private let setupLabel = UILabel(text: "Setup profile", font: .galvji30())
+    private let fullNameLabel = UILabel(text: "Full name")
+    private let aboutMeLabel = UILabel(text: "About me")
+    private let sexLabel = UILabel(text: "Sex")
     
-    let fullNameTextField = UnderlinedTextField(font: .galvji20())
-    let aboutMeTextField = UnderlinedTextField(font: .galvji20())
+    private let fullNameTextField = UnderlinedTextField(font: .galvji20())
+    private let aboutMeTextField = UnderlinedTextField(font: .galvji20())
     
-    let sexSegmentedControl = UISegmentedControl(elements: ["Male", "Female", "Other"])
-    let submitButton = UIButton(title: "Submit", titleColor: .white,
+    private let sexSegmentedControl = UISegmentedControl(elements: ["Male", "Female", "Other"])
+    private let submitButton = UIButton(title: "Submit", titleColor: .white,
                                 backgroundColor: .darkButtonColor(), isShadow: false)
     
     private let currentUser: User
@@ -185,28 +185,5 @@ extension SetupProfileViewController {
             submitButton.heightAnchor.constraint(equalToConstant: 60)
         ])
         
-    }
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct SetupProfileVCProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let setupProfileViewController = SetupProfileViewController(currentUser: Auth.auth().currentUser!)
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return setupProfileViewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
     }
 }

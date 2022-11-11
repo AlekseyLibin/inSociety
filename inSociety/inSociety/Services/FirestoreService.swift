@@ -13,8 +13,12 @@ import FirebaseFirestore
 class FirestoreService {
     
     static let shared = FirestoreService()
+    private init() {}
+
     
-    let dataBase = Firestore.firestore()
+    private let dataBase = Firestore.firestore()
+    var currentUser: UserModel!
+
     
     private var usersReference: CollectionReference {
         return dataBase.collection("users")
@@ -27,9 +31,17 @@ class FirestoreService {
     private var activeChatsReference: CollectionReference {
         return dataBase.collection("users/\(currentUser.id)/activeChats")
     }
+        
     
-    var currentUser: UserModel!
+    
+    
+    
+}
 
+
+
+//MARK: - User
+extension FirestoreService {
     
     func getUserData(user: User, completion: @escaping (Result<UserModel, Error>) -> Void) {
         let documentReference = usersReference.document(user.uid)
@@ -90,6 +102,42 @@ class FirestoreService {
         }
     }
     
+}
+
+
+
+//MARK: - Chats
+extension FirestoreService {
+    
+    func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
+        activeChatMessages.getDocuments { snapshot, error in
+            guard let snapshot = snapshot else {
+                completion(.failure(error!))
+                return
+            }
+            
+            if snapshot.documents.isEmpty {
+                let waitingChatMessages = self.waitingChatsReference.document(friend.id).collection("messages")
+                waitingChatMessages.getDocuments { snapshot, error in
+                    guard let snapshot = snapshot else {
+                        completion(.failure(error!))
+                        return
+                    }
+                    
+                    if snapshot.documents.isEmpty {
+                        completion(.success(Void()))
+                    } else {
+                        completion(.failure(UserError.chatAlreadyExists))
+                    }
+                }
+            } else {
+                completion(.failure(UserError.chatAlreadyExists))
+            }
+        }
+    }
+    
+    //MARK: - Waiting chats
     func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let waitingChatsReference = dataBase.collection("users/\(receiver.id)/waitingChats")
         
@@ -126,64 +174,6 @@ class FirestoreService {
         }
     }
     
-    func getWaitingChatMessages(chat: ChatModel, completion: @escaping (Result<[MessageModel], Error>) -> Void) {
-        let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
-        var messages = [MessageModel]()
-        messagesReference.getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            for document in querySnapshot!.documents {
-                guard let message = MessageModel(document: document) else { return }
-                messages.append(message)
-            }
-            completion(.success(messages))
-        }
-    }
-    
-    func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
-        activeChatMessages.getDocuments { snapshot, error in
-            guard let snapshot = snapshot else {
-                completion(.failure(error!))
-                return
-            }
-            
-            if snapshot.documents.isEmpty {
-                let waitingChatMessages = self.waitingChatsReference.document(friend.id).collection("messages")
-                waitingChatMessages.getDocuments { snapshot, error in
-                    guard let snapshot = snapshot else {
-                        completion(.failure(error!))
-                        return
-                    }
-                    
-                    if snapshot.documents.isEmpty {
-                        completion(.success(Void()))
-                    } else {
-                        completion(.failure(UserError.chatAlreadyExists))
-                    }
-                }
-            } else {
-                completion(.failure(UserError.chatAlreadyExists))
-            }
-        }
-    }
-    
-    func getNumberOfActiveChats(for user: UserModel, completion: @escaping (Result<Int, Error>) -> Void) {
-        let activeChatsReference = dataBase.collection("users/\(user.id)/activeChats")
-        let activeChats = activeChatsReference
-        activeChats.getDocuments { snapshot, error in
-            guard let snapshot = snapshot else {
-                completion(.failure(error!))
-                return
-            }
-            let count = snapshot.documents.count
-            completion(.success(count))
-        }
-    }
-    
     func getNumberOfWaitingChats(for user: UserModel, completion: @escaping(Result<Int, Error>) -> Void) {
         let waitingChatsReference = dataBase.collection("users/\(user.id)/waitingChats")
         waitingChatsReference.getDocuments { snapshot, error in
@@ -197,48 +187,7 @@ class FirestoreService {
         }
     }
     
-    func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void) {
-        let messagesReference = activeChatsReference.document(chat.friendID).collection("messages")
-        var messages = [MessageModel]()
-        messagesReference.getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            
-            for document in querySnapshot!.documents {
-                guard let message = MessageModel(document: document) else { return }
-                messages.append(message)
-            }
-            messages.sort()
-            guard let lastMessage = messages.last else { return }
-            completion(.success(lastMessage))
-        }
-    }
-    
-    func deleteMessages(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
-        getWaitingChatMessages(chat: chat) { result in
-            switch result {
-            case .success(let messages):
-                for message in messages {
-                    guard let documentID = message.id else { return }
-                    let messageReference = messagesReference.document(documentID)
-                    messageReference.delete { error in
-                        if let error = error {
-                            completion(.failure(error))
-                            return
-                        }
-                        completion(.success(Void()))
-                    }
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func moveToActive(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+    func moveWaitingChatToActive(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
         getWaitingChatMessages(chat: chat) { result in
             switch result {
             case .success(let messages):
@@ -263,6 +212,7 @@ class FirestoreService {
         }
     }
     
+    //MARK: Active chats
     func createActiveChat(chat: ChatModel, messages: [MessageModel], completion: @escaping (Result<Void, Error>) -> Void) {
         let messageReference = activeChatsReference.document(chat.friendID).collection("messages")
         activeChatsReference.document(chat.friendID).setData(chat.representation) { error in
@@ -282,6 +232,25 @@ class FirestoreService {
         }
     }
     
+    func getNumberOfActiveChats(for user: UserModel, completion: @escaping (Result<Int, Error>) -> Void) {
+        let activeChatsReference = dataBase.collection("users/\(user.id)/activeChats")
+        let activeChats = activeChatsReference
+        activeChats.getDocuments { snapshot, error in
+            guard let snapshot = snapshot else {
+                completion(.failure(error!))
+                return
+            }
+            let count = snapshot.documents.count
+            completion(.success(count))
+        }
+    }
+    
+}
+
+
+
+//MARK: - Messages
+extension FirestoreService {
     func sendMessage(chat: ChatModel, message: MessageModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let friendReference = usersReference.document(chat.friendID).collection("activeChats").document(currentUser.id)
         let friendMessageReference = friendReference.collection("messages")
@@ -309,6 +278,64 @@ class FirestoreService {
                     completion(.success(Void()))
                 }
             }
+        }
+    }
+    
+    func deleteMessages(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
+        getWaitingChatMessages(chat: chat) { result in
+            switch result {
+            case .success(let messages):
+                for message in messages {
+                    guard let documentID = message.id else { return }
+                    let messageReference = messagesReference.document(documentID)
+                    messageReference.delete { error in
+                        if let error = error {
+                            completion(.failure(error))
+                            return
+                        }
+                        completion(.success(Void()))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void) {
+        let messagesReference = activeChatsReference.document(chat.friendID).collection("messages")
+        var messages = [MessageModel]()
+        messagesReference.getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            for document in querySnapshot!.documents {
+                guard let message = MessageModel(document: document) else { return }
+                messages.append(message)
+            }
+            messages.sort()
+            guard let lastMessage = messages.last else { return }
+            completion(.success(lastMessage))
+        }
+    }
+    
+    func getWaitingChatMessages(chat: ChatModel, completion: @escaping (Result<[MessageModel], Error>) -> Void) {
+        let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
+        var messages = [MessageModel]()
+        messagesReference.getDocuments { querySnapshot, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            for document in querySnapshot!.documents {
+                guard let message = MessageModel(document: document) else { return }
+                messages.append(message)
+            }
+            completion(.success(messages))
         }
     }
 }

@@ -45,9 +45,6 @@
 		4397FB87290708E800FED534 /* SendMessageTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB86290708E800FED534 /* SendMessageTextField.swift */; };
 		4397FB892907091800FED534 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB882907091800FED534 /* UIColor + Extension.swift */; };
 		4397FB8B2907093100FED534 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB8A2907093100FED534 /* UIFont + Extension.swift */; };
-		4397FB8E2907099D00FED534 /* Users.json in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB8D2907099D00FED534 /* Users.json */; };
-		4397FB90290709E500FED534 /* WaitingChats.json in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB8F290709E500FED534 /* WaitingChats.json */; };
-		4397FB9229070A0900FED534 /* ActiveChats.json in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB9129070A0900FED534 /* ActiveChats.json */; };
 		4397FB9529070A6D00FED534 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9429070A6D00FED534 /* AuthError.swift */; };
 		4397FB9A29070AA900FED534 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9929070AA900FED534 /* UserError.swift */; };
 		4397FB9C29070ABB00FED534 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9B29070ABB00FED534 /* Validator.swift */; };
@@ -106,9 +103,6 @@
 		4397FB86290708E800FED534 /* SendMessageTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageTextField.swift; sourceTree = "<group>"; };
 		4397FB882907091800FED534 /* UIColor + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		4397FB8A2907093100FED534 /* UIFont + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
-		4397FB8D2907099D00FED534 /* Users.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Users.json; sourceTree = "<group>"; };
-		4397FB8F290709E500FED534 /* WaitingChats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = WaitingChats.json; sourceTree = "<group>"; };
-		4397FB9129070A0900FED534 /* ActiveChats.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ActiveChats.json; sourceTree = "<group>"; };
 		4397FB9429070A6D00FED534 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		4397FB9929070AA900FED534 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		4397FB9B29070ABB00FED534 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
@@ -246,7 +240,6 @@
 				4397FB76290707C500FED534 /* UnderlinedTextField.swift */,
 				4397FB722907079900FED534 /* Bundle-Decodable.swift */,
 				4397FB8C2907094500FED534 /* UIKit */,
-				4397FB9329070A1700FED534 /* JSON */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -268,16 +261,6 @@
 				4397FB84290708B800FED534 /* UIStackView + Extension.swift */,
 			);
 			path = UIKit;
-			sourceTree = "<group>";
-		};
-		4397FB9329070A1700FED534 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				4397FB8D2907099D00FED534 /* Users.json */,
-				4397FB9129070A0900FED534 /* ActiveChats.json */,
-				4397FB8F290709E500FED534 /* WaitingChats.json */,
-			);
-			path = JSON;
 			sourceTree = "<group>";
 		};
 		4397FB9629070A7B00FED534 /* Helpers */ = {
@@ -384,11 +367,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4397FB9229070A0900FED534 /* ActiveChats.json in Resources */,
-				4397FB8E2907099D00FED534 /* Users.json in Resources */,
 				4397FB31290702BE00FED534 /* LaunchScreen.storyboard in Resources */,
 				4397FB2E290702BE00FED534 /* Assets.xcassets in Resources */,
-				4397FB90290709E500FED534 /* WaitingChats.json in Resources */,
 				4397FBAD29070F4600FED534 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

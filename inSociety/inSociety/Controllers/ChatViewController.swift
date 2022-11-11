@@ -135,6 +135,7 @@ extension ChatViewController: MessagesLayoutDelegate {
 // MARK: - ConfigureMessageInputBar
 extension ChatViewController {
     func configureMessageInputBar() {
+        
         messageInputBar.isTranslucent = true
         messageInputBar.separatorLine.isHidden = true
         messageInputBar.backgroundView.backgroundColor = .secondaryDark()
@@ -170,9 +171,6 @@ extension ChatViewController {
 
 //MARK: - MessagesDataSource
 extension ChatViewController: MessagesDataSource {
-    
-
-    
     func currentSender() -> MessageKit.SenderType {
         Sender(senderID: currentUser.id, senderName: currentUser.userName)
     }

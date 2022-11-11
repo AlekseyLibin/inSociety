@@ -8,17 +8,41 @@
 import UIKit
 import SDWebImage
 
-class UserCell: UICollectionViewCell, SelfConfiguringCell {
+class UserCell: UICollectionViewCell {
     
-    var userImageView = UIImageView()
-    let userNameLabel = UILabel(text: "", font: .laoSangamMN20())
-    let containerView = UIView()
+    private var userImageView = UIImageView()
+    private let userNameLabel = UILabel(text: "", font: .laoSangamMN20())
+    private let containerView = UIView()
     
     static var reuseID: String = "UserCell"
     
     override func prepareForReuse() {
         userImageView.image = nil
     }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupViews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.containerView.layer.cornerRadius = 5
+        self.containerView.clipsToBounds = true
+    }
+    
+}
+
+
+
+//MARK: - SelfConfiguringCell
+extension UserCell: SelfConfiguringCell {
     
     //HCell - Hashable cell.
     func configure<HCell>(with value: HCell) where HCell : Hashable {
@@ -32,30 +56,22 @@ class UserCell: UICollectionViewCell, SelfConfiguringCell {
         userImageView.backgroundColor = .secondaryDark()
         userImageView.contentMode = .scaleAspectFill
     }
-    
-    
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-                
+}
+
+
+
+//MARK: Setup constraints
+extension UserCell {
+    private func setupViews() {
+        
         backgroundColor = .mainDark()
+        
         self.layer.shadowColor = UIColor.thirdDark().cgColor
         self.layer.cornerRadius = 5
         self.layer.shadowRadius = 5
         self.layer.shadowOpacity = 1
         self.layer.shadowOffset = CGSize(width: 0, height: 5)
         
-        setupConstraints()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        self.containerView.layer.cornerRadius = 5
-        self.containerView.clipsToBounds = true
-    }
-    
-    private func setupConstraints() {
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,32 +96,5 @@ class UserCell: UICollectionViewCell, SelfConfiguringCell {
             userNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             userNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct UserChatCellProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let mainTabBarController = MainTabBarController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return mainTabBarController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
     }
 }

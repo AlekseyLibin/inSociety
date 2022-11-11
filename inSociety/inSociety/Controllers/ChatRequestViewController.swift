@@ -9,15 +9,15 @@ import UIKit
 
 class ChatRequestViewController: UIViewController {
     
-    let containerView = UIView()
-    let imageView = UIImageView()
-    let nameLabel = UILabel(text: "",
-                            font: .systemFont(ofSize: 20, weight: .light))
-    let descriptionLabel = UILabel(text: "Chat request",
-                                   font: .systemFont(ofSize: 16, weight: .light))
+    private let containerView = UIView()
+    private let imageView = UIImageView()
+    private let nameLabel = UILabel(text: "",
+                                    font: .systemFont(ofSize: 20, weight: .light))
+    private let descriptionLabel = UILabel(text: "Chat request",
+                                           font: .systemFont(ofSize: 16, weight: .light))
     
-    let acceptButton = UIButton(type: .system)
-    let denyButton = UIButton(type: .system)
+    private let acceptButton = UIButton(type: .system)
+    private let denyButton = UIButton(type: .system)
     
     private var chat: ChatModel
     
@@ -39,12 +39,11 @@ class ChatRequestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        customizeViews()
-        setupConstraints()
+        setupViews()
         
         denyButton.addTarget(self, action: #selector(deny), for: .touchUpInside)
         acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
-
+        
     }
     
     @objc private func deny() {
@@ -59,8 +58,7 @@ class ChatRequestViewController: UIViewController {
         }
     }
     
-    private func customizeViews() {
-        
+    private func setupViews() {
         imageView.contentMode = .scaleAspectFill
         
         containerView.layer.cornerRadius = 30
@@ -85,12 +83,8 @@ class ChatRequestViewController: UIViewController {
         denyButton.layer.borderColor = UIColor.secondaryDark().cgColor
         denyButton.tintColor = .mainYellow()
         
-    }
-    
-    private func setupConstraints() {
-        
         let buttonStackView = UIStackView(arrangedSubviews: [acceptButton, denyButton],
-                                           axis: .horizontal, spacing: 20)
+                                          axis: .horizontal, spacing: 20)
         buttonStackView.distribution = .fillEqually
         
         view.addSubview(imageView)
@@ -128,26 +122,3 @@ class ChatRequestViewController: UIViewController {
         ])
     }
 }
-
-
-
-//MARK: - SwiftUI
-//import SwiftUI
-//
-//struct CharRequestVCProvider: PreviewProvider {
-//    static var previews: some View {
-//        ContainerView().edgesIgnoringSafeArea(.all)
-//    }
-//
-//    struct ContainerView: UIViewControllerRepresentable {
-//        let chatRequestViewController = ChatRequestViewController()
-//
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            return chatRequestViewController
-//        }
-//
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//
-//        }
-//    }
-//}

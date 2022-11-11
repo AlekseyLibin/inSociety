@@ -25,15 +25,15 @@ class ListViewController: UIViewController {
     
     private let currentUser: UserModel
     
-    var waitingChats = [ChatModel]()
-    var activeChats = [ChatModel]()
+    private var waitingChats = [ChatModel]()
+    private var activeChats = [ChatModel]()
     
     private var waitingChatsListener: ListenerRegistration?
     private var activeChatsListener: ListenerRegistration?
     
-    var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
-        
+    private var collectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
+    
     
     init(currentUser: UserModel) {
         self.currentUser = currentUser
@@ -61,7 +61,7 @@ class ListViewController: UIViewController {
         tabBarController?.tabBar.backgroundColor = .mainDark()
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.gray]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-                
+        
         setupCollectionView()
         setupSearchController()
         createDataSource()
@@ -152,7 +152,7 @@ extension ListViewController {
             collectionView, kind, indexPath in
             
             guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                                withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
+                                                                                      withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
             else { fatalError("Cannot create neu section header") }
             
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
@@ -214,7 +214,7 @@ extension ListViewController: WaitingChatsNavigation {
     }
     
     func moveToActive(chat: ChatModel) {
-        FirestoreService.shared.moveToActive(chat: chat) { result in
+        FirestoreService.shared.moveWaitingChatToActive(chat: chat) { result in
             switch result {
             case .success: break
             case .failure(let error):
@@ -294,19 +294,19 @@ extension ListViewController {
     
     private func createActiveChatsSection() -> NSCollectionLayoutSection {
         
-            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                  heightDimension: .fractionalHeight(1))
-            let item = NSCollectionLayoutItem(layoutSize: itemSize)
-            
-            let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                                   heightDimension: .absolute(80))
-            let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
-                                                         subitems: [item])
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.interGroupSpacing = 10
-            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20,
-                                                            bottom: 0, trailing: 20)
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                              heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
+                                               heightDimension: .absolute(80))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
+                                                     subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.interGroupSpacing = 10
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 20,
+                                                        bottom: 0, trailing: 20)
         
         let sectionHeader = createSectionHeader()
         section.boundarySupplementaryItems = [sectionHeader]
@@ -320,7 +320,7 @@ extension ListViewController {
                 switch result {
                 case .success(let message):
                     guard let cell = self.collectionView.cellForItem(at: [1, index]) as? ActiveChatCell else { return }
-                    cell.lastMessage.text = message.content
+                    cell.updateLastMessage(with: message.content)
                 case .failure(let error):
                     self.showAlert(with: "Error", and: error.localizedDescription)
                 }
@@ -336,27 +336,4 @@ extension ListViewController {
         return sectionHeader
     }
     
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct ListVCProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let mainTabBarController = MainTabBarController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return mainTabBarController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
 }

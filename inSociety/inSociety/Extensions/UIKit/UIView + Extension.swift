@@ -10,7 +10,7 @@ import UIKit
 
 //MARK: - Hide keyboard when tapped arround
 extension UIView {
-    func hideKeyboardWhenTappedOrSwiped() {
+     func hideKeyboardWhenTappedOrSwiped() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false

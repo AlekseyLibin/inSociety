@@ -11,20 +11,20 @@ class SignUpViewController: UIViewController {
     
     weak var delegate: AuthNavigationDelegate?
     
-    let scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     
-    let greetingLabel = UILabel(text: "Pleased to see you!", font: .galvji30())
-    let emailLabel = UILabel(text: "Email")
-    let passwordLabel = UILabel(text: "Password")
-    let confirmPasswordLabel = UILabel(text: "Confirm password")
-    let alreadyWithUsLabel = UILabel(text: "Already with us?")
+    private let greetingLabel = UILabel(text: "Pleased to see you!", font: .galvji30())
+    private let emailLabel = UILabel(text: "Email")
+    private let passwordLabel = UILabel(text: "Password")
+    private let confirmPasswordLabel = UILabel(text: "Confirm password")
+    private let alreadyWithUsLabel = UILabel(text: "Already with us?")
     
-    let emailextField = UnderlinedTextField(font: .galvji20())
-    let passwordTextField = UnderlinedTextField(font: .galvji20())
-    let confirmPasswordtextField = UnderlinedTextField(font: .galvji20())
+    private let emailextField = UnderlinedTextField(font: .galvji20())
+    private let passwordTextField = UnderlinedTextField(font: .galvji20())
+    private let confirmPasswordtextField = UnderlinedTextField(font: .galvji20())
     
-    let signUpButon = UIButton(title: "Sign up", titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
-    let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
+    private let signUpButon = UIButton(title: "Sign up", titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
+    private let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
     
     
     
@@ -151,28 +151,5 @@ extension SignUpViewController {
             loginButton.widthAnchor.constraint(equalToConstant: 100)
         ])
         
-    }
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct SignUpVCProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let signUpViewController = SignUpViewController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return signUpViewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
     }
 }

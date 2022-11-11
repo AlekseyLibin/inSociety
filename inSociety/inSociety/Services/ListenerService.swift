@@ -21,6 +21,7 @@ class ListenerService {
     }
     
     
+    
     func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allUsers = users
@@ -52,10 +53,10 @@ class ListenerService {
     }
     
     
+    
     func waitingChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allChats = chats
-//        guard let currentUserId = currentUserId else { return nil }
         let chatsReference = dataBase.collection("users/\(currentUserId)/waitingChats")
         let chatsListener = chatsReference.addSnapshotListener { querySnapshot, error in
             guard let querySnapshot = querySnapshot else {
@@ -84,6 +85,8 @@ class ListenerService {
         
         return chatsListener
     }
+    
+    
     
     func activeChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
         

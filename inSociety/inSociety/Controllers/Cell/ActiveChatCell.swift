@@ -7,28 +7,14 @@
 
 import UIKit
 
-class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
+class ActiveChatCell: UICollectionViewCell {
     
     static var reuseID = "ActiveChatCell"
     
-    //HCell - Hashable cell
-    func configure<HCell>(with value: HCell) where HCell : Hashable {
-        guard let user: ChatModel = value as? ChatModel else { return }
-        
-        backgroundColor = .secondaryDark()
-        userImageView.sd_setImage(with: URL(string: user.friendAvatarString))
-        userName.text = user.friendName
-        lastMessage.text = user.lastMessageContent
-        
-
-    }
-    
-    
-        
-    let userImageView = UIImageView()
-    let userName = UILabel(text: "User name", font: .laoSangamMN20())
-    let lastMessage = UILabel(text: "Last message", font: .laoSangamMN18())
-    let stripView = UIView()
+    private let userImageView = UIImageView()
+    private let userName = UILabel(text: "User name", font: .laoSangamMN20())
+    private let lastMessage = UILabel(text: "Last message", font: .laoSangamMN18())
+    private let stripView = UIView()
     
     
     override init(frame: CGRect) {
@@ -40,9 +26,28 @@ class ActiveChatCell: UICollectionViewCell, SelfConfiguringCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func updateLastMessage(with content: String) {
+        self.lastMessage.text = content
+    }
 }
 
 
+
+//MARK: - SelfConfiguringCell
+extension ActiveChatCell: SelfConfiguringCell {
+    
+    //HCell - Hashable cell
+    func configure<HCell>(with value: HCell) where HCell : Hashable {
+        guard let user: ChatModel = value as? ChatModel else { return }
+        
+        backgroundColor = .secondaryDark()
+        userImageView.sd_setImage(with: URL(string: user.friendAvatarString))
+        userName.text = user.friendName
+        lastMessage.text = user.lastMessageContent
+        
+    }
+}
 
 
 
@@ -85,29 +90,6 @@ extension ActiveChatCell {
             stripView.heightAnchor.constraint(equalTo: self.heightAnchor),
             stripView.widthAnchor.constraint(equalToConstant: 5)
         ])
-    }
-}
-
-
-
-//MARK: - SwiftUI
-import SwiftUI
-
-struct ActiveChatCellProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let mainTabBarController = MainTabBarController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return mainTabBarController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
     }
 }
 

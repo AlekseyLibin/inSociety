@@ -21,6 +21,7 @@ class StorageService {
         return Auth.auth().currentUser?.uid
     }
     
+    
     func upload(image: UIImage, completion: @escaping(Result<URL, Error>) -> Void) {
         
         guard

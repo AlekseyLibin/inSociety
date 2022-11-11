@@ -11,12 +11,7 @@ class MainTabBarController: UITabBarController {
     
     private let currentUser: UserModel
     
-    init(currentUser: UserModel = UserModel(userName: "userName",
-                                            userAvatarString: "ProfilePhoto",
-                                            email: "email",
-                                            description: "description",
-                                            sex: "sex",
-                                            id: "id")) {
+    init(currentUser: UserModel) {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
     }
