@@ -10,7 +10,9 @@ import FirebaseAuth
 import FirebaseStorage
 
 class StorageService {
+    
     static let shared = StorageService()
+    private init() {}
     
     let storageRef = Storage.storage().reference()
     private var avatarsRef: StorageReference {
