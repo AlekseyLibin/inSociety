@@ -10,7 +10,7 @@ import UIKit
 class ChatRequestViewController: UIViewController {
     
     let containerView = UIView()
-    let imageView = UIImageView(named: "SergeyLogo", contentMode: .scaleAspectFill)
+    let imageView = UIImageView()
     let nameLabel = UILabel(text: "",
                             font: .systemFont(ofSize: 20, weight: .light))
     let descriptionLabel = UILabel(text: "Chat request",
@@ -61,24 +61,29 @@ class ChatRequestViewController: UIViewController {
     
     private func customizeViews() {
         
+        imageView.contentMode = .scaleAspectFill
+        
         containerView.layer.cornerRadius = 30
-        containerView.backgroundColor = .mainWhite()
+        containerView.backgroundColor = .mainDark()
+        
+        nameLabel.textColor = .mainWhite()
         
         descriptionLabel.text = "\(nameLabel.text ?? "Somebody") wants to chat with you"
+        descriptionLabel.textColor = .mainWhite()
         descriptionLabel.numberOfLines = 0
         
         acceptButton.setTitle("ACCEPT", for: .normal)
         acceptButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .light)
         acceptButton.layer.cornerRadius = 10
         acceptButton.titleLabel?.tintColor = .black
-        acceptButton.backgroundColor = .systemYellow
+        acceptButton.backgroundColor = .mainYellow()
         
         denyButton.setTitle("Deny", for: .normal)
         denyButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .light)
         denyButton.layer.borderWidth = 1.2
         denyButton.layer.cornerRadius = 10
-        denyButton.layer.borderColor = UIColor.black.cgColor
-        denyButton.tintColor = .systemYellow
+        denyButton.layer.borderColor = UIColor.secondaryDark().cgColor
+        denyButton.tintColor = .mainYellow()
         
     }
     
@@ -94,12 +99,9 @@ class ChatRequestViewController: UIViewController {
         containerView.addSubview(descriptionLabel)
         containerView.addSubview(buttonStackView)
         
-        
-        containerView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        buttonStackView.translatesAutoresizingMaskIntoConstraints = false
+        [containerView, imageView, nameLabel, descriptionLabel, buttonStackView].forEach { view in
+            view.translatesAutoresizingMaskIntoConstraints = false
+        }
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: view.topAnchor),

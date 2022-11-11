@@ -64,75 +64,74 @@ class ProfileViewController: UIViewController {
 //MARK: - Setup Views
 extension ProfileViewController {
     func setupViews() {
-        
         view.backgroundColor = .mainDark()
-        
-        avatarView.sd_setImage(with: URL(string: currentUser.userAvatarString))
-        avatarView.clipsToBounds = true
-        avatarView.layer.masksToBounds = true
-        avatarView.layer.cornerRadius = 10
-        avatarView.contentMode = .scaleAspectFill
-        
-        
+                
+                avatarView.sd_setImage(with: URL(string: currentUser.userAvatarString))
+                avatarView.clipsToBounds = true
+                avatarView.layer.masksToBounds = true
+                avatarView.layer.cornerRadius = 10
+                avatarView.contentMode = .scaleAspectFill
+                
+                
 
-        fullNameLabel.text = currentUser.userName
-        fullNameLabel.font = .galvji30()
-        fullNameLabel.textColor = .mainYellow()
-        fullNameLabel.textAlignment = .center
-        
-        descriptionLabel.text = currentUser.description
-        descriptionLabel.numberOfLines = 3
-        descriptionLabel.font = .galvji20()
-        descriptionLabel.textColor = .mainYellow()
-        
-        activeChatsNumberLabel.font = .galvji25()
-        activeChatsNumberLabel.textColor = .mainYellow()
-        
-        waitingChatsNumberLabel.font = .galvji25()
-        waitingChatsNumberLabel.textColor = .mainYellow()
-        
-        
-        let secondaryView = UIView()
-        secondaryView.layer.cornerRadius = 20
-        secondaryView.backgroundColor = .secondaryDark()
-        
-        [avatarView, secondaryView, fullNameLabel, descriptionLabel, activeChatsNumberLabel, waitingChatsNumberLabel, logOutButton].forEach { subView in
-            view.addSubview(subView)
-            subView.translatesAutoresizingMaskIntoConstraints = false
-        }
+                fullNameLabel.text = currentUser.userName
+                fullNameLabel.font = .galvji30()
+                fullNameLabel.textColor = .mainYellow()
+                fullNameLabel.textAlignment = .center
+                
+                descriptionLabel.text = currentUser.description
+                descriptionLabel.numberOfLines = 3
+                descriptionLabel.font = .galvji20()
+                descriptionLabel.textColor = .mainYellow()
+                
+                activeChatsNumberLabel.font = .galvji25()
+                activeChatsNumberLabel.textColor = .mainYellow()
+                
+                waitingChatsNumberLabel.font = .galvji25()
+                waitingChatsNumberLabel.textColor = .mainYellow()
+                
+                
+                let secondaryView = UIView()
+                secondaryView.layer.cornerRadius = 20
+                secondaryView.backgroundColor = .secondaryDark()
+                
+                [avatarView, secondaryView, fullNameLabel, descriptionLabel, activeChatsNumberLabel, waitingChatsNumberLabel, logOutButton].forEach { subView in
+                    view.addSubview(subView)
+                    subView.translatesAutoresizingMaskIntoConstraints = false
+                }
 
-        NSLayoutConstraint.activate([
-            avatarView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            avatarView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            avatarView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor),
-            
-            fullNameLabel.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: 40),
-            fullNameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            fullNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            descriptionLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 30),
-            descriptionLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-            descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            activeChatsNumberLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 120),
-            activeChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
-            activeChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            
-            waitingChatsNumberLabel.topAnchor.constraint(equalTo: activeChatsNumberLabel.bottomAnchor, constant: 20),
-            waitingChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
-            waitingChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            
-            logOutButton.topAnchor.constraint(equalTo: waitingChatsNumberLabel.bottomAnchor, constant: 70),
-            logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logOutButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-            logOutButton.heightAnchor.constraint(equalToConstant: 50),
-            
-            secondaryView.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: -25),
-            secondaryView.bottomAnchor.constraint(equalTo: logOutButton.bottomAnchor, constant: 25),
-            secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-            secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
+                NSLayoutConstraint.activate([
+                    avatarView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+                    avatarView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    avatarView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+                    avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor),
+                    
+                    fullNameLabel.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: 40),
+                    fullNameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+                    fullNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    
+                    descriptionLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 30),
+                    descriptionLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+                    descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    
+                    activeChatsNumberLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 120),
+                    activeChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
+                    activeChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+                    
+                    waitingChatsNumberLabel.topAnchor.constraint(equalTo: activeChatsNumberLabel.bottomAnchor, constant: 20),
+                    waitingChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
+                    waitingChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+                    
+                    logOutButton.topAnchor.constraint(equalTo: waitingChatsNumberLabel.bottomAnchor, constant: 70),
+                    logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                    logOutButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
+                    logOutButton.heightAnchor.constraint(equalToConstant: 50),
+                    
+                    secondaryView.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: -25),
+                    secondaryView.bottomAnchor.constraint(equalTo: logOutButton.bottomAnchor, constant: 25),
+                    secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+                    secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+                ])
         
         
     }

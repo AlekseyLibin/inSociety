@@ -11,7 +11,7 @@ import FirebaseCore
 import GoogleSignIn
 
 class AuthViewController: UIViewController {
-        
+    
     let logoImage = UIImageView(named: "inSociety", contentMode: .scaleAspectFit)
     let googleLabel = UILabel(text: "Get started with")
     let emailLabel = UILabel(text: "Or sign up with")
@@ -61,14 +61,12 @@ extension AuthViewController {
                 FirestoreService.shared.getUserData(user: user) { result in
                     switch result {
                     case .success(let userModel):
-                        self.showAlert(with: "You have successfully logged in", and: "") {
-                            
-                            let main = MainTabBarController(currentUser: userModel)
-                            main.modalPresentationStyle = .fullScreen
-                            self.present(main, animated: true)
-                        }
+                        
+                        let main = MainTabBarController(currentUser: userModel)
+                        main.modalPresentationStyle = .fullScreen
+                        self.present(main, animated: true)
                     case .failure(_):
-                        self.showAlert(with: "You have successfully registrated", and: "") {
+                        self.showAlert(with: "You have successfully registrated") {
                             self.present(SetupProfileViewController(currentUser: user), animated: true)
                         }
                     }
@@ -91,6 +89,7 @@ extension AuthViewController {
         
         logoImage.setupColor(.mainYellow())
         
+        
         loginButton.layer.borderColor = UIColor.mainYellow().cgColor
         loginButton.layer.borderWidth = 2
         
@@ -112,16 +111,11 @@ extension AuthViewController {
         secondaryView.backgroundColor = .secondaryDark()
         
         
-        view.addSubview(logoImage)
-        view.addSubview(secondaryView)
-        view.addSubview(stackView)
-        
-        
         [logoImage, secondaryView, stackView].forEach { subView in
             view.addSubview(subView)
             subView.translatesAutoresizingMaskIntoConstraints = false
         }
-
+        
         NSLayoutConstraint.activate([
             
             logoImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),

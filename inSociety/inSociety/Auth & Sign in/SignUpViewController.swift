@@ -26,7 +26,7 @@ class SignUpViewController: UIViewController {
     let signUpButon = UIButton(title: "Sign up", titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
     let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
     
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class SignUpViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         scrollView.contentSize = view.frame.size
     }
     
@@ -54,11 +54,9 @@ extension SignUpViewController {
                                     password: passwordTextField.text,
                                     confirmPassword: confirmPasswordtextField.text) { result in
             switch result {
-            
+                
             case .success(let user):
-                self.showAlert(with: "Success", and: "You have been registrated") {
-                    self.present(SetupProfileViewController(currentUser: user), animated: true)
-                }
+                self.present(SetupProfileViewController(currentUser: user), animated: true)
             case .failure(let error ):
                 self.showAlert(with: "Failure!", and: error.localizedDescription)
             }
@@ -91,8 +89,13 @@ extension SignUpViewController {
         alreadyWithUsLabel.textColor = .lightGray
         
         emailextField.autocapitalizationType = .none
+        emailextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
+        passwordTextField.autocorrectionType = .no
+        passwordTextField.isSecureTextEntry = true
         confirmPasswordtextField.autocapitalizationType = .none
+        confirmPasswordtextField.autocorrectionType = .no
+        confirmPasswordtextField.isSecureTextEntry = true
         
         let emailStackView = UIStackView(
             arrangedSubviews: [emailLabel, emailextField], axis: .vertical, spacing: 10)
@@ -102,7 +105,7 @@ extension SignUpViewController {
             arrangedSubviews: [confirmPasswordLabel, confirmPasswordtextField], axis: .vertical, spacing: 10)
         
         let stackView = UIStackView(arrangedSubviews: [
-        emailStackView, passwordStackView, confirmPasswordStackView, signUpButon
+            emailStackView, passwordStackView, confirmPasswordStackView, signUpButon
         ], axis: .vertical, spacing: 40)
         
         let bottomStackView = UIStackView(arrangedSubviews: [alreadyWithUsLabel, loginButton],

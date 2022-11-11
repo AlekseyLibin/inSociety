@@ -54,7 +54,7 @@ class SetupProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         scrollView.contentSize = view.frame.size
     }
     
@@ -79,15 +79,13 @@ extension SetupProfileViewController {
                                                 avatarImage: fillImageView.profileImageView.image,
                                                 email: currentUser.email ?? "no email",
                                                 description: aboutMeTextField.text,
-    sex: sexSegmentedControl.titleForSegment(at:sexSegmentedControl.selectedSegmentIndex),
+                                                sex: sexSegmentedControl.titleForSegment(at:sexSegmentedControl.selectedSegmentIndex),
                                                 id: currentUser.uid) { result in
             switch result {
             case .success(let currentUser):
-                self.showAlert(with: "Success", and: "") {
-                    let mainTabBar = MainTabBarController(currentUser: currentUser)
-                    mainTabBar.modalPresentationStyle = .fullScreen
-                    self.present(mainTabBar, animated: true)
-                }
+                let mainTabBar = MainTabBarController(currentUser: currentUser)
+                mainTabBar.modalPresentationStyle = .fullScreen
+                self.present(mainTabBar, animated: true)
             case .failure(let error):
                 self.showAlert(with: "Error", and: error.localizedDescription)
             }
@@ -125,16 +123,18 @@ extension SetupProfileViewController {
             label.textColor = .mainYellow()
         }
         
-
+        
         sexSegmentedControl.selectedSegmentTintColor = UIColor.mainYellow()
         let yellowAttribute = [NSAttributedString.Key.foregroundColor: UIColor.mainYellow()]
-              sexSegmentedControl.setTitleTextAttributes(yellowAttribute, for:.normal)
+        sexSegmentedControl.setTitleTextAttributes(yellowAttribute, for:.normal)
         let blackAttribute = [NSAttributedString.Key.foregroundColor: UIColor.black]
-              sexSegmentedControl.setTitleTextAttributes(blackAttribute, for:.selected)
+        sexSegmentedControl.setTitleTextAttributes(blackAttribute, for:.selected)
         
         
         fullNameTextField.autocapitalizationType = .none
+        fullNameTextField.autocorrectionType = .no
         aboutMeTextField.autocapitalizationType = .none
+        aboutMeTextField.autocorrectionType = .no
         
         
         let fullNameStackview = UIStackView(arrangedSubviews: [fullNameLabel, fullNameTextField],
@@ -159,7 +159,7 @@ extension SetupProfileViewController {
         [scrollView, setupLabel, secondaryView, fillImageView, stackView].forEach { view in
             view.translatesAutoresizingMaskIntoConstraints = false
         }
-                
+        
         NSLayoutConstraint.activate([
             
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),

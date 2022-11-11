@@ -216,8 +216,7 @@ extension ListViewController: WaitingChatsNavigation {
     func moveToActive(chat: ChatModel) {
         FirestoreService.shared.moveToActive(chat: chat) { result in
             switch result {
-            case .success:
-                self.showAlert(with: "Success", and: "")
+            case .success: break
             case .failure(let error):
                 self.showAlert(with: "Error", and: error.localizedDescription)
             }

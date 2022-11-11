@@ -9,7 +9,7 @@ import UIKit
 
 //MARK: - ShowAlert method
 extension UIViewController {
-    func showAlert(with title: String, and message: String, completion: @escaping () -> Void = {} ) {
+    func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {} ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let sumbitButton = UIAlertAction(title: "Submit", style: .default) { _ in
             completion()

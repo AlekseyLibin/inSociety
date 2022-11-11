@@ -13,7 +13,7 @@ class LoginViewController: UIViewController {
     weak var delegate: AuthNavigationDelegate?
     
     let scrollView = UIScrollView()
-        
+    
     let greetingLabel = UILabel(text: "Welcome back!", font: .galvji30())
     let loginWithLabel = UILabel(text: "Login with")
     let orLabel = UILabel(text: "or")
@@ -47,10 +47,10 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
+        
         scrollView.contentSize = view.frame.size
     }
-
+    
 }
 
 
@@ -62,16 +62,14 @@ extension LoginViewController {
                                  password: passwordTextField.text) { result in
             switch result {
             case .success(let user):
-                self.showAlert(with: "Success", and: "You have successfully logged in") {
-                    FirestoreService.shared.getUserData(user: user) { result in
-                        switch result {
-                        case .success(let currentUser):
-                            let mainTabBar = MainTabBarController(currentUser: currentUser)
-                            mainTabBar.modalPresentationStyle = .fullScreen
-                            self.present(mainTabBar, animated: true)
-                        case .failure(_):
-                            self.present(SetupProfileViewController(currentUser: user), animated: true)
-                        }
+                FirestoreService.shared.getUserData(user: user) { result in
+                    switch result {
+                    case .success(let currentUser):
+                        let mainTabBar = MainTabBarController(currentUser: currentUser)
+                        mainTabBar.modalPresentationStyle = .fullScreen
+                        self.present(mainTabBar, animated: true)
+                    case .failure(_):
+                        self.present(SetupProfileViewController(currentUser: user), animated: true)
                     }
                 }
             case .failure(let error):
@@ -94,14 +92,11 @@ extension LoginViewController {
                 FirestoreService.shared.getUserData(user: user) { result in
                     switch result {
                     case .success(let userModel):
-                        self.showAlert(with: "You have successfully logged in", and: "") {
-                            
-                            let main = MainTabBarController(currentUser: userModel)
-                            main.modalPresentationStyle = .fullScreen
-                            self.present(main, animated: true)
-                        }
+                        let main = MainTabBarController(currentUser: userModel)
+                        main.modalPresentationStyle = .fullScreen
+                        self.present(main, animated: true)
                     case .failure(_):
-                        self.showAlert(with: "You have successfully registrated", and: "") {
+                        self.showAlert(with: "You have successfully registrated", and: nil) {
                             self.present(SetupProfileViewController(currentUser: user), animated: true)
                         }
                     }
@@ -124,7 +119,7 @@ extension LoginViewController {
         
         scrollView.hideKeyboardWhenTappedOrSwiped()
         scrollView.addKeyboardObservers()
-                
+        
         [greetingLabel, emailLabel, passwordLabel].forEach { label in
             label.textColor = .mainYellow()
         }
@@ -136,8 +131,11 @@ extension LoginViewController {
         googleButton.customizeGoogleButton()
         
         emailTextField.autocapitalizationType = .none
+        emailTextField.autocorrectionType = .no
         passwordTextField.autocapitalizationType = .none
-
+        passwordTextField.autocorrectionType = .no
+        passwordTextField.isSecureTextEntry = true
+        
         let loginView = LabelButtonView(label: loginWithLabel, button: googleButton)
         let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField],
                                          axis: .vertical, spacing: 10)
