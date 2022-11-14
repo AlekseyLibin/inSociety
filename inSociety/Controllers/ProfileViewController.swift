@@ -31,13 +31,10 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         tabBarController?.tabBar.backgroundColor = .mainDark()
         navigationController?.navigationBar.backgroundColor = .mainDark()
-        
-        logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
-        
+                
         setupViews()
+        
     }
-    
-    
     
     @objc private func logOut() {
         let ac = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .actionSheet)
@@ -61,18 +58,18 @@ class ProfileViewController: UIViewController {
 
 
 //MARK: - Setup Views
-extension ProfileViewController {
+private extension ProfileViewController {
     func setupViews() {
+        
         view.backgroundColor = .mainDark()
         fillChatsInformation()
+        logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         
         avatarView.sd_setImage(with: URL(string: currentUser.userAvatarString))
         avatarView.clipsToBounds = true
         avatarView.layer.masksToBounds = true
         avatarView.layer.cornerRadius = 10
         avatarView.contentMode = .scaleAspectFill
-        
-        
         
         fullNameLabel.text = currentUser.userName
         fullNameLabel.font = .galvji30()
@@ -133,31 +130,25 @@ extension ProfileViewController {
             secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
-        
-    }
-}
-
-
-
-//MARK: - Fill chats information
-extension ProfileViewController {
-    func fillChatsInformation() {
-        FirestoreService.shared.getNumberOfActiveChats(for: currentUser) { result in
-            switch result {
-            case .success(let count):
-                self.activeChatsNumberLabel.text = "Active chats: \(count.description)"
-            case .failure(let error):
-                self.activeChatsNumberLabel.text = "Could not get active chats data \n \(error.localizedDescription)"
+        func fillChatsInformation() {
+            FirestoreService.shared.getNumberOfActiveChats(for: currentUser) { result in
+                switch result {
+                case .success(let count):
+                    self.activeChatsNumberLabel.text = "Active chats: \(count.description)"
+                case .failure(let error):
+                    self.activeChatsNumberLabel.text = "Could not get active chats data \n \(error.localizedDescription)"
+                }
             }
-        }
-        
-        FirestoreService.shared.getNumberOfWaitingChats(for: currentUser) { result in
-            switch result {
-            case .success(let count):
-                self.waitingChatsNumberLabel.text = "Waiting chats: \(count.description)"
-            case .failure(let error):
-                self.activeChatsNumberLabel.text = "Could not get waiting chats data \n \(error.localizedDescription)"
+            
+            FirestoreService.shared.getNumberOfWaitingChats(for: currentUser) { result in
+                switch result {
+                case .success(let count):
+                    self.waitingChatsNumberLabel.text = "Waiting chats: \(count.description)"
+                case .failure(let error):
+                    self.activeChatsNumberLabel.text = "Could not get waiting chats data \n \(error.localizedDescription)"
+                }
             }
         }
     }
 }
+

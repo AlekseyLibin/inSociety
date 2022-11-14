@@ -27,7 +27,6 @@ class WaitingChatCell: UICollectionViewCell {
 }
 
 
-
 //MARK: - SelfConfiguringCell
 extension WaitingChatCell: SelfConfiguringCell {
     
@@ -39,10 +38,9 @@ extension WaitingChatCell: SelfConfiguringCell {
 }
 
 
-
 //MARK: - Setup constraints
-extension WaitingChatCell {
-    private func setupConstraints() {
+private extension WaitingChatCell {
+    func setupConstraints() {
         
         friendImageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(friendImageView)

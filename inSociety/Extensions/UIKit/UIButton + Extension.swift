@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 extension UIButton {
-    
     convenience init(title: String,
                      titleColor: UIColor,
                      font: UIFont? = .galvji20(),

@@ -40,7 +40,6 @@ class UserCell: UICollectionViewCell {
 }
 
 
-
 //MARK: - SelfConfiguringCell
 extension UserCell: SelfConfiguringCell {
     
@@ -59,10 +58,9 @@ extension UserCell: SelfConfiguringCell {
 }
 
 
-
 //MARK: Setup constraints
-extension UserCell {
-    private func setupViews() {
+private extension UserCell {
+    func setupViews() {
         
         backgroundColor = .mainDark()
         

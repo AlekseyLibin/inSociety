@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseCore
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     
@@ -23,25 +24,17 @@ class LoginViewController: UIViewController {
     private let emailTextField = UnderlinedTextField(font: .galvji20())
     private let passwordTextField = UnderlinedTextField(font: .galvji20())
     
-    
     private let loginButton = UIButton(title: "Login",
-                               titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
+                                       titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
     private let googleButton = UIButton(title: "Google",
-                                titleColor: .black, backgroundColor: .white, isShadow: true)
+                                        titleColor: .black, backgroundColor: .white, isShadow: true)
     private let signUpButton = UIButton(title: "Create new account",
-                                titleColor: .mainYellow(), backgroundColor: nil)
-    
-    
-    
+                                        titleColor: .mainYellow(), backgroundColor: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpViews()
-        
-        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
-        signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
-        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
         
     }
     
@@ -51,30 +44,10 @@ class LoginViewController: UIViewController {
         scrollView.contentSize = view.frame.size
     }
     
-}
-
-
-
-//MARK: - Buttons realization
-extension LoginViewController {
     @objc private func loginButtonPressed() {
         AuthService.shared.login(email: emailTextField.text,
                                  password: passwordTextField.text) { result in
-            switch result {
-            case .success(let user):
-                FirestoreService.shared.getUserData(user: user) { result in
-                    switch result {
-                    case .success(let currentUser):
-                        let mainTabBar = MainTabBarController(currentUser: currentUser)
-                        mainTabBar.modalPresentationStyle = .fullScreen
-                        self.present(mainTabBar, animated: true)
-                    case .failure(_):
-                        self.present(SetupProfileViewController(currentUser: user), animated: true)
-                    }
-                }
-            case .failure(let error):
-                self.showAlert(with: "Failure", and: error.localizedDescription)
-            }
+            self.tryToLogin(with: result)
         }
     }
     
@@ -87,33 +60,33 @@ extension LoginViewController {
     @objc private func googleButtonPressed() {
         let clientID = FirebaseApp.app()?.options.clientID
         AuthService.shared.googleLogin(clientID: clientID, presentingVC: self) { result in
-            switch result {
-            case .success(let user):
-                FirestoreService.shared.getUserData(user: user) { result in
-                    switch result {
-                    case .success(let userModel):
-                        let main = MainTabBarController(currentUser: userModel)
-                        main.modalPresentationStyle = .fullScreen
-                        self.present(main, animated: true)
-                    case .failure(_):
-                        self.showAlert(with: "You have successfully registrated", and: nil) {
-                            self.present(SetupProfileViewController(currentUser: user), animated: true)
-                        }
-                    }
+            self.tryToLogin(with: result)
+        }
+    }
+    
+    private func tryToLogin(with options: Result<User, Error>) {
+        switch options {
+        case .success(let user):
+            FirestoreService.shared.getUserData(user: user) { result in
+                switch result {
+                case .success(let currentUser):
+                    let mainTabBar = MainTabBarController(currentUser: currentUser)
+                    mainTabBar.modalPresentationStyle = .fullScreen
+                    self.present(mainTabBar, animated: true)
+                case .failure(_):
+                    self.present(SetupProfileViewController(currentUser: user), animated: true)
                 }
-            case .failure(let failure):
-                self.showAlert(with: "Error", and: failure.localizedDescription)
             }
+        case .failure(let error):
+            self.showAlert(with: "Error", and: error.localizedDescription)
         }
     }
 }
 
 
-
 //MARK: - Setup views
-extension LoginViewController {
-    
-    private func setUpViews() {
+private extension LoginViewController {
+    func setUpViews() {
         
         view.backgroundColor = .mainDark()
         
@@ -127,8 +100,11 @@ extension LoginViewController {
         loginWithLabel.textColor = .lightGray
         orLabel.textColor = .lightGray
         
-        
         googleButton.customizeGoogleButton()
+        
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        signUpButton.addTarget(self, action: #selector(signUpButtonPressed), for: .touchUpInside)
+        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
         
         emailTextField.autocapitalizationType = .none
         emailTextField.autocorrectionType = .no
@@ -161,7 +137,7 @@ extension LoginViewController {
         
         NSLayoutConstraint.activate([
             
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

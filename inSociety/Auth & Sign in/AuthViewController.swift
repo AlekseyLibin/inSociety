@@ -21,79 +21,63 @@ class AuthViewController: UIViewController {
     private let emailButton = UIButton(title: "email", titleColor: .black, backgroundColor: .mainYellow())
     private let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
     
-    private let signUpVC = SignUpViewController()
-    private let loginVC = LoginViewController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        
-        emailButton.addTarget(self, action: #selector(emailButtonPressed), for: .touchUpInside)
-        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
-        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
-        
-        signUpVC.delegate = self
-        loginVC.delegate = self
-        
     }
-    
-}
-
-
-
-//MARK: - Buttons realization
-extension AuthViewController {
     
     @objc private func emailButtonPressed() {
-        present(signUpVC, animated: true)
+        toSignUpVC()
     }
     
-    @objc private func loginButtonPressed() {
-        present(loginVC, animated: true)
+    @objc func loginButtonPressed() {
+        toLoginVC()
     }
     
     @objc private func googleButtonPressed() {
         let clientID = FirebaseApp.app()?.options.clientID
-        AuthService.shared.googleLogin(clientID: clientID, presentingVC: self) { result in
+        AuthService.shared.googleLogin(clientID: clientID, presentingVC: self) { [weak self] result in
             switch result {
             case .success(let user):
-                FirestoreService.shared.getUserData(user: user) { result in
+                FirestoreService.shared.getUserData(user: user) { [weak self] result in
                     switch result {
                     case .success(let userModel):
                         
                         let main = MainTabBarController(currentUser: userModel)
                         main.modalPresentationStyle = .fullScreen
-                        self.present(main, animated: true)
+                        self?.present(main, animated: true)
                     case .failure(_):
-                        self.showAlert(with: "You have successfully registrated") {
-                            self.present(SetupProfileViewController(currentUser: user), animated: true)
+                        self?.showAlert(with: "You have successfully registrated") {
+                            self?.present(SetupProfileViewController(currentUser: user), animated: true)
                         }
                     }
                 }
             case .failure(let failure):
-                self.showAlert(with: "Error", and: failure.localizedDescription)
+                self?.showAlert(with: "Error", and: failure.localizedDescription)
             }
         }
     }
+    
 }
 
 
-
 //MARK: - Setup views
-extension AuthViewController {
-    
-    private func setupViews() {
+private extension AuthViewController {
+    func setupViews() {
         
         view.backgroundColor = .mainDark()
         
         logoImage.setupColor(.mainYellow())
         
-        
         loginButton.layer.borderColor = UIColor.mainYellow().cgColor
         loginButton.layer.borderWidth = 2
         
         googleButton.customizeGoogleButton()
+        
+        emailButton.addTarget(self, action: #selector(emailButtonPressed), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
         
         [googleLabel, emailLabel, loginLabel].forEach { label in
             label.textColor = .lightGray
@@ -109,7 +93,6 @@ extension AuthViewController {
         let secondaryView = UIView()
         secondaryView.layer.cornerRadius = 20
         secondaryView.backgroundColor = .secondaryDark()
-        
         
         [logoImage, secondaryView, stackView].forEach { subView in
             view.addSubview(subView)
@@ -137,14 +120,17 @@ extension AuthViewController {
 }
 
 
-
 //MARK: - AuthNavigationDelegate
 extension AuthViewController: AuthNavigationDelegate {
     func toLoginVC() {
+        let loginVC = LoginViewController()
+        loginVC.delegate = self
         present(loginVC, animated: true)
     }
     
     func toSignUpVC() {
+        let signUpVC = SignUpViewController()
+        signUpVC.delegate = self
         present(signUpVC, animated: true)
     }
 }

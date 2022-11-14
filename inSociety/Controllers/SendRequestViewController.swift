@@ -18,7 +18,6 @@ class SendRequestViewController: UIViewController {
     private let descriptionLabel = UILabel()
     private let sendMessageTextField = SendMessageTextField()
     
-    
     private let user: UserModel
     
     init(user: UserModel) {
@@ -31,15 +30,10 @@ class SendRequestViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        
-        if let button = sendMessageTextField.rightView as? UIButton {
-            button.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
-        }
         
     }
     
@@ -47,17 +41,12 @@ class SendRequestViewController: UIViewController {
         super.viewDidAppear(animated)
         
         scrollView.contentSize = view.frame.size
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-
-//MARK: - Button realization
-extension SendRequestViewController {
+    
     @objc private func sendButtonPressed() {
         guard
             let message = sendMessageTextField.text,
@@ -91,10 +80,9 @@ extension SendRequestViewController {
 }
 
 
-
 //MARK: - Setup views
-extension SendRequestViewController {
-    private func setupViews() {
+private extension SendRequestViewController {
+    func setupViews() {
         
         view.backgroundColor = .white
         
@@ -114,6 +102,10 @@ extension SendRequestViewController {
         descriptionLabel.numberOfLines = 2
         descriptionLabel.textColor = .mainWhite()
         descriptionLabel.font = .systemFont(ofSize: 16, weight: .light)
+        
+        if let button = sendMessageTextField.rightView as? UIButton {
+            button.addTarget(self, action: #selector(sendButtonPressed), for: .touchUpInside)
+        }
         
         view.addSubview(imageView)
         view.addSubview(scrollView)
@@ -142,7 +134,6 @@ extension SendRequestViewController {
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
             
             nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 35),
             nameLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),

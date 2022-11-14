@@ -25,11 +25,9 @@ class SetupProfileViewController: UIViewController {
     
     private let sexSegmentedControl = UISegmentedControl(elements: ["Male", "Female", "Other"])
     private let submitButton = UIButton(title: "Submit", titleColor: .white,
-                                backgroundColor: .darkButtonColor(), isShadow: false)
+                                        backgroundColor: .darkButtonColor(), isShadow: false)
     
     private let currentUser: User
-    
-    
     
     init(currentUser: User) {
         self.currentUser = currentUser
@@ -48,8 +46,6 @@ class SetupProfileViewController: UIViewController {
         
         setupViews()
         
-        submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchUpInside)
-        fillImageView.addProfilePhoto.addTarget(self, action: #selector(addProfilePhoto), for: .touchUpInside)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,11 +58,7 @@ class SetupProfileViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-
-//MARK: - Buttons realization
-extension SetupProfileViewController {
+    
     @objc private func addProfilePhoto() {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -80,20 +72,18 @@ extension SetupProfileViewController {
                                                 email: currentUser.email ?? "no email",
                                                 description: aboutMeTextField.text,
                                                 sex: sexSegmentedControl.titleForSegment(at:sexSegmentedControl.selectedSegmentIndex),
-                                                id: currentUser.uid) { result in
+                                                id: currentUser.uid) { [weak self] result in
             switch result {
             case .success(let currentUser):
                 let mainTabBar = MainTabBarController(currentUser: currentUser)
                 mainTabBar.modalPresentationStyle = .fullScreen
-                self.present(mainTabBar, animated: true)
+                self?.present(mainTabBar, animated: true)
             case .failure(let error):
-                self.showAlert(with: "Error", and: error.localizedDescription)
+                self?.showAlert(with: "Error", and: error.localizedDescription)
             }
         }
     }
 }
-
-
 
 
 //MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
@@ -111,13 +101,16 @@ extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePic
 
 
 //MARK: - Setup views
-extension SetupProfileViewController {
-    private func setupViews() {
+private extension SetupProfileViewController {
+    func setupViews() {
         
         view.backgroundColor = .mainDark()
         
         scrollView.addKeyboardObservers()
         scrollView.hideKeyboardWhenTappedOrSwiped()
+        
+        submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchUpInside)
+        fillImageView.addProfilePhoto.addTarget(self, action: #selector(addProfilePhoto), for: .touchUpInside)
         
         [setupLabel, fullNameLabel, aboutMeLabel, sexLabel].forEach { label in
             label.textColor = .mainYellow()
@@ -129,7 +122,6 @@ extension SetupProfileViewController {
         sexSegmentedControl.setTitleTextAttributes(yellowAttribute, for:.normal)
         let blackAttribute = [NSAttributedString.Key.foregroundColor: UIColor.black]
         sexSegmentedControl.setTitleTextAttributes(blackAttribute, for:.selected)
-        
         
         fullNameTextField.autocapitalizationType = .none
         fullNameTextField.autocorrectionType = .no
@@ -162,7 +154,7 @@ extension SetupProfileViewController {
         
         NSLayoutConstraint.activate([
             
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

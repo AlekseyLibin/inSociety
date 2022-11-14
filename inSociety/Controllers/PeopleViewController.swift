@@ -30,13 +30,11 @@ class PeopleViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, UserModel>!
     
-    
     init(currentUser: UserModel) {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
         
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,10 +67,9 @@ class PeopleViewController: UIViewController {
 }
 
 
-
 //MARK: - Setup collectionView
-extension PeopleViewController {
-    private func setupCollectionView() {
+private extension PeopleViewController {
+    func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.backgroundColor = .mainDark()
@@ -87,7 +84,7 @@ extension PeopleViewController {
         
     }
 
-    private func reloadData(with searchText: String?) {
+    func reloadData(with searchText: String?) {
         
         let filteredUsers = users.filter { (user) -> Bool in
             user.contains(filter: searchText)
@@ -99,7 +96,6 @@ extension PeopleViewController {
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
-
 
 
 //MARK: - UICollectionViewDelegate
@@ -119,10 +115,9 @@ extension PeopleViewController: UICollectionViewDelegate {
 }
 
 
-
 //MARK: - Create Data Source
-extension PeopleViewController {
-    private func createDataSource() {
+private extension PeopleViewController {
+    func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, UserModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
             
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section kind") }
@@ -160,11 +155,9 @@ extension PeopleViewController {
 }
 
 
-
-
 //MARK: - Create Compositional Layout
-extension PeopleViewController {
-    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+private extension PeopleViewController {
+    func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
             
             guard let section = Section(rawValue: sectionIndex) else {
@@ -213,10 +206,9 @@ extension PeopleViewController {
 }
 
 
-
 //MARK: - SetupSearchController
-extension PeopleViewController {
-    private func setupSearchController() {
+private extension PeopleViewController {
+    func setupSearchController() {
         navigationController?.navigationBar.barTintColor = .mainDark()
         
         let searchController = UISearchController(searchResultsController: nil)
@@ -229,7 +221,6 @@ extension PeopleViewController {
 }
 
 
-
 //MARK: - UISearchBarDelegate
 extension PeopleViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -238,10 +229,9 @@ extension PeopleViewController: UISearchBarDelegate {
 }
 
 
-
 //MARK: - SetupTabBar
-extension PeopleViewController {
-    private func setupTabBar() {
+private extension PeopleViewController {
+    func setupTabBar() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .mainDark()

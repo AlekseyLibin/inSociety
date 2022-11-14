@@ -15,7 +15,6 @@ class FirestoreService {
     static let shared = FirestoreService()
     private init() {}
 
-    
     private let dataBase = Firestore.firestore()
     var currentUser: UserModel!
 
@@ -31,13 +30,8 @@ class FirestoreService {
     private var activeChatsReference: CollectionReference {
         return dataBase.collection("users/\(currentUser.id)/activeChats")
     }
-        
-    
-    
-    
     
 }
-
 
 
 //MARK: - User
@@ -77,7 +71,6 @@ extension FirestoreService {
             return
         }
         
-        
         var userModel = UserModel(userName: userName!,
                                   userAvatarString: "not exist",
                                   email: email,
@@ -103,7 +96,6 @@ extension FirestoreService {
     }
     
 }
-
 
 
 //MARK: - Chats
@@ -246,7 +238,6 @@ extension FirestoreService {
     }
     
 }
-
 
 
 //MARK: - Messages

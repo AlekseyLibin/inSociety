@@ -20,8 +20,6 @@ class ListenerService {
         return Auth.auth().currentUser!.uid
     }
     
-    
-    
     func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allUsers = users
@@ -51,7 +49,6 @@ class ListenerService {
         }
         return usersListener
     }
-    
     
     
     func waitingChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
@@ -87,7 +84,6 @@ class ListenerService {
     }
     
     
-    
     func activeChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allChats = chats
@@ -118,7 +114,6 @@ class ListenerService {
         }
         return chatsListener
     }
-    
     
     
     func messagesObserve(chat: ChatModel, completion: @escaping(Result<MessageModel, Error>) -> Void) -> ListenerRegistration {

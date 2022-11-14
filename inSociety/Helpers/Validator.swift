@@ -10,8 +10,8 @@ import Foundation
 class Validator {
     
     static func checkRegisterValidation(email: String?,
-                                password: String?,
-                                confirmPassword: String?) -> AuthError? {
+                                        password: String?,
+                                        confirmPassword: String?) -> AuthError? {
         
         //MARK: - Empty fields
         guard

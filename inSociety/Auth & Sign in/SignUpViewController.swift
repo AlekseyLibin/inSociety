@@ -26,15 +26,11 @@ class SignUpViewController: UIViewController {
     private let signUpButon = UIButton(title: "Sign up", titleColor: .white, backgroundColor: .darkButtonColor(), isShadow: false)
     private let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpViews()
         
-        signUpButon.addTarget(self, action: #selector(signUpButonPressed), for: .touchUpInside)
-        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,22 +39,16 @@ class SignUpViewController: UIViewController {
         scrollView.contentSize = view.frame.size
     }
     
-}
-
-
-
-//MARK: - Buttons realization
-extension SignUpViewController {
     @objc private func signUpButonPressed() {
         AuthService.shared.register(email: emailextField.text,
                                     password: passwordTextField.text,
-                                    confirmPassword: confirmPasswordtextField.text) { result in
+                                    confirmPassword: confirmPasswordtextField.text) { [weak self] result in
             switch result {
                 
             case .success(let user):
-                self.present(SetupProfileViewController(currentUser: user), animated: true)
+                self?.present(SetupProfileViewController(currentUser: user), animated: true)
             case .failure(let error ):
-                self.showAlert(with: "Failure!", and: error.localizedDescription)
+                self?.showAlert(with: "Failure!", and: error.localizedDescription)
             }
         }
     }
@@ -71,16 +61,18 @@ extension SignUpViewController {
 }
 
 
-
 //MARK: - Setup Views
-extension SignUpViewController {
+private extension SignUpViewController {
     
-    private func setUpViews() {
+    func setUpViews() {
         
         view.backgroundColor = .mainDark()
         
         scrollView.hideKeyboardWhenTappedOrSwiped()
         scrollView.addKeyboardObservers()
+        
+        signUpButon.addTarget(self, action: #selector(signUpButonPressed), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
         
         [greetingLabel, emailLabel, passwordLabel, confirmPasswordLabel].forEach { label in
             label.textColor = .mainYellow()
@@ -127,7 +119,7 @@ extension SignUpViewController {
         
         NSLayoutConstraint.activate([
             
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

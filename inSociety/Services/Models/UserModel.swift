@@ -72,7 +72,6 @@ struct UserModel: Hashable, Decodable {
         return rep
     }
     
-    
     func contains(filter: String?) -> Bool {
         guard let filter = filter, filter.isEmpty == false else { return true }
         

@@ -20,7 +20,6 @@ extension UIViewController {
 }
 
 
-
 //MARK: - Configure CollectionViewCell
 extension UIViewController {
      func configure<T: SelfConfiguringCell, U: Hashable>(collectionView: UICollectionView,

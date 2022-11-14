@@ -17,7 +17,6 @@ class AuthService {
     
     private let auth = Auth.auth()
     
-    
     func register(email: String?,
                   password: String?,
                   confirmPassword: String?,
@@ -46,7 +45,6 @@ class AuthService {
                password: String?,
                completion: @escaping (Result<User, Error>) -> Void) {
         
-        
         let error = Validator.checkLoginValidation(email: email, password: password)
         if let error = error {
             completion(.failure(error))
@@ -62,7 +60,6 @@ class AuthService {
             completion(.success(result.user))
         }
     }
-    
     
     
     func googleLogin(clientID: String?, presentingVC: UIViewController, completion: @escaping (Result<User, Error>) -> Void) {

@@ -23,7 +23,6 @@ struct ChatModel: Hashable, Decodable {
     }
     
     
-    
     init?(document: QueryDocumentSnapshot) {
         let data = document.data()
         guard let friendName = data["friendName"] as? String,
@@ -49,7 +48,6 @@ struct ChatModel: Hashable, Decodable {
         ]
         return rep
     }
-    
     
     func contains(filter: String?) -> Bool {
         guard let filter = filter, filter.isEmpty == false else { return true }

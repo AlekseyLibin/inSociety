@@ -35,14 +35,10 @@ class ChatRequestViewController: UIViewController {
     }
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        
-        denyButton.addTarget(self, action: #selector(deny), for: .touchUpInside)
-        acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
         
     }
     
@@ -82,6 +78,9 @@ class ChatRequestViewController: UIViewController {
         denyButton.layer.cornerRadius = 10
         denyButton.layer.borderColor = UIColor.secondaryDark().cgColor
         denyButton.tintColor = .mainYellow()
+        
+        denyButton.addTarget(self, action: #selector(deny), for: .touchUpInside)
+        acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
         
         let buttonStackView = UIStackView(arrangedSubviews: [acceptButton, denyButton],
                                           axis: .horizontal, spacing: 20)
