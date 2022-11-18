@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WaitingChatCell: UICollectionViewCell {
+final class WaitingChatCell: UICollectionViewCell {
     
     static var reuseID: String = "WaitingChatCell"
     

@@ -10,7 +10,7 @@ import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 
-class AuthService {
+final class AuthService {
     
     static let shared = AuthService()
     private init() {}
@@ -22,6 +22,15 @@ class AuthService {
                   confirmPassword: String?,
                   completion: @escaping (Result<User, Error>) -> Void) {
         
+        guard
+            let email = email,
+            let password = password,
+            let confirmPassword = confirmPassword
+        else {
+            completion(.failure(AuthError.fieldsAreNotFilled))
+            return
+        }
+        
         let error = Validator.checkRegisterValidation(email: email,
                                                       password: password,
                                                       confirmPassword: confirmPassword)
@@ -30,7 +39,7 @@ class AuthService {
             return
         }
         
-        auth.createUser(withEmail: email!, password: password!) { result, error in
+        auth.createUser(withEmail: email, password: password) { result, error in
             guard let result = result else {
                 completion(.failure(error!))
                 return
@@ -45,13 +54,21 @@ class AuthService {
                password: String?,
                completion: @escaping (Result<User, Error>) -> Void) {
         
+        guard
+            let email = email,
+            let password = password
+        else {
+            completion(.failure(AuthError.fieldsAreNotFilled))
+            return
+        }
+        
         let error = Validator.checkLoginValidation(email: email, password: password)
         if let error = error {
             completion(.failure(error))
             return
         }
         
-        auth.signIn(withEmail: email!, password: password!) { result, error in
+        auth.signIn(withEmail: email, password: password) { result, error in
             guard let result = result else {
                 completion(.failure(error!))
                 return
@@ -67,7 +84,8 @@ class AuthService {
         
         let config = GIDConfiguration(clientID: clientID)
         
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { [unowned self] user, error in
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { [weak self] user, error in
+            guard let self = self else { return }
             
             if let error = error {
                 completion(.failure(error))

@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-class UserCell: UICollectionViewCell {
+final class UserCell: UICollectionViewCell {
     
     private var userImageView = UIImageView()
     private let userNameLabel = UILabel(text: "", font: .laoSangamMN20())
@@ -79,12 +79,12 @@ private extension UserCell {
         containerView.addSubview(userNameLabel)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: self.topAnchor),
+            containerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             
-            userImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            userImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             userImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             userImageView.widthAnchor.constraint(equalTo: self.widthAnchor),
             userImageView.heightAnchor.constraint(equalTo: self.widthAnchor),

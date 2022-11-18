@@ -9,7 +9,7 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 
-class ListenerService {
+final class ListenerService {
     static let shared = ListenerService()
     
     private let dataBase = Firestore.firestore()
@@ -23,7 +23,8 @@ class ListenerService {
     func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allUsers = users
-        let usersListener = usersReference.addSnapshotListener { querySnapshot, error in
+        let usersListener = usersReference.addSnapshotListener { [weak self] querySnapshot, error in
+            guard let self = self else { return }
             guard let snapshot = querySnapshot else {
                 completion(.failure(error!))
                 return

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ActiveChatCell: UICollectionViewCell {
+final class ActiveChatCell: UICollectionViewCell {
     
     static var reuseID = "ActiveChatCell"
     

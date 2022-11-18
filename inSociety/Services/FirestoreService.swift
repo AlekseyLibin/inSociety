@@ -10,7 +10,7 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 
-class FirestoreService {
+final class FirestoreService {
     
     static let shared = FirestoreService()
     private init() {}
@@ -39,7 +39,9 @@ extension FirestoreService {
     
     func getUserData(user: User, completion: @escaping (Result<UserModel, Error>) -> Void) {
         let documentReference = usersReference.document(user.uid)
-        documentReference.getDocument { document, error in
+        documentReference.getDocument { [weak self] document, error in
+            guard let self = self else { return }
+            
             if let document = document, document.exists {
                 guard let user = UserModel(document: document) else {
                     completion(.failure(UserError.cannotUnwrapFBDataToUserModel))
@@ -60,8 +62,15 @@ extension FirestoreService {
                          sex: String?,
                          id: String,
                          completion: @escaping (Result<UserModel, Error>) -> Void) {
-        
-        guard Validator.isFilled(userName: userName, description: description, sex: sex) else {
+        guard
+            let userName = userName,
+            let avatarImage = avatarImage,
+            let description = description,
+            let sex = sex,
+            !userName.isEmpty,
+            !description.isEmpty,
+            !sex.isEmpty
+        else {
             completion(.failure(UserError.notFilled))
             return
         }
@@ -71,13 +80,15 @@ extension FirestoreService {
             return
         }
         
-        var userModel = UserModel(userName: userName!,
+        var userModel = UserModel(userName: userName,
                                   userAvatarString: "not exist",
                                   email: email,
-                                  description: description!,
-                                  sex: sex!,
+                                  description: description,
+                                  sex: sex,
                                   id: id)
-        StorageService.shared.upload(image: avatarImage!) { result in
+        StorageService.shared.upload(image: avatarImage) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let avatatarURL):
                 userModel.userAvatarString = avatatarURL.absoluteString
@@ -103,7 +114,9 @@ extension FirestoreService {
     
     func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
-        activeChatMessages.getDocuments { snapshot, error in
+        activeChatMessages.getDocuments { [weak self] snapshot, error in
+            guard let self = self else { return }
+            
             guard let snapshot = snapshot else {
                 completion(.failure(error!))
                 return
@@ -157,7 +170,9 @@ extension FirestoreService {
     }
     
     func deleteWaitingChat(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        waitingChatsReference.document(chat.friendID).delete { error in
+        waitingChatsReference.document(chat.friendID).delete { [weak self] error in
+            guard let self = self else { return }
+            
             if let error = error {
                 completion(.failure(error))
                 return
@@ -180,7 +195,9 @@ extension FirestoreService {
     }
     
     func moveWaitingChatToActive(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        getWaitingChatMessages(chat: chat) { result in
+        getWaitingChatMessages(chat: chat) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let messages):
                 self.deleteWaitingChat(chat: chat) { result in
@@ -298,12 +315,12 @@ extension FirestoreService {
         let messagesReference = activeChatsReference.document(chat.friendID).collection("messages")
         var messages = [MessageModel]()
         messagesReference.getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
+            guard let querySnapshot = querySnapshot else {
+                completion(.failure(error!))
                 return
             }
             
-            for document in querySnapshot!.documents {
+            for document in querySnapshot.documents {
                 guard let message = MessageModel(document: document) else { return }
                 messages.append(message)
             }
@@ -317,12 +334,12 @@ extension FirestoreService {
         let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
         var messages = [MessageModel]()
         messagesReference.getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
+            guard let querySnapshot = querySnapshot else {
+                completion(.failure(error!))
                 return
             }
             
-            for document in querySnapshot!.documents {
+            for document in querySnapshot.documents {
                 guard let message = MessageModel(document: document) else { return }
                 messages.append(message)
             }

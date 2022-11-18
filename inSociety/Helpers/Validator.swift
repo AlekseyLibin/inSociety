@@ -7,17 +7,14 @@
 
 import Foundation
 
-class Validator {
+final class Validator {
     
-    static func checkRegisterValidation(email: String?,
-                                        password: String?,
-                                        confirmPassword: String?) -> AuthError? {
+    static func checkRegisterValidation(email: String,
+                                        password: String,
+                                        confirmPassword: String) -> AuthError? {
         
         //MARK: - Empty fields
         guard
-            let email = email,
-            let password = password,
-            let confirmPassword = confirmPassword,
             !email.isEmpty,
             !password.isEmpty,
             !confirmPassword.isEmpty
@@ -39,32 +36,14 @@ class Validator {
         return nil
     }
     
-    static func checkLoginValidation(email: String?, password: String?) -> AuthError? {
+    static func checkLoginValidation(email: String, password: String) -> AuthError? {
         
         guard
-            let email = email,
-            let password = password,
             !email.isEmpty,
             !password.isEmpty
         else { return .fieldsAreNotFilled }
         
         return nil
-    }
-    
-    static func isFilled(userName: String?,
-                         description: String?,
-                         sex: String?) -> Bool {
-        
-        guard
-            let userName = userName,
-            let description = description,
-            let sex = sex,
-            !userName.isEmpty,
-            !description.isEmpty,
-            !sex.isEmpty
-        else { return false }
-        
-        return true
     }
     
 }

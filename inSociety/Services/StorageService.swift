@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseStorage
 
-class StorageService {
+final class StorageService {
     
     static let shared = StorageService()
     private init() {}
@@ -35,7 +35,9 @@ class StorageService {
         
         guard let currentUserId = currentUserId else { return }
         avatarsRef.child(currentUserId).putData(imageData,
-                                                metadata: metadata) { metadata, error in
+                                                metadata: metadata) { [weak self] metadata, error in
+            guard let self = self else { return }
+            
             guard let _ = metadata else {
                 completion(.failure(error!))
                 return

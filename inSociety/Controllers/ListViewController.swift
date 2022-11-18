@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class ListViewController: UIViewController {
+final class ListViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
         case waitingChats, activeChats
@@ -95,7 +95,9 @@ class ListViewController: UIViewController {
     
     func updateLastMessage() {
         for index in 0 ..< activeChats.count {
-            FirestoreService.shared.getLastMessage(chat: activeChats[index]) { result in
+            FirestoreService.shared.getLastMessage(chat: activeChats[index]) { [weak self] result in
+                guard let self = self else { return }
+                
                 switch result {
                 case .success(let message):
                     guard let cell = self.collectionView.cellForItem(at: [1, index]) as? ActiveChatCell else { return }
@@ -127,6 +129,7 @@ class ListViewController: UIViewController {
         
         activeChatsListener = ListenerService.shared.activeChatsObserve(chats: activeChats, completion: { [weak self] difference in
             guard let self = self else { return }
+            
             switch difference {
             case .success(let updatedActiveChats):
                 self.activeChats = updatedActiveChats
@@ -214,7 +217,9 @@ extension ListViewController: UICollectionViewDelegate {
 //MARK: - WaitingChatsNavigation
 extension ListViewController: WaitingChatsNavigation {
     func removeWaitingChat(chat: ChatModel) {
-        FirestoreService.shared.deleteWaitingChat(chat: chat) { result in
+        FirestoreService.shared.deleteWaitingChat(chat: chat) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
                 self.showAlert(with: "Success", and: "Chat request has been denied")
@@ -225,7 +230,9 @@ extension ListViewController: WaitingChatsNavigation {
     }
     
     func moveToActive(chat: ChatModel) {
-        FirestoreService.shared.moveWaitingChatToActive(chat: chat) { result in
+        FirestoreService.shared.moveWaitingChatToActive(chat: chat) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success: break
             case .failure(let error):

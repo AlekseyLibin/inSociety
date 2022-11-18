@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class PeopleViewController: UIViewController {
+final class PeopleViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
         case users
@@ -44,7 +44,9 @@ class PeopleViewController: UIViewController {
         setupCollectionView()
         createDataSource()
         
-        usersListener = ListenerService.shared.usersObserve(users: users, completion: { result in
+        usersListener = ListenerService.shared.usersObserve(users: users, completion: { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let updatedUsers):
                 self.users = updatedUsers
@@ -102,7 +104,9 @@ private extension PeopleViewController {
 extension PeopleViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selectedUser = self.dataSource.itemIdentifier(for: indexPath) else { return }
-        FirestoreService.shared.checkNoChats(with: selectedUser) { result in
+        FirestoreService.shared.checkNoChats(with: selectedUser) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
                 let sendRequestVC = SendRequestViewController(user: selectedUser)
@@ -138,7 +142,9 @@ private extension PeopleViewController {
                                                                                       withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
             else { fatalError("Cannot create new section header")}
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
-            self.numberOfUsersListener = ListenerService.shared.usersObserve(users: self.users) { result in
+            self.numberOfUsersListener = ListenerService.shared.usersObserve(users: self.users) { [weak self] result in
+                guard let self = self else { return }
+                
                 switch result {
                 case .success(let allUsers):
                     sectionHeader.configure(text: section.description(usersCount: allUsers.count),

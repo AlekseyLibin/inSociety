@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
 
-class AuthViewController: UIViewController {
+final class AuthViewController: UIViewController {
     
     private let logoImage = UIImageView(named: "inSociety", contentMode: .scaleAspectFit)
     private let googleLabel = UILabel(text: "Get started with")
@@ -38,23 +38,25 @@ class AuthViewController: UIViewController {
     @objc private func googleButtonPressed() {
         let clientID = FirebaseApp.app()?.options.clientID
         AuthService.shared.googleLogin(clientID: clientID, presentingVC: self) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let user):
-                FirestoreService.shared.getUserData(user: user) { [weak self] result in
+                FirestoreService.shared.getUserData(user: user) { result in
                     switch result {
                     case .success(let userModel):
                         
                         let main = MainTabBarController(currentUser: userModel)
                         main.modalPresentationStyle = .fullScreen
-                        self?.present(main, animated: true)
+                        self.present(main, animated: true)
                     case .failure(_):
-                        self?.showAlert(with: "You have successfully registrated") {
-                            self?.present(SetupProfileViewController(currentUser: user), animated: true)
+                        self.showAlert(with: "You have successfully registrated") {
+                            self.present(SetupProfileViewController(currentUser: user), animated: true)
                         }
                     }
                 }
             case .failure(let failure):
-                self?.showAlert(with: "Error", and: failure.localizedDescription)
+                self.showAlert(with: "Error", and: failure.localizedDescription)
             }
         }
     }
@@ -70,7 +72,10 @@ private extension AuthViewController {
         
         logoImage.setupColor(.mainYellow())
         
+        emailButton.addBaseShadow()
+        
         loginButton.layer.borderColor = UIColor.mainYellow().cgColor
+        loginButton.addBaseShadow()
         loginButton.layer.borderWidth = 2
         
         googleButton.customizeGoogleButton()
@@ -82,6 +87,12 @@ private extension AuthViewController {
         [googleLabel, emailLabel, loginLabel].forEach { label in
             label.textColor = .lightGray
         }
+        
+        setupConstraints()
+    }
+    
+    
+    func setupConstraints() {
         
         let googleView = LabelButtonView(label: googleLabel, button: googleButton)
         let emailView = LabelButtonView(label: emailLabel, button: emailButton)
@@ -101,7 +112,7 @@ private extension AuthViewController {
         
         NSLayoutConstraint.activate([
             
-            logoImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
             logoImage.heightAnchor.constraint(equalTo: logoImage.widthAnchor, multiplier: 0.34),
@@ -110,12 +121,11 @@ private extension AuthViewController {
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            secondaryView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -35),
+            secondaryView.topAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor, constant: -35),
             secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35)
         ])
-        
     }
 }
 

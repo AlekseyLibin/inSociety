@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SendMessageTextField: UITextField {
+final class SendMessageTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         

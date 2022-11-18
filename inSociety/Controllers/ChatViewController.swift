@@ -10,7 +10,7 @@ import MessageKit
 import InputBarAccessoryView
 import FirebaseFirestore
 
-class ChatViewController: MessagesViewController {
+final class ChatViewController: MessagesViewController {
     
     private var messages: [MessageModel] = []
     private var messageListener: ListenerRegistration?
@@ -42,12 +42,14 @@ class ChatViewController: MessagesViewController {
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         
         messageListener = ListenerService.shared.messagesObserve(chat: chat, completion: { [weak self] result in
+            guard let self = self else { return}
+            
             switch result {
             case .success(let message):
-                self?.chat.lastMessageContent = message.content
-                self?.insertNewMessage(message: message)
+                self.chat.lastMessageContent = message.content
+                self.insertNewMessage(message: message)
             case .failure(let error):
-                self?.showAlert(with: "Error", and: error.localizedDescription)
+                self.showAlert(with: "Error", and: error.localizedDescription)
             }
         })
         

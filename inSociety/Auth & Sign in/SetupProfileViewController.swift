@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import SDWebImage
 
-class SetupProfileViewController: UIViewController {
+final class SetupProfileViewController: UIViewController {
     
     private let fillImageView = AddPhotoView()
     
@@ -25,7 +25,7 @@ class SetupProfileViewController: UIViewController {
     
     private let sexSegmentedControl = UISegmentedControl(elements: ["Male", "Female", "Other"])
     private let submitButton = UIButton(title: "Submit", titleColor: .white,
-                                        backgroundColor: .darkButtonColor(), isShadow: false)
+                                        backgroundColor: .darkButtonColor())
     
     private let currentUser: User
     
@@ -71,15 +71,17 @@ class SetupProfileViewController: UIViewController {
                                                 avatarImage: fillImageView.profileImageView.image,
                                                 email: currentUser.email ?? "no email",
                                                 description: aboutMeTextField.text,
-                                                sex: sexSegmentedControl.titleForSegment(at:sexSegmentedControl.selectedSegmentIndex),
+                                                sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex),
                                                 id: currentUser.uid) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let currentUser):
                 let mainTabBar = MainTabBarController(currentUser: currentUser)
                 mainTabBar.modalPresentationStyle = .fullScreen
-                self?.present(mainTabBar, animated: true)
+                self.present(mainTabBar, animated: true)
             case .failure(let error):
-                self?.showAlert(with: "Error", and: error.localizedDescription)
+                self.showAlert(with: "Error", and: error.localizedDescription)
             }
         }
     }
@@ -128,6 +130,11 @@ private extension SetupProfileViewController {
         aboutMeTextField.autocapitalizationType = .none
         aboutMeTextField.autocorrectionType = .no
         
+        setupConstraints()
+    }
+    
+    
+    func setupConstraints() {
         
         let fullNameStackview = UIStackView(arrangedSubviews: [fullNameLabel, fullNameTextField],
                                             axis: .vertical, spacing: 10)
@@ -159,7 +166,7 @@ private extension SetupProfileViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            setupLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50),
+            setupLabel.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor, constant: 50),
             setupLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             
             fillImageView.topAnchor.constraint(equalTo: setupLabel.bottomAnchor, constant: 80),
@@ -169,13 +176,12 @@ private extension SetupProfileViewController {
             stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
             
-            secondaryView.topAnchor.constraint(equalTo: fillImageView.topAnchor, constant: -35),
+            secondaryView.topAnchor.constraint(equalTo: fillImageView.safeAreaLayoutGuide.topAnchor, constant: -35),
             secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35),
             
             submitButton.heightAnchor.constraint(equalToConstant: 60)
         ])
-        
     }
 }
