@@ -7,7 +7,7 @@
 
 import MessageKit
 
-class Sender: SenderType {
+final class Sender: SenderType {
     var senderId: String
     
     var displayName: String

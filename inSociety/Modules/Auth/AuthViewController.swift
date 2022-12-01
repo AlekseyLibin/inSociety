@@ -10,7 +10,12 @@ import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
 
-class AuthViewController: UIViewController {
+protocol AuthViewControllerProtocol: AnyObject {
+    func present(viewController: UIViewController)
+    func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
+}
+
+final class AuthViewController: BaseViewController {
     
     private let logoImage = UIImageView(named: "inSociety", contentMode: .scaleAspectFit)
     private let googleLabel = UILabel(text: "Get started with")
@@ -21,83 +26,59 @@ class AuthViewController: UIViewController {
     private let emailButton = UIButton(title: "email", titleColor: .black, backgroundColor: .mainYellow())
     private let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
     
-    private let signUpVC = SignUpViewController()
-    private let loginVC = LoginViewController()
+    var presenter: AuthPresenterInputProtocol!
+    private let configurator: AuthConfiguratorProtocol = AuthConfigurator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configurator.configure(with: self)
         setupViews()
-        
-        emailButton.addTarget(self, action: #selector(emailButtonPressed), for: .touchUpInside)
-        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
-        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
-        
-        signUpVC.delegate = self
-        loginVC.delegate = self
-        
     }
-    
-}
-
-
-
-//MARK: - Buttons realization
-extension AuthViewController {
     
     @objc private func emailButtonPressed() {
-        present(signUpVC, animated: true)
+        presenter.emailButtonPressed()
     }
     
-    @objc private func loginButtonPressed() {
-        present(loginVC, animated: true)
+    @objc func loginButtonPressed() {
+        presenter.loginButtonPressed()
     }
     
     @objc private func googleButtonPressed() {
-        let clientID = FirebaseApp.app()?.options.clientID
-        AuthService.shared.googleLogin(clientID: clientID, presentingVC: self) { result in
-            switch result {
-            case .success(let user):
-                FirestoreService.shared.getUserData(user: user) { result in
-                    switch result {
-                    case .success(let userModel):
-                        
-                        let main = MainTabBarController(currentUser: userModel)
-                        main.modalPresentationStyle = .fullScreen
-                        self.present(main, animated: true)
-                    case .failure(_):
-                        self.showAlert(with: "You have successfully registrated") {
-                            self.present(SetupProfileViewController(currentUser: user), animated: true)
-                        }
-                    }
-                }
-            case .failure(let failure):
-                self.showAlert(with: "Error", and: failure.localizedDescription)
-            }
+        AuthService.shared.googleLogin(presentingVC: self) { [weak self] result in
+            self?.presenter.signInWithGoogle(with: result)
         }
     }
-}
-
-
-
-//MARK: - Setup views
-extension AuthViewController {
     
-    private func setupViews() {
+}
+//MARK: - Setup views
+private extension AuthViewController {
+    func setupViews() {
         
         view.backgroundColor = .mainDark()
         
         logoImage.setupColor(.mainYellow())
         
+        emailButton.addBaseShadow()
         
         loginButton.layer.borderColor = UIColor.mainYellow().cgColor
+        loginButton.addBaseShadow()
         loginButton.layer.borderWidth = 2
         
         googleButton.customizeGoogleButton()
         
+        emailButton.addTarget(self, action: #selector(emailButtonPressed), for: .touchUpInside)
+        loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
+        googleButton.addTarget(self, action: #selector(googleButtonPressed), for: .touchUpInside)
+        
         [googleLabel, emailLabel, loginLabel].forEach { label in
             label.textColor = .lightGray
         }
+        
+        setupConstraints()
+    }
+    
+    
+    func setupConstraints() {
         
         let googleView = LabelButtonView(label: googleLabel, button: googleButton)
         let emailView = LabelButtonView(label: emailLabel, button: emailButton)
@@ -110,7 +91,6 @@ extension AuthViewController {
         secondaryView.layer.cornerRadius = 20
         secondaryView.backgroundColor = .secondaryDark()
         
-        
         [logoImage, secondaryView, stackView].forEach { subView in
             view.addSubview(subView)
             subView.translatesAutoresizingMaskIntoConstraints = false
@@ -118,7 +98,7 @@ extension AuthViewController {
         
         NSLayoutConstraint.activate([
             
-            logoImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
             logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
             logoImage.heightAnchor.constraint(equalTo: logoImage.widthAnchor, multiplier: 0.34),
@@ -127,25 +107,18 @@ extension AuthViewController {
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
             
-            secondaryView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -35),
+            secondaryView.topAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor, constant: -35),
             secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35)
         ])
-        
     }
 }
 
 
-
-//MARK: - AuthNavigationDelegate
-extension AuthViewController: AuthNavigationDelegate {
-    func toLoginVC() {
-        present(loginVC, animated: true)
-    }
+//MARK: - AuthViewControllerProtocol
+extension AuthViewController: AuthViewControllerProtocol {
     
-    func toSignUpVC() {
-        present(signUpVC, animated: true)
-    }
 }
+
 

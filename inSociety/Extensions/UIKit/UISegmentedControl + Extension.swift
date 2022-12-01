@@ -8,7 +8,6 @@
 import UIKit
 
 extension UISegmentedControl {
-    
     convenience init(elements: [String]) {
         self.init()
         self.selectedSegmentIndex = 0

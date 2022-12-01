@@ -7,9 +7,8 @@
 
 import UIKit
 
-//MARK: - ShowAlert method
 extension UIViewController {
-    func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {} ) {
+    @objc func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {} ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let sumbitButton = UIAlertAction(title: "Submit", style: .default) { _ in
             completion()
@@ -20,16 +19,15 @@ extension UIViewController {
 }
 
 
-
 //MARK: - Configure CollectionViewCell
 extension UIViewController {
      func configure<T: SelfConfiguringCell, U: Hashable>(collectionView: UICollectionView,
-                                                        cellType: T.Type,
-                                                        with value: U,
-                                                        for indexPath: IndexPath) -> T {
-        
+                                                         cellType: T.Type,
+                                                         with value: U,
+                                                         for indexPath: IndexPath) -> T {
+
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseID, for: indexPath) as? T else { fatalError("Unable to dequeue \(cellType)") }
-        
+
         cell.configure(with: value)
         return cell
     }

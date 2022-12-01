@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LabelButtonView: UIView {
+final class LabelButtonView: UIView {
     
     init(label: UILabel, button: UIButton) {
         super.init(frame: .zero)
@@ -20,7 +20,7 @@ class LabelButtonView: UIView {
         self.addSubview(button)
         
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: self.topAnchor),
+            label.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             label.leadingAnchor.constraint(equalTo: self.leadingAnchor)
         ])
         

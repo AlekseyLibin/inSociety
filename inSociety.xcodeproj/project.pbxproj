@@ -8,6 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		4318BFDD290C128300F8E8AB /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4318BFDC290C128300F8E8AB /* ChatViewController.swift */; };
+		43260B822938006A0008730C /* AuthConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B812938006A0008730C /* AuthConfigurator.swift */; };
+		43260B862938007F0008730C /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B852938007F0008730C /* AuthPresenter.swift */; };
+		43260B882938008C0008730C /* AuthInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B872938008C0008730C /* AuthInteractor.swift */; };
+		43260B8A2938009B0008730C /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B892938009B0008730C /* AuthRouter.swift */; };
+		43260B8C293800AD0008730C /* LoginConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B8B293800AC0008730C /* LoginConfigurator.swift */; };
+		43260B8E293800B60008730C /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B8D293800B60008730C /* LoginPresenter.swift */; };
+		43260B90293800C10008730C /* LoginInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B8F293800C10008730C /* LoginInteractor.swift */; };
+		43260B92293800CA0008730C /* LoginRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B91293800CA0008730C /* LoginRouter.swift */; };
+		43260B94293801100008730C /* SignUpConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B93293801100008730C /* SignUpConfigurator.swift */; };
+		43260B962938011D0008730C /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B952938011D0008730C /* SignUpPresenter.swift */; };
+		43260B98293801370008730C /* SignUpInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B97293801370008730C /* SignUpInteractor.swift */; };
+		43260B9A2938014B0008730C /* SignUpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B992938014B0008730C /* SignUpRouter.swift */; };
+		43260B9E2938016B0008730C /* SetupProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B9D2938016B0008730C /* SetupProfilePresenter.swift */; };
+		43260BA0293801760008730C /* SetupProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B9F293801760008730C /* SetupProfileInteractor.swift */; };
+		43260BA22938017F0008730C /* SetupProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260BA12938017F0008730C /* SetupProfileRouter.swift */; };
+		43260BA8293801E40008730C /* SetupProfileConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260BA7293801E40008730C /* SetupProfileConfigurator.swift */; };
+		43260BAA2939094E0008730C /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260BA92939094E0008730C /* BaseViewController.swift */; };
 		4367D0B02907F7100056C307 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0AF2907F7100056C307 /* StorageService.swift */; };
 		4367D0B22907FC970056C307 /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0B12907FC970056C307 /* UIImage + Extension.swift */; };
 		4367D0B4290849BE0056C307 /* ListenerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0B3290849BE0056C307 /* ListenerService.swift */; };
@@ -48,7 +65,6 @@
 		4397FB9529070A6D00FED534 /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9429070A6D00FED534 /* AuthError.swift */; };
 		4397FB9A29070AA900FED534 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9929070AA900FED534 /* UserError.swift */; };
 		4397FB9C29070ABB00FED534 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9B29070ABB00FED534 /* Validator.swift */; };
-		4397FB9E29070AEF00FED534 /* AuthNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9D29070AEF00FED534 /* AuthNavigationDelegate.swift */; };
 		4397FBA029070B0700FED534 /* SelfConfiguringCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB9F29070B0700FED534 /* SelfConfiguringCell.swift */; };
 		4397FBA329070B4500FED534 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FBA229070B4500FED534 /* AuthService.swift */; };
 		4397FBA529070B5800FED534 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FBA429070B5800FED534 /* FirestoreService.swift */; };
@@ -64,6 +80,23 @@
 /* Begin PBXFileReference section */
 		30B72A917C7A7C8864966385 /* Pods-inSociety.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inSociety.debug.xcconfig"; path = "Target Support Files/Pods-inSociety/Pods-inSociety.debug.xcconfig"; sourceTree = "<group>"; };
 		4318BFDC290C128300F8E8AB /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		43260B812938006A0008730C /* AuthConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfigurator.swift; sourceTree = "<group>"; };
+		43260B852938007F0008730C /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
+		43260B872938008C0008730C /* AuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInteractor.swift; sourceTree = "<group>"; };
+		43260B892938009B0008730C /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
+		43260B8B293800AC0008730C /* LoginConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurator.swift; sourceTree = "<group>"; };
+		43260B8D293800B60008730C /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		43260B8F293800C10008730C /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
+		43260B91293800CA0008730C /* LoginRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRouter.swift; sourceTree = "<group>"; };
+		43260B93293801100008730C /* SignUpConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpConfigurator.swift; sourceTree = "<group>"; };
+		43260B952938011D0008730C /* SignUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
+		43260B97293801370008730C /* SignUpInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInteractor.swift; sourceTree = "<group>"; };
+		43260B992938014B0008730C /* SignUpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRouter.swift; sourceTree = "<group>"; };
+		43260B9D2938016B0008730C /* SetupProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePresenter.swift; sourceTree = "<group>"; };
+		43260B9F293801760008730C /* SetupProfileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileInteractor.swift; sourceTree = "<group>"; };
+		43260BA12938017F0008730C /* SetupProfileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileRouter.swift; sourceTree = "<group>"; };
+		43260BA7293801E40008730C /* SetupProfileConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileConfigurator.swift; sourceTree = "<group>"; };
+		43260BA92939094E0008730C /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		4367D0AF2907F7100056C307 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		4367D0B12907FC970056C307 /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		4367D0B3290849BE0056C307 /* ListenerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenerService.swift; sourceTree = "<group>"; };
@@ -106,7 +139,6 @@
 		4397FB9429070A6D00FED534 /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		4397FB9929070AA900FED534 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		4397FB9B29070ABB00FED534 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
-		4397FB9D29070AEF00FED534 /* AuthNavigationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNavigationDelegate.swift; sourceTree = "<group>"; };
 		4397FB9F29070B0700FED534 /* SelfConfiguringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfConfiguringCell.swift; sourceTree = "<group>"; };
 		4397FBA229070B4500FED534 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		4397FBA429070B5800FED534 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
@@ -149,6 +181,54 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		43260BA3293801900008730C /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				43260B812938006A0008730C /* AuthConfigurator.swift */,
+				4397FB502907053800FED534 /* AuthViewController.swift */,
+				43260B852938007F0008730C /* AuthPresenter.swift */,
+				43260B872938008C0008730C /* AuthInteractor.swift */,
+				43260B892938009B0008730C /* AuthRouter.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		43260BA42938019C0008730C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				43260B8B293800AC0008730C /* LoginConfigurator.swift */,
+				4397FB522907055600FED534 /* LoginViewController.swift */,
+				43260B8D293800B60008730C /* LoginPresenter.swift */,
+				43260B8F293800C10008730C /* LoginInteractor.swift */,
+				43260B91293800CA0008730C /* LoginRouter.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		43260BA5293801A80008730C /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				43260B93293801100008730C /* SignUpConfigurator.swift */,
+				4397FB562907058B00FED534 /* SignUpViewController.swift */,
+				43260B952938011D0008730C /* SignUpPresenter.swift */,
+				43260B97293801370008730C /* SignUpInteractor.swift */,
+				43260B992938014B0008730C /* SignUpRouter.swift */,
+			);
+			path = SignUp;
+			sourceTree = "<group>";
+		};
+		43260BA6293801B20008730C /* SetupProfile */ = {
+			isa = PBXGroup;
+			children = (
+				43260BA7293801E40008730C /* SetupProfileConfigurator.swift */,
+				4397FB542907056F00FED534 /* SetupProfileViewController.swift */,
+				43260B9D2938016B0008730C /* SetupProfilePresenter.swift */,
+				43260B9F293801760008730C /* SetupProfileInteractor.swift */,
+				43260BA12938017F0008730C /* SetupProfileRouter.swift */,
+			);
+			path = SetupProfile;
+			sourceTree = "<group>";
+		};
 		4397FB18290702BC00FED534 = {
 			isa = PBXGroup;
 			children = (
@@ -172,8 +252,9 @@
 			children = (
 				4397FB4C290704F600FED534 /* AppDelegate.swift */,
 				4397FB4E2907051600FED534 /* SceneDelegate.swift */,
-				4397FB58290705A700FED534 /* Auth & Sign in */,
+				43E8995B2939573800414FAF /* Modules */,
 				4397FB612907064400FED534 /* Controllers */,
+				43CDAA122927CEA400ECF127 /* Views */,
 				4397FB712907077D00FED534 /* Extensions */,
 				4397FBA129070B2600FED534 /* Protocols */,
 				4397FB9629070A7B00FED534 /* Helpers */,
@@ -184,17 +265,6 @@
 				4397FB32290702BE00FED534 /* Info.plist */,
 			);
 			path = inSociety;
-			sourceTree = "<group>";
-		};
-		4397FB58290705A700FED534 /* Auth & Sign in */ = {
-			isa = PBXGroup;
-			children = (
-				4397FB502907053800FED534 /* AuthViewController.swift */,
-				4397FB522907055600FED534 /* LoginViewController.swift */,
-				4397FB562907058B00FED534 /* SignUpViewController.swift */,
-				4397FB542907056F00FED534 /* SetupProfileViewController.swift */,
-			);
-			path = "Auth & Sign in";
 			sourceTree = "<group>";
 		};
 		4397FB602907062200FED534 /* Cell */ = {
@@ -234,10 +304,6 @@
 		4397FB712907077D00FED534 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4397FB6F2907077500FED534 /* AddPhotoView.swift */,
-				4397FB74290707AF00FED534 /* LabelButtonView.swift */,
-				4397FB86290708E800FED534 /* SendMessageTextField.swift */,
-				4397FB76290707C500FED534 /* UnderlinedTextField.swift */,
 				4397FB722907079900FED534 /* Bundle-Decodable.swift */,
 				4397FB8C2907094500FED534 /* UIKit */,
 			);
@@ -266,6 +332,7 @@
 		4397FB9629070A7B00FED534 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				43260BA92939094E0008730C /* BaseViewController.swift */,
 				4397FB9429070A6D00FED534 /* AuthError.swift */,
 				4397FB9929070AA900FED534 /* UserError.swift */,
 				4397FB9B29070ABB00FED534 /* Validator.swift */,
@@ -276,7 +343,6 @@
 		4397FBA129070B2600FED534 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				4397FB9D29070AEF00FED534 /* AuthNavigationDelegate.swift */,
 				4397FB9F29070B0700FED534 /* SelfConfiguringCell.swift */,
 				4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */,
 			);
@@ -304,6 +370,28 @@
 				4397FBAA29070B8E00FED534 /* Models */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		43CDAA122927CEA400ECF127 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4397FB6F2907077500FED534 /* AddPhotoView.swift */,
+				4397FB74290707AF00FED534 /* LabelButtonView.swift */,
+				4397FB86290708E800FED534 /* SendMessageTextField.swift */,
+				4397FB76290707C500FED534 /* UnderlinedTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		43E8995B2939573800414FAF /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				43260BA3293801900008730C /* Auth */,
+				43260BA42938019C0008730C /* Login */,
+				43260BA5293801A80008730C /* SignUp */,
+				43260BA6293801B20008730C /* SetupProfile */,
+			);
+			path = Modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -423,8 +511,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43260BAA2939094E0008730C /* BaseViewController.swift in Sources */,
+				43260B9A2938014B0008730C /* SignUpRouter.swift in Sources */,
 				4397FB7F2907085200FED534 /* UIViewController + Extension.swift in Sources */,
 				4397FB632907066400FED534 /* ChatRequestViewController.swift in Sources */,
+				43260B8C293800AD0008730C /* LoginConfigurator.swift in Sources */,
 				4318BFDD290C128300F8E8AB /* ChatViewController.swift in Sources */,
 				4397FB6C290706D900FED534 /* PeopleViewController.swift in Sources */,
 				4397FB85290708B800FED534 /* UIStackView + Extension.swift in Sources */,
@@ -432,17 +523,24 @@
 				4397FB572907058B00FED534 /* SignUpViewController.swift in Sources */,
 				43AC54BC290C1AB200EF962C /* Sender.swift in Sources */,
 				43C426892911A70400205F5D /* ProfileViewController.swift in Sources */,
+				43260B822938006A0008730C /* AuthConfigurator.swift in Sources */,
 				4367D0B02907F7100056C307 /* StorageService.swift in Sources */,
+				43260B9E2938016B0008730C /* SetupProfilePresenter.swift in Sources */,
+				43260B8E293800B60008730C /* LoginPresenter.swift in Sources */,
 				4397FB68290706AE00FED534 /* ListViewController.swift in Sources */,
 				4397FB77290707C500FED534 /* UnderlinedTextField.swift in Sources */,
 				4397FBA929070B8400FED534 /* UserModel.swift in Sources */,
 				4397FB532907055600FED534 /* LoginViewController.swift in Sources */,
 				4367D0DD2909BA3B0056C307 /* WaitingChatsNavigation.swift in Sources */,
 				4397FB7B2907080B00FED534 /* UILabel + Extension.swift in Sources */,
+				43260BA22938017F0008730C /* SetupProfileRouter.swift in Sources */,
 				4397FBA729070B7100FED534 /* ChatModel.swift in Sources */,
+				43260B94293801100008730C /* SignUpConfigurator.swift in Sources */,
 				4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */,
 				43C4268729119B8B00205F5D /* UIScrollView + Extension.swift in Sources */,
 				4397FB4D290704F600FED534 /* AppDelegate.swift in Sources */,
+				43260B98293801370008730C /* SignUpInteractor.swift in Sources */,
+				43260B90293800C10008730C /* LoginInteractor.swift in Sources */,
 				4396F66D2914518F00BB988F /* UIView + Extension.swift in Sources */,
 				4397FB812907087400FED534 /* UIImageView + Extension.swift in Sources */,
 				4397FB8B2907093100FED534 /* UIFont + Extension.swift in Sources */,
@@ -452,24 +550,30 @@
 				4397FB5C290705F800FED534 /* WaitingChatCell.swift in Sources */,
 				4397FB512907053800FED534 /* AuthViewController.swift in Sources */,
 				4397FB87290708E800FED534 /* SendMessageTextField.swift in Sources */,
+				43260B862938007F0008730C /* AuthPresenter.swift in Sources */,
 				4397FB6A290706C400FED534 /* MainTabBarController.swift in Sources */,
 				4397FB5E2907060F00FED534 /* UserCell.swift in Sources */,
 				4397FB892907091800FED534 /* UIColor + Extension.swift in Sources */,
+				43260B8A2938009B0008730C /* AuthRouter.swift in Sources */,
 				4397FBA529070B5800FED534 /* FirestoreService.swift in Sources */,
-				4397FB9E29070AEF00FED534 /* AuthNavigationDelegate.swift in Sources */,
 				4367D0DB29097E2C0056C307 /* UIApplication + Extension.swift in Sources */,
 				4397FB9529070A6D00FED534 /* AuthError.swift in Sources */,
+				43260B882938008C0008730C /* AuthInteractor.swift in Sources */,
 				4397FB5A290705D900FED534 /* ActiveChatCell.swift in Sources */,
 				4397FB702907077500FED534 /* AddPhotoView.swift in Sources */,
 				4397FB9A29070AA900FED534 /* UserError.swift in Sources */,
 				4397FB9C29070ABB00FED534 /* Validator.swift in Sources */,
 				4397FB832907089E00FED534 /* UISegmentedControl + Extension.swift in Sources */,
 				4397FB652907068200FED534 /* SectionHeader.swift in Sources */,
+				43260BA8293801E40008730C /* SetupProfileConfigurator.swift in Sources */,
 				4397FB7D2907083000FED534 /* UIButton + Extension.swift in Sources */,
 				4397FB6E2907070A00FED534 /* SendRequestViewController.swift in Sources */,
 				4397FBA329070B4500FED534 /* AuthService.swift in Sources */,
 				4397FB552907056F00FED534 /* SetupProfileViewController.swift in Sources */,
+				43260BA0293801760008730C /* SetupProfileInteractor.swift in Sources */,
 				4397FB4F2907051600FED534 /* SceneDelegate.swift in Sources */,
+				43260B92293800CA0008730C /* LoginRouter.swift in Sources */,
+				43260B962938011D0008730C /* SignUpPresenter.swift in Sources */,
 				4367D0B4290849BE0056C307 /* ListenerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

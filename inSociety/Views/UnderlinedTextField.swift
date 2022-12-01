@@ -7,7 +7,7 @@
 
 import UIKit
 
-class UnderlinedTextField: UITextField {
+final class UnderlinedTextField: UITextField {
     convenience init(font: UIFont?) {
         self.init()
         

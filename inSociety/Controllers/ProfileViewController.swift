@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 import FirebaseAuth
 
-class ProfileViewController: UIViewController {
+final class ProfileViewController: UIViewController {
     
     private let currentUser: UserModel
     
@@ -19,7 +19,7 @@ class ProfileViewController: UIViewController {
     private var activeChatsNumberLabel = UILabel(text: "Active chats data")
     private var waitingChatsNumberLabel = UILabel(text: "Waiting chats data")
     
-    private var logOutButton = UIButton(title: "Log out", titleColor: .systemRed, backgroundColor: .darkButtonColor(), isShadow: false)
+    private var logOutButton = UIButton(title: "Log out", titleColor: .systemRed, backgroundColor: .darkButtonColor())
     
     
     init(currentUser: UserModel) {
@@ -31,23 +31,22 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         tabBarController?.tabBar.backgroundColor = .mainDark()
         navigationController?.navigationBar.backgroundColor = .mainDark()
-        
-        logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
-        
+                
         setupViews()
+        
     }
-    
-    
     
     @objc private func logOut() {
         let ac = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-        ac.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in
+        ac.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { [weak self] _ in
+            guard let self = self else { return }
+            
             do {
                 try Auth.auth().signOut()
                 UIApplication.shared.keyWindow?.rootViewController = AuthViewController()
             } catch {
-                self.showAlert(with: "Error", and: error.localizedDescription)
+//MARK: -                self.showAlert(with: "Error", and: error.localizedDescription)
             }
             
         }))
@@ -61,18 +60,18 @@ class ProfileViewController: UIViewController {
 
 
 //MARK: - Setup Views
-extension ProfileViewController {
+private extension ProfileViewController {
     func setupViews() {
+        
         view.backgroundColor = .mainDark()
         fillChatsInformation()
+        logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
         
         avatarView.sd_setImage(with: URL(string: currentUser.userAvatarString))
         avatarView.clipsToBounds = true
         avatarView.layer.masksToBounds = true
         avatarView.layer.cornerRadius = 10
         avatarView.contentMode = .scaleAspectFill
-        
-        
         
         fullNameLabel.text = currentUser.userName
         fullNameLabel.font = .galvji30()
@@ -90,6 +89,11 @@ extension ProfileViewController {
         waitingChatsNumberLabel.font = .galvji25()
         waitingChatsNumberLabel.textColor = .mainYellow()
         
+        setupConstraints()
+    }
+    
+    
+    func setupConstraints() {
         
         let secondaryView = UIView()
         secondaryView.layer.cornerRadius = 20
@@ -101,7 +105,7 @@ extension ProfileViewController {
         }
         
         NSLayoutConstraint.activate([
-            avatarView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            avatarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             avatarView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             avatarView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
             avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor),
@@ -127,22 +131,18 @@ extension ProfileViewController {
             logOutButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
             logOutButton.heightAnchor.constraint(equalToConstant: 50),
             
-            secondaryView.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: -25),
+            secondaryView.topAnchor.constraint(equalTo: fullNameLabel.safeAreaLayoutGuide.topAnchor, constant: -25),
             secondaryView.bottomAnchor.constraint(equalTo: logOutButton.bottomAnchor, constant: 25),
             secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        
-        
     }
-}
-
-
-
-//MARK: - Fill chats information
-extension ProfileViewController {
+    
+    
     func fillChatsInformation() {
-        FirestoreService.shared.getNumberOfActiveChats(for: currentUser) { result in
+        FirestoreService.shared.getNumberOfActiveChats(for: currentUser) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let count):
                 self.activeChatsNumberLabel.text = "Active chats: \(count.description)"
@@ -151,7 +151,9 @@ extension ProfileViewController {
             }
         }
         
-        FirestoreService.shared.getNumberOfWaitingChats(for: currentUser) { result in
+        FirestoreService.shared.getNumberOfWaitingChats(for: currentUser) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let count):
                 self.waitingChatsNumberLabel.text = "Waiting chats: \(count.description)"
@@ -161,3 +163,4 @@ extension ProfileViewController {
         }
     }
 }
+

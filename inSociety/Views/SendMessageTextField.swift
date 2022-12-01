@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SendMessageTextField: UITextField {
+final class SendMessageTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -38,8 +38,6 @@ class SendMessageTextField: UITextField {
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return bounds.insetBy(dx: 30, dy: 0)
     }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

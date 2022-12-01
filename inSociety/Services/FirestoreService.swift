@@ -10,14 +10,13 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 
-class FirestoreService {
+final class FirestoreService {
     
     static let shared = FirestoreService()
     private init() {}
 
-    
     private let dataBase = Firestore.firestore()
-    var currentUser: UserModel!
+    var currentUserModel: UserModel!
 
     
     private var usersReference: CollectionReference {
@@ -25,33 +24,35 @@ class FirestoreService {
     }
     
     private var waitingChatsReference: CollectionReference {
-        return dataBase.collection("users/\(currentUser.id)/waitingChats")
+        return dataBase.collection("users/\(currentUserModel.id)/waitingChats")
     }
     
     private var activeChatsReference: CollectionReference {
-        return dataBase.collection("users/\(currentUser.id)/activeChats")
+        return dataBase.collection("users/\(currentUserModel.id)/activeChats")
     }
-        
-    
-    
-    
     
 }
-
 
 
 //MARK: - User
 extension FirestoreService {
     
-    func getUserData(user: User, completion: @escaping (Result<UserModel, Error>) -> Void) {
-        let documentReference = usersReference.document(user.uid)
-        documentReference.getDocument { document, error in
+    func getDataForCurrentUser(completion: @escaping (Result<UserModel, Error>) -> Void) {
+        guard let currentUser = Auth.auth().currentUser else {
+            completion(.failure(UserError.cannotGetUserInfo))
+            return
+        }
+        
+        let documentReference = usersReference.document(currentUser.uid)
+        documentReference.getDocument { [weak self] document, error in
+            guard let self = self else { return }
+            
             if let document = document, document.exists {
                 guard let user = UserModel(document: document) else {
                     completion(.failure(UserError.cannotUnwrapFBDataToUserModel))
                     return
                 }
-                self.currentUser = user
+                self.currentUserModel = user
                 completion(.success(user))
             } else {
                 completion(.failure(UserError.cannotGetUserInfo))
@@ -66,8 +67,15 @@ extension FirestoreService {
                          sex: String?,
                          id: String,
                          completion: @escaping (Result<UserModel, Error>) -> Void) {
-        
-        guard Validator.isFilled(userName: userName, description: description, sex: sex) else {
+        guard
+            let userName = userName,
+            let avatarImage = avatarImage,
+            let description = description,
+            let sex = sex,
+            !userName.isEmpty,
+            !description.isEmpty,
+            !sex.isEmpty
+        else {
             completion(.failure(UserError.notFilled))
             return
         }
@@ -77,14 +85,15 @@ extension FirestoreService {
             return
         }
         
-        
-        var userModel = UserModel(userName: userName!,
+        var userModel = UserModel(userName: userName,
                                   userAvatarString: "not exist",
                                   email: email,
-                                  description: description!,
-                                  sex: sex!,
+                                  description: description,
+                                  sex: sex,
                                   id: id)
-        StorageService.shared.upload(image: avatarImage!) { result in
+        StorageService.shared.upload(image: avatarImage) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let avatatarURL):
                 userModel.userAvatarString = avatatarURL.absoluteString
@@ -93,7 +102,7 @@ extension FirestoreService {
                         completion(.failure(error))
                     } else {
                         completion(.success(userModel))
-                        self.currentUser = userModel
+                        self.currentUserModel = userModel
                     }
                 }
             case .failure(let error):
@@ -105,13 +114,14 @@ extension FirestoreService {
 }
 
 
-
 //MARK: - Chats
 extension FirestoreService {
     
     func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
-        activeChatMessages.getDocuments { snapshot, error in
+        activeChatMessages.getDocuments { [weak self] snapshot, error in
+            guard let self = self else { return }
+            
             guard let snapshot = snapshot else {
                 completion(.failure(error!))
                 return
@@ -141,14 +151,14 @@ extension FirestoreService {
     func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let waitingChatsReference = dataBase.collection("users/\(receiver.id)/waitingChats")
         
-        let messageReference = waitingChatsReference.document(currentUser.id).collection("messages")
+        let messageReference = waitingChatsReference.document(currentUserModel.id).collection("messages")
 
-        let message = MessageModel(user: currentUser, content: message)
-        let chat = ChatModel(friendName: currentUser.userName,
-                             friendAvatarString: currentUser.userAvatarString,
+        let message = MessageModel(user: currentUserModel, content: message)
+        let chat = ChatModel(friendName: currentUserModel.userName,
+                             friendAvatarString: currentUserModel.userAvatarString,
                              lastMessageContent: message.content,
-                             friendID: currentUser.id)
-        waitingChatsReference.document(currentUser.id).setData(chat.representation) { error in
+                             friendID: currentUserModel.id)
+        waitingChatsReference.document(currentUserModel.id).setData(chat.representation) { error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -165,7 +175,9 @@ extension FirestoreService {
     }
     
     func deleteWaitingChat(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        waitingChatsReference.document(chat.friendID).delete { error in
+        waitingChatsReference.document(chat.friendID).delete { [weak self] error in
+            guard let self = self else { return }
+            
             if let error = error {
                 completion(.failure(error))
                 return
@@ -188,7 +200,9 @@ extension FirestoreService {
     }
     
     func moveWaitingChatToActive(chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        getWaitingChatMessages(chat: chat) { result in
+        getWaitingChatMessages(chat: chat) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let messages):
                 self.deleteWaitingChat(chat: chat) { result in
@@ -248,18 +262,17 @@ extension FirestoreService {
 }
 
 
-
 //MARK: - Messages
 extension FirestoreService {
     func sendMessage(chat: ChatModel, message: MessageModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        let friendReference = usersReference.document(chat.friendID).collection("activeChats").document(currentUser.id)
+        let friendReference = usersReference.document(chat.friendID).collection("activeChats").document(currentUserModel.id)
         let friendMessageReference = friendReference.collection("messages")
-        let myMessageReference = usersReference.document(currentUser.id).collection("activeChats").document(chat.friendID).collection("messages")
+        let myMessageReference = usersReference.document(currentUserModel.id).collection("activeChats").document(chat.friendID).collection("messages")
         
-        let chatForFriend = ChatModel(friendName: currentUser.userName,
-                                      friendAvatarString: currentUser.userAvatarString,
+        let chatForFriend = ChatModel(friendName: currentUserModel.userName,
+                                      friendAvatarString: currentUserModel.userAvatarString,
                                       lastMessageContent: message.content,
-                                      friendID: currentUser.id)
+                                      friendID: currentUserModel.id)
         friendReference.setData(chatForFriend.representation) { error in
             if let error = error {
                 completion(.failure(error))
@@ -307,12 +320,12 @@ extension FirestoreService {
         let messagesReference = activeChatsReference.document(chat.friendID).collection("messages")
         var messages = [MessageModel]()
         messagesReference.getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
+            guard let querySnapshot = querySnapshot else {
+                completion(.failure(error!))
                 return
             }
             
-            for document in querySnapshot!.documents {
+            for document in querySnapshot.documents {
                 guard let message = MessageModel(document: document) else { return }
                 messages.append(message)
             }
@@ -326,12 +339,12 @@ extension FirestoreService {
         let messagesReference = waitingChatsReference.document(chat.friendID).collection("messages")
         var messages = [MessageModel]()
         messagesReference.getDocuments { querySnapshot, error in
-            if let error = error {
-                completion(.failure(error))
+            guard let querySnapshot = querySnapshot else {
+                completion(.failure(error!))
                 return
             }
             
-            for document in querySnapshot!.documents {
+            for document in querySnapshot.documents {
                 guard let message = MessageModel(document: document) else { return }
                 messages.append(message)
             }

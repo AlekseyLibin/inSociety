@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ActiveChatCell: UICollectionViewCell {
+final class ActiveChatCell: UICollectionViewCell {
     
     static var reuseID = "ActiveChatCell"
     
@@ -15,7 +15,6 @@ class ActiveChatCell: UICollectionViewCell {
     private let userName = UILabel(text: "User name", font: .laoSangamMN20())
     private let lastMessage = UILabel(text: "Last message", font: .laoSangamMN18())
     private let stripView = UIView()
-    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +32,6 @@ class ActiveChatCell: UICollectionViewCell {
 }
 
 
-
 //MARK: - SelfConfiguringCell
 extension ActiveChatCell: SelfConfiguringCell {
     
@@ -45,10 +43,8 @@ extension ActiveChatCell: SelfConfiguringCell {
         userImageView.sd_setImage(with: URL(string: user.friendAvatarString))
         userName.text = user.friendName
         lastMessage.text = user.lastMessageContent
-        
     }
 }
-
 
 
 //MARK: - Setup Constraints

@@ -22,7 +22,7 @@ struct MessageModel: Hashable, MessageType {
     var messageId: String {
         return id ?? UUID().uuidString
     }
-
+    
     
     init(user: UserModel, content: String) {
         self.content = content
@@ -63,8 +63,9 @@ struct MessageModel: Hashable, MessageType {
     static func == (lhs: MessageModel, rhs: MessageModel) -> Bool {
         return lhs.messageId == rhs.messageId
     }
-    
 }
+
+
 extension MessageModel: Comparable {
     static func < (lhs: MessageModel, rhs: MessageModel) -> Bool {
         return lhs.sentDate < rhs.sentDate

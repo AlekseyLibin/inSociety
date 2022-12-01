@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class PeopleViewController: UIViewController {
+final class PeopleViewController: UIViewController {
     
     enum Section: Int, CaseIterable {
         case users
@@ -30,13 +30,11 @@ class PeopleViewController: UIViewController {
     private var collectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, UserModel>!
     
-    
     init(currentUser: UserModel) {
         self.currentUser = currentUser
         super.init(nibName: nil, bundle: nil)
         
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +44,9 @@ class PeopleViewController: UIViewController {
         setupCollectionView()
         createDataSource()
         
-        usersListener = ListenerService.shared.usersObserve(users: users, completion: { result in
+        usersListener = ListenerService.shared.usersObserve(users: users, completion: { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success(let updatedUsers):
                 self.users = updatedUsers
@@ -69,10 +69,9 @@ class PeopleViewController: UIViewController {
 }
 
 
-
 //MARK: - Setup collectionView
-extension PeopleViewController {
-    private func setupCollectionView() {
+private extension PeopleViewController {
+    func setupCollectionView() {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.backgroundColor = .mainDark()
@@ -87,7 +86,7 @@ extension PeopleViewController {
         
     }
 
-    private func reloadData(with searchText: String?) {
+    func reloadData(with searchText: String?) {
         
         let filteredUsers = users.filter { (user) -> Bool in
             user.contains(filter: searchText)
@@ -101,12 +100,13 @@ extension PeopleViewController {
 }
 
 
-
 //MARK: - UICollectionViewDelegate
 extension PeopleViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let selectedUser = self.dataSource.itemIdentifier(for: indexPath) else { return }
-        FirestoreService.shared.checkNoChats(with: selectedUser) { result in
+        FirestoreService.shared.checkNoChats(with: selectedUser) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
             case .success:
                 let sendRequestVC = SendRequestViewController(user: selectedUser)
@@ -119,10 +119,9 @@ extension PeopleViewController: UICollectionViewDelegate {
 }
 
 
-
 //MARK: - Create Data Source
-extension PeopleViewController {
-    private func createDataSource() {
+private extension PeopleViewController {
+    func createDataSource() {
         dataSource = UICollectionViewDiffableDataSource<Section, UserModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
             
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section kind") }
@@ -143,7 +142,9 @@ extension PeopleViewController {
                                                                                       withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
             else { fatalError("Cannot create new section header")}
             guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
-            self.numberOfUsersListener = ListenerService.shared.usersObserve(users: self.users) { result in
+            self.numberOfUsersListener = ListenerService.shared.usersObserve(users: self.users) { [weak self] result in
+                guard let self = self else { return }
+                
                 switch result {
                 case .success(let allUsers):
                     sectionHeader.configure(text: section.description(usersCount: allUsers.count),
@@ -160,11 +161,9 @@ extension PeopleViewController {
 }
 
 
-
-
 //MARK: - Create Compositional Layout
-extension PeopleViewController {
-    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+private extension PeopleViewController {
+    func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
             
             guard let section = Section(rawValue: sectionIndex) else {
@@ -213,10 +212,9 @@ extension PeopleViewController {
 }
 
 
-
 //MARK: - SetupSearchController
-extension PeopleViewController {
-    private func setupSearchController() {
+private extension PeopleViewController {
+    func setupSearchController() {
         navigationController?.navigationBar.barTintColor = .mainDark()
         
         let searchController = UISearchController(searchResultsController: nil)
@@ -229,7 +227,6 @@ extension PeopleViewController {
 }
 
 
-
 //MARK: - UISearchBarDelegate
 extension PeopleViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -238,10 +235,9 @@ extension PeopleViewController: UISearchBarDelegate {
 }
 
 
-
 //MARK: - SetupTabBar
-extension PeopleViewController {
-    private func setupTabBar() {
+private extension PeopleViewController {
+    func setupTabBar() {
         let appearance = UITabBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .mainDark()

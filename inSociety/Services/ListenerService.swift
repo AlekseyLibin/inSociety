@@ -9,7 +9,7 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseFirestore
 
-class ListenerService {
+final class ListenerService {
     static let shared = ListenerService()
     
     private let dataBase = Firestore.firestore()
@@ -20,12 +20,11 @@ class ListenerService {
         return Auth.auth().currentUser!.uid
     }
     
-    
-    
     func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allUsers = users
-        let usersListener = usersReference.addSnapshotListener { querySnapshot, error in
+        let usersListener = usersReference.addSnapshotListener { [weak self] querySnapshot, error in
+            guard let self = self else { return }
             guard let snapshot = querySnapshot else {
                 completion(.failure(error!))
                 return
@@ -51,7 +50,6 @@ class ListenerService {
         }
         return usersListener
     }
-    
     
     
     func waitingChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
@@ -87,7 +85,6 @@ class ListenerService {
     }
     
     
-    
     func activeChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
         
         var allChats = chats
@@ -118,7 +115,6 @@ class ListenerService {
         }
         return chatsListener
     }
-    
     
     
     func messagesObserve(chat: ChatModel, completion: @escaping(Result<MessageModel, Error>) -> Void) -> ListenerRegistration {

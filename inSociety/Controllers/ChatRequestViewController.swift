@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ChatRequestViewController: UIViewController {
+final class ChatRequestViewController: UIViewController {
     
     private let containerView = UIView()
     private let imageView = UIImageView()
@@ -35,14 +35,10 @@ class ChatRequestViewController: UIViewController {
     }
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
-        
-        denyButton.addTarget(self, action: #selector(deny), for: .touchUpInside)
-        acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
         
     }
     
@@ -83,6 +79,15 @@ class ChatRequestViewController: UIViewController {
         denyButton.layer.borderColor = UIColor.secondaryDark().cgColor
         denyButton.tintColor = .mainYellow()
         
+        denyButton.addTarget(self, action: #selector(deny), for: .touchUpInside)
+        acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
+        
+        setupConstraints()
+    }
+    
+    
+    func setupConstraints() {
+        
         let buttonStackView = UIStackView(arrangedSubviews: [acceptButton, denyButton],
                                           axis: .horizontal, spacing: 20)
         buttonStackView.distribution = .fillEqually
@@ -98,7 +103,7 @@ class ChatRequestViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: view.topAnchor),
+            imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             imageView.bottomAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
@@ -108,7 +113,7 @@ class ChatRequestViewController: UIViewController {
             containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 35),
+            nameLabel.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 35),
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
             descriptionLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),

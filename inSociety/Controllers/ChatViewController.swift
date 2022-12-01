@@ -10,7 +10,7 @@ import MessageKit
 import InputBarAccessoryView
 import FirebaseFirestore
 
-class ChatViewController: MessagesViewController {
+final class ChatViewController: MessagesViewController {
     
     private var messages: [MessageModel] = []
     private var messageListener: ListenerRegistration?
@@ -41,7 +41,9 @@ class ChatViewController: MessagesViewController {
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.mainYellow()]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
         
-        messageListener = ListenerService.shared.messagesObserve(chat: chat, completion: { result in
+        messageListener = ListenerService.shared.messagesObserve(chat: chat, completion: { [weak self] result in
+            guard let self = self else { return}
+            
             switch result {
             case .success(let message):
                 self.chat.lastMessageContent = message.content
@@ -87,7 +89,6 @@ class ChatViewController: MessagesViewController {
 }
 
 
-
 //MARK: - MessagesDisplayDelegate
 extension ChatViewController: MessagesDisplayDelegate {
     func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
@@ -115,7 +116,6 @@ extension ChatViewController: MessagesDisplayDelegate {
 }
 
 
-
 //MARK: - MessagesLayoutDelegate
 extension ChatViewController: MessagesLayoutDelegate {
     
@@ -129,7 +129,6 @@ extension ChatViewController: MessagesLayoutDelegate {
         return 30
     }
 }
-
 
 
 // MARK: - ConfigureMessageInputBar
@@ -168,7 +167,6 @@ extension ChatViewController {
 }
 
 
-
 //MARK: - MessagesDataSource
 extension ChatViewController: MessagesDataSource {
     func currentSender() -> MessageKit.SenderType {
@@ -201,17 +199,16 @@ extension ChatViewController: MessagesDataSource {
 }
 
 
-
 //MARK: - InputBarAccessoryViewDelegate
 extension ChatViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         let message = MessageModel(user: currentUser, content: text)
-        FirestoreService.shared.sendMessage(chat: chat, message: message) { result in
+        FirestoreService.shared.sendMessage(chat: chat, message: message) { [weak self] result in
             switch result {
             case .success:
-                self.messagesCollectionView.scrollToLastItem()
+                self?.messagesCollectionView.scrollToLastItem()
             case .failure(let error):
-                self.showAlert(with: "Error", and: error.localizedDescription)
+                self?.showAlert(with: "Error", and: error.localizedDescription)
             }
         }
         inputBar.inputTextView.text = ""

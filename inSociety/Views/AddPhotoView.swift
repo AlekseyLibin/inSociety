@@ -7,9 +7,9 @@
 
 import UIKit
 
-class AddPhotoView: UIView {
+final class AddPhotoView: UIView {
     
-    var profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
         let image = UIImageView(named: "ProfilePhoto", contentMode: .scaleAspectFill)
         image.clipsToBounds = true
         image.layer.borderColor = UIColor.black.cgColor
@@ -18,7 +18,7 @@ class AddPhotoView: UIView {
         return image
     }()
     
-    var addProfilePhoto: UIButton = {
+    lazy var addProfilePhoto: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "AddProfilePhoto")
@@ -38,7 +38,7 @@ class AddPhotoView: UIView {
     private func setupConstraints() {
         
         NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            profileImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
             profileImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             profileImageView.widthAnchor.constraint(equalToConstant: 100),
             profileImageView.heightAnchor.constraint(equalToConstant: 100),
