@@ -17,9 +17,11 @@ class BaseViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    override func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {}) {
-        super.showAlert(with: title, and: message, completion: completion)
+    deinit {
+        print(" - deinit \(String(describing: type(of: self)))")
     }
+    
+    
     
 //    func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {} ) {
 //        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)

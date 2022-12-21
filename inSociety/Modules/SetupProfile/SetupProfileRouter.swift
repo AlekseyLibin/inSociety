@@ -11,9 +11,9 @@ protocol SetupProfileRouterProtocol {
 
 final class SetupProfileRouter {
     
-    private weak var viewController: SetupProfileViewControllerProtocol!
+    private weak var viewController: BaseViewController!
     
-    init(viewController: SetupProfileViewControllerProtocol!) {
+    init(viewController: BaseViewController!) {
         self.viewController = viewController
     }
 }
@@ -22,12 +22,8 @@ extension SetupProfileRouter: SetupProfileRouterProtocol {
     
     func toMainVC(currentUser: UserModel) {
         
-        //MARK: - Fail - navigationController in nil
-//        viewController.navigationController?.setViewControllers([main], animated: true)
-        
         let main = MainTabBarController(currentUser: currentUser)
-        main.modalPresentationStyle = .fullScreen
-        viewController.present(viewController: main)
+        viewController.navigationController?.setViewControllers([main], animated: true)
     }
     
     

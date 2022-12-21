@@ -11,7 +11,6 @@ import SDWebImage
 
 protocol SetupProfileViewControllerProtocol: AnyObject {
     func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
-    func present(viewController: UIViewController)
 }
 
 final class SetupProfileViewController: BaseViewController {
@@ -57,8 +56,8 @@ final class SetupProfileViewController: BaseViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         scrollView.contentSize = view.frame.size
     }
@@ -79,12 +78,14 @@ final class SetupProfileViewController: BaseViewController {
     
     @objc private func submitButtonPressed() {
         
-        presenter.submitButtonPressed(userName: fullNameTextField.text,
-                                      avatarImage: fillImageView.profileImageView.image,
-                                      email: currentUser.email ?? "no email",
-                                      description: aboutMeTextField.text,
-                                      sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex),
-                                      id: currentUser.uid)
+        let newUser = SetupNewUser(name: fullNameTextField.text,
+                                   avatarImage: fillImageView.profileImageView.image,
+                                   email: currentUser.email ?? "no email",
+                                   desctiption: aboutMeTextField.text,
+                                   sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex),
+                                   id: currentUser.uid)
+        
+        presenter.submitButtonPressed(with: newUser)
     }
 }
 

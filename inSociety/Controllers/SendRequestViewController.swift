@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-final class SendRequestViewController: UIViewController {
+final class SendRequestViewController: BaseViewController {
     
     private let scrollView = UIScrollView()
     

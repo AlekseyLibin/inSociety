@@ -18,20 +18,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         
-        if let user = Auth.auth().currentUser {
-            FirestoreService.shared.getDataForCurrentUser { [weak self] result in
-                guard let self = self else { return }
+        let navigationController = UINavigationController()
+        
+        if let _ = Auth.auth().currentUser {
+            FirestoreService.shared.getDataForCurrentUser { result in
                 switch result {
                 case .success(let currentUser):
-                    self.window?.rootViewController = MainTabBarController(currentUser: currentUser)
+                    navigationController.setViewControllers([MainTabBarController(currentUser: currentUser)], animated: true)
                 case .failure(_):
-                    self.window?.rootViewController = AuthViewController()
+                    navigationController.setViewControllers([AuthViewController()], animated: true)
                 }
             }
         } else {
-            window?.rootViewController = AuthViewController()
+            navigationController.setViewControllers([AuthViewController()], animated: true)
         }
         
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
 

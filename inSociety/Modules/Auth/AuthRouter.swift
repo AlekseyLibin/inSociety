@@ -16,12 +16,11 @@ protocol AuthRouterProtocol: AnyObject {
 
 final class AuthRouter {
         
-    weak var viewController: AuthViewControllerProtocol!
+    weak var viewController: BaseViewController!
     
-    required init(viewController: AuthViewControllerProtocol) {
+    required init(viewController: BaseViewController) {
         self.viewController = viewController
     }
-    
     
     
 }
@@ -51,10 +50,7 @@ extension AuthRouter: AuthRouterProtocol {
     
     func toMainVC(currentUser: UserModel) {
         let main = MainTabBarController(currentUser: currentUser)
-        main.modalPresentationStyle = .fullScreen
-//        viewController.navigationController?.setViewControllers([main], animated: true)
-        //MARK: - navigationController is nil
-        viewController.present(viewController: main)
+        viewController.navigationController?.setViewControllers([main], animated: true)
     }
     
     

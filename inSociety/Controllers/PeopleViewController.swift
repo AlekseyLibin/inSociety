@@ -9,7 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-final class PeopleViewController: UIViewController {
+final class PeopleViewController: BaseViewController {
     
     enum Section: Int, CaseIterable {
         case users

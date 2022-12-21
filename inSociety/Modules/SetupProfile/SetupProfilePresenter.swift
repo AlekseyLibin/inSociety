@@ -8,12 +8,7 @@
 import UIKit
 
 protocol SetupProfilePresenterProtocol: AnyObject {
-    func submitButtonPressed(userName: String?,
-                             avatarImage: UIImage?,
-                             email: String,
-                             description: String?,
-                             sex: String?,
-                             id: String)
+    func submitButtonPressed(with newUser: SetupNewUser)
 }
 
 final class SetupProfilePresenter {
@@ -29,8 +24,8 @@ final class SetupProfilePresenter {
 }
 
 extension SetupProfilePresenter: SetupProfilePresenterProtocol {
-    func submitButtonPressed(userName: String?, avatarImage: UIImage?, email: String, description: String?, sex: String?, id: String) {
-        interactor.submitButtonPressed(userName: userName, avatarImage: avatarImage, email: email, description: description, sex: sex, id: id) { [weak self] result in
+    func submitButtonPressed(with: newUser: SetupNewUser) {
+        interactor.submitButtonPressed(with: newUser) { [weak self] result in
             guard let self = self else { return }
             
             switch result {

@@ -8,7 +8,6 @@
 import UIKit
 
 protocol SignUpViewControllerProtocol: AnyObject {
-    func present(viewController: UIViewController)
     func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
 }
 
@@ -51,8 +50,8 @@ final class SignUpViewController: BaseViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         scrollView.contentSize = view.frame.size
     }

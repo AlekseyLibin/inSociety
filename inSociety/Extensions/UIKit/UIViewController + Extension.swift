@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIViewController {
-    @objc func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {} ) {
+    func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {} ) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let sumbitButton = UIAlertAction(title: "Submit", style: .default) { _ in
             completion()
@@ -32,3 +32,4 @@ extension UIViewController {
         return cell
     }
 }
+

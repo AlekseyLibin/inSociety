@@ -11,7 +11,6 @@ import FirebaseCore
 import GoogleSignIn
 
 protocol AuthViewControllerProtocol: AnyObject {
-    func present(viewController: UIViewController)
     func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
 }
 
@@ -27,31 +26,19 @@ final class AuthViewController: BaseViewController {
     private let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
     
     var presenter: AuthPresenterInputProtocol!
-    private let configurator: AuthConfiguratorProtocol = AuthConfigurator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let configurator = AuthConfigurator()
         configurator.configure(with: self)
         setupViews()
     }
     
-    @objc private func emailButtonPressed() {
-        presenter.emailButtonPressed()
-    }
-    
-    @objc func loginButtonPressed() {
-        presenter.loginButtonPressed()
-    }
-    
-    @objc private func googleButtonPressed() {
-        AuthService.shared.googleLogin(presentingVC: self) { [weak self] result in
-            self?.presenter.signInWithGoogle(with: result)
-        }
-    }
-    
 }
-//MARK: - Setup views
+
 private extension AuthViewController {
+    
     func setupViews() {
         
         view.backgroundColor = .mainDark()
@@ -113,12 +100,28 @@ private extension AuthViewController {
             secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35)
         ])
     }
+    
+    //MARK: - Actions
+    @objc func emailButtonPressed() {
+        presenter.emailButtonPressed()
+    }
+    
+    @objc func loginButtonPressed() {
+        presenter.loginButtonPressed()
+    }
+    
+    @objc func googleButtonPressed() {
+        AuthService.shared.googleLogin(presentingVC: self) { [weak self] result in
+            self?.presenter.signInWithGoogle(with: result)
+        }
+    }
 }
 
 
-//MARK: - AuthViewControllerProtocol
 extension AuthViewController: AuthViewControllerProtocol {
     
 }
+
+
 
 

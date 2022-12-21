@@ -60,18 +60,13 @@ extension FirestoreService {
         }
     }
     
-    func saveProfileWith(userName: String?,
-                         avatarImage: UIImage?,
-                         email: String,
-                         description: String?,
-                         sex: String?,
-                         id: String,
-                         completion: @escaping (Result<UserModel, Error>) -> Void) {
+    func saveProfile(with newUser: SetupNewUser, completion: @escaping (Result<UserModel, Error>) -> Void) {
+        
         guard
-            let userName = userName,
-            let avatarImage = avatarImage,
-            let description = description,
-            let sex = sex,
+            let userName = newUser.name,
+            let avatarImage = newUser.avatarImage,
+            let description = newUser.desctiption,
+            let sex = newUser.sex,
             !userName.isEmpty,
             !description.isEmpty,
             !sex.isEmpty

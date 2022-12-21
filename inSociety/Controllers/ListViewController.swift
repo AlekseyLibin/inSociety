@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-final class ListViewController: UIViewController {
+final class ListViewController: BaseViewController {
     
     enum Section: Int, CaseIterable {
         case waitingChats, activeChats

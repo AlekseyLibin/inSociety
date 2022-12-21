@@ -13,9 +13,9 @@ protocol SignUpRouterProtocol {
 
 final class SignUpRouter {
     
-    private weak var viewController: SignUpViewControllerProtocol!
+    private weak var viewController: BaseViewController!
     
-    init(viewController: SignUpViewControllerProtocol) {
+    init(viewController: BaseViewController) {
         self.viewController = viewController
     }
 }

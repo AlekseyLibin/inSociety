@@ -14,9 +14,9 @@ protocol loginRouterProtocol {
 
 final class LoginRouter {
     
-    private weak var viewController: LoginViewControllerProtocol!
+    private weak var viewController: BaseViewController!
     
-    init(viewController: LoginViewControllerProtocol) {
+    init(viewController: BaseViewController) {
         self.viewController = viewController
     }
     
@@ -32,10 +32,7 @@ extension LoginRouter: loginRouterProtocol {
     
     func toMainVC(currentUser: UserModel) {
         let main = MainTabBarController(currentUser: currentUser)
-        main.modalPresentationStyle = .fullScreen
-//        viewController.navigationController?.setViewControllers([main], animated: true)
-        //MARK: - navigationController is nil
-        viewController.present(viewController: main)
+        viewController.navigationController?.setViewControllers([main], animated: true)
     }
     
 }
