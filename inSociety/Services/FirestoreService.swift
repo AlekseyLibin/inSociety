@@ -82,10 +82,10 @@ extension FirestoreService {
         
         var userModel = UserModel(userName: userName,
                                   userAvatarString: "not exist",
-                                  email: email,
+                                  email: newUser.email,
                                   description: description,
                                   sex: sex,
-                                  id: id)
+                                  id: newUser.id)
         StorageService.shared.upload(image: avatarImage) { [weak self] result in
             guard let self = self else { return }
             

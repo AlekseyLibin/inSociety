@@ -24,7 +24,7 @@ final class SetupProfilePresenter {
 }
 
 extension SetupProfilePresenter: SetupProfilePresenterProtocol {
-    func submitButtonPressed(with: newUser: SetupNewUser) {
+    func submitButtonPressed(with newUser: SetupNewUser) {
         interactor.submitButtonPressed(with: newUser) { [weak self] result in
             guard let self = self else { return }
             
