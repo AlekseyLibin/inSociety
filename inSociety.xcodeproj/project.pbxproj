@@ -541,6 +541,7 @@
 				4397FB1E290702BC00FED534 /* Frameworks */,
 				4397FB1F290702BC00FED534 /* Resources */,
 				A7064EDD98B9B4FEB21B1319 /* [CP] Embed Pods Frameworks */,
+				43D7410D2993E7D5005C0ADE /* Linter */,
 			);
 			buildRules = (
 			);
@@ -599,6 +600,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		43D7410D2993E7D5005C0ADE /* Linter */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Linter;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"Warning no swiftlint\"\nfi\n";
+		};
 		A7064EDD98B9B4FEB21B1319 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;

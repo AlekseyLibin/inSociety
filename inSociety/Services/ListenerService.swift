@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 final class ListenerService {
   static let shared = ListenerService()
-  private init(){}
+  private init() {}
   
   private let dataBase = Firestore.firestore()
   private var usersReference: CollectionReference {
@@ -52,7 +52,6 @@ final class ListenerService {
     return usersListener
   }
   
-  
   func waitingChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
     
     var allChats = chats
@@ -85,7 +84,6 @@ final class ListenerService {
     return chatsListener
   }
   
-  
   func activeChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {
     
     var allChats = chats
@@ -117,7 +115,6 @@ final class ListenerService {
     return chatsListener
   }
   
-  
   func messagesObserve(chat: ChatModel, completion: @escaping(Result<MessageModel, Error>) -> Void) -> ListenerRegistration {
     let reference = usersReference.document(currentUserId).collection("activeChats").document(chat.friendID).collection("messages")
     let messagesListener = reference.addSnapshotListener { snapshot, error in
@@ -131,10 +128,10 @@ final class ListenerService {
         case .added:
           completion(.success(message))
         case .modified:
-          //Do any additional actions to expand project
+          // Do any additional actions to expand project
           break
         case .removed:
-          //Do any additional actions to expand project
+          // Do any additional actions to expand project
           break
         }
       }

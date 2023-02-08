@@ -26,5 +26,4 @@ extension ChatConfigurator: ChatConfiguratorProtocol {
     presenter.router = router
   }
   
-  
 }

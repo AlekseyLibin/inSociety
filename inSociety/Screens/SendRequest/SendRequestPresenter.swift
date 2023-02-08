@@ -45,5 +45,4 @@ extension SendRequestPresenter: SendRequestPresenterProtocol {
 
   }
   
-  
 }

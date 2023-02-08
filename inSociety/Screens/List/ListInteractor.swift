@@ -9,7 +9,7 @@ import Foundation
 
 protocol ListInteractorProtocol: AnyObject {
   func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void)
-  func waitingChat(moveToActive chat: ChatModel, completion:  @escaping (Result<Void, Error>)  -> Void)
+  func waitingChat(moveToActive chat: ChatModel, completion:  @escaping (Result<Void, Error>) -> Void)
   func waitingChat(remove chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void)
 }
 

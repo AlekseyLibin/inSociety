@@ -28,5 +28,4 @@ extension ChatPresenter: ChatPresenterProtocol {
     return ListenerService.shared.messagesObserve(chat: chat, completion: completion)
   }
   
-  
 }

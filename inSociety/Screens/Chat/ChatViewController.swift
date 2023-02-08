@@ -59,7 +59,6 @@ final class ChatViewController: MessagesViewController {
       }
     }
     
-    
     configureMessageInputBar()
     messagesCollectionView.backgroundColor = .mainDark()
     
@@ -94,8 +93,7 @@ final class ChatViewController: MessagesViewController {
   
 }
 
-
-//MARK: - MessagesDisplayDelegate
+// MARK: - MessagesDisplayDelegate
 extension ChatViewController: MessagesDisplayDelegate {
   func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
     if isFromCurrentSender(message: message) {
@@ -121,21 +119,19 @@ extension ChatViewController: MessagesDisplayDelegate {
   }
 }
 
-
-//MARK: - MessagesLayoutDelegate
+// MARK: - MessagesLayoutDelegate
 extension ChatViewController: MessagesLayoutDelegate {
   
-  //Distance between last message and text field
+  // Distance between last message and text field
   func footerViewSize(for section: Int, in messagesCollectionView: MessagesCollectionView) -> CGSize {
     return CGSize(width: 0, height: 8)
   }
   
-  //Distance between messages(Need to do it between rare messages, for instance)
+  // Distance between messages(Need to do it between rare messages, for instance)
   func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
     return 30
   }
 }
-
 
 // MARK: - ConfigureMessageInputBar
 extension ChatViewController {
@@ -154,7 +150,6 @@ extension ChatViewController {
     messageInputBar.inputTextView.layer.masksToBounds = true
     messageInputBar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 14, left: 0, bottom: 14, right: 0)
     
-    
     messageInputBar.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     messageInputBar.layer.shadowRadius = 5
     messageInputBar.layer.shadowOpacity = 0.3
@@ -172,8 +167,7 @@ extension ChatViewController {
   }
 }
 
-
-//MARK: - MessagesDataSource
+// MARK: - MessagesDataSource
 extension ChatViewController: MessagesDataSource {
   func currentSender() -> MessageKit.SenderType {
     Sender(senderID: currentUser.id, senderName: currentUser.userName)
@@ -198,14 +192,12 @@ extension ChatViewController: MessagesDataSource {
         attributes: [
           NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 10),
           NSAttributedString.Key.foregroundColor: UIColor.darkGray])
-    }
-    else { return nil }
+    } else { return nil }
   }
   
 }
 
-
-//MARK: - InputBarAccessoryViewDelegate
+// MARK: - InputBarAccessoryViewDelegate
 extension ChatViewController: InputBarAccessoryViewDelegate {
   func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
     let message = MessageModel(user: currentUser, content: text)
@@ -222,9 +214,6 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
   }
 }
 
-
 extension ChatViewController: ChatViewControllerProtocol {
   
 }
-
-

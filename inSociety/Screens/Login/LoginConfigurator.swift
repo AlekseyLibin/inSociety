@@ -11,11 +11,9 @@ protocol LoginConfiguratorProtocol {
     func configure(with viewController: LoginViewController)
 }
 
-
 final class LoginConfigurator {
     
 }
-
 
 extension LoginConfigurator: LoginConfiguratorProtocol {
     func configure(with viewController: LoginViewController) {

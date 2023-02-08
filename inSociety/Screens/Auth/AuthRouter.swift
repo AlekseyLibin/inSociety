@@ -22,11 +22,9 @@ final class AuthRouter {
         self.viewController = viewController
     }
     
-    
 }
 
-
-//MARK: AuthRouterProtocol
+// MARK: AuthRouterProtocol
 extension AuthRouter: AuthRouterProtocol {
     
     func toSignUpVC() {
@@ -52,6 +50,5 @@ extension AuthRouter: AuthRouterProtocol {
         let main = MainTabBarController(currentUser: currentUser)
         viewController.navigationController?.setViewControllers([main], animated: true)
     }
-    
     
 }

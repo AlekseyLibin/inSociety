@@ -39,11 +39,10 @@ final class UserCell: UICollectionViewCell {
     
 }
 
-
-//MARK: - SelfConfiguringCell
+// MARK: - SelfConfiguringCell
 extension UserCell: SelfConfiguringCell {
     
-    //HCell - Hashable cell.
+    // HCell - Hashable cell.
     func configure<HCell>(with value: HCell) where HCell : Hashable {
         guard let user: UserModel = value as? UserModel else { return }
         userNameLabel.text = user.userName
@@ -57,8 +56,7 @@ extension UserCell: SelfConfiguringCell {
     }
 }
 
-
-//MARK: Setup constraints
+// MARK: Setup constraints
 private extension UserCell {
     func setupViews() {
         

@@ -29,7 +29,6 @@ final class ChatRequestViewController: UIViewController {
   
   weak var delegate: WaitingChatsNavigation?
   
-  
   init(chat: ChatModel) {
     self.chat = chat
     imageView.sd_setImage(with: URL(string: chat.friendAvatarString))
@@ -40,7 +39,6 @@ final class ChatRequestViewController: UIViewController {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -92,7 +90,6 @@ final class ChatRequestViewController: UIViewController {
     setupConstraints()
   }
   
-  
   func setupConstraints() {
     
     let buttonStackView = UIStackView(arrangedSubviews: [acceptButton, denyButton],
@@ -134,7 +131,6 @@ final class ChatRequestViewController: UIViewController {
     ])
   }
 }
-
 
 extension ChatRequestViewController: ChatRequestViewControllerProtocol {
   

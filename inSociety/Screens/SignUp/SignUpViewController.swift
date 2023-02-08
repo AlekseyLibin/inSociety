@@ -69,8 +69,7 @@ final class SignUpViewController: BaseViewController {
     }
 }
 
-
-//MARK: - Setup Views
+// MARK: - Setup Views
 private extension SignUpViewController {
     
     func setUpViews() {
@@ -100,7 +99,6 @@ private extension SignUpViewController {
         
         setupConstraints()
     }
-    
     
     func setupConstraints() {
         
@@ -160,8 +158,7 @@ private extension SignUpViewController {
     }
 }
 
-
-//MARK: - SignUpViewControllerProtocol
+// MARK: - SignUpViewControllerProtocol
 extension SignUpViewController: SignUpViewControllerProtocol {
     
 }

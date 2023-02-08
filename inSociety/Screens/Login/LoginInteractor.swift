@@ -11,7 +11,6 @@ protocol LoginInteractorProtocol {
 
 final class LoginInteractor {
     
-    
 }
 
 extension LoginInteractor: LoginInteractorProtocol {
@@ -27,6 +26,5 @@ extension LoginInteractor: LoginInteractorProtocol {
             }
         }
     }
-    
     
 }

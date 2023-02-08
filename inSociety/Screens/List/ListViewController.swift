@@ -120,7 +120,6 @@ extension ListViewController: ListViewControllerProtocol {
     cell.updateLastMessage(with: message)
   }
   
-  
   func changeValueFor(waitingChats: [ChatModel]) {
     self.waitingChats = waitingChats
     reloadData(with: nil)
@@ -131,7 +130,6 @@ extension ListViewController: ListViewControllerProtocol {
     reloadData(with: nil)
   }
   
-  
   func removeWaitingChat(chat: ChatModel) {
     presenter.waitingChat(remove: chat)
   }
@@ -141,8 +139,7 @@ extension ListViewController: ListViewControllerProtocol {
   }
 }
 
-
-//MARK: - Data Source
+// MARK: - Data Source
 private extension ListViewController {
   func createDataSource() {
     dataSource = UICollectionViewDiffableDataSource<Section, ChatModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
@@ -165,8 +162,7 @@ private extension ListViewController {
       }
     })
     
-    dataSource?.supplementaryViewProvider = {
-      collectionView, kind, indexPath in
+    dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
       
       guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
@@ -182,16 +178,14 @@ private extension ListViewController {
   }
 }
 
-
-//MARK: - UISearchBarDelegate
+// MARK: - UISearchBarDelegate
 extension ListViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     reloadData(with: searchText)
   }
 }
 
-
-//MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 extension ListViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard
@@ -208,8 +202,7 @@ extension ListViewController: UICollectionViewDelegate {
   }
 }
 
-
-//MARK: - Setup CollectionView
+// MARK: - Setup CollectionView
 private extension ListViewController {
   func setupCollectionView() {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
@@ -220,7 +213,6 @@ private extension ListViewController {
     collectionView.register(SectionHeader.self,
                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
     
-    
     collectionView.register(WaitingChatCell.self, forCellWithReuseIdentifier: WaitingChatCell.reuseID)
     collectionView.register(ActiveChatCell.self, forCellWithReuseIdentifier: ActiveChatCell.reuseID)
     
@@ -229,7 +221,7 @@ private extension ListViewController {
   }
   
   func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-    let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
+    let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
       
       guard let section = Section(rawValue: sectionIndex) else {
         fatalError("No such section foud")

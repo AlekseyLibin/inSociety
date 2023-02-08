@@ -14,14 +14,12 @@ struct ChatModel: Hashable, Decodable {
     var lastMessageContent: String
     var friendID: String
     
-    
     init(friendName: String, friendAvatarString: String, lastMessageContent: String, friendID: String) {
         self.friendName = friendName
         self.friendAvatarString = friendAvatarString
         self.lastMessageContent = lastMessageContent
         self.friendID = friendID
     }
-    
     
     init?(document: QueryDocumentSnapshot) {
         let data = document.data()
@@ -37,7 +35,6 @@ struct ChatModel: Hashable, Decodable {
         self.friendID = friendID
 
     }
-    
     
     var representation: [String: Any] {
         let rep: [String: Any] = [
@@ -55,7 +52,6 @@ struct ChatModel: Hashable, Decodable {
         let lowercasedFilter = filter.lowercased()
         return friendName.lowercased().contains(lowercasedFilter)
     }
-    
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(friendID)

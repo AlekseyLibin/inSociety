@@ -31,11 +31,10 @@ final class ActiveChatCell: UICollectionViewCell {
     }
 }
 
-
-//MARK: - SelfConfiguringCell
+// MARK: - SelfConfiguringCell
 extension ActiveChatCell: SelfConfiguringCell {
     
-    //HCell - Hashable cell
+    // HCell - Hashable cell
     func configure<HCell>(with value: HCell) where HCell : Hashable {
         guard let user: ChatModel = value as? ChatModel else { return }
         
@@ -46,8 +45,7 @@ extension ActiveChatCell: SelfConfiguringCell {
     }
 }
 
-
-//MARK: - Setup Constraints
+// MARK: - Setup Constraints
 extension ActiveChatCell {
     private func setupViews() {
         
@@ -88,4 +86,3 @@ extension ActiveChatCell {
         ])
     }
 }
-

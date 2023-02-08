@@ -5,9 +5,7 @@
 //  Created by Aleksey Libin on 17.10.2022.
 //
 
-
-
-//MARK: - Returns structed data from json file
+// MARK: - Returns structed data from json file
 /*
  
  import Foundation
@@ -34,4 +32,3 @@
  }
  
  */
-

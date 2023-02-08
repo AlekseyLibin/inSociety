@@ -16,7 +16,7 @@ final class LoginPresenter {
     
     private unowned let viewController: LoginViewControllerProtocol
     var interactor: LoginInteractorProtocol!
-    var router: loginRouterProtocol!
+    var router: LoginRouterProtocol!
     
     init(viewController: LoginViewControllerProtocol) {
         self.viewController = viewController
@@ -35,7 +35,7 @@ extension LoginPresenter: LoginPresenterProtocol {
                     switch result {
                     case .success(let currentCompletedUserModel):
                         self.router.toMainVC(currentUser: currentCompletedUserModel)
-                    case .failure(_):
+                    case .failure:
                         self.router.toSetupProfileVC(currentUser: currentUserModel)
                     }
                 }
@@ -53,7 +53,7 @@ extension LoginPresenter: LoginPresenterProtocol {
                 switch result {
                 case .success(let currentCompletedUserModel):
                     self.router.toMainVC(currentUser: currentCompletedUserModel)
-                case .failure(_):
+                case .failure:
                     self.viewController.showAlert(with: "You have been successfully registrated", and: nil) {
                         self.router.toSetupProfileVC(currentUser: currentUserModel)
                     }

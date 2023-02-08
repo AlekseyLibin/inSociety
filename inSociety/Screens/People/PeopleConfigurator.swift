@@ -26,5 +26,4 @@ extension PeopleConfigurator: PeopleConfiguratorProtocol {
     presenter.router = router
   }
   
-  
 }

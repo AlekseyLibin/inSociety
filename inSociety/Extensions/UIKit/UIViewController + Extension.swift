@@ -26,8 +26,7 @@ extension UIViewController {
   }
 }
 
-
-//MARK: - Configure CollectionViewCell
+// MARK: - Configure CollectionViewCell
 extension UIViewController {
   func configure<T: SelfConfiguringCell, U: Hashable>(collectionView: UICollectionView,
                                                       cellType: T.Type,
@@ -40,4 +39,3 @@ extension UIViewController {
     return cell
   }
 }
-

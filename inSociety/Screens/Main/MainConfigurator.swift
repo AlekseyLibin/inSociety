@@ -25,5 +25,4 @@ extension MainConfigurator: MainConfiguratorProtocol {
     presenter.router = router
   }
   
-  
 }

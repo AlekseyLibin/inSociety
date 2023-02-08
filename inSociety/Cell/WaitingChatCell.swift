@@ -26,19 +26,17 @@ final class WaitingChatCell: UICollectionViewCell {
     
 }
 
-
-//MARK: - SelfConfiguringCell
+// MARK: - SelfConfiguringCell
 extension WaitingChatCell: SelfConfiguringCell {
     
-    //HCell - Hashable cell
+    // HCell - Hashable cell
     func configure<HCell>(with value: HCell) where HCell : Hashable {
         guard let chat: ChatModel = value as? ChatModel else { return }
         friendImageView.sd_setImage(with: URL(string: chat.friendAvatarString))
     }
 }
 
-
-//MARK: - Setup constraints
+// MARK: - Setup constraints
 private extension WaitingChatCell {
     func setupConstraints() {
         

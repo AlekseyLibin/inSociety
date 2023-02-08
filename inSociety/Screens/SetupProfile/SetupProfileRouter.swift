@@ -27,5 +27,4 @@ extension SetupProfileRouter: SetupProfileRouterProtocol {
     viewController.present(viewController: main)
   }
   
-  
 }

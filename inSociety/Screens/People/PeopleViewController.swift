@@ -77,8 +77,7 @@ final class PeopleViewController: BaseViewController {
   
 }
 
-
-//MARK: - Setup collectionView
+// MARK: - Setup collectionView
 private extension PeopleViewController {
   func setupCollectionView() {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
@@ -88,7 +87,6 @@ private extension PeopleViewController {
     
     collectionView.register(SectionHeader.self,
                             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.reuseId)
-    
     
     collectionView.register(UserCell.self, forCellWithReuseIdentifier: UserCell.reuseID)
     collectionView.delegate = self
@@ -109,8 +107,7 @@ private extension PeopleViewController {
   
 }
 
-
-//MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegate
 extension PeopleViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let selectedUser = self.dataSource.itemIdentifier(for: indexPath) else { return }
@@ -118,8 +115,7 @@ extension PeopleViewController: UICollectionViewDelegate {
   }
 }
 
-
-//MARK: - Create Data Source
+// MARK: - Create Data Source
 private extension PeopleViewController {
   func createDataSource() {
     dataSource = UICollectionViewDiffableDataSource<Section, UserModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
@@ -135,8 +131,7 @@ private extension PeopleViewController {
       }
     })
     
-    dataSource?.supplementaryViewProvider = {
-      collectionView, kind, indexPath in
+    dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
       
       guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
@@ -164,11 +159,10 @@ extension PeopleViewController: PeopleViewControllerProtocol {
   
 }
 
-
-//MARK: - Create Compositional Layout
+// MARK: - Create Compositional Layout
 private extension PeopleViewController {
   func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-    let layout = UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
+    let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
       
       guard let section = Section(rawValue: sectionIndex) else {
         fatalError("No such section foud")
@@ -202,7 +196,6 @@ private extension PeopleViewController {
     let sectionHeader = createSectionHeader()
     section.boundarySupplementaryItems = [sectionHeader]
     
-    
     return section
   }
   
@@ -215,8 +208,7 @@ private extension PeopleViewController {
   }
 }
 
-
-//MARK: - SetupSearchController
+// MARK: - SetupSearchController
 private extension PeopleViewController {
   func setupSearchController() {
     navigationController?.navigationBar.barTintColor = .mainDark()
@@ -230,16 +222,14 @@ private extension PeopleViewController {
   }
 }
 
-
-//MARK: - UISearchBarDelegate
+// MARK: - UISearchBarDelegate
 extension PeopleViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     reloadData(with: searchText)
   }
 }
 
-
-//MARK: - SetupTabBar
+// MARK: - SetupTabBar
 private extension PeopleViewController {
   func setupTabBar() {
     let appearance = UITabBarAppearance()

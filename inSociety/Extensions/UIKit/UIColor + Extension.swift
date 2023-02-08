@@ -8,7 +8,6 @@
 import UIKit
 import SwiftUI
 
-
 extension UIColor {
     
     static func mainWhite() -> UIColor {
@@ -27,7 +26,6 @@ extension UIColor {
         return UIColor.systemYellow
     }
         
-    
     static func mainDark() -> UIColor {
         return UIColor(red: 27/255, green: 31/255, blue: 34/255, alpha: 1)
     }

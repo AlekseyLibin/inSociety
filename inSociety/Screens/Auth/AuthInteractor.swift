@@ -15,7 +15,6 @@ final class AuthInteractor {
         
 }
 
-
 extension AuthInteractor: AuthInteractorProtocol {
     
     func checkIfRegestrationCompleted(completion: @escaping (Result<UserModel, Error>) -> Void) {

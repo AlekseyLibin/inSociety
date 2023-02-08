@@ -17,7 +17,6 @@ protocol AuthPresenterOutputProtocol: AnyObject {
     
 }
 
-
 final class AuthPresenter {
     
     private unowned let viewController: AuthViewControllerProtocol
@@ -30,7 +29,6 @@ final class AuthPresenter {
     
 }
 
-
 extension AuthPresenter: AuthPresenterInputProtocol {
     
     func signInWithGoogle(with result: Result<User, Error>) {
@@ -42,7 +40,7 @@ extension AuthPresenter: AuthPresenterInputProtocol {
                 switch result {
                 case .success(let completedUser):
                     self.router.toMainVC(currentUser: completedUser)
-                case .failure(_):
+                case .failure:
                     self.viewController.showAlert(with: "You have been successfully registrated", and: nil) {
                         self.router.toSetupProfileVC(currentUser: currentUser)
                     }

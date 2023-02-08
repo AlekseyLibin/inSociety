@@ -17,7 +17,6 @@ final class FirestoreService {
     private let dataBase = Firestore.firestore()
     var currentUserModel: UserModel!
 
-    
     private var usersReference: CollectionReference {
         return dataBase.collection("users")
     }
@@ -32,8 +31,7 @@ final class FirestoreService {
     
 }
 
-
-//MARK: - User
+// MARK: - User
 extension FirestoreService {
     
     func getDataForCurrentUser(completion: @escaping (Result<UserModel, Error>) -> Void) {
@@ -43,8 +41,7 @@ extension FirestoreService {
         }
         
         let documentReference = usersReference.document(currentUser.uid)
-        documentReference.getDocument { [weak self] document, error in
-            guard let self = self else { return }
+        documentReference.getDocument { document, _ in
             
             if let document = document, document.exists {
                 guard let user = UserModel(document: document) else {
@@ -107,8 +104,7 @@ extension FirestoreService {
     
 }
 
-
-//MARK: - Chats
+// MARK: - Chats
 extension FirestoreService {
     
     func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -141,7 +137,7 @@ extension FirestoreService {
         }
     }
     
-    //MARK: - Waiting chats
+    // MARK: - Waiting chats
     func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let waitingChatsReference = dataBase.collection("users/\(receiver.id)/waitingChats")
         
@@ -220,7 +216,7 @@ extension FirestoreService {
         }
     }
     
-    //MARK: Active chats
+    // MARK: Active chats
     func createActiveChat(chat: ChatModel, messages: [MessageModel], completion: @escaping (Result<Void, Error>) -> Void) {
         let messageReference = activeChatsReference.document(chat.friendID).collection("messages")
         activeChatsReference.document(chat.friendID).setData(chat.representation) { error in
@@ -229,8 +225,8 @@ extension FirestoreService {
                 return
             }
             for message in messages {
-                messageReference.addDocument(data: message.representation) { erorr in
-                    if let error = error {
+                messageReference.addDocument(data: message.representation) { addDocErr in
+                    if let error = addDocErr {
                         completion(.failure(error))
                         return
                     }
@@ -255,8 +251,7 @@ extension FirestoreService {
     
 }
 
-
-//MARK: - Messages
+// MARK: - Messages
 extension FirestoreService {
     func sendMessage(chat: ChatModel, message: MessageModel, completion: @escaping (Result<Void, Error>) -> Void) {
         let friendReference = usersReference.document(chat.friendID).collection("activeChats").document(currentUserModel.id)

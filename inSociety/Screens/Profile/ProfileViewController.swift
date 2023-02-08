@@ -43,12 +43,12 @@ final class ProfileViewController: BaseViewController {
   }
   
   @objc private func logOut() {
-    let ac = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .actionSheet)
-    ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-    ac.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in
+    let alertController = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .actionSheet)
+    alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    alertController.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in
       self.presenter.signOut()
     }))
-    present(ac, animated: true)
+    present(alertController, animated: true)
   }
   
   required init?(coder: NSCoder) {
@@ -56,8 +56,7 @@ final class ProfileViewController: BaseViewController {
   }
 }
 
-
-//MARK: - Setup Views
+// MARK: - Setup Views
 private extension ProfileViewController {
   func setupViews() {
     view.backgroundColor = .mainDark()
@@ -90,7 +89,6 @@ private extension ProfileViewController {
     
     setupConstraints()
   }
-  
   
   func setupConstraints() {
     
@@ -139,7 +137,6 @@ private extension ProfileViewController {
   
 }
 
-
 extension ProfileViewController: ProfileViewControllerProtocol {
   func activeChats(changeQuantity count: Int) {
     self.activeChatsNumberLabel.text = "Active chats: \(count.description)"
@@ -149,6 +146,4 @@ extension ProfileViewController: ProfileViewControllerProtocol {
     self.waitingChatsNumberLabel.text = "Waiting chats: \(count.description)"
   }
   
-  
 }
-

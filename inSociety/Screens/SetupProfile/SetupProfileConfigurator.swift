@@ -24,5 +24,4 @@ extension SetupProfileConfigurator: SetupProfileConfiguratorProtocol {
     presenter.router = router
   }
   
-  
 }

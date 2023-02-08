@@ -26,5 +26,4 @@ extension ProfileInteractor: ProfileInteractorProtocol {
     FirestoreService.shared.getNumberOfActiveChats(for: currentUser, completion: completion)
   }
   
-  
 }

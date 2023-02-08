@@ -28,7 +28,4 @@ extension SetupProfileInteractor: SetupProfileInteractorProtocol {
     }
   }
   
-  
-  
-  
 }

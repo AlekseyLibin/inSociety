@@ -38,7 +38,7 @@ final class StorageService {
                                                 metadata: metadata) { [weak self] metadata, error in
             guard let self = self else { return }
             
-            guard let _ = metadata else {
+            guard metadata != nil else {
                 completion(.failure(error!))
                 return
             }

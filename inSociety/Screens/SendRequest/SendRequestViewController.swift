@@ -25,7 +25,6 @@ final class SendRequestViewController: BaseViewController {
   private let sendMessageTextField = SendMessageTextField()
   private let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
 
-  
   private let user: UserModel
   private let configurator: SendRequestConfiguratorProtocol = SendRequestConfigurator()
   var presenter: SendRequestPresenterProtocol!
@@ -72,8 +71,7 @@ final class SendRequestViewController: BaseViewController {
   }
 }
 
-
-//MARK: - Setup views
+// MARK: - Setup views
 private extension SendRequestViewController {
   func setupViews() {
     
@@ -83,7 +81,7 @@ private extension SendRequestViewController {
     
     scrollView.hideKeyboardWhenTappedOrSwiped()
     scrollView.addKeyboardObservers()
-    scrollView.contentSize.height = view.frame.height/1.07   //On a modally presented VC height is different
+    scrollView.contentSize.height = view.frame.height/1.07   // On a modally presented VC height is different
     scrollView.contentSize.width = view.frame.width
     
     containerView.layer.cornerRadius = 30
@@ -109,7 +107,6 @@ private extension SendRequestViewController {
     
     setupConstraints()
   }
-  
   
   func setupConstraints() {
     
@@ -148,7 +145,6 @@ private extension SendRequestViewController {
     ])
   }
 }
-
 
 extension SendRequestViewController: SendRequestViewControllerProtocol {
   func removeActivityIndicator() {

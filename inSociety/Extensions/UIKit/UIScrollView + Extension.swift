@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - Keyboard observers on UIScrolLView
+// MARK: - Keyboard observers on UIScrolLView
 extension UIScrollView {
     func addKeyboardObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -28,9 +28,7 @@ extension UIScrollView {
     }
 }
 
-
-
-//MARK: - Is at bottom
+// MARK: - Is at bottom
 extension UIScrollView {
     var isAtBottom: Bool {
         return contentOffset.y >= verticalOffsetForBottom

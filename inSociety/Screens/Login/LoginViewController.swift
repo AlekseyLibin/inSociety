@@ -80,8 +80,7 @@ final class LoginViewController: BaseViewController {
   
 }
 
-
-//MARK: - Setup views
+// MARK: - Setup views
 private extension LoginViewController {
   func setUpViews() {
     
@@ -111,12 +110,10 @@ private extension LoginViewController {
     passwordTextField.autocorrectionType = .no
     passwordTextField.isSecureTextEntry = true
     
-    
     view.addSubview(scrollView)
     
     setupConstraints()
   }
-  
   
   func setupConstraints() {
     
@@ -166,8 +163,7 @@ private extension LoginViewController {
   }
 }
 
-
-//MARK: - LoginViewControllerProtocol
+// MARK: - LoginViewControllerProtocol
 extension LoginViewController: LoginViewControllerProtocol {
   
 }

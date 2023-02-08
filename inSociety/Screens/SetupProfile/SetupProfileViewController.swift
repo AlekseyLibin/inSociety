@@ -62,7 +62,6 @@ final class SetupProfileViewController: BaseViewController {
     scrollView.contentSize = view.frame.size
   }
   
-  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -89,8 +88,7 @@ final class SetupProfileViewController: BaseViewController {
   }
 }
 
-
-//MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -102,8 +100,7 @@ extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePic
   }
 }
 
-
-//MARK: - Setup views
+// MARK: - Setup views
 private extension SetupProfileViewController {
   func setupViews() {
     
@@ -119,7 +116,6 @@ private extension SetupProfileViewController {
       label.textColor = .mainYellow()
     }
     
-    
     sexSegmentedControl.selectedSegmentTintColor = UIColor.mainYellow()
     let yellowAttribute = [NSAttributedString.Key.foregroundColor: UIColor.mainYellow()]
     sexSegmentedControl.setTitleTextAttributes(yellowAttribute, for:.normal)
@@ -133,7 +129,6 @@ private extension SetupProfileViewController {
     
     setupConstraints()
   }
-  
   
   func setupConstraints() {
     
@@ -187,8 +182,7 @@ private extension SetupProfileViewController {
   }
 }
 
-
-//MARK: - SetupProfileViewControllerProtocol
+// MARK: - SetupProfileViewControllerProtocol
 extension SetupProfileViewController: SetupProfileViewControllerProtocol {
   
 }

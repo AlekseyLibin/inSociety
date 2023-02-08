@@ -65,7 +65,6 @@ private extension AuthViewController {
     setupConstraints()
   }
   
-  
   func setupConstraints() {
     
     let googleView = LabelButtonView(label: googleLabel, button: googleButton)
@@ -102,7 +101,7 @@ private extension AuthViewController {
     ])
   }
   
-  //MARK: - Actions
+  // MARK: - Actions
   @objc func emailButtonPressed() {
     presenter.emailButtonPressed()
   }
@@ -118,11 +117,6 @@ private extension AuthViewController {
   }
 }
 
-
 extension AuthViewController: AuthViewControllerProtocol {
   
 }
-
-
-
-

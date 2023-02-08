@@ -7,23 +7,20 @@
 
 import FirebaseAuth
 
-protocol loginRouterProtocol {
+protocol LoginRouterProtocol {
   func toSetupProfileVC(currentUser: User)
   func toMainVC(currentUser: UserModel)
 }
 
 final class LoginRouter {
-  
-  private weak var viewController: BaseViewController!
-  
   init(viewController: BaseViewController) {
     self.viewController = viewController
   }
   
+  private unowned var viewController: BaseViewController
 }
 
-
-extension LoginRouter: loginRouterProtocol {
+extension LoginRouter: LoginRouterProtocol {
   
   func toSetupProfileVC(currentUser: User) {
     let setupProfileVC = SetupProfileViewController(currentUser: currentUser)

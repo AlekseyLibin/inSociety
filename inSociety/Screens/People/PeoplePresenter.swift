@@ -37,8 +37,6 @@ extension PeoplePresenter: PeoplePresenterProtocol {
     }
   }
   
-  
-  
   func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
     interactor.usersObserve(users: users, completion: completion)
   }

@@ -37,10 +37,9 @@ extension ListPresenter: ListPresenterProtocol {
     router.toChatVC(currentUser: currentUser, chat: chat)
   }
   
-  
   func waitingChat(remove chat: ChatModel) {
     interactor.waitingChat(remove: chat) { result in
-    switch result {
+      switch result {
       case .success:
         self.viewController.showAlert(with: "Success", and: "Chat request has been denied")
       case .failure(let error):
@@ -52,15 +51,13 @@ extension ListPresenter: ListPresenterProtocol {
   func waitingChat(moveToActive chat: ChatModel) {
     interactor.waitingChat(moveToActive: chat) { result in
       switch result {
-      case .success():
+      case .success:
         break
       case .failure(let error):
         self.viewController.showAlert(with: "Error", and: error.localizedDescription)
       }
     }
   }
-  
-  
   
   func updateLastMessage() {
     for index in 0 ..< viewController.activeChats.count {
@@ -75,7 +72,6 @@ extension ListPresenter: ListPresenterProtocol {
       }
     }
   }
-  
   
   func setupListeners(_ waitingChatsListener: inout ListenerRegistration?, _ activeChatsListener: inout ListenerRegistration?) {
     
@@ -108,6 +104,5 @@ extension ListPresenter: ListPresenterProtocol {
       }
     })
   }
-  
   
 }

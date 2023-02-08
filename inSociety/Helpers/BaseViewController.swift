@@ -30,8 +30,6 @@ class BaseViewController: UIViewController {
     print(" - deinit \(String(describing: type(of: self)))")
   }
     
-    
-    
 //    func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void = {} ) {
 //        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 //        let sumbitButton = UIAlertAction(title: "Submit", style: .default) { _ in

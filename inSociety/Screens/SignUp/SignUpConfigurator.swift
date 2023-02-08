@@ -24,5 +24,4 @@ extension SignUpConfigurator: SignUpConfiguratorProtocol {
         presenter.router = router
     }
     
-    
 }

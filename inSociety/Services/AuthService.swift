@@ -53,7 +53,6 @@ final class AuthService {
         }
     }
     
-    
     func login(email: String?,
                password: String?,
                completion: @escaping (Result<User, Error>) -> Void) {
@@ -81,7 +80,6 @@ final class AuthService {
             completion(.success(result.user))
         }
     }
-    
     
     func googleLogin(presentingVC: UIViewController, completion: @escaping (Result<User, Error>) -> Void) {
         guard let clientID = self.clientId else { return }

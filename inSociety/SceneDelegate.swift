@@ -19,12 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let navigationController = UINavigationController()
     
-    if let _ = Auth.auth().currentUser {
+    if Auth.auth().currentUser != nil {
       FirestoreService.shared.getDataForCurrentUser { result in
         switch result {
         case .success(let currentUser):
           navigationController.setViewControllers([MainTabBarController(currentUser: currentUser)], animated: true)
-        case .failure(_):
+        case .failure:
           navigationController.setViewControllers([AuthViewController()], animated: true)
 
         }
@@ -65,6 +65,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // to restore the scene back to its current state.
   }
   
-  
 }
-

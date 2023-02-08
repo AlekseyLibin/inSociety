@@ -12,12 +12,11 @@ protocol SignUpRouterProtocol {
 }
 
 final class SignUpRouter {
-    
-    private weak var viewController: BaseViewController!
-    
     init(viewController: BaseViewController) {
         self.viewController = viewController
     }
+  
+  private unowned var viewController: BaseViewController
 }
 
 extension SignUpRouter: SignUpRouterProtocol {

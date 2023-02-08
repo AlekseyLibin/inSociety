@@ -26,10 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     -> Bool {
         return GIDSignIn.sharedInstance.handle(url)
     }
-    
-    
-    
-    
     // MARK: UISceneSession Lifecycle
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
@@ -43,17 +39,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    
 }
 
-
-
-//MARK: - Notifications (prepare)
+// MARK: - Notifications (prepare)
 import UserNotifications
 
 extension AppDelegate {
     func requestNotifications() {
-        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
             print("Permission granted ", granted)
             
             guard granted else { return }
