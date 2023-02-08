@@ -1,7 +1,7 @@
 # inSociety Messenger
 
 ## General info
-The project has been created to demonstrate programming skills. It widely uses networking, user authorization with the choice of a suitable service (such as Google account or email). Messenger has 9 ViewControllers, and lots of custom views. Absolutely all view elements are built only code and the UIKit library.
+The project has been created to demonstrate programming skills. It widely uses networking, user authorization with the choice of a suitable service (such as Google account or email). Messenger has 10 screens, and lots of custom views. Absolutely all view elements are built only with code and the UIKit library.
 
 ## Networking
 The project does not store any information. I used the Firebase backend service for these tasks so that all users have real time access to current data. FirebaseAuth used to authorize users, FirebaseFirestore to store data, and FirebaseStorage to store images (user avatars). For each of them I created a singleton class that performs the corresponding tasks.

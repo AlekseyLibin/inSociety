@@ -9,13 +9,11 @@ import Foundation
 import UIKit
 
 extension UIButton {
-    
     convenience init(title: String,
                      titleColor: UIColor,
                      font: UIFont? = .galvji20(),
                      backgroundColor: UIColor?,
-                     cornerRadius: CGFloat = 10,
-                     isShadow: Bool = true) {
+                     cornerRadius: CGFloat = 10) {
         self.init(type: .system)
         
         self.setTitle(title, for: .normal)
@@ -23,17 +21,18 @@ extension UIButton {
         self.titleLabel?.font = font
         self.backgroundColor = backgroundColor
         self.layer.cornerRadius = cornerRadius
-        
-        if isShadow {
-            self.layer.shadowColor = UIColor.buttonShadowColor().cgColor
-            self.layer.shadowRadius = 4
-            self.layer.shadowOpacity = 0.4
-            self.layer.shadowOffset = CGSize(width: 0, height: 4)
-        }
+    }
+    
+    func addBaseShadow() {
+        self.layer.shadowColor = UIColor.buttonShadowColor().cgColor
+        self.layer.shadowRadius = 4
+        self.layer.shadowOpacity = 0.4
+        self.layer.shadowOffset = CGSize(width: 0, height: 4)
     }
     
     func customizeGoogleButton() {
         let logo = UIImageView(named: "GoogleLogo", contentMode: .scaleAspectFit)
+        self.addBaseShadow()
         self.addSubview(logo)
         logo.translatesAutoresizingMaskIntoConstraints = false
         

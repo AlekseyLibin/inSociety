@@ -10,18 +10,30 @@ import FirebaseCore
 import FirebaseAuth
 import GoogleSignIn
 
-class AuthService {
+final class AuthService {
     
     static let shared = AuthService()
     private init() {}
     
     private let auth = Auth.auth()
     
+    private var clientId: String? {
+        return FirebaseApp.app()?.options.clientID
+    }
     
     func register(email: String?,
                   password: String?,
                   confirmPassword: String?,
                   completion: @escaping (Result<User, Error>) -> Void) {
+        
+        guard
+            let email = email,
+            let password = password,
+            let confirmPassword = confirmPassword
+        else {
+            completion(.failure(AuthError.fieldsAreNotFilled))
+            return
+        }
         
         let error = Validator.checkRegisterValidation(email: email,
                                                       password: password,
@@ -31,7 +43,7 @@ class AuthService {
             return
         }
         
-        auth.createUser(withEmail: email!, password: password!) { result, error in
+        auth.createUser(withEmail: email, password: password) { result, error in
             guard let result = result else {
                 completion(.failure(error!))
                 return
@@ -46,6 +58,13 @@ class AuthService {
                password: String?,
                completion: @escaping (Result<User, Error>) -> Void) {
         
+        guard
+            let email = email,
+            let password = password
+        else {
+            completion(.failure(AuthError.fieldsAreNotFilled))
+            return
+        }
         
         let error = Validator.checkLoginValidation(email: email, password: password)
         if let error = error {
@@ -53,7 +72,7 @@ class AuthService {
             return
         }
         
-        auth.signIn(withEmail: email!, password: password!) { result, error in
+        auth.signIn(withEmail: email, password: password) { result, error in
             guard let result = result else {
                 completion(.failure(error!))
                 return
@@ -64,13 +83,13 @@ class AuthService {
     }
     
     
-    
-    func googleLogin(clientID: String?, presentingVC: UIViewController, completion: @escaping (Result<User, Error>) -> Void) {
-        guard let clientID = clientID else { return }
+    func googleLogin(presentingVC: UIViewController, completion: @escaping (Result<User, Error>) -> Void) {
+        guard let clientID = self.clientId else { return }
         
         let config = GIDConfiguration(clientID: clientID)
         
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { [unowned self] user, error in
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { [weak self] user, error in
+            guard let self = self else { return }
             
             if let error = error {
                 completion(.failure(error))
