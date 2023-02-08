@@ -21,36 +21,36 @@ final class ListenerService {
     return Auth.auth().currentUser!.uid
   }
   
-//  func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
-//
-//    var allUsers = users //Firestore.firestore().collection("users")
-//    let usersListener = usersReference.addSnapshotListener { [weak self] querySnapshot, error in
-//      guard let self = self else { return }
-//      guard let snapshot = querySnapshot else {
-//        completion(.failure(error!))
-//        return
-//      }
-//      snapshot.documentChanges.forEach { difference in
-//        guard let newUser = UserModel(queryDocument: difference.document) else { return }
-//        switch difference.type {
-//        case .added:
-//          guard
-//            !allUsers.contains(newUser),
-//            newUser.id != self.currentUserId
-//          else { return }
-//          allUsers.append(newUser)
-//        case .modified:
-//          guard let index = allUsers.firstIndex(of: newUser) else { return }
-//          allUsers[index] = newUser
-//        case .removed:
-//          guard let index = allUsers.firstIndex(of: newUser) else { return }
-//          allUsers.remove(at: index)
-//        }
-//      }
-//      completion(.success(allUsers))
-//    }
-//    return usersListener
-//  }
+  func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration? {
+
+    var allUsers = users 
+    let usersListener = usersReference.addSnapshotListener { [weak self] querySnapshot, error in
+      guard let self = self else { return }
+      guard let snapshot = querySnapshot else {
+        completion(.failure(error!))
+        return
+      }
+      snapshot.documentChanges.forEach { difference in
+        guard let newUser = UserModel(queryDocument: difference.document) else { return }
+        switch difference.type {
+        case .added:
+          guard
+            !allUsers.contains(newUser),
+            newUser.id != self.currentUserId
+          else { return }
+          allUsers.append(newUser)
+        case .modified:
+          guard let index = allUsers.firstIndex(of: newUser) else { return }
+          allUsers[index] = newUser
+        case .removed:
+          guard let index = allUsers.firstIndex(of: newUser) else { return }
+          allUsers.remove(at: index)
+        }
+      }
+      completion(.success(allUsers))
+    }
+    return usersListener
+  }
   
   
   func waitingChatsObserve(chats: [ChatModel], completion: @escaping(Result<[ChatModel], Error>) -> Void) -> ListenerRegistration? {

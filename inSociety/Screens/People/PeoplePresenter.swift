@@ -25,20 +25,6 @@ final class PeoplePresenter {
   
 }
 
-/*
- FirestoreService.shared.checkNoChats(with: selectedUser) { [weak self] result in
-   guard let self = self else { return }
-   
-   switch result {
-   case .success:
-     let sendRequestVC = SendRequestViewController(user: selectedUser)
-     self.present(sendRequestVC, animated: true)
-   case .failure(let error):
-     self.showAlert(with: error.localizedDescription, and: "")
-   }
- }
- */
-
 extension PeoplePresenter: PeoplePresenterProtocol {
   func friendSelected(_ userModel: UserModel) {
     interactor.checkNoChats(with: userModel) { result in

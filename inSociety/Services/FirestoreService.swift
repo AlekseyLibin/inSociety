@@ -111,35 +111,35 @@ extension FirestoreService {
 //MARK: - Chats
 extension FirestoreService {
     
-//    func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
-//        let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
-//        activeChatMessages.getDocuments { [weak self] snapshot, error in
-//            guard let self = self else { return }
-//            
-//            guard let snapshot = snapshot else {
-//                completion(.failure(error!))
-//                return
-//            }
-//            
-//            if snapshot.documents.isEmpty {
-//                let waitingChatMessages = self.waitingChatsReference.document(friend.id).collection("messages")
-//                waitingChatMessages.getDocuments { snapshot, error in
-//                    guard let snapshot = snapshot else {
-//                        completion(.failure(error!))
-//                        return
-//                    }
-//                    
-//                    if snapshot.documents.isEmpty {
-//                        completion(.success(Void()))
-//                    } else {
-//                        completion(.failure(UserError.chatAlreadyExists))
-//                    }
-//                }
-//            } else {
-//                completion(.failure(UserError.chatAlreadyExists))
-//            }
-//        }
-//    }
+    func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
+        let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
+        activeChatMessages.getDocuments { [weak self] snapshot, error in
+            guard let self = self else { return }
+            
+            guard let snapshot = snapshot else {
+                completion(.failure(error!))
+                return
+            }
+            
+            if snapshot.documents.isEmpty {
+                let waitingChatMessages = self.waitingChatsReference.document(friend.id).collection("messages")
+                waitingChatMessages.getDocuments { snapshot, error in
+                    guard let snapshot = snapshot else {
+                        completion(.failure(error!))
+                        return
+                    }
+                    
+                    if snapshot.documents.isEmpty {
+                        completion(.success(Void()))
+                    } else {
+                        completion(.failure(UserError.chatAlreadyExists))
+                    }
+                }
+            } else {
+                completion(.failure(UserError.chatAlreadyExists))
+            }
+        }
+    }
     
     //MARK: - Waiting chats
     func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
