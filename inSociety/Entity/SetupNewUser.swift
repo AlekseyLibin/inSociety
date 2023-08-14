@@ -7,11 +7,11 @@
 
 import UIKit
 
- struct SetupNewUser {
-     let name: String?
-     let avatarImage: UIImage?
-     let email: String
-     let desctiption: String?
-     let sex: String?
-     let id: String
- }
+struct SetupNewUser {
+  let name: String?
+  let avatarImage: UIImage?
+  let email: String
+  let desctiption: String?
+  let sex: String?
+  let id: String
+}

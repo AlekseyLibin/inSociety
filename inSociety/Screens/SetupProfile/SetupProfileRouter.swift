@@ -5,8 +5,11 @@
 //  Created by Aleksey Libin on 30.11.2022.
 //
 
+import UIKit
+
 protocol SetupProfileRouterProtocol {
   func toMainVC(currentUser: UserModel)
+  func backToProfileVC()
 }
 
 final class SetupProfileRouter {
@@ -19,12 +22,14 @@ final class SetupProfileRouter {
 }
 
 extension SetupProfileRouter: SetupProfileRouterProtocol {
-  
   func toMainVC(currentUser: UserModel) {
-    
-    let main = MainTabBarController(currentUser: currentUser)
-    main.modalPresentationStyle = .fullScreen
-    viewController.present(viewController: main)
+    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        windowScene.windows.first?.rootViewController = MainTabBarController(currentUser: currentUser)
+    viewController.navigationController?.setViewControllers([], animated: true)
+  }
+  
+  func backToProfileVC() {
+    viewController.navigationController?.popViewController(animated: true)
   }
   
 }

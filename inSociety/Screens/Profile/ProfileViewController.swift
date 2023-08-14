@@ -9,23 +9,25 @@ import UIKit
 import SDWebImage
 import FirebaseAuth
 
-protocol ProfileViewControllerProtocol: AnyObject {
+protocol ProfileViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?)
+  func updateViews(with userModel: UserModel)
   func activeChats(changeQuantity count: Int)
   func waitingChats(changeQuantity count: Int)
+  var currentUser: UserModel { get }
 }
 
 final class ProfileViewController: BaseViewController {
   
-  private let currentUser: UserModel
+  let currentUser: UserModel
   
   private var avatarView = UIImageView()
   private var fullNameLabel = UILabel()
-  private var descriptionLabel = UILabel()
-  private var activeChatsNumberLabel = UILabel(text: "Active chats data")
-  private var waitingChatsNumberLabel = UILabel(text: "Waiting chats data")
+  private var aboutMeLabel = UILabel()
+  private var activeChatsNumberLabel = UILabel(text: "Active chats")
+  private var waitingChatsNumberLabel = UILabel(text: "Waiting chats")
   
-  private var logOutButton = UIButton(title: "Log out", titleColor: .systemRed, backgroundColor: .darkButtonColor())
+  private var logOutButton = UIButton(title: "Log out", titleColor: .systemRed, backgroundColor: .secondaryDark())
   private let configurator: ProfileConfiguratorProtocol = ProfileConfigurator()
   var presenter: ProfilePresenterProtocol!
   
@@ -37,9 +39,13 @@ final class ProfileViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     configurator.configure(viewController: self)
-    
     setupViews()
-    
+    setupTopBar()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    presenter.fillUpActualInformation()
   }
   
   @objc private func logOut() {
@@ -61,25 +67,24 @@ private extension ProfileViewController {
   func setupViews() {
     view.backgroundColor = .mainDark()
     tabBarController?.tabBar.backgroundColor = .mainDark()
-    navigationController?.navigationBar.backgroundColor = .mainDark()
     presenter.fillChatsInformation(by: currentUser)
+    
     logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
     
-    avatarView.sd_setImage(with: URL(string: currentUser.userAvatarString))
+    avatarView.sd_setImage(with: URL(string: currentUser.avatarString))
     avatarView.clipsToBounds = true
     avatarView.layer.masksToBounds = true
     avatarView.layer.cornerRadius = 10
     avatarView.contentMode = .scaleAspectFill
     
-    fullNameLabel.text = currentUser.userName
-    fullNameLabel.font = .galvji30()
+    fullNameLabel.text = currentUser.fullName
+    fullNameLabel.font = .galvji25()
     fullNameLabel.textColor = .mainYellow()
-    fullNameLabel.textAlignment = .center
-    
-    descriptionLabel.text = currentUser.description
-    descriptionLabel.numberOfLines = 3
-    descriptionLabel.font = .galvji20()
-    descriptionLabel.textColor = .mainYellow()
+
+    aboutMeLabel.text = currentUser.description
+    aboutMeLabel.numberOfLines = 2
+    aboutMeLabel.font = .galvji15()
+    aboutMeLabel.textColor = .secondaryYellow()
     
     activeChatsNumberLabel.font = .galvji25()
     activeChatsNumberLabel.textColor = .mainYellow()
@@ -90,54 +95,100 @@ private extension ProfileViewController {
     setupConstraints()
   }
   
-  func setupConstraints() {
+  func setupTopBar() {
+    let titleLabel = UILabel(text: "Profile")
+    titleLabel.font = .systemFont(ofSize: 25)
+    titleLabel.textColor = .systemGray
     
-    let secondaryView = UIView()
-    secondaryView.layer.cornerRadius = 20
-    secondaryView.backgroundColor = .secondaryDark()
-    
-    [avatarView, secondaryView, fullNameLabel, descriptionLabel, activeChatsNumberLabel, waitingChatsNumberLabel, logOutButton].forEach { subView in
-      view.addSubview(subView)
-      subView.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    NSLayoutConstraint.activate([
-      avatarView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-      avatarView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      avatarView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-      avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor),
-      
-      fullNameLabel.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: 40),
-      fullNameLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-      fullNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      
-      descriptionLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 30),
-      descriptionLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-      descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      
-      activeChatsNumberLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 120),
-      activeChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
-      activeChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-      
-      waitingChatsNumberLabel.topAnchor.constraint(equalTo: activeChatsNumberLabel.bottomAnchor, constant: 20),
-      waitingChatsNumberLabel.widthAnchor.constraint(equalToConstant: 250),
-      waitingChatsNumberLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-      
-      logOutButton.topAnchor.constraint(equalTo: waitingChatsNumberLabel.bottomAnchor, constant: 70),
-      logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      logOutButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
-      logOutButton.heightAnchor.constraint(equalToConstant: 50),
-      
-      secondaryView.topAnchor.constraint(equalTo: fullNameLabel.safeAreaLayoutGuide.topAnchor, constant: -25),
-      secondaryView.bottomAnchor.constraint(equalTo: logOutButton.bottomAnchor, constant: 25),
-      secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-      secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-    ])
+    navigationItem.titleView = titleLabel
+    navigationController?.navigationBar.tintColor = .secondaryYellow()
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit",
+                                                        style: .plain,
+                                                        target: self,
+                                                        action: #selector(editButtonPressed))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "globe"),
+                                                       style: .plain,
+                                                       target: self,
+                                                       action: #selector(globeButtonPressed))
   }
   
+  @objc func globeButtonPressed() {
+    presenter.globeButtonPressed()
+  }
+  
+  @objc func editButtonPressed() {
+    presenter.editButtonPressed()
+  }
+  
+  func setupConstraints() {
+    let avatarBackgroudView = UIView()
+    avatarBackgroudView.layer.cornerRadius = 20
+    avatarBackgroudView.backgroundColor = .secondaryDark()
+    avatarBackgroudView.addSubview(avatarView)
+    avatarBackgroudView.addSubview(fullNameLabel)
+    avatarBackgroudView.addSubview(aboutMeLabel)
+    avatarView.translatesAutoresizingMaskIntoConstraints = false
+    fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
+    aboutMeLabel.translatesAutoresizingMaskIntoConstraints = false
+    avatarBackgroudView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(avatarBackgroudView)
+    
+    let chatsInformationStackView = UIStackView(arrangedSubviews: [activeChatsNumberLabel, waitingChatsNumberLabel])
+    chatsInformationStackView.backgroundColor = .secondaryDark()
+    chatsInformationStackView.layer.cornerRadius = 20
+    chatsInformationStackView.axis = .vertical
+    chatsInformationStackView.distribution = .fillEqually
+    activeChatsNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+    waitingChatsNumberLabel.translatesAutoresizingMaskIntoConstraints = false
+    chatsInformationStackView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(chatsInformationStackView)
+    
+    logOutButton.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(logOutButton)
+    
+    NSLayoutConstraint.activate([
+      avatarBackgroudView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+      avatarBackgroudView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+      avatarBackgroudView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+      avatarBackgroudView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+      
+      avatarView.topAnchor.constraint(equalTo: avatarBackgroudView.topAnchor, constant: 10),
+      avatarView.leadingAnchor.constraint(equalTo: avatarBackgroudView.leadingAnchor, constant: 10),
+      avatarView.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: -10),
+      avatarView.widthAnchor.constraint(equalTo: avatarView.heightAnchor, multiplier: 1),
+      
+      fullNameLabel.topAnchor.constraint(equalTo: avatarBackgroudView.topAnchor, constant: 20),
+      fullNameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 20),
+      fullNameLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -20),
+      
+      aboutMeLabel.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: 25),
+      aboutMeLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 10),
+      aboutMeLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -10),
+      aboutMeLabel.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor),
+      
+      chatsInformationStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
+      chatsInformationStackView.leadingAnchor.constraint(equalTo: avatarBackgroudView.leadingAnchor),
+      chatsInformationStackView.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor),
+      chatsInformationStackView.heightAnchor.constraint(equalTo: avatarBackgroudView.heightAnchor, multiplier: 1.3),
+      activeChatsNumberLabel.leadingAnchor.constraint(equalTo: chatsInformationStackView.leadingAnchor, constant: 20),
+      
+      logOutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+      logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      logOutButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
+      logOutButton.heightAnchor.constraint(equalTo: logOutButton.widthAnchor, multiplier: 0.2)
+    ])
+  }
 }
 
 extension ProfileViewController: ProfileViewControllerProtocol {
+  func updateViews(with userModel: UserModel) {
+    let userImageURL = URL(string: userModel.avatarString)
+    avatarView.sd_setImage(with: userImageURL)
+    
+    fullNameLabel.text = userModel.fullName
+    aboutMeLabel.text = userModel.description
+  }
+  
   func activeChats(changeQuantity count: Int) {
     self.activeChatsNumberLabel.text = "Active chats: \(count.description)"
   }
@@ -145,5 +196,4 @@ extension ProfileViewController: ProfileViewControllerProtocol {
   func waitingChats(changeQuantity count: Int) {
     self.waitingChatsNumberLabel.text = "Waiting chats: \(count.description)"
   }
-  
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol SignUpViewControllerProtocol: AnyObject {
+protocol SignUpViewControllerProtocol: BaseViewCotrollerProtocol {
     func showAlert(with title: String, and message: String?)
 }
 

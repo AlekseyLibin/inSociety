@@ -28,7 +28,7 @@ extension SendRequestPresenter: SendRequestPresenterProtocol {
       self.viewController.removeActivityIndicator()
       switch result {
       case .success:
-        UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(user.userName)", completion: {
+        UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(user.fullName)", completion: {
           self.viewController.dismiss()
         })
       case.failure(let error):

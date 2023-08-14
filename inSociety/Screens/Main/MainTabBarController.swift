@@ -31,7 +31,7 @@ final class MainTabBarController: UITabBarController {
     
     configurator.configure(viewController: self)
     let peopleViewController = PeopleViewController(currentUser: currentUser)
-    let listViewController = ListViewController(currentUser: currentUser)
+    let listViewController = ChatsViewController(currentUser: currentUser)
     let profileViewController = ProfileViewController(currentUser: currentUser)
     
     tabBar.tintColor = .mainYellow()
@@ -58,7 +58,6 @@ final class MainTabBarController: UITabBarController {
     let navigationVC = UINavigationController(rootViewController: rootViewControler)
     navigationVC.tabBarItem.title = title
     navigationVC.tabBarItem.image = image
-    
     return navigationVC
   }
 }

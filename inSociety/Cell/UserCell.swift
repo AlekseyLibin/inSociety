@@ -45,11 +45,11 @@ extension UserCell: SelfConfiguringCell {
     // HCell - Hashable cell.
     func configure<HCell>(with value: HCell) where HCell : Hashable {
         guard let user: UserModel = value as? UserModel else { return }
-        userNameLabel.text = user.userName
+        userNameLabel.text = user.fullName
         userNameLabel.textColor = .mainWhite()
         userNameLabel.backgroundColor = .secondaryDark()
         userNameLabel.textAlignment = .center
-        guard let url = URL(string: user.userAvatarString) else { return }
+        guard let url = URL(string: user.avatarString) else { return }
         userImageView.sd_setImage(with: url)
         userImageView.backgroundColor = .secondaryDark()
         userImageView.contentMode = .scaleAspectFill
@@ -62,11 +62,12 @@ private extension UserCell {
         
         backgroundColor = .mainDark()
         
-        self.layer.shadowColor = UIColor.thirdDark().cgColor
-        self.layer.cornerRadius = 5
-        self.layer.shadowRadius = 5
-        self.layer.shadowOpacity = 1
-        self.layer.shadowOffset = CGSize(width: 0, height: 5)
+        layer.shadowColor = UIColor.thirdDark().cgColor
+        layer.cornerRadius = 5
+        layer.shadowRadius = 5
+        layer.shadowOpacity = 1
+        layer.shadowOffset = CGSize(width: 0, height: 5)
+        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
         
         userImageView.translatesAutoresizingMaskIntoConstraints = false
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -77,20 +78,20 @@ private extension UserCell {
         containerView.addSubview(userNameLabel)
         
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            containerView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            containerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            containerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            containerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             
-            userImageView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            userImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            userImageView.widthAnchor.constraint(equalTo: self.widthAnchor),
-            userImageView.heightAnchor.constraint(equalTo: self.widthAnchor),
+            userImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            userImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            userImageView.widthAnchor.constraint(equalTo: widthAnchor),
+            userImageView.heightAnchor.constraint(equalTo: widthAnchor),
             
             userNameLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor),
-            userNameLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            userNameLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            userNameLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            userNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
+            userNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            userNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }

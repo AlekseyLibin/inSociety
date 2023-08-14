@@ -1,5 +1,5 @@
 //
-//  ListPresenter.swift
+//  ChatsPresenter.swift
 //  inSociety
 //
 //  Created by Aleksey Libin on 04.02.2023.
@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-protocol ListPresenterProtocol: AnyObject {
+protocol ChatsPresenterProtocol: AnyObject {
   func setupListeners( _ waitingChatsListener: inout ListenerRegistration?, _ activeChatsListener: inout ListenerRegistration?)
   func updateLastMessage()
   func waitingChat(moveToActive chat: ChatModel)
@@ -17,18 +17,18 @@ protocol ListPresenterProtocol: AnyObject {
   func navigate(toChatVC currentUser: UserModel, chat: ChatModel)
 }
 
-final class ListPresenter {
+final class ChatsPresenter {
   
-  init(viewController: ListViewController) {
+  init(viewController: ChatsViewController) {
     self.viewController = viewController
   }
   
-  private unowned let viewController: ListViewControllerProtocol
-  var interactor: ListInteractorProtocol!
-  var router: ListRouterProtocol!
+  private unowned let viewController: ChatsViewControllerProtocol
+  var interactor: ChatsInteractorProtocol!
+  var router: ChatsRouterProtocol!
 }
 
-extension ListPresenter: ListPresenterProtocol {
+extension ChatsPresenter: ChatsPresenterProtocol {
   func navigate(toChatRequestVC chat: ChatModel) {
     router.toChatRequestVC(chat: chat)
   }
@@ -74,12 +74,19 @@ extension ListPresenter: ListPresenterProtocol {
   }
   
   func setupListeners(_ waitingChatsListener: inout ListenerRegistration?, _ activeChatsListener: inout ListenerRegistration?) {
-    
     var waitingChats: [ChatModel] {
-      return viewController.waitingChats
+      get {
+        return viewController.waitingChats
+      } set {
+        viewController.emptyWaitingChatsLabel(isActive: newValue.isEmpty)
+      }
     }
     var activeChats: [ChatModel] {
-      return viewController.activeChats
+      get {
+        return viewController.activeChats
+      } set {
+        viewController.emptyActiveChatsLabel(isActive: newValue.isEmpty)
+      }
     }
     
     waitingChatsListener = ListenerService.shared.waitingChatsObserve(chats: waitingChats, completion: { difference in

@@ -15,8 +15,8 @@ protocol PeoplePresenterProtocol: AnyObject {
 
 final class PeoplePresenter {
   
-  init(viewContrroller: PeopleViewController) {
-    self.viewController = viewContrroller
+  init(viewController: PeopleViewControllerProtocol) {
+    self.viewController = viewController
   }
   
   private unowned let viewController: PeopleViewControllerProtocol

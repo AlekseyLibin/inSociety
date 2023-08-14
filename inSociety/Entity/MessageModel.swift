@@ -25,7 +25,7 @@ struct MessageModel: Hashable, MessageType {
     
     init(user: UserModel, content: String) {
         self.content = content
-        sender = Sender(senderID: user.id, senderName: user.userName)
+        sender = Sender(senderID: user.id, senderName: user.fullName)
         sentDate = Date()
         id = nil
     }

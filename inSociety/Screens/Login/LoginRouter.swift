@@ -23,14 +23,14 @@ final class LoginRouter {
 extension LoginRouter: LoginRouterProtocol {
   
   func toSetupProfileVC(currentUser: User) {
-    let setupProfileVC = SetupProfileViewController(currentUser: currentUser)
+    let setupProfileVC = SetupProfileViewController(currentUser: currentUser, target: .create)
     viewController.present(viewController: setupProfileVC)
   }
   
   func toMainVC(currentUser: UserModel) {
-    let main = MainTabBarController(currentUser: currentUser)
-    main.modalPresentationStyle = .fullScreen
-    viewController.present(viewController: main)
+    guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        windowScene.windows.first?.rootViewController = MainTabBarController(currentUser: currentUser)
+    viewController.navigationController?.setViewControllers([], animated: true)
   }
   
 }

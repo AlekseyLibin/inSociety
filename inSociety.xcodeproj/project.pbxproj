@@ -31,10 +31,10 @@
 		4367D0D92909762B0056C307 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0D82909762B0056C307 /* MessageModel.swift */; };
 		4367D0DB29097E2C0056C307 /* UIApplication + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0DA29097E2C0056C307 /* UIApplication + Extension.swift */; };
 		4367D0DD2909BA3B0056C307 /* WaitingChatsNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */; };
-		43846B53298EAC9700588F72 /* ListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B52298EAC9700588F72 /* ListConfigurator.swift */; };
-		43846B55298EACA200588F72 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B54298EACA200588F72 /* ListPresenter.swift */; };
-		43846B57298EACAB00588F72 /* ListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B56298EACAB00588F72 /* ListInteractor.swift */; };
-		43846B59298EACB100588F72 /* ListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B58298EACB100588F72 /* ListRouter.swift */; };
+		43846B53298EAC9700588F72 /* ChatsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B52298EAC9700588F72 /* ChatsConfigurator.swift */; };
+		43846B55298EACA200588F72 /* ChatsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B54298EACA200588F72 /* ChatsPresenter.swift */; };
+		43846B57298EACAB00588F72 /* ChatsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B56298EACAB00588F72 /* ChatsInteractor.swift */; };
+		43846B59298EACB100588F72 /* ChatsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B58298EACB100588F72 /* ChatsRouter.swift */; };
 		4396F66D2914518F00BB988F /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396F66C2914518F00BB988F /* UIView + Extension.swift */; };
 		4397FB2E290702BE00FED534 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2D290702BE00FED534 /* Assets.xcassets */; };
 		4397FB31290702BE00FED534 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2F290702BE00FED534 /* LaunchScreen.storyboard */; };
@@ -49,12 +49,11 @@
 		4397FB5E2907060F00FED534 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB5D2907060F00FED534 /* UserCell.swift */; };
 		4397FB632907066400FED534 /* ChatRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB622907066400FED534 /* ChatRequestViewController.swift */; };
 		4397FB652907068200FED534 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB642907068200FED534 /* SectionHeader.swift */; };
-		4397FB68290706AE00FED534 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB67290706AE00FED534 /* ListViewController.swift */; };
+		4397FB68290706AE00FED534 /* ChatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB67290706AE00FED534 /* ChatsViewController.swift */; };
 		4397FB6A290706C400FED534 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB69290706C400FED534 /* MainTabBarController.swift */; };
 		4397FB6C290706D900FED534 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6B290706D900FED534 /* PeopleViewController.swift */; };
 		4397FB6E2907070A00FED534 /* SendRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6D2907070A00FED534 /* SendRequestViewController.swift */; };
-		4397FB702907077500FED534 /* AddPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6F2907077500FED534 /* AddPhotoView.swift */; };
-		4397FB732907079900FED534 /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB722907079900FED534 /* Bundle-Decodable.swift */; };
+		4397FB702907077500FED534 /* FillImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB6F2907077500FED534 /* FillImageView.swift */; };
 		4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB74290707AF00FED534 /* LabelButtonView.swift */; };
 		4397FB77290707C500FED534 /* UnderlinedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB76290707C500FED534 /* UnderlinedTextField.swift */; };
 		4397FB7B2907080B00FED534 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB7A2907080B00FED534 /* UILabel + Extension.swift */; };
@@ -112,7 +111,7 @@
 		43260B812938006A0008730C /* AuthConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfigurator.swift; sourceTree = "<group>"; };
 		43260B852938007F0008730C /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
 		43260B872938008C0008730C /* AuthInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInteractor.swift; sourceTree = "<group>"; };
-		43260B892938009B0008730C /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
+		43260B892938009B0008730C /* AuthRouter.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; tabWidth = 2; usesTabs = 1; };
 		43260B8B293800AC0008730C /* LoginConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginConfigurator.swift; sourceTree = "<group>"; };
 		43260B8D293800B60008730C /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		43260B8F293800C10008730C /* LoginInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInteractor.swift; sourceTree = "<group>"; };
@@ -132,10 +131,10 @@
 		4367D0D82909762B0056C307 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		4367D0DA29097E2C0056C307 /* UIApplication + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication + Extension.swift"; sourceTree = "<group>"; };
 		4367D0DC2909BA3B0056C307 /* WaitingChatsNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingChatsNavigation.swift; sourceTree = "<group>"; };
-		43846B52298EAC9700588F72 /* ListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListConfigurator.swift; sourceTree = "<group>"; };
-		43846B54298EACA200588F72 /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
-		43846B56298EACAB00588F72 /* ListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInteractor.swift; sourceTree = "<group>"; };
-		43846B58298EACB100588F72 /* ListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouter.swift; sourceTree = "<group>"; };
+		43846B52298EAC9700588F72 /* ChatsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsConfigurator.swift; sourceTree = "<group>"; };
+		43846B54298EACA200588F72 /* ChatsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsPresenter.swift; sourceTree = "<group>"; };
+		43846B56298EACAB00588F72 /* ChatsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsInteractor.swift; sourceTree = "<group>"; };
+		43846B58298EACB100588F72 /* ChatsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsRouter.swift; sourceTree = "<group>"; };
 		4396F66C2914518F00BB988F /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		4397FB21290702BC00FED534 /* inSociety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inSociety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4397FB2D290702BE00FED534 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -152,12 +151,11 @@
 		4397FB5D2907060F00FED534 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		4397FB622907066400FED534 /* ChatRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatRequestViewController.swift; path = inSociety/Screens/ChatRequest/ChatRequestViewController.swift; sourceTree = SOURCE_ROOT; };
 		4397FB642907068200FED534 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
-		4397FB67290706AE00FED534 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		4397FB67290706AE00FED534 /* ChatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsViewController.swift; sourceTree = "<group>"; };
 		4397FB69290706C400FED534 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		4397FB6B290706D900FED534 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		4397FB6D2907070A00FED534 /* SendRequestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequestViewController.swift; sourceTree = "<group>"; };
-		4397FB6F2907077500FED534 /* AddPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPhotoView.swift; sourceTree = "<group>"; };
-		4397FB722907079900FED534 /* Bundle-Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
+		4397FB6F2907077500FED534 /* FillImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillImageView.swift; sourceTree = "<group>"; };
 		4397FB74290707AF00FED534 /* LabelButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelButtonView.swift; sourceTree = "<group>"; };
 		4397FB76290707C500FED534 /* UnderlinedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedTextField.swift; sourceTree = "<group>"; };
 		4397FB7A2907080B00FED534 /* UILabel + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
@@ -287,16 +285,16 @@
 			path = SetupProfile;
 			sourceTree = "<group>";
 		};
-		43846B51298EAC7E00588F72 /* List */ = {
+		43846B51298EAC7E00588F72 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
-				43846B52298EAC9700588F72 /* ListConfigurator.swift */,
-				4397FB67290706AE00FED534 /* ListViewController.swift */,
-				43846B54298EACA200588F72 /* ListPresenter.swift */,
-				43846B56298EACAB00588F72 /* ListInteractor.swift */,
-				43846B58298EACB100588F72 /* ListRouter.swift */,
+				43846B52298EAC9700588F72 /* ChatsConfigurator.swift */,
+				4397FB67290706AE00FED534 /* ChatsViewController.swift */,
+				43846B54298EACA200588F72 /* ChatsPresenter.swift */,
+				43846B56298EACAB00588F72 /* ChatsInteractor.swift */,
+				43846B58298EACB100588F72 /* ChatsRouter.swift */,
 			);
-			path = List;
+			path = Chats;
 			sourceTree = "<group>";
 		};
 		4397FB18290702BC00FED534 = {
@@ -372,7 +370,6 @@
 		4397FB712907077D00FED534 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				4397FB722907079900FED534 /* Bundle-Decodable.swift */,
 				4397FB8C2907094500FED534 /* UIKit */,
 			);
 			path = Extensions;
@@ -443,7 +440,7 @@
 		43CDAA122927CEA400ECF127 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				4397FB6F2907077500FED534 /* AddPhotoView.swift */,
+				4397FB6F2907077500FED534 /* FillImageView.swift */,
 				4397FB74290707AF00FED534 /* LabelButtonView.swift */,
 				4397FB86290708E800FED534 /* SendMessageTextField.swift */,
 				4397FB76290707C500FED534 /* UnderlinedTextField.swift */,
@@ -472,7 +469,7 @@
 				43260BA6293801B20008730C /* SetupProfile */,
 				43F23014298D589C001A1183 /* Main */,
 				43F2301D298D7F93001A1183 /* People */,
-				43846B51298EAC7E00588F72 /* List */,
+				43846B51298EAC7E00588F72 /* Chats */,
 				43EE386F299167FE003314B1 /* Profile */,
 				43EE3878299176F9003314B1 /* ChatRequest */,
 				43D01CED29917BCE00FB5760 /* SendRequest */,
@@ -621,7 +618,7 @@
 		A7064EDD98B9B4FEB21B1319 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -671,7 +668,7 @@
 				43F2301F298D7FCC001A1183 /* PeopleConfigurator.swift in Sources */,
 				4397FB632907066400FED534 /* ChatRequestViewController.swift in Sources */,
 				43260B8C293800AD0008730C /* LoginConfigurator.swift in Sources */,
-				43846B57298EACAB00588F72 /* ListInteractor.swift in Sources */,
+				43846B57298EACAB00588F72 /* ChatsInteractor.swift in Sources */,
 				4318BFDD290C128300F8E8AB /* ChatViewController.swift in Sources */,
 				43EE38732991687B003314B1 /* ProfilePresenter.swift in Sources */,
 				4397FB6C290706D900FED534 /* PeopleViewController.swift in Sources */,
@@ -681,13 +678,13 @@
 				43AC54BC290C1AB200EF962C /* Sender.swift in Sources */,
 				43C426892911A70400205F5D /* ProfileViewController.swift in Sources */,
 				43260B822938006A0008730C /* AuthConfigurator.swift in Sources */,
-				43846B59298EACB100588F72 /* ListRouter.swift in Sources */,
+				43846B59298EACB100588F72 /* ChatsRouter.swift in Sources */,
 				4367D0B02907F7100056C307 /* StorageService.swift in Sources */,
 				43260B9E2938016B0008730C /* SetupProfilePresenter.swift in Sources */,
 				43F2301A298D58D6001A1183 /* MainInteractor.swift in Sources */,
 				43260B8E293800B60008730C /* LoginPresenter.swift in Sources */,
 				43EE38772991688D003314B1 /* ProfileRouter.swift in Sources */,
-				4397FB68290706AE00FED534 /* ListViewController.swift in Sources */,
+				4397FB68290706AE00FED534 /* ChatsViewController.swift in Sources */,
 				4397FB77290707C500FED534 /* UnderlinedTextField.swift in Sources */,
 				4397FBA929070B8400FED534 /* UserModel.swift in Sources */,
 				4397FB532907055600FED534 /* LoginViewController.swift in Sources */,
@@ -695,11 +692,11 @@
 				43D01CF92991949D00FB5760 /* ChatPresenter.swift in Sources */,
 				4397FB7B2907080B00FED534 /* UILabel + Extension.swift in Sources */,
 				43F23013298D57AF001A1183 /* SetupNewUser.swift in Sources */,
-				43846B55298EACA200588F72 /* ListPresenter.swift in Sources */,
+				43846B55298EACA200588F72 /* ChatsPresenter.swift in Sources */,
 				43260BA22938017F0008730C /* SetupProfileRouter.swift in Sources */,
 				4397FBA729070B7100FED534 /* ChatModel.swift in Sources */,
 				43260B94293801100008730C /* SignUpConfigurator.swift in Sources */,
-				43846B53298EAC9700588F72 /* ListConfigurator.swift in Sources */,
+				43846B53298EAC9700588F72 /* ChatsConfigurator.swift in Sources */,
 				4397FB75290707AF00FED534 /* LabelButtonView.swift in Sources */,
 				43C4268729119B8B00205F5D /* UIScrollView + Extension.swift in Sources */,
 				43F23025298D8006001A1183 /* PeopleRouter.swift in Sources */,
@@ -713,7 +710,6 @@
 				4397FB8B2907093100FED534 /* UIFont + Extension.swift in Sources */,
 				4367D0B22907FC970056C307 /* UIImage + Extension.swift in Sources */,
 				43F23016298D58C4001A1183 /* MainConfigurator.swift in Sources */,
-				4397FB732907079900FED534 /* Bundle-Decodable.swift in Sources */,
 				4397FBA029070B0700FED534 /* SelfConfiguringCell.swift in Sources */,
 				4397FB5C290705F800FED534 /* WaitingChatCell.swift in Sources */,
 				43EE38712991686F003314B1 /* ProfileConfigurator.swift in Sources */,
@@ -735,7 +731,7 @@
 				4397FB5A290705D900FED534 /* ActiveChatCell.swift in Sources */,
 				43EE387C29917735003314B1 /* ChatRequestRouter.swift in Sources */,
 				43EE387529916888003314B1 /* ProfileInteractor.swift in Sources */,
-				4397FB702907077500FED534 /* AddPhotoView.swift in Sources */,
+				4397FB702907077500FED534 /* FillImageView.swift in Sources */,
 				4397FB9A29070AA900FED534 /* UserError.swift in Sources */,
 				43D01CFF299194C600FB5760 /* ChatRouter.swift in Sources */,
 				4397FB9C29070ABB00FED534 /* Validator.swift in Sources */,
@@ -902,9 +898,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = inSociety/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -912,10 +909,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "aleksey-libin.inSociety";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -932,9 +932,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = inSociety/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDarkContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -942,9 +943,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "aleksey-libin.inSociety";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

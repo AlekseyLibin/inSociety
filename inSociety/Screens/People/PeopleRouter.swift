@@ -13,11 +13,11 @@ protocol PeopleRouterProtocol: AnyObject {
 
 final class PeopleRouter {
   
-  init(viewController: PeopleViewController) {
+  init(viewController: PeopleViewControllerProtocol) {
     self.viewController = viewController
   }
   
-  private unowned let viewController: PeopleViewController
+  private unowned let viewController: PeopleViewControllerProtocol
   
 }
 

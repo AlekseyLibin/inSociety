@@ -16,25 +16,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     window = UIWindow(frame: windowScene.coordinateSpace.bounds)
     window?.windowScene = windowScene
+    window?.makeKeyAndVisible()
     
     let navigationController = UINavigationController()
     
     if Auth.auth().currentUser != nil {
-      FirestoreService.shared.getDataForCurrentUser { result in
+      FirestoreService.shared.getDataForCurrentUser { [weak self] result in
         switch result {
         case .success(let currentUser):
-          navigationController.setViewControllers([MainTabBarController(currentUser: currentUser)], animated: true)
+          self?.window?.rootViewController = MainTabBarController(currentUser: currentUser)
         case .failure:
           navigationController.setViewControllers([AuthViewController()], animated: true)
-
+          self?.window?.rootViewController = navigationController
         }
       }
     } else {
       navigationController.setViewControllers([AuthViewController()], animated: true)
+      self.window?.rootViewController = navigationController
     }
-    
-    window?.rootViewController = navigationController
-    window?.makeKeyAndVisible()
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {

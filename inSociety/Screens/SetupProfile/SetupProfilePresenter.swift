@@ -8,6 +8,7 @@
 import UIKit
 
 protocol SetupProfilePresenterProtocol: AnyObject {
+  func fillAvailableDataForCurrentUser()
   func submitButtonPressed(with newUser: SetupNewUser)
 }
 
@@ -24,13 +25,29 @@ final class SetupProfilePresenter {
 }
 
 extension SetupProfilePresenter: SetupProfilePresenterProtocol {
+  func fillAvailableDataForCurrentUser() {
+    interactor.getDataForCurrentUser { result in
+      switch result {
+      case .success(let userModel):
+        self.viewController.updateViews(with: userModel)
+      case .failure(let failure):
+        print(failure.localizedDescription)
+      }
+    }
+  }
+  
   func submitButtonPressed(with newUser: SetupNewUser) {
     interactor.submitButtonPressed(with: newUser) { [weak self] result in
       guard let self = self else { return }
       
       switch result {
       case .success(let currentUserModel):
-        self.router.toMainVC(currentUser: currentUserModel)
+        switch viewController.target {
+        case .create:
+          self.router.toMainVC(currentUser: currentUserModel)
+        case .modify:
+          self.router.backToProfileVC()
+        }
       case .failure(let error):
         self.viewController.showAlert(with: "Error", and: error.localizedDescription, completion: {})
       }

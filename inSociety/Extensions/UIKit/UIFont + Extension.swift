@@ -10,7 +10,7 @@ import UIKit
 extension UIFont {
     
     static func galvji15() -> UIFont? {
-        return UIFont(name: "Galvji", size: 20)
+        return UIFont(name: "Galvji", size: 15)
     }
     
     static func galvji20() -> UIFont? {

@@ -14,11 +14,11 @@ extension UIView {
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tap.cancelsTouchesInView = false
         swipe.cancelsTouchesInView = false
-        self.addGestureRecognizer(tap)
-        self.addGestureRecognizer(swipe)
+        addGestureRecognizer(tap)
+        addGestureRecognizer(swipe)
     }
     
     @objc func dismissKeyboard() {
-        self.endEditing(true)
+        endEditing(true)
     }
 }

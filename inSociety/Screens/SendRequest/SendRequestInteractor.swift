@@ -20,9 +20,9 @@ extension SendRequestInteractor: SendRequestInteractorProtocol {
     FirestoreService.shared.createWaitingChat(message: message, receiver: receiver) { result in
       switch result {
       case .success:
-        guard let currentUser = FirestoreService.shared.currentUserModel else { return }
-        let chat = ChatModel(friendName: receiver.userName,
-                             friendAvatarString: receiver.userAvatarString,
+        guard let currentUser = FirestoreService.shared.currentUser else { return }
+        let chat = ChatModel(friendName: receiver.fullName,
+                             friendAvatarString: receiver.avatarString,
                              lastMessageContent: message, friendID: receiver.id)
         
         let message = MessageModel(user: currentUser, content: message)

@@ -8,7 +8,7 @@
 import UIKit
 import SDWebImage
 
-protocol SendRequestViewControllerProtocol: AnyObject {
+protocol SendRequestViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?)
   func dismiss()
   func removeActivityIndicator()
@@ -32,9 +32,9 @@ final class SendRequestViewController: BaseViewController {
   init(user: UserModel) {
     self.user = user
     
-    self.nameLabel.text = user.userName
+    self.nameLabel.text = user.fullName
     self.descriptionLabel.text = user.description
-    self.imageView.sd_setImage(with: URL(string: user.userAvatarString))
+    self.imageView.sd_setImage(with: URL(string: user.avatarString))
     
     super.init(nibName: nil, bundle: nil)
   }

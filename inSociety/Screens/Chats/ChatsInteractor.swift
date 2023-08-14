@@ -1,5 +1,5 @@
 //
-//  ListInteractor.swift
+//  ChatsInteractor.swift
 //  inSociety
 //
 //  Created by Aleksey Libin on 04.02.2023.
@@ -7,17 +7,17 @@
 
 import Foundation
 
-protocol ListInteractorProtocol: AnyObject {
+protocol ChatsInteractorProtocol: AnyObject {
   func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void)
   func waitingChat(moveToActive chat: ChatModel, completion:  @escaping (Result<Void, Error>) -> Void)
   func waitingChat(remove chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-final class ListInteractor {
+final class ChatsInteractor {
   
 }
 
-extension ListInteractor: ListInteractorProtocol {
+extension ChatsInteractor: ChatsInteractorProtocol {
   func waitingChat(moveToActive chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void) {
     FirestoreService.shared.moveWaitingChatToActive(chat: chat, completion: completion)
   }

@@ -9,8 +9,9 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-protocol PeopleViewControllerProtocol: AnyObject {
+protocol PeopleViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?)
+  var presenter: PeoplePresenterProtocol! { get set }
 }
 
 final class PeopleViewController: BaseViewController {
@@ -48,7 +49,7 @@ final class PeopleViewController: BaseViewController {
     
     configurator.configure(viewController: self)
     
-    setupSearchController()
+    setupTopBar()
     setupTabBar()
     setupCollectionView()
     createDataSource()
@@ -66,10 +67,11 @@ final class PeopleViewController: BaseViewController {
     })
   }
   
-  deinit {
-    numberOfUsersListener?.remove()
-    usersListener?.remove()
-  }
+//  deinit {
+//    numberOfUsersListener?.remove()
+//    usersListener?.remove()
+//    print("deinit")
+//  }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -77,7 +79,7 @@ final class PeopleViewController: BaseViewController {
   
 }
 
-// MARK: - Setup collectionView
+// MARK: - Setup CollectionView
 private extension PeopleViewController {
   func setupCollectionView() {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
@@ -143,7 +145,7 @@ private extension PeopleViewController {
         switch result {
         case .success(let allUsers):
           sectionHeader.configure(text: section.description(usersCount: allUsers.count),
-                                  font: .systemFont(ofSize: 36, weight: .light),
+                                  font: .systemFont(ofSize: 20, weight: .light),
                                   textColor: .mainYellow())
         case .failure(let error):
           self.showAlert(with: "Error", and: error.localizedDescription)
@@ -208,14 +210,24 @@ private extension PeopleViewController {
   }
 }
 
-// MARK: - SetupSearchController
+// MARK: - SetupTopBar
 private extension PeopleViewController {
-  func setupSearchController() {
-    navigationController?.navigationBar.barTintColor = .mainDark()
+  func setupTopBar() {
+    let titleLogoImage = UIImage(named: "inSociety")?.withTintColor(.mainYellow())
+    let titleLogoView = UIImageView(image: titleLogoImage)
+    titleLogoView.contentMode = .scaleAspectFit
+    
+    let appearance = UINavigationBarAppearance()
+    appearance.backgroundColor = .mainDark()
+    
+    navigationController?.navigationBar.standardAppearance = appearance
+    navigationController?.navigationBar.scrollEdgeAppearance = appearance
     
     let searchController = UISearchController(searchResultsController: nil)
     navigationItem.searchController = searchController
-    navigationItem.hidesSearchBarWhenScrolling = false
+    
+    navigationItem.titleView = titleLogoView
+    navigationItem.hidesSearchBarWhenScrolling = true
     searchController.hidesNavigationBarDuringPresentation = false
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.delegate = self
@@ -233,7 +245,6 @@ extension PeopleViewController: UISearchBarDelegate {
 private extension PeopleViewController {
   func setupTabBar() {
     let appearance = UITabBarAppearance()
-    appearance.configureWithOpaqueBackground()
     appearance.backgroundColor = .mainDark()
     
     self.tabBarController?.tabBar.standardAppearance = appearance

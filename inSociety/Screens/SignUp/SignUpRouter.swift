@@ -22,7 +22,7 @@ final class SignUpRouter {
 extension SignUpRouter: SignUpRouterProtocol {
     
     func toSetupProfileVC(with currentUser: User) {
-        let setupProfileVC = SetupProfileViewController(currentUser: currentUser)
+      let setupProfileVC = SetupProfileViewController(currentUser: currentUser, target: .create)
         viewController.present(viewController: setupProfileVC)
     }
     

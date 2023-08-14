@@ -1,5 +1,5 @@
 //
-//  ListViewController.swift
+//  ChatsViewController.swift
 //  inSociety
 //
 //  Created by Aleksey Libin on 14.10.2022.
@@ -8,17 +8,19 @@
 import UIKit
 import FirebaseFirestore
 
-protocol ListViewControllerProtocol: WaitingChatsNavigation, AnyObject {
+protocol ChatsViewControllerProtocol: WaitingChatsNavigation, BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?)
   func changeValueFor(waitingChats: [ChatModel])
   func changeValueFor(activeChats: [ChatModel])
   func collectionView(updateCellValueBy indexPath: IndexPath, with message: String)
-
+  func emptyWaitingChatsLabel(isActive: Bool)
+  func emptyActiveChatsLabel(isActive: Bool)
+  
   var waitingChats: [ChatModel] { get }
   var activeChats: [ChatModel] { get }
 }
 
-final class ListViewController: BaseViewController {
+final class ChatsViewController: BaseViewController {
   
   enum Section: Int, CaseIterable {
     case waitingChats, activeChats
@@ -43,14 +45,15 @@ final class ListViewController: BaseViewController {
   
   private var collectionView: UICollectionView!
   private var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
+  private let emptyWaitingChatsLabel = UILabel()
+  private let emptyActiveChatsLabel = UILabel()
   
-  private let configurator: ListConfiguratorProtocol = ListConfigurator()
-  var presenter: ListPresenterProtocol!
+  private let configurator: ChatsConfiguratorProtocol = ChatsConfigurator()
+  var presenter: ChatsPresenterProtocol!
   
   init(currentUser: UserModel) {
     self.currentUser = currentUser
     super.init(nibName: nil, bundle: nil)
-    title = "Chats"
   }
   
   deinit {
@@ -70,26 +73,66 @@ final class ListViewController: BaseViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     configurator.configure(viewController: self)
-    tabBarController?.tabBar.backgroundColor = .mainDark()
-    let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.gray]
-    navigationController?.navigationBar.titleTextAttributes = textAttributes
-    
     setupCollectionView()
-    setupSearchController()
+    setupTopBar()
     createDataSource()
     presenter.setupListeners(&waitingChatsListener, &activeChatsListener)
     reloadData(with: nil)
+    setupLabels()
+  }
+  
+  private func setupLabels() {
+    emptyWaitingChatsLabel.text = "Here will be indicated people, waiting you to confirm their chat request"
+    emptyWaitingChatsLabel.textColor = .darkGray
+    emptyWaitingChatsLabel.alpha = 0.5
+    emptyWaitingChatsLabel.font = .italicSystemFont(ofSize: 20)
+    emptyWaitingChatsLabel.textAlignment = .center
+    emptyWaitingChatsLabel.numberOfLines = 0
+    emptyWaitingChatsLabel.isHidden = !waitingChats.isEmpty
+    collectionView.addSubview(emptyWaitingChatsLabel)
+    emptyWaitingChatsLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      emptyWaitingChatsLabel.topAnchor.constraint(equalTo: collectionView.safeAreaLayoutGuide.topAnchor, constant: 60),
+      emptyWaitingChatsLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+      emptyWaitingChatsLabel.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 0.8)
+    ])
+    
+    emptyActiveChatsLabel.text = "Here will be indicated people, who you chat with"
+    emptyActiveChatsLabel.textColor = .darkGray
+    emptyActiveChatsLabel.alpha = 0.5
+    emptyActiveChatsLabel.font = .italicSystemFont(ofSize: 20)
+    emptyActiveChatsLabel.textAlignment = .center
+    emptyActiveChatsLabel.numberOfLines = 0
+    emptyActiveChatsLabel.isHidden = !activeChats.isEmpty
+    collectionView.addSubview(emptyActiveChatsLabel)
+    emptyActiveChatsLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    NSLayoutConstraint.activate([
+      emptyActiveChatsLabel.topAnchor.constraint(equalTo: emptyWaitingChatsLabel.bottomAnchor, constant: 100),
+      emptyActiveChatsLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+      emptyActiveChatsLabel.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 0.8)
+    ])
     
   }
   
-  private func setupSearchController() {
-    navigationController?.navigationBar.barTintColor = .mainDark()
+  private func setupTopBar() {
+    let appearance = UINavigationBarAppearance()
+    appearance.backgroundColor = .mainDark()
+    
+    let titleLabel = UILabel(text: "Chats")
+    titleLabel.font = .systemFont(ofSize: 25)
+    titleLabel.textColor = .systemGray
+    
+    navigationController?.navigationBar.standardAppearance = appearance
+    navigationController?.navigationBar.scrollEdgeAppearance = appearance
     
     let searchController = UISearchController(searchResultsController: nil)
     navigationItem.searchController = searchController
-    navigationItem.hidesSearchBarWhenScrolling = false
+    navigationItem.titleView = titleLabel
+    
+    navigationItem.hidesSearchBarWhenScrolling = true
     searchController.hidesNavigationBarDuringPresentation = false
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.delegate = self
@@ -110,11 +153,9 @@ final class ListViewController: BaseViewController {
   func updateLastMessage() {
     presenter.updateLastMessage()
   }
-  
 }
 
-extension ListViewController: ListViewControllerProtocol {
-  
+extension ChatsViewController: ChatsViewControllerProtocol {
   func collectionView(updateCellValueBy indexPath: IndexPath, with message: String) {
     guard let cell = self.collectionView.cellForItem(at: indexPath) as? ActiveChatCell else { return }
     cell.updateLastMessage(with: message)
@@ -137,10 +178,18 @@ extension ListViewController: ListViewControllerProtocol {
   func moveToActive(chat: ChatModel) {
     presenter.waitingChat(moveToActive: chat)
   }
+  
+  func emptyWaitingChatsLabel(isActive: Bool) {
+    emptyWaitingChatsLabel.isHidden = !isActive
+  }
+  
+  func emptyActiveChatsLabel(isActive: Bool) {
+    emptyActiveChatsLabel.isHidden = !isActive
+  }
 }
 
 // MARK: - Data Source
-private extension ListViewController {
+private extension ChatsViewController {
   func createDataSource() {
     dataSource = UICollectionViewDiffableDataSource<Section, ChatModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
       
@@ -163,10 +212,9 @@ private extension ListViewController {
     })
     
     dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
-      
       guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
-      else { fatalError("Cannot create neu section header") }
+      else { fatalError("Cannot create nev section header") }
       
       guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
       sectionHeader.configure(text: section.description(),
@@ -179,14 +227,14 @@ private extension ListViewController {
 }
 
 // MARK: - UISearchBarDelegate
-extension ListViewController: UISearchBarDelegate {
+extension ChatsViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     reloadData(with: searchText)
   }
 }
 
 // MARK: - UICollectionViewDelegate
-extension ListViewController: UICollectionViewDelegate {
+extension ChatsViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard
       let chat = self.dataSource?.itemIdentifier(for: indexPath),
@@ -203,7 +251,7 @@ extension ListViewController: UICollectionViewDelegate {
 }
 
 // MARK: - Setup CollectionView
-private extension ListViewController {
+private extension ChatsViewController {
   func setupCollectionView() {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
     collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
@@ -293,5 +341,4 @@ private extension ListViewController {
                                                                     elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
     return sectionHeader
   }
-  
 }

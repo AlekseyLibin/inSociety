@@ -1,5 +1,5 @@
 //
-//  ListRouter.swift
+//  ChatsRouter.swift
 //  inSociety
 //
 //  Created by Aleksey Libin on 04.02.2023.
@@ -7,21 +7,21 @@
 
 import Foundation
 
-protocol ListRouterProtocol: AnyObject {
+protocol ChatsRouterProtocol: AnyObject {
   func toChatRequestVC(chat: ChatModel)
   func toChatVC(currentUser:  UserModel, chat: ChatModel)
 }
 
-final class ListRouter {
+final class ChatsRouter {
   
-  init(viewController: ListViewController) {
+  init(viewController: ChatsViewController) {
     self.viewController = viewController
   }
   
-  private unowned let viewController: ListViewController
+  private unowned let viewController: ChatsViewController
 }
 
-extension ListRouter: ListRouterProtocol {
+extension ChatsRouter: ChatsRouterProtocol {
   func toChatVC(currentUser: UserModel, chat: ChatModel) {
     let chatVC = ChatViewController(currentUser: currentUser, chat: chat)
     chatVC.hidesBottomBarWhenPushed = true

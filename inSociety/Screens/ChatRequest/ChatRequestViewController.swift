@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol ChatRequestViewControllerProtocol: AnyObject {
+protocol ChatRequestViewControllerProtocol: BaseViewCotrollerProtocol {
   
 }
 
-final class ChatRequestViewController: UIViewController {
+final class ChatRequestViewController: BaseViewController {
   
   private let containerView = UIView()
   private let imageView = UIImageView()

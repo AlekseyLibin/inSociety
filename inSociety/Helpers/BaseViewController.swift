@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol BaseViewCotrollerProtocol: AnyObject {
+  func present(viewController: UIViewController)
+  func dismiss()
+}
+
 class BaseViewController: UIViewController {
   
   func present(viewController: UIViewController) {

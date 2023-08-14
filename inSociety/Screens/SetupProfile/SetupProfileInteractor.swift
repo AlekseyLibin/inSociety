@@ -9,6 +9,7 @@ import UIKit
 
 protocol SetupProfileInteractorProtocol {
   func submitButtonPressed(with newUser: SetupNewUser, completion: @escaping (Result<UserModel, Error>) -> Void)
+  func getDataForCurrentUser(completion: @escaping (Result<UserModel, Error>) -> Void)
 }
 
 final class SetupProfileInteractor {
@@ -16,8 +17,11 @@ final class SetupProfileInteractor {
 }
 
 extension SetupProfileInteractor: SetupProfileInteractorProtocol {
+  func getDataForCurrentUser(completion: @escaping (Result<UserModel, Error>) -> Void) {
+    FirestoreService.shared.getDataForCurrentUser(completion: completion)
+  }
+  
   func submitButtonPressed(with newUser: SetupNewUser, completion: @escaping (Result<UserModel, Error>) -> Void) {
-    
     FirestoreService.shared.saveProfile(with: newUser) { result in
       switch result {
       case .success(let currentUserModel):

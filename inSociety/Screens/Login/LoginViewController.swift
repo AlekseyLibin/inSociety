@@ -9,7 +9,7 @@ import UIKit
 import FirebaseCore
 import FirebaseAuth
 
-protocol LoginViewControllerProtocol: AnyObject {
+protocol LoginViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
   func showAlert(with title: String, and message: String?)
 }

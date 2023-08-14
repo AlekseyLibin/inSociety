@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PeopleConfiguratorProtocol: AnyObject {
-  func configure(viewController: PeopleViewController)
+  func configure(viewController: PeopleViewControllerProtocol)
 }
 
 final class PeopleConfigurator {
@@ -16,8 +16,8 @@ final class PeopleConfigurator {
 }
 
 extension PeopleConfigurator: PeopleConfiguratorProtocol {
-  func configure(viewController: PeopleViewController) {
-    let presenter = PeoplePresenter(viewContrroller: viewController)
+  func configure(viewController: PeopleViewControllerProtocol) {
+    let presenter = PeoplePresenter(viewController: viewController)
     let router = PeopleRouter(viewController: viewController)
     let interactor = PeopleInteractor()
     

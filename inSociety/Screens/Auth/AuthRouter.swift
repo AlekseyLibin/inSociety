@@ -8,47 +8,47 @@
 import FirebaseAuth
 
 protocol AuthRouterProtocol: AnyObject {
-    func toSignUpVC()
-    func toLoginVC()
-    func toSetupProfileVC(currentUser: User)
-    func toMainVC(currentUser: UserModel)
+  func toSignUpVC()
+  func toLoginVC()
+  func toSetupProfileVC(currentUser: User)
+  func toMainVC(currentUser: UserModel)
 }
 
 final class AuthRouter {
-        
-    private unowned let viewController: BaseViewController
-    
-    required init(viewController: BaseViewController) {
-        self.viewController = viewController
-    }
-    
+  
+  private unowned let viewController: BaseViewController
+  
+  required init(viewController: BaseViewController) {
+    self.viewController = viewController
+  }
+  
 }
 
 // MARK: AuthRouterProtocol
 extension AuthRouter: AuthRouterProtocol {
-    
-    func toSignUpVC() {
-        let signUpVC = SignUpViewController { [weak self] in
-            self?.toLoginVC()
-        }
-        viewController.present(viewController: signUpVC)
+  
+  func toSignUpVC() {
+    let signUpVC = SignUpViewController { [weak self] in
+      self?.toLoginVC()
     }
-    
-    func toLoginVC() {
-        let loginVC = LoginViewController { [weak self] in
-            self?.toSignUpVC()
-        }
-        viewController.present(viewController: loginVC)
+    viewController.present(viewController: signUpVC)
+  }
+  
+  func toLoginVC() {
+    let loginVC = LoginViewController { [weak self] in
+      self?.toSignUpVC()
     }
-    
-    func toSetupProfileVC(currentUser: User) {
-        let setupProfileVC = SetupProfileViewController(currentUser: currentUser)
-        viewController.present(viewController: setupProfileVC)
-    }
-    
-    func toMainVC(currentUser: UserModel) {
-        let main = MainTabBarController(currentUser: currentUser)
-        viewController.navigationController?.setViewControllers([main], animated: true)
-    }
-    
+    viewController.present(viewController: loginVC)
+  }
+  
+  func toSetupProfileVC(currentUser: User) {
+		let setupProfileVC = SetupProfileViewController(currentUser: currentUser, target: .create)
+    viewController.present(viewController: setupProfileVC)
+  }
+  
+  func toMainVC(currentUser: UserModel) {
+		guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+				windowScene.windows.first?.rootViewController = MainTabBarController(currentUser: currentUser)
+		viewController.navigationController?.setViewControllers([], animated: true)
+  }
 }

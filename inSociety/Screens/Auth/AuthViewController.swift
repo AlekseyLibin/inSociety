@@ -10,7 +10,7 @@ import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
 
-protocol AuthViewControllerProtocol: AnyObject {
+protocol AuthViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
   func showAlert(with title: String, and message: String?)
 }
