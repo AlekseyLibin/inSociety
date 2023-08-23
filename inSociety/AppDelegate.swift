@@ -46,7 +46,7 @@ import UserNotifications
 extension AppDelegate {
     func requestNotifications() {
         notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-            print("Permission granted ", granted)
+            print("Permission granted", granted)
             
             guard granted else { return }
             self.getNotificationSettings()

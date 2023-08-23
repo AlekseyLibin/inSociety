@@ -31,7 +31,7 @@ extension SignUpPresenter: SignUpPresenterProtocol {
             case .success(let user):
                 self.router.toSetupProfileVC(with: user)
             case .failure(let error):
-                self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+              self.viewController.showAlert(with: SignUpString.error.localized, and: error.localizedDescription)
             }
         }
     }

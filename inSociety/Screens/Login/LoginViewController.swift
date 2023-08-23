@@ -18,20 +18,20 @@ final class LoginViewController: BaseViewController {
   
   private let scrollView = UIScrollView()
   
-  private let greetingLabel = UILabel(text: "Welcome back!", font: .galvji30())
-  private let loginWithLabel = UILabel(text: "Login with")
-  private let orLabel = UILabel(text: "or")
-  private let emailLabel = UILabel(text: "Email")
-  private let passwordLabel = UILabel(text: "Password")
+  private let greetingLabel = UILabel(text: LoginString.welcomeBack.localized, font: .galvji30())
+  private let loginWithLabel = UILabel(text: LoginString.loginWith.localized)
+  private let orLabel = UILabel(text: LoginString.orSignUpWithAnotherMethod.localized)
+  private let emailLabel = UILabel(text: LoginString.email.localized)
+  private let passwordLabel = UILabel(text: LoginString.password.localized)
   
   private let emailTextField = UnderlinedTextField(font: .galvji20())
   private let passwordTextField = UnderlinedTextField(font: .galvji20())
   
-  private let loginButton = UIButton(title: "Login",
+  private let loginButton = UIButton(title: LoginString.login.localized,
                                      titleColor: .white, backgroundColor: .darkButtonColor())
-  private let googleButton = UIButton(title: "Google",
+  private let googleButton = UIButton(title: LoginString.google.localized,
                                       titleColor: .black, backgroundColor: .white)
-  private let signUpButton = UIButton(title: "Create new account",
+  private let signUpButton = UIButton(title: LoginString.createNewAccount.localized,
                                       titleColor: .mainYellow(), backgroundColor: nil)
   
   var presenter: LoginPresenterProtocol!
@@ -87,7 +87,7 @@ private extension LoginViewController {
     view.backgroundColor = .mainDark()
     
     scrollView.hideKeyboardWhenTappedOrSwiped()
-    scrollView.addKeyboardObservers()
+//    scrollView.addKeyboardObservers()
     
     [greetingLabel, emailLabel, passwordLabel].forEach { label in
       label.textColor = .mainYellow()

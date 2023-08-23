@@ -8,7 +8,6 @@
 import FirebaseAuth
 
 protocol ProfileRouterProtocol: AnyObject {
-  func toLanguagesVC()
   func toSetupProfileVC(with user: User)
 }
 
@@ -17,18 +16,13 @@ final class ProfileRouter {
     self.viewController = viewController
   }
   
-  private unowned let viewController: ProfileViewController
+  private let viewController: ProfileViewController
 }
 
 extension ProfileRouter: ProfileRouterProtocol {
-  func toLanguagesVC() {
-    
-  }
-  
   func toSetupProfileVC(with user: User) {
     let setupProfileViewController = SetupProfileViewController(currentUser: user, target: .modify)
     viewController.navigationController?.pushViewController(setupProfileViewController, animated: true)
   }
-  
   
 }

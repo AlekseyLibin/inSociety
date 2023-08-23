@@ -23,7 +23,7 @@ final class Validator {
     // MARK: - Invalid email type
     let emailRegex = "[A-Z0-9a-z.]+@[A-Za-z0-9.]+\\.[A-Za-z]{2,64}"
     let isValid =  NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
-    guard isValid else { return .emailInvalid }
+    guard isValid else { return .invalidEmail }
     
     // MARK: - Invalid password type
     guard !password.isEmpty else { return .passwordFieldIsEmpty }

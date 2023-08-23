@@ -41,13 +41,13 @@ extension AuthPresenter: AuthPresenterInputProtocol {
                 case .success(let completedUser):
                     self.router.toMainVC(currentUser: completedUser)
                 case .failure:
-                    self.viewController.showAlert(with: "You have been successfully registrated", and: nil) {
+                  self.viewController.showAlert(with: AuthString.youHaveBeenRegistrated.localized, and: nil) {
                         self.router.toSetupProfileVC(currentUser: currentUser)
                     }
                 }
             }
         case .failure(let failure):
-            self.viewController.showAlert(with: "Error", and: failure.localizedDescription)
+          self.viewController.showAlert(with: AuthString.error.localized, and: failure.localizedDescription)
         }
     }
     

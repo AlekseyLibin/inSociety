@@ -128,10 +128,10 @@ final class ListenerService {
         case .added:
           completion(.success(message))
         case .modified:
-          // Do any additional actions to expand project
+          // TODO: any additional actions to expand project
           break
         case .removed:
-          // Do any additional actions to expand project
+          // TODO: any additional actions to expand project
           break
         }
       }

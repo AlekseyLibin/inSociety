@@ -1,0 +1,134 @@
+/* 
+  Localizable.strings
+  inSociety
+
+  Created by Aleksey Libin on 14.08.2023.
+  
+*/
+
+//Auth Screen
+"AuthString_getStartedWith" = "Loslegen mit";
+"AuthString_orSignUpWith" = "Oder registriere dich mit";
+"AuthString_alreadyOnBoard" = "Bereits angemeldet?";
+"AuthString_google" = "Google";
+"AuthString_login" = "Anmelden";
+"AuthString_email" = "E-Mail";
+"AuthString_youHaveBeenRegistrated" = "Sie wurden erfolgreich registriert";
+"AuthString_error" = "Fehler";
+
+//Login Screen
+"LoginString_welcomeBack" = "Willkommen zurück!";
+"LoginString_loginWith" = "Anmelden mit";
+"LoginString_orSignUpWithAnotherMethod" = "oder";
+"Logintring_email" = "E-Mail";
+"LoginString_password" = "Passwort";
+"LoginString_google" = "Google";
+"LoginString_login" = "Anmelden";
+"LoginString_createNewAccount" = "Neuen Account erstellen";
+"LoginString_youHaveBeenRegistrated" = "Sie wurden erfolgreich registriert";
+"LoginString_error" = "Fehler";
+
+//Profile Screen
+"ProfileString_activeChats" = "Aktive Chats";
+"ProfileString_waitingChats" = "Wartende Chats";
+"ProfileString_logOut" = "Abmelden";
+"ProfileString_logOutWarning" = "Sind Sie sicher, dass Sie sich abmelden möchten?";
+"ProfileString_cancel" = "Abbrechen";
+"ProfileString_profile" = "Profil";
+"ProfileString_edit" = "Bearbeiten";
+"ProfileString_noActiveChatsQuantity" = "Aktive Chats konnte nicht abgerufen werden";
+"ProfileString_noWaitingChatsQuantity" = "Wartende Chats konnte nicht abgerufen werden";
+"ProfileString_error" = "Fehler";
+"ProfileString_userNotFound" = "Benutzer nicht gefunden";
+
+// SignUp Screen
+"SignUpString_pleasedToSeeYou" = "Schön, dich zu sehen!";
+"SignUpString_email" = "E-Mail";
+"SignUpString_password" = "Passwort";
+"SignUpString_confirmPassword" = "Passwort bestätigen";
+"SignUpString_alreadyWithUs" = "Bereits registriert?";
+"SignUpString_signUp" = "Registrieren";
+"SignUpString_login" = "Anmelden";
+"SignUpString_error" = "Fehler";
+
+// SetupProfile Screen
+"SetupProfileString_fullName" = "Vollständiger Name";
+"SetupProfileString_aboutMe" = "Über mich";
+"SetupProfileString_aboutMePlaceholder" = "Hey! Ich bin ...";
+"SetupProfileString_sex" = "Geschlecht";
+"SetupProfileString_submit" = "Senden";
+"SetupProfileString_setupProfile" = "Profil einrichten";
+"SetupProfileString_error" = "Fehler";
+
+// Main Screen
+"MainString_people" = "Personen";
+"MainString_chats" = "Chats";
+"MainString_profile" = "Profil";
+
+// People Screen
+"PeopleString_peopleNearby" = "Personen in der Nähe";
+"PeopleString_error" = "Fehler";
+
+// Chats Screen
+"ChatsString_waitingChats" = "Wartende Chats";
+"ChatsString_activeChats" = "Aktive Chats";
+"ChatsString_waitingChatsMessage" = "Hier werden Personen angezeigt, die auf deine Bestätigung ihrer Chatanfrage warten.";
+"ChatsString_activeChatsMessage" = "Hier werden Personen angezeigt, mit denen du chattest.";
+"ChatsString_chats" = "Chats";
+"ChatsString_success" = "Erfolg";
+"ChatsString_chatRequestDenied" = "Chatanfrage wurde abgelehnt";
+"ChatsString_error" = "Fehler";
+
+// Profile Screen
+"ProfileString_activeChats" = "Aktive Chats";
+"ProfileString_waitingChats" = "Wartende Chats";
+"ProfileString_logOut" = "Abmelden";
+"ProfileString_logOutWarning" = "Möchtest du dich wirklich abmelden?";
+"ProfileString_cancel" = "Abbrechen";
+"ProfileString_profile" = "Profil";
+"ProfileString_edit" = "Profil bearbeiten";
+"ProfileString_noActiveChatsQuantity" = "Aktive Chats konnte nicht abgerufen werden";
+"ProfileString_noWaitingChatsQuantity" = "Wartende Chats konnte nicht abgerufen werden";
+"ProfileString_error" = "Fehler";
+"ProfileString_userNotFound" = "Benutzer nicht gefunden";
+
+// ChatRequest Screen
+"ChatRequestString_chatRequest" = "Chatanfrage";
+"ChatRequestString_somebody" = "Jemand";
+"ChatRequestString_wantsToChatWithYou" = "möchte mit dir chatten";
+"ChatRequestString_accept" = "AKZEPTIEREN";
+"ChatRequestString_deny" = "Ablehnen";
+
+// SendRequest Screen
+"SendRequestString_success" = "Erfolg";
+"SendRequestString_messageAndRequestSent" = "Deine Nachricht und Chatanfrage wurden gesendet an";
+"SendRequestString_error" = "Fehler";
+
+// ActiveChat Cell
+"ActiveChatCellString_userName" = "Benutzername";
+"ActiveChatCellString_lastMessage" = "Letzte Nachricht";
+
+// Extensions
+"ExtensionsString_submit" = "Senden";
+
+// AuthError
+"AuthError_fieldsAreNotFilled" = "Fülle alle Felder aus";
+"AuthError_emailFieldIsEmpty" = "E-Mail-Feld ist leer";
+"AuthError_invalidEmail" = "Ungültiger E-Mail-Typ";
+"AuthError_passwordFieldIsEmpty" = "Passwortfeld ist leer";
+"AuthError_confirmPasswordFieldIsEmpty" = "Feld zur Passwortbestätigung ist leer";
+"AuthError_passwordContainsSpecificSymbols" = "Passwort enthält bestimmte Symbole";
+"AuthError_passwordsDoNotMatch" = "Passwörter stimmen nicht überein";
+"AuthError_couldNotAuthWithGoogle" = "Konnte nicht mit Google autorisieren";
+
+// UserError
+"UserError_fieldsAreNotFilled" = "Fülle alle Felder aus";
+"UserError_noPhoto" = "Benutzer hat kein Foto ausgewählt";
+"UserError_cannotGetUserInfo" = "Benutzerinformationen konnten nicht abgerufen werden";
+"UserError_cannotUnwrapFBDataToUserModel" = "Daten aus der Datenbank konnten nicht in ein lokales Modell umgewandelt werden. Möglicherweise sind nicht alle Felder ausgefüllt";
+"UserError_chatAlreadyExists" = "Du hast bereits einen Chat mit diesem Benutzer";
+
+// UserModel
+"UserModel_male" = "Männlich";
+"UserModel_female" = "Weiblich";
+"UserModel_other" = "Andere";

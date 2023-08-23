@@ -786,6 +786,7 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
+  - lottie-ios (4.1.3)
   - MessageKit (3.1.1):
     - InputBarAccessoryView (~> 4.3.0)
   - nanopb (2.30909.0):
@@ -805,6 +806,7 @@ DEPENDENCIES:
   - FirebaseFirestore
   - FirebaseStorage
   - GoogleSignIn
+  - lottie-ios
   - MessageKit
   - SDWebImage
 
@@ -836,6 +838,7 @@ SPEC REPOS:
     - InputBarAccessoryView
     - leveldb-library
     - Libuv-gRPC
+    - lottie-ios
     - MessageKit
     - nanopb
     - PromisesObjC
@@ -868,11 +871,12 @@ SPEC CHECKSUMS:
   InputBarAccessoryView: 8e7fc09e9cba75e0fee5da13450e15c194806f69
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
+  lottie-ios: d0954d3150061f662ed0adf96ef98d7421864c47
   MessageKit: a3e612a54a24f5d9ca0295760749b481afd3f2da
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   SDWebImage: 23d714cd599354ee7906dbae26dff89b421c4370
 
-PODFILE CHECKSUM: cfd8313bd7a0e3f84a19681b94b9bf8fdeb4a960
+PODFILE CHECKSUM: 448c014cc56bdfa87248816823dbb1063535550b
 
 COCOAPODS: 1.12.1

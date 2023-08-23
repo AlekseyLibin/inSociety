@@ -11,10 +11,29 @@ import FirebaseFirestore
 struct UserModel: Hashable, Decodable {
   
   enum Sex: String, Decodable, CaseIterable {
-    case male = "Male"
-    case female = "Female"
-    case other = "Other"
+    case male
+    case female
+    case other
     
+    init(by string: String) {
+      switch string.lowercased() {
+      case "male": self = .male
+      case "female": self = .female
+      default: self = .other
+      }
+    }
+    
+    init(by int: Int) {
+      switch int {
+      case 0: self = .male
+      case 1: self = .female
+      default: self = .other
+      }
+    }
+    
+    var localized: String {
+      NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")
+    }
   }
   
   var fullName: String
@@ -35,12 +54,12 @@ struct UserModel: Hashable, Decodable {
   }
   
   init?(document: DocumentSnapshot) {
-    guard let data = document.data() else { return nil }
-    guard let userName = data["userName"] as? String,
+    guard let data = document.data(),
+          let userName = data["userName"] as? String,
           let userAvatarString = data["userAvatarString"] as? String,
           let email = data["email"] as? String,
           let description = data["description"] as? String,
-          let sexString = data["sex"] as? String, let sex = Sex(rawValue: sexString),
+          let sexString = data["sex"] as? String,
           let id = data["uid"] as? String
     else { return nil }
     
@@ -49,7 +68,7 @@ struct UserModel: Hashable, Decodable {
     self.email = email
     self.description = description
     self.id = id
-    self.sex = sex
+    self.sex = Sex(by: sexString)
   }
   
   init?(queryDocument: QueryDocumentSnapshot) {
@@ -58,7 +77,7 @@ struct UserModel: Hashable, Decodable {
           let userAvatarString = data["userAvatarString"] as? String,
           let email = data["email"] as? String,
           let description = data["description"] as? String,
-          let sexString = data["sex"] as? String, let sex = Sex(rawValue: sexString),
+          let sexString = data["sex"] as? String, let sex = Sex(rawValue: sexString.lowercased()),
           let id = data["uid"] as? String
     else { return nil }
     

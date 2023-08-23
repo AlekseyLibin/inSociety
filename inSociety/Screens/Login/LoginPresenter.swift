@@ -40,7 +40,7 @@ extension LoginPresenter: LoginPresenterProtocol {
                     }
                 }
             case .failure(let error):
-                self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+              self.viewController.showAlert(with: LoginString.error.localized, and: error.localizedDescription)
             }
         }
     }
@@ -54,13 +54,13 @@ extension LoginPresenter: LoginPresenterProtocol {
                 case .success(let currentCompletedUserModel):
                     self.router.toMainVC(currentUser: currentCompletedUserModel)
                 case .failure:
-                    self.viewController.showAlert(with: "You have been successfully registrated", and: nil) {
+                  self.viewController.showAlert(with: LoginString.youHaveBeenRegistrated.localized, and: nil) {
                         self.router.toSetupProfileVC(currentUser: currentUserModel)
                     }
                 }
             }
         case .failure(let error):
-            self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+          self.viewController.showAlert(with: LoginString.error.localized, and: error.localizedDescription)
         }
     }
     

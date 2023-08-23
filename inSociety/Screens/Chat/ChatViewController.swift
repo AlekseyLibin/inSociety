@@ -55,7 +55,7 @@ final class ChatViewController: MessagesViewController {
         self.chat.lastMessageContent = message.content
         self.insertNewMessage(message: message)
       case .failure(let error):
-        self.showAlert(with: "Error", and: error.localizedDescription)
+        self.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
     }
     
@@ -207,7 +207,7 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
       case .success:
         self.messagesCollectionView.scrollToLastItem()
       case .failure(let error):
-        self.showAlert(with: "Error", and: error.localizedDescription)
+        self.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
     }
     inputBar.inputTextView.text = ""

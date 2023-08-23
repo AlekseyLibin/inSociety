@@ -17,6 +17,7 @@ pod 'FirebaseStorage'
 pod 'GoogleSignIn'
 pod 'MessageKit'
 pod 'SDWebImage'
+pod 'lottie-ios'
 
 end
 

@@ -21,40 +21,32 @@ final class ProfileViewController: BaseViewController {
   
   let currentUser: UserModel
   
-  private var avatarView = UIImageView()
-  private var fullNameLabel = UILabel()
-  private var aboutMeLabel = UILabel()
-  private var activeChatsNumberLabel = UILabel(text: "Active chats")
-  private var waitingChatsNumberLabel = UILabel(text: "Waiting chats")
-  
-  private var logOutButton = UIButton(title: "Log out", titleColor: .systemRed, backgroundColor: .secondaryDark())
+  private let avatarView = UIImageView()
+  private let fullNameLabel = UILabel()
+  private let aboutMeLabel = UILabel()
+  private let activeChatsNumberLabel = UILabel(text: ProfileString.activeChats.localized)
+  private let waitingChatsNumberLabel = UILabel(text: ProfileString.waitingChats.localized)
+  private let editButton = UIButton(title: ProfileString.edit.localized, titleColor: .systemBlue, backgroundColor: .secondaryDark())
+  private let logOutButton = UIButton(title: ProfileString.logOut.localized, titleColor: .systemRed, backgroundColor: .secondaryDark())
   private let configurator: ProfileConfiguratorProtocol = ProfileConfigurator()
   var presenter: ProfilePresenterProtocol!
   
   init(currentUser: UserModel) {
     self.currentUser = currentUser
     super.init(nibName: nil, bundle: nil)
+    configurator.configure(viewController: self)
+    setupTopBar()
+    setupViews()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configurator.configure(viewController: self)
-    setupViews()
-    setupTopBar()
+    
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     presenter.fillUpActualInformation()
-  }
-  
-  @objc private func logOut() {
-    let alertController = UIAlertController(title: "Are you sure you want to log out?", message: nil, preferredStyle: .actionSheet)
-    alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
-    alertController.addAction(UIAlertAction(title: "Log out", style: .destructive, handler: { _ in
-      self.presenter.signOut()
-    }))
-    present(alertController, animated: true)
   }
   
   required init?(coder: NSCoder) {
@@ -69,7 +61,8 @@ private extension ProfileViewController {
     tabBarController?.tabBar.backgroundColor = .mainDark()
     presenter.fillChatsInformation(by: currentUser)
     
-    logOutButton.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+    editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
+    logOutButton.addTarget(self, action: #selector(logOutButtonPressed), for: .touchUpInside)
     
     avatarView.sd_setImage(with: URL(string: currentUser.avatarString))
     avatarView.clipsToBounds = true
@@ -95,29 +88,25 @@ private extension ProfileViewController {
     setupConstraints()
   }
   
+  @objc func editButtonPressed() {
+    presenter.editButtonPressed()
+  }
+  
+  @objc private func logOutButtonPressed() {
+    presenter.logOutButtonPressed()
+  }
+  
   func setupTopBar() {
-    let titleLabel = UILabel(text: "Profile")
+    let appearance = UINavigationBarAppearance()
+    appearance.backgroundColor = .mainDark()
+    
+    let titleLabel = UILabel(text: ProfileString.profile.localized)
     titleLabel.font = .systemFont(ofSize: 25)
     titleLabel.textColor = .systemGray
     
+    navigationController?.navigationBar.standardAppearance = appearance
+    navigationController?.navigationBar.scrollEdgeAppearance = appearance
     navigationItem.titleView = titleLabel
-    navigationController?.navigationBar.tintColor = .secondaryYellow()
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit",
-                                                        style: .plain,
-                                                        target: self,
-                                                        action: #selector(editButtonPressed))
-    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "globe"),
-                                                       style: .plain,
-                                                       target: self,
-                                                       action: #selector(globeButtonPressed))
-  }
-  
-  @objc func globeButtonPressed() {
-    presenter.globeButtonPressed()
-  }
-  
-  @objc func editButtonPressed() {
-    presenter.editButtonPressed()
   }
   
   func setupConstraints() {
@@ -143,6 +132,9 @@ private extension ProfileViewController {
     chatsInformationStackView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(chatsInformationStackView)
     
+    editButton.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(editButton)
+    
     logOutButton.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(logOutButton)
     
@@ -166,16 +158,21 @@ private extension ProfileViewController {
       aboutMeLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -10),
       aboutMeLabel.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor),
       
-      chatsInformationStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
+      editButton.topAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: 20),
+      editButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      editButton.widthAnchor.constraint(equalTo: avatarBackgroudView.widthAnchor),
+      editButton.heightAnchor.constraint(equalTo: editButton.widthAnchor, multiplier: 0.125),
+      
+      chatsInformationStackView.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: 50),
       chatsInformationStackView.leadingAnchor.constraint(equalTo: avatarBackgroudView.leadingAnchor),
       chatsInformationStackView.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor),
-      chatsInformationStackView.heightAnchor.constraint(equalTo: avatarBackgroudView.heightAnchor, multiplier: 1.3),
+      chatsInformationStackView.heightAnchor.constraint(equalTo: avatarBackgroudView.heightAnchor, multiplier: 1.2),
       activeChatsNumberLabel.leadingAnchor.constraint(equalTo: chatsInformationStackView.leadingAnchor, constant: 20),
       
       logOutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
       logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      logOutButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-      logOutButton.heightAnchor.constraint(equalTo: logOutButton.widthAnchor, multiplier: 0.2)
+      logOutButton.widthAnchor.constraint(equalTo: avatarBackgroudView.widthAnchor),
+      logOutButton.heightAnchor.constraint(equalTo: logOutButton.widthAnchor, multiplier: 0.15)
     ])
   }
 }
@@ -190,10 +187,10 @@ extension ProfileViewController: ProfileViewControllerProtocol {
   }
   
   func activeChats(changeQuantity count: Int) {
-    self.activeChatsNumberLabel.text = "Active chats: \(count.description)"
+    self.activeChatsNumberLabel.text = "\(ProfileString.activeChats.localized): \(count.description)"
   }
   
   func waitingChats(changeQuantity count: Int) {
-    self.waitingChatsNumberLabel.text = "Waiting chats: \(count.description)"
+    self.waitingChatsNumberLabel.text = "\(ProfileString.waitingChats.localized): \(count.description)"
   }
 }

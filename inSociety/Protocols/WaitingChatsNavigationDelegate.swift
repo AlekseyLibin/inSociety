@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol WaitingChatsNavigation: AnyObject {
+protocol WaitingChatsNavigationDelegate: AnyObject {
     func removeWaitingChat(chat: ChatModel)
     func moveToActive(chat: ChatModel)
 }

@@ -1,0 +1,121 @@
+/* 
+  Localizable.strings
+  inSociety
+
+  Created by Aleksey Libin on 14.08.2023.
+  
+*/
+
+//Auth Screen
+"AuthString_getStartedWith" = "Commencer avec";
+"AuthString_orSignUpWith" = "Ou s'inscrire avec";
+"AuthString_alreadyOnBoard" = "Déjà inscrit ?";
+"AuthString_google" = "Google";
+"AuthString_login" = "Se connecter";
+"AuthString_email" = "e-mail";
+"AuthString_youHaveBeenRegistrated" = "Vous avez été enregistré avec succès";
+"AuthString_error" = "Erreur";
+
+//Login Screen
+"LoginString_welcomeBack" = "Bon retour!";
+"LoginString_loginWith" = "Se connecter avec";
+"LoginString_orSignUpWithAnotherMethod" = "ou";
+"Logintring_email" = "E-mail";
+"LoginString_password" = "Mot de passe";
+"LoginString_google" = "Google";
+"LoginString_login" = "Se connecter";
+"LoginString_createNewAccount" = "Créer un nouveau compte";
+"LoginString_youHaveBeenRegistrated" = "Vous avez été enregistré avec succès";
+"LoginString_error" = "Erreur";
+
+// SignUp Screen
+"SignUpString_pleasedToSeeYou" = "Ravi de vous voir !";
+"SignUpString_email" = "E-mail";
+"SignUpString_password" = "Mot de passe";
+"SignUpString_confirmPassword" = "Confirmer le mot de passe";
+"SignUpString_alreadyWithUs" = "Déjà inscrit ?";
+"SignUpString_signUp" = "S'inscrire";
+"SignUpString_login" = "Se connecter";
+"SignUpString_error" = "Erreur";
+
+// SetupProfile Screen
+"SetupProfileString_fullName" = "Nom complet";
+"SetupProfileString_aboutMe" = "À propos de moi";
+"SetupProfileString_aboutMePlaceholder" = "Hé! je suis ...";
+"SetupProfileString_sex" = "Sexe";
+"SetupProfileString_submit" = "Envoyer";
+"SetupProfileString_setupProfile" = "Configurer le profil";
+"SetupProfileString_error" = "Erreur";
+
+// Main Screen
+"MainString_people" = "Personnes";
+"MainString_chats" = "Chats";
+"MainString_profile" = "Profil";
+
+// People Screen
+"PeopleString_peopleNearby" = "personnes à proximité";
+"PeopleString_error" = "Erreur";
+
+// Chats Screen
+"ChatsString_waitingChats" = "Chats en attente";
+"ChatsString_activeChats" = "Chats actifs";
+"ChatsString_waitingChatsMessage" = "Ici seront indiquées les personnes attendant votre confirmation de demande de chat";
+"ChatsString_activeChatsMessage" = "Ici seront indiquées les personnes avec lesquelles vous chattez";
+"ChatsString_chats" = "Chats";
+"ChatsString_success" = "Succès";
+"ChatsString_chatRequestDenied" = "La demande de chat a été refusée";
+"ChatsString_error" = "Erreur";
+
+// Profile Screen
+"ProfileString_activeChats" = "Chats actifs";
+"ProfileString_waitingChats" = "Chats en attente";
+"ProfileString_logOut" = "Déconnexion";
+"ProfileString_logOutWarning" = "Êtes-vous sûr de vouloir vous déconnecter ?";
+"ProfileString_cancel" = "Annuler";
+"ProfileString_profile" = "Profil";
+"ProfileString_edit" = "Modifier";
+"ProfileString_noActiveChatsQuantity" = "Impossible d'obtenir la quantité de chats actifs";
+"ProfileString_noWaitingChatsQuantity" = "Impossible d'obtenir la quantité de chats en attente";
+"ProfileString_error" = "Erreur";
+"ProfileString_userNotFound" = "Utilisateur non trouvé";
+
+// ChatRequest Screen
+"ChatRequestString_chatRequest" = "Demande de chat";
+"ChatRequestString_somebody" = "Quelqu'un";
+"ChatRequestString_wantsToChatWithYou" = "veut discuter avec vous";
+"ChatRequestString_accept" = "ACCEPTER";
+"ChatRequestString_deny" = "Refuser";
+
+// SendRequest Screen
+"SendRequestString_success" = "Succès";
+"SendRequestString_messageAndRequestSent" = "Votre message et votre demande de chat ont été envoyés à";
+"SendRequestString_error" = "Erreur";
+
+// ActiveChat Cell
+"ActiveChatCellString_userName" = "Nom d'utilisateur";
+"ActiveChatCellString_lastMessage" = "Dernier message";
+
+// Extensions
+"ExtensionsString_submit" = "Envoyer";
+
+// AuthError
+"AuthError_fieldsAreNotFilled" = "Remplissez tous les champs";
+"AuthError_emailFieldIsEmpty" = "Le champ e-mail est vide";
+"AuthError_invalidEmail" = "Type d'e-mail invalide";
+"AuthError_passwordFieldIsEmpty" = "Le champ du mot de passe est vide";
+"AuthError_confirmPasswordFieldIsEmpty" = "Le champ de confirmation du mot de passe est vide";
+"AuthError_passwordContainsSpecificSymbols" = "Le mot de passe contient des symboles spécifiques";
+"AuthError_passwordsDoNotMatch" = "Les mots de passe ne correspondent pas";
+"AuthError_couldNotAuthWithGoogle" = "Impossible de s'authentifier avec Google";
+
+// UserError
+"UserError_fieldsAreNotFilled" = "Remplissez tous les champs";
+"UserError_noPhoto" = "L'utilisateur n'a pas sélectionné de photo";
+"UserError_cannotGetUserInfo" = "Impossible d'obtenir les informations de l'utilisateur";
+"UserError_cannotUnwrapFBDataToUserModel" = "Impossible de déballer les données de la base de données dans un modèle local. Peut-être que tous les champs ne sont pas remplis";
+"UserError_chatAlreadyExists" = "Vous avez déjà un chat avec cet utilisateur";
+
+// UserModel
+"UserModel_male" = "Homme";
+"UserModel_female" = "Femme";
+"UserModel_other" = "Autre";

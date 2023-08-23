@@ -1,0 +1,121 @@
+/* 
+  Localizable.strings
+  inSociety
+
+  Created by Aleksey Libin on 14.08.2023.
+  
+*/
+
+//Auth Screen
+"AuthString_getStartedWith" = "Get started with";
+"AuthString_orSignUpWith" = "Or sign up with";
+"AuthString_alreadyOnBoard" = "Already on board?";
+"AuthString_google" = "Google";
+"AuthString_login" = "Login";
+"AuthString_email" = "email";
+"AuthString_youHaveBeenRegistrated" = "You have been successfully registrated";
+"AuthString_error" = "Error";
+
+//Login Screen
+"LoginString_welcomeBack" = "Welcome back!";
+"LoginString_loginWith" = "Login with";
+"LoginString_orSignUpWithAnotherMethod" = "or";
+"Logintring_email" = "Email";
+"LoginString_password" = "Password";
+"LoginString_google" = "Google";
+"LoginString_login" = "Login";
+"LoginString_createNewAccount" = "Create a new account";
+"LoginString_youHaveBeenRegistrated" = "You have been successfully registrated";
+"LoginString_error" = "Error";
+
+// SignUp Screen
+"SignUpString_pleasedToSeeYou" = "Pleased to see you!";
+"SignUpString_email" = "Email";
+"SignUpString_password" = "Password";
+"SignUpString_confirmPassword" = "Confirm password";
+"SignUpString_alreadyWithUs" = "Already with us?";
+"SignUpString_signUp" = "Sign up";
+"SignUpString_login" = "login";
+"SignUpString_error" = "Error";
+
+// SetupProfile Screen
+"SetupProfileString_fullName" = "Full name";
+"SetupProfileString_aboutMe" = "About me";
+"SetupProfileString_aboutMePlaceholder" = "Hey! I am ...";
+"SetupProfileString_sex" = "Sex";
+"SetupProfileString_submit" = "Submit";
+"SetupProfileString_setupProfile" = "Setup profile";
+"SetupProfileString_error" = "Error";
+
+// Main Screen
+"MainString_people" = "People";
+"MainString_chats" = "Chats";
+"MainString_profile" = "Profile";
+
+// People Screen
+"PeopleString_peopleNearby" = "people nearby";
+"PeopleString_error" = "Error";
+
+// Chats Screen
+"ChatsString_waitingChats" = "Waiting chats";
+"ChatsString_activeChats" = "Active chats";
+"ChatsString_waitingChatsMessage" = "Here will be indicated people, waiting you to confirm their chat request";
+"ChatsString_activeChatsMessage" = "Here will be indicated people, who you chat with";
+"ChatsString_chats" = "Chats";
+"ChatsString_success" = "Success";
+"ChatsString_chatRequestDenied" = "Chat request has been denied";
+"ChatsString_error" = "Error";
+
+// Profile Screen
+"ProfileString_activeChats" = "Active chats";
+"ProfileString_waitingChats" = "Waiting chats";
+"ProfileString_logOut" = "Log out";
+"ProfileString_logOutWarning" = "Are you sure you want to log out?";
+"ProfileString_cancel" = "Cancel";
+"ProfileString_profile" = "Profile";
+"ProfileString_edit" = "Edit profile";
+"ProfileString_noActiveChatsQuantity" = "Couldn't get active chats quantity";
+"ProfileString_noWaitingChatsQuantity" = "Couldn't get waiting chats quantity";
+"ProfileString_error" = "Error";
+"ProfileString_userNotFound" = "User not found";
+
+// ChatRequest Screen
+"ChatRequestString_chatRequest" = "Chat request";
+"ChatRequestString_somebody" = "Somebody";
+"ChatRequestString_wantsToChatWithYou" = "wants to chat with you";
+"ChatRequestString_accept" = "ACCEPT";
+"ChatRequestString_deny" = "Deny";
+
+// SendRequest Screen
+"SendRequestString_success" = "Success";
+"SendRequestString_messageAndRequestSent" = "Your message and chat request have been sent to";
+"SendRequestString_error" = "Error";
+
+// ActiveChat Cell
+"ActiveChatCellString_userName" = "User name";
+"ActiveChatCellString_lastMessage" = "Last message";
+
+// Extensions
+"ExtensionsString_submit" = "Submit";
+
+// AuthError
+"AuthError_fieldsAreNotFilled" = "Fill in all the fields";
+"AuthError_emailFieldIsEmpty" = "Email field is empty";
+"AuthError_invalidEmail" = "Email type is invalid";
+"AuthError_passwordFieldIsEmpty" = "Password field is empty";
+"AuthError_confirmPasswordFieldIsEmpty" = "Confirm password field is empty";
+"AuthError_passwordContainsSpecificSymbols" = "Password contains specific symbols";
+"AuthError_passwordsDoNotMatch" = "Passwords do not match";
+"AuthError_couldNotAuthWithGoogle" = "Could not authorize with Goole";
+
+// UserError
+"UserError_fieldsAreNotFilled" = "Fill in all the fields";
+"UserError_noPhoto" = "Select a photo";
+"UserError_cannotGetUserInfo" = "Could not get user info";
+"UserError_cannotUnwrapFBDataToUserModel" = "Could not unwrap data from Database into a local model. Maybe not all of the fields are filled";
+"UserError_chatAlreadyExists" = "You already have a chat with this this user";
+
+// UserModel
+"Sex_male" = "Male";
+"Sex_female" = "Female";
+"Sex_other" = "Other";

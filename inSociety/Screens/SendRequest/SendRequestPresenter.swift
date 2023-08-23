@@ -9,6 +9,12 @@ import UIKit
 
 protocol SendRequestPresenterProtocol: AnyObject {
   func sendChatRequest(to user: UserModel, with message: String)
+  var delegate: SendRequestPresenterDelegate? { get set }
+}
+
+protocol SendRequestPresenterDelegate: AnyObject {
+  func requestSentSuccessfully()
+  func requestHasNotBeenSent(with error: Error)
 }
 
 final class SendRequestPresenter {
@@ -17,30 +23,23 @@ final class SendRequestPresenter {
   }
   
   private unowned let viewController: SendRequestViewControllerProtocol
+  weak var delegate: SendRequestPresenterDelegate?
   var interactor: SendRequestInteractorProtocol!
   var router: SendRequestRouterProtocol!
 }
 
 extension SendRequestPresenter: SendRequestPresenterProtocol {
-  
   func sendChatRequest(to user: UserModel, with message: String) {
-    interactor.createActiveChat(message: message, receiver: user) { result in
-      self.viewController.removeActivityIndicator()
+    interactor.createActiveChat(message: message, receiver: user) { [weak self] result in
+      self?.viewController.dismiss()
       switch result {
       case .success:
-        UIApplication.getTopViewController()?.showAlert(with: "Success", and: "Your message and chat request have been sent to \(user.fullName)", completion: {
-          self.viewController.dismiss()
-        })
-      case.failure(let error):
-        UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription, completion: {
-          self.viewController.dismiss()
-        })
+        self?.delegate?.requestSentSuccessfully()
+      case .failure(let error):
+        self?.delegate?.requestHasNotBeenSent(with: error)
       }
-    } errorComplition: { error in
-      self.viewController.removeActivityIndicator()
-      UIApplication.getTopViewController()?.showAlert(with: "Error", and: error.localizedDescription, completion: {
-        self.viewController.dismiss()
-      })
+    } errorComplition: { [weak self] error in
+      self?.delegate?.requestHasNotBeenSent(with: error)
     }
 
   }

@@ -41,9 +41,9 @@ extension ChatsPresenter: ChatsPresenterProtocol {
     interactor.waitingChat(remove: chat) { result in
       switch result {
       case .success:
-        self.viewController.showAlert(with: "Success", and: "Chat request has been denied")
+        self.viewController.showAlert(with: ChatsString.success.localized, and: ChatsString.chatRequestDenied.localized)
       case .failure(let error):
-        self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
     }
   }
@@ -54,7 +54,7 @@ extension ChatsPresenter: ChatsPresenterProtocol {
       case .success:
         break
       case .failure(let error):
-        self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
     }
   }
@@ -67,7 +67,7 @@ extension ChatsPresenter: ChatsPresenterProtocol {
         case .success(let message):
           self.viewController.collectionView(updateCellValueBy: [1, index], with: message.content)
         case .failure(let error):
-          self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+          self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
         }
       }
     }
@@ -92,12 +92,9 @@ extension ChatsPresenter: ChatsPresenterProtocol {
     waitingChatsListener = ListenerService.shared.waitingChatsObserve(chats: waitingChats, completion: { difference in
       switch difference {
       case .success(let updatedWaitingChats):
-        if updatedWaitingChats.count > waitingChats.count {
-          self.router.toChatRequestVC(chat: updatedWaitingChats.last!)
-        }
         self.viewController.changeValueFor(waitingChats: updatedWaitingChats)
       case .failure(let error):
-        self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
     })
     
@@ -107,7 +104,7 @@ extension ChatsPresenter: ChatsPresenterProtocol {
       case .success(let updatedActiveChats):
         self.viewController.changeValueFor(activeChats: updatedActiveChats)
       case .failure(let error):
-        self.viewController.showAlert(with: "Error", and: error.localizedDescription)
+        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
     })
   }

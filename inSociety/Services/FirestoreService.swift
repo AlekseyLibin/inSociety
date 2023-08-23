@@ -56,7 +56,6 @@ extension FirestoreService {
   }
   
   func saveProfile(with newUser: SetupNewUser, completion: @escaping (Result<UserModel, Error>) -> Void) {
-    
     guard
       let userName = newUser.name,
       let newAvatarImage = newUser.avatarImage,
@@ -66,10 +65,9 @@ extension FirestoreService {
       !description.isEmpty,
       !sexString.isEmpty
     else {
-      completion(.failure(UserError.notFilled))
+      completion(.failure(UserError.fieldsAreNotFilled))
       return
     }
-    
     var userModel = UserModel(userName: userName,
                               userAvatarString: "not exist",
                               email: newUser.email,
@@ -114,40 +112,73 @@ extension FirestoreService {
     }
   }
   
-  
 }
 
 // MARK: - Chats
 extension FirestoreService {
-  func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
-    let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
-    activeChatMessages.getDocuments { [weak self] snapshot, error in
-      guard let self = self else { return }
-      
-      guard let snapshot = snapshot else {
-        completion(.failure(error!))
-        return
-      }
-      
-      if snapshot.documents.isEmpty {
-        let waitingChatMessages = self.waitingChatsReference.document(friend.id).collection("messages")
-        waitingChatMessages.getDocuments { snapshot, error in
-          guard let snapshot = snapshot else {
-            completion(.failure(error!))
-            return
-          }
-          
-          if snapshot.documents.isEmpty {
-            completion(.success(Void()))
-          } else {
-            completion(.failure(UserError.chatAlreadyExists))
-          }
-        }
-      } else {
-        completion(.failure(UserError.chatAlreadyExists))
-      }
-    }
-  }
+//  func checkIfThereIsChat(with friend: UserModel, completion: @escaping (Result<ChatModel?, Error>) -> Void) {
+//    let activeChatWithFriend = activeChatsReference.document(friend.id)
+//    activeChatWithFriend.getDocument { snapshot, error in
+//    }
+    
+//    activeChatMessages.getDocuments { [weak self] snapshot, error in
+//      guard let self = self else { return }
+//
+//      guard let snapshot = snapshot else {
+//        completion(.failure(error!))
+//        return
+//      }
+//
+//      if snapshot.documents.isEmpty {
+//        let waitingChatMessages = self.waitingChatsReference.document(friend.id).collection("messages")
+//        waitingChatMessages.getDocuments { snapshot, error in
+//          guard let snapshot = snapshot else {
+//            completion(.failure(error!))
+//            return
+//          }
+//
+//          if snapshot.documents.isEmpty {
+//            completion(.success(Void()))
+//          } else {
+//            completion(.failure(UserError.chatAlreadyExists))
+//          }
+//        }
+//      } else {
+//        completion(.failure(UserError.chatAlreadyExists))
+//      }
+//    }
+//  }
+  
+  
+//  func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
+//    let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
+//    activeChatMessages.getDocuments { [weak self] snapshot, error in
+//      guard let self = self else { return }
+//
+//      guard let snapshot = snapshot else {
+//        completion(.failure(error!))
+//        return
+//      }
+//
+//      if snapshot.documents.isEmpty {
+//        let waitingChatMessages = self.waitingChatsReference.document(friend.id).collection("messages")
+//        waitingChatMessages.getDocuments { snapshot, error in
+//          guard let snapshot = snapshot else {
+//            completion(.failure(error!))
+//            return
+//          }
+//
+//          if snapshot.documents.isEmpty {
+//            completion(.success(Void()))
+//          } else {
+//            completion(.failure(UserError.chatAlreadyExists))
+//          }
+//        }
+//      } else {
+//        completion(.failure(UserError.chatAlreadyExists))
+//      }
+//    }
+//  }
   
   // MARK: - Waiting chats
   func createWaitingChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {

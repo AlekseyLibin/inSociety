@@ -6,12 +6,18 @@
 //
 
 import UIKit
+import Lottie
 import FirebaseAuth
 import FirebaseFirestore
 
-protocol PeopleViewControllerProtocol: BaseViewCotrollerProtocol {
+protocol PeopleViewControllerProtocol: BaseViewCotrollerProtocol, WaitingChatsNavigationDelegate {
   func showAlert(with title: String, and message: String?)
+  func updateUsersValue(with updatedUsers: [UserModel])
+  func playSuccessAnimation()
   var presenter: PeoplePresenterProtocol! { get set }
+  var tabBarController: UITabBarController? { get }
+  var navigationController: UINavigationController? { get }
+  var currentUser: UserModel { get }
 }
 
 final class PeopleViewController: BaseViewController {
@@ -22,7 +28,7 @@ final class PeopleViewController: BaseViewController {
     func description(usersCount: Int) -> String {
       switch self {
       case .users:
-        return "\(usersCount) people nearby"
+        return "\(usersCount) \(PeopleString.peopleNearby.localized)"
       }
     }
   }
@@ -33,22 +39,21 @@ final class PeopleViewController: BaseViewController {
   private var users = [UserModel]()
   private var usersListener: ListenerRegistration?
   private var numberOfUsersListener: ListenerRegistration?
+  private var waitingChatsListener: ListenerRegistration?
+  private var activeChatsListener: ListenerRegistration?
   
-  private let currentUser: UserModel
+  let currentUser: UserModel
   private var collectionView: UICollectionView!
   private var dataSource: UICollectionViewDiffableDataSource<Section, UserModel>!
   
   init(currentUser: UserModel) {
     self.currentUser = currentUser
     super.init(nibName: nil, bundle: nil)
-    
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     configurator.configure(viewController: self)
-    
     setupTopBar()
     setupTabBar()
     setupCollectionView()
@@ -67,11 +72,16 @@ final class PeopleViewController: BaseViewController {
     })
   }
   
-//  deinit {
-//    numberOfUsersListener?.remove()
-//    usersListener?.remove()
-//    print("deinit")
-//  }
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+  }
+  
+  deinit {
+    numberOfUsersListener?.remove()
+    usersListener?.remove()
+    waitingChatsListener?.remove()
+    activeChatsListener?.remove()
+  }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
@@ -137,7 +147,7 @@ private extension PeopleViewController {
       
       guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
-      else { fatalError("Cannot create new section header")}
+      else { fatalError("Cannot create new section header") }
       guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
       self.numberOfUsersListener = self.presenter.usersObserve(users: self.users) { [weak self] result in
         guard let self = self else { return }
@@ -148,7 +158,7 @@ private extension PeopleViewController {
                                   font: .systemFont(ofSize: 20, weight: .light),
                                   textColor: .mainYellow())
         case .failure(let error):
-          self.showAlert(with: "Error", and: error.localizedDescription)
+          self.showAlert(with: PeopleString.error.localized, and: error.localizedDescription)
         }
       }
       
@@ -157,8 +167,40 @@ private extension PeopleViewController {
   }
 }
 
+// MARK: - PeopleViewControllerProtocol
 extension PeopleViewController: PeopleViewControllerProtocol {
+  func updateUsersValue(with updatedUsers: [UserModel]) {
+    self.users = updatedUsers
+    self.reloadData(with: nil)
+  }
   
+  func playSuccessAnimation() {
+    let successAnimationView = LottieAnimationView(name: "Success")
+    successAnimationView.frame = view.bounds
+    successAnimationView.contentMode = .scaleAspectFit
+    successAnimationView.loopMode = .playOnce
+    successAnimationView.animationSpeed = 1
+    view.addSubview(successAnimationView)
+    successAnimationView.play(completion: { (finished) in
+      if finished {
+        UIView.animate(withDuration: 0.3, animations: {
+          successAnimationView.alpha = 0
+        }, completion: { _ in
+          successAnimationView.stop()
+          successAnimationView.removeFromSuperview()
+          LottieAnimationCache.shared?.clearCache()
+        })
+      }
+    })
+  }
+  
+  func removeWaitingChat(chat: ChatModel) {
+    presenter.waitingChat(remove: chat)
+  }
+  
+  func moveToActive(chat: ChatModel) {
+    presenter.waitingChat(moveToActive: chat)
+  }
 }
 
 // MARK: - Create Compositional Layout
@@ -167,7 +209,7 @@ private extension PeopleViewController {
     let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
       
       guard let section = Section(rawValue: sectionIndex) else {
-        fatalError("No such section foud")
+        fatalError("No such section found")
       }
       
       switch section {

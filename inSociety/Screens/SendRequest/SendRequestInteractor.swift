@@ -24,7 +24,7 @@ extension SendRequestInteractor: SendRequestInteractorProtocol {
         let chat = ChatModel(friendName: receiver.fullName,
                              friendAvatarString: receiver.avatarString,
                              lastMessageContent: message, friendID: receiver.id)
-        
+
         let message = MessageModel(user: currentUser, content: message)
         FirestoreService.shared.createActiveChat(chat: chat, messages: [message], completion: completion)
       case .failure(let error):

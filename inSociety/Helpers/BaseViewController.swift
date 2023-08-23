@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 
 protocol BaseViewCotrollerProtocol: AnyObject {
   func present(viewController: UIViewController)
@@ -13,14 +14,6 @@ protocol BaseViewCotrollerProtocol: AnyObject {
 }
 
 class BaseViewController: UIViewController {
-  
-  func present(viewController: UIViewController) {
-    present(viewController, animated: true)
-  }
-  
-  func dismiss() {
-    dismiss(animated: true)
-  }
   
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -43,5 +36,17 @@ class BaseViewController: UIViewController {
 //        alert.addAction(sumbitButton)
 //        present(alert, animated: true)
 //    }
-    
+  
 }
+
+extension BaseViewController: BaseViewCotrollerProtocol {
+  
+  func present(viewController: UIViewController) {
+    present(viewController, animated: true)
+  }
+  
+  func dismiss() {
+    dismiss(animated: true)
+  }
+}
+    

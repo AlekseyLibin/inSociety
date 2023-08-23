@@ -18,13 +18,13 @@ protocol AuthViewControllerProtocol: BaseViewCotrollerProtocol {
 final class AuthViewController: BaseViewController {
   
   private let logoImage = UIImageView(named: "inSociety", contentMode: .scaleAspectFit)
-  private let googleLabel = UILabel(text: "Get started with")
-  private let emailLabel = UILabel(text: "Or sign up with")
-  private let loginLabel = UILabel(text: "Already on board?")
+  private let googleLabel = UILabel(text: AuthString.getStartedWith.localized)
+  private let emailLabel = UILabel(text: AuthString.orSignUpWith.localized)
+  private let loginLabel = UILabel(text: AuthString.alreadyOnBoard.localized)
   
-  private let googleButton = UIButton(title: "Google", titleColor: .black, backgroundColor: .white)
-  private let emailButton = UIButton(title: "email", titleColor: .black, backgroundColor: .mainYellow())
-  private let loginButton = UIButton(title: "Login", titleColor: .mainYellow(), backgroundColor: nil)
+  private let googleButton = UIButton(title: AuthString.google.localized, titleColor: .black, backgroundColor: .white)
+  private let emailButton = UIButton(title: AuthString.email.localized, titleColor: .black, backgroundColor: .mainYellow())
+  private let loginButton = UIButton(title: AuthString.login.localized, titleColor: .mainYellow(), backgroundColor: nil)
   
   var presenter: AuthPresenterInputProtocol!
   

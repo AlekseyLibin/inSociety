@@ -1,0 +1,121 @@
+/* 
+  Localizable.strings
+  inSociety
+
+  Created by Aleksey Libin on 14.08.2023.
+  
+*/
+
+//Auth Screen
+"AuthString_getStartedWith" = "Войти с помощью";
+"AuthString_orSignUpWith" = "Или зарегистрироваться";
+"AuthString_alreadyOnBoard" = "Уже зарегистрированы?";
+"AuthString_google" = "Google";
+"AuthString_login" = "Войти";
+"AuthString_email" = "email";
+"AuthString_youHaveBeenRegistrated" = "Вы успешно зарегистрированы";
+"AuthString_error" = "Ошибка";
+
+//Login Screen
+"LoginString_welcomeBack" = "С возвращением!";
+"LoginString_loginWith" = "Войти с помощью";
+"LoginString_orSignUpWithAnotherMethod" = "или";
+"Logintring_email" = "Email";
+"LoginString_password" = "Пароль";
+"LoginString_google" = "Google";
+"LoginString_login" = "Войти";
+"LoginString_createNewAccount" = "Создать новый аккаунт";
+"LoginString_youHaveBeenRegistrated" = "Вы успешно зарегистрированы";
+"LoginString_error" = "Ошибка";
+
+// SignUp Screen
+"SignUpString_pleasedToSeeYou" = "Рады видеть вас!";
+"SignUpString_email" = "Эл. почта";
+"SignUpString_password" = "Пароль";
+"SignUpString_confirmPassword" = "Подтвердите пароль";
+"SignUpString_alreadyWithUs" = "Уже с нами?";
+"SignUpString_signUp" = "Зарегистрироваться";
+"SignUpString_login" = "Войти";
+"SignUpString_error" = "Ошибка";
+
+// SetupProfile Screen
+"SetupProfileString_fullName" = "Полное имя";
+"SetupProfileString_aboutMe" = "Обо мне";
+"SetupProfileString_aboutMePlaceholder" = "Привет! меня зовут ...";
+"SetupProfileString_sex" = "Пол";
+"SetupProfileString_submit" = "Отправить";
+"SetupProfileString_setupProfile" = "Настроить профиль";
+"SetupProfileString_error" = "Ошибка";
+
+// Main Screen
+"MainString_people" = "Пользователи";
+"MainString_chats" = "Чаты";
+"MainString_profile" = "Профиль";
+
+// People Screen
+"PeopleString_peopleNearby" = "людей поблизости";
+"PeopleString_error" = "Ошибка";
+
+// Chats Screen
+"ChatsString_waitingChats" = "Чаты в ожидании";
+"ChatsString_activeChats" = "Активные чаты";
+"ChatsString_waitingChatsMessage" = "Здесь будут отображены люди, ожидающие вашего подтверждения запроса на чат";
+"ChatsString_activeChatsMessage" = "Здесь будут отображены люди, с которыми вы общаетесь";
+"ChatsString_chats" = "Чаты";
+"ChatsString_success" = "Успешно";
+"ChatsString_chatRequestDenied" = "Запрос на чат отклонен";
+"ChatsString_error" = "Ошибка";
+
+//Profile Screen
+"ProfileString_activeChats" = "Активные чаты";
+"ProfileString_waitingChats" = "Ожидающие чаты";
+"ProfileString_logOut" = "Выйти";
+"ProfileString_logOutWarning" = "Вы уверены, что хотите выйти?";
+"ProfileString_cancel" = "Отмена";
+"ProfileString_profile" = "Профиль";
+"ProfileString_edit" = "Редактировать профиль";
+"ProfileString_noActiveChatsQuantity" = "Не удалось получить количество активных чатов";
+"ProfileString_noWaitingChatsQuantity" = "Не удалось получить количество ожидающих чатов";
+"ProfileString_error" = "Ошибка";
+"ProfileString_userNotFound" = "Пользователь не найден";
+
+// ChatRequest Screen
+"ChatRequestString_chatRequest" = "Запрос на чат";
+"ChatRequestString_somebody" = "Кто-то";
+"ChatRequestString_wantsToChatWithYou" = "хочет пообщаться с вами";
+"ChatRequestString_accept" = "ПРИНЯТЬ";
+"ChatRequestString_deny" = "Отказать";
+
+// SendRequest Screen
+"SendRequestString_success" = "Успешно";
+"SendRequestString_messageAndRequestSent" = "Ваше сообщение и запрос на чат отправлены";
+"SendRequestString_error" = "Ошибка";
+
+// ActiveChat Cell
+"ActiveChatCellString_userName" = "Имя пользователя";
+"ActiveChatCellString_lastMessage" = "Последнее сообщение";
+
+// Extensions
+"ExtensionsString_submit" = "Отправить";
+
+// AuthError
+"AuthError_fieldsAreNotFilled" = "Заполните все поля";
+"AuthError_emailFieldIsEmpty" = "Поле эл. почты пусто";
+"AuthError_invalidEmail" = "Недопустимый тип эл. почты";
+"AuthError_passwordFieldIsEmpty" = "Поле пароля пусто";
+"AuthError_confirmPasswordFieldIsEmpty" = "Поле подтверждения пароля пусто";
+"AuthError_passwordContainsSpecificSymbols" = "Пароль содержит специальные символы";
+"AuthError_passwordsDoNotMatch" = "Пароли не совпадают";
+"AuthError_couldNotAuthWithGoogle" = "Не удалось авторизоваться через Google";
+
+// UserError
+"UserError_fieldsAreNotFilled" = "Заполните все поля";
+"UserError_noPhoto" = "Выберите фото";
+"UserError_cannotGetUserInfo" = "Не удалось получить информацию о пользователе";
+"UserError_cannotUnwrapFBDataToUserModel" = "Не удалось преобразовать данные из базы данных в локальную модель. Возможно, не все поля заполнены";
+"UserError_chatAlreadyExists" = "У вас уже есть чат с этим пользователем";
+
+// UserModel
+"Sex_male" = "Мужчина";
+"Sex_female" = "Женщина";
+"Sex_other" = "Другое";

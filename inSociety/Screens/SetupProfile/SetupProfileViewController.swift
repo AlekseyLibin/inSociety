@@ -25,14 +25,15 @@ final class SetupProfileViewController: BaseViewController {
   
   private let fillImageView = FillImageView()
   private let scrollView = UIScrollView()
+  private let imagePickerController = UIImagePickerController()
   private let setupView = UIView()
-  private let fullNameLabel = UILabel(text: "Full name")
-  private let aboutMeLabel = UILabel(text: "About me")
-  private let sexLabel = UILabel(text: "Sex")
+  private let fullNameLabel = UILabel(text: SetupProfileString.fullName.localized)
+  private let aboutMeLabel = UILabel(text: SetupProfileString.aboutMe.localized)
+  private let sexLabel = UILabel(text: SetupProfileString.sex.localized)
   private let fullNameTextField = UnderlinedTextField(font: .galvji20())
   private let aboutMeTextField = UnderlinedTextField(font: .galvji20())
-  private let sexSegmentedControl = UISegmentedControl(elements: UserModel.Sex.allCases)
-  private let submitButton = UIButton(title: "Submit", titleColor: .white,
+  private let sexSegmentedControl = SexSegmentedControl()
+  private let submitButton = UIButton(title: SetupProfileString.submit.localized, titleColor: .white,
                                       backgroundColor: .thirdDark())
   
   var presenter: SetupProfilePresenterProtocol!
@@ -52,13 +53,11 @@ final class SetupProfileViewController: BaseViewController {
     configurator.configure(viewController: self)
     presenter.fillAvailableDataForCurrentUser()
     setupViews()
+    setUpNavigationBar()
   }
   
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-    UserDefaults.standard.set(tabBarController?.tabBar.frame.height,
-                              forKey: "tabBarHeight")
-    UserDefaults.standard.synchronize()
     setupContentSize()
   }
   
@@ -67,15 +66,11 @@ final class SetupProfileViewController: BaseViewController {
   }
   
   private func setupContentSize() {
-    let tabBarHeight = tabBarController?.tabBar.frame.height ?? 0
     let setupViewHeight = setupView.frame.height
-    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + tabBarHeight)
+    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + 30)
   }
   
   @objc private func addProfilePhoto() {
-    let imagePickerController = UIImagePickerController()
-    imagePickerController.delegate = self
-    imagePickerController.sourceType = .photoLibrary
     present(imagePickerController, animated: true)
   }
   
@@ -84,7 +79,7 @@ final class SetupProfileViewController: BaseViewController {
                                avatarImage: fillImageView.profileImage,
                                email: currentUser.email ?? "no email",
                                desctiption: aboutMeTextField.text,
-                               sex: sexSegmentedControl.titleForSegment(at: sexSegmentedControl.selectedSegmentIndex),
+                               sex: sexSegmentedControl.selectedSex.rawValue,
                                id: currentUser.uid)
     
     presenter.submitButtonPressed(with: newUser)
@@ -105,21 +100,13 @@ extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePic
 // MARK: - Setup views
 private extension SetupProfileViewController {
   func setupViews() {
-    let appearance = UINavigationBarAppearance()
-    appearance.backgroundColor = .mainDark()
-    
-    let titleLabel = UILabel(text: "Setup Profile")
-    titleLabel.font = .systemFont(ofSize: 25)
-    titleLabel.textColor = .mainYellow()
-    
-    navigationController?.navigationBar.standardAppearance = appearance
-    navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    
-    navigationItem.titleView = titleLabel
     view.backgroundColor = .mainDark()
     
+    imagePickerController.delegate = self
+    imagePickerController.sourceType = .photoLibrary
+    
     scrollView.showsVerticalScrollIndicator = false
-    scrollView.addKeyboardObservers()
+//    scrollView.addKeyboardObservers()
     scrollView.hideKeyboardWhenTappedOrSwiped()
     
     submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchUpInside)
@@ -130,22 +117,30 @@ private extension SetupProfileViewController {
       label.textColor = .mainYellow()
     }
     
-    sexSegmentedControl.selectedSegmentTintColor = UIColor.mainYellow()
-    let yellowAttribute = [NSAttributedString.Key.foregroundColor: UIColor.mainYellow()]
-    sexSegmentedControl.setTitleTextAttributes(yellowAttribute, for:.normal)
-    let blackAttribute = [NSAttributedString.Key.foregroundColor: UIColor.black]
-    sexSegmentedControl.setTitleTextAttributes(blackAttribute, for:.selected)
-    
     fullNameTextField.autocapitalizationType = .none
     fullNameTextField.autocorrectionType = .no
     aboutMeTextField.autocapitalizationType = .none
     aboutMeTextField.autocorrectionType = .no
+    aboutMeTextField.placeholder = SetupProfileString.aboutMePlaceholder.localized
     
     setupConstraints()
   }
   
-  func setupConstraints() {
+  func setUpNavigationBar() {
+    let appearance = UINavigationBarAppearance()
+    appearance.backgroundColor = .mainDark()
     
+    let titleLabel = UILabel(text: SetupProfileString.setupProfile.localized)
+    titleLabel.font = .systemFont(ofSize: 25)
+    titleLabel.textColor = .mainYellow()
+    
+    navigationController?.navigationBar.standardAppearance = appearance
+    navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    navigationController?.navigationBar.tintColor = .mainYellow()
+    navigationItem.titleView = titleLabel
+  }
+  
+  func setupConstraints() {
     let fullNameStackview = UIStackView(arrangedSubviews: [fullNameLabel, fullNameTextField],
                                         axis: .vertical, spacing: 10)
     let aboutMeStackView = UIStackView(arrangedSubviews: [aboutMeLabel, aboutMeTextField],

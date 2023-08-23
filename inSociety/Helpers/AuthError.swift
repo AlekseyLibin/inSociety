@@ -7,24 +7,26 @@
 
 import Foundation
 
-enum AuthError {
+enum AuthError: String {
     
     case fieldsAreNotFilled
-    
     case emailFieldIsEmpty
-    case emailInvalid
-    
+    case invalidEmail
     case passwordFieldIsEmpty
     case confirmPasswordFieldIsEmpty
     case passwordContainsSpecificSymbols
     case passwordsDoNotMatch
-    
     case couldNotAuthWithGoogle
+  
+  var localized: String {
+    NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")
+  }
 }
 
 extension AuthError: LocalizedError {
     var errorDescription: String? {
-       
+      return NSLocalizedString(self.localized, comment: "")
+      /*
        switch self {
        case .fieldsAreNotFilled:
            return NSLocalizedString("Fill in all the fields", comment: "")
@@ -43,5 +45,6 @@ extension AuthError: LocalizedError {
        case .couldNotAuthWithGoogle:
            return NSLocalizedString("Could not authorize with Goole", comment: "")
        }
+       */
    }
 }

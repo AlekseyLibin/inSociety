@@ -7,18 +7,24 @@
 
 import Foundation
 
-enum UserError {
+enum UserError: String {
     
-    case notFilled
+    case fieldsAreNotFilled
     case noPhoto
     case cannotGetUserInfo
     case cannotUnwrapFBDataToUserModel
     case chatAlreadyExists
+  
+  var localized: String {
+    NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")
+  }
 }
 
 extension UserError: LocalizedError {
     var errorDescription: String? {
-        
+      
+      return NSLocalizedString(self.localized, comment: "")
+        /*
         switch self {
         case .notFilled:
             return NSLocalizedString("Fill in all the fields", comment: "")
@@ -31,5 +37,6 @@ extension UserError: LocalizedError {
         case .chatAlreadyExists:
             return NSLocalizedString("You already have a chat with this this user", comment: "")
         }
+         */
     }
 }

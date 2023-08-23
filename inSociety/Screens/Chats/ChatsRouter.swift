@@ -29,11 +29,9 @@ extension ChatsRouter: ChatsRouterProtocol {
   }
   
   func toChatRequestVC(chat: ChatModel) {
-    
     let chatRequestVC = ChatRequestViewController(chat: chat)
     chatRequestVC.delegate = viewController
     viewController.present(chatRequestVC, animated: true)
-    
   }
   
 }

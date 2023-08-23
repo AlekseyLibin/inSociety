@@ -44,13 +44,13 @@ final class MainTabBarController: UITabBarController {
     
     viewControllers = [
       generateViewController(rootViewControler: peopleViewController,
-                             title: "People", image: peopleImage),
+                             title: MainString.people.localized, image: peopleImage),
       
       generateViewController(rootViewControler: listViewController,
-                             title: "Chats", image: chatImage),
+                             title: MainString.chats.localized, image: chatImage),
       
       generateViewController(rootViewControler: profileViewController,
-                             title: "Profile", image: profileImage)
+                             title: MainString.profile.localized, image: profileImage)
     ]
   }
   

@@ -17,7 +17,7 @@ final class ChatRequestViewController: BaseViewController {
   private let imageView = UIImageView()
   private let nameLabel = UILabel(text: "",
                                   font: .systemFont(ofSize: 20, weight: .light))
-  private let descriptionLabel = UILabel(text: "Chat request",
+  private let descriptionLabel = UILabel(text: ChatRequestString.chatRequest.localized,
                                          font: .systemFont(ofSize: 16, weight: .light))
   
   private let acceptButton = UIButton(type: .system)
@@ -27,7 +27,7 @@ final class ChatRequestViewController: BaseViewController {
   private let configurator: ChatRequestConfiguratorProtocol = ChatRequestConfigurator()
   var presenter: ChatRequestPresenterProtocol!
   
-  weak var delegate: WaitingChatsNavigation?
+  weak var delegate: WaitingChatsNavigationDelegate?
   
   init(chat: ChatModel) {
     self.chat = chat
@@ -67,17 +67,17 @@ final class ChatRequestViewController: BaseViewController {
     
     nameLabel.textColor = .mainWhite()
     
-    descriptionLabel.text = "\(nameLabel.text ?? "Somebody") wants to chat with you"
+    descriptionLabel.text = "\(nameLabel.text ?? ChatRequestString.somebody.localized) \(ChatRequestString.wantsToChatWithYou.localized)"
     descriptionLabel.textColor = .mainWhite()
     descriptionLabel.numberOfLines = 0
     
-    acceptButton.setTitle("ACCEPT", for: .normal)
+    acceptButton.setTitle(ChatRequestString.accept.localized, for: .normal)
     acceptButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .light)
     acceptButton.layer.cornerRadius = 10
     acceptButton.titleLabel?.tintColor = .black
     acceptButton.backgroundColor = .mainYellow()
     
-    denyButton.setTitle("Deny", for: .normal)
+    denyButton.setTitle(ChatRequestString.deny.localized, for: .normal)
     denyButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .light)
     denyButton.layer.borderWidth = 1.2
     denyButton.layer.cornerRadius = 10

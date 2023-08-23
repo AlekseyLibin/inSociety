@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-protocol ChatsViewControllerProtocol: WaitingChatsNavigation, BaseViewCotrollerProtocol {
+protocol ChatsViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?)
   func changeValueFor(waitingChats: [ChatModel])
   func changeValueFor(activeChats: [ChatModel])
@@ -28,17 +28,17 @@ final class ChatsViewController: BaseViewController {
     func description() -> String {
       switch self {
       case .waitingChats:
-        return "Waiting chats"
+        return ChatsString.waitingChats.localized
       case .activeChats:
-        return "Active chats"
+        return ChatsString.activeChats.localized
       }
     }
   }
   
   private let currentUser: UserModel
   
-  var waitingChats = [ChatModel]()
-  var activeChats = [ChatModel]()
+  private(set) var waitingChats = [ChatModel]()
+  private(set) var activeChats = [ChatModel]()
   
   private var waitingChatsListener: ListenerRegistration?
   private var activeChatsListener: ListenerRegistration?
@@ -54,6 +54,13 @@ final class ChatsViewController: BaseViewController {
   init(currentUser: UserModel) {
     self.currentUser = currentUser
     super.init(nibName: nil, bundle: nil)
+    configurator.configure(viewController: self)
+    presenter.setupListeners(&waitingChatsListener, &activeChatsListener)
+    setupCollectionView()
+    setupTopBar()
+    createDataSource()
+    reloadData(with: nil)
+    setupLabels()
   }
   
   deinit {
@@ -67,23 +74,16 @@ final class ChatsViewController: BaseViewController {
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    
     updateLastMessage()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configurator.configure(viewController: self)
-    setupCollectionView()
-    setupTopBar()
-    createDataSource()
-    presenter.setupListeners(&waitingChatsListener, &activeChatsListener)
     reloadData(with: nil)
-    setupLabels()
   }
   
   private func setupLabels() {
-    emptyWaitingChatsLabel.text = "Here will be indicated people, waiting you to confirm their chat request"
+    emptyWaitingChatsLabel.text = ChatsString.waitingChatsMessage.localized
     emptyWaitingChatsLabel.textColor = .darkGray
     emptyWaitingChatsLabel.alpha = 0.5
     emptyWaitingChatsLabel.font = .italicSystemFont(ofSize: 20)
@@ -99,7 +99,7 @@ final class ChatsViewController: BaseViewController {
       emptyWaitingChatsLabel.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 0.8)
     ])
     
-    emptyActiveChatsLabel.text = "Here will be indicated people, who you chat with"
+    emptyActiveChatsLabel.text = ChatsString.activeChatsMessage.localized
     emptyActiveChatsLabel.textColor = .darkGray
     emptyActiveChatsLabel.alpha = 0.5
     emptyActiveChatsLabel.font = .italicSystemFont(ofSize: 20)
@@ -121,7 +121,7 @@ final class ChatsViewController: BaseViewController {
     let appearance = UINavigationBarAppearance()
     appearance.backgroundColor = .mainDark()
     
-    let titleLabel = UILabel(text: "Chats")
+    let titleLabel = UILabel(text: ChatsString.chats.localized)
     titleLabel.font = .systemFont(ofSize: 25)
     titleLabel.textColor = .systemGray
     
@@ -155,6 +155,7 @@ final class ChatsViewController: BaseViewController {
   }
 }
 
+// MARK: - ChatsViewControllerProtocol
 extension ChatsViewController: ChatsViewControllerProtocol {
   func collectionView(updateCellValueBy indexPath: IndexPath, with message: String) {
     guard let cell = self.collectionView.cellForItem(at: indexPath) as? ActiveChatCell else { return }
@@ -171,20 +172,23 @@ extension ChatsViewController: ChatsViewControllerProtocol {
     reloadData(with: nil)
   }
   
-  func removeWaitingChat(chat: ChatModel) {
-    presenter.waitingChat(remove: chat)
-  }
-  
-  func moveToActive(chat: ChatModel) {
-    presenter.waitingChat(moveToActive: chat)
-  }
-  
   func emptyWaitingChatsLabel(isActive: Bool) {
     emptyWaitingChatsLabel.isHidden = !isActive
   }
   
   func emptyActiveChatsLabel(isActive: Bool) {
     emptyActiveChatsLabel.isHidden = !isActive
+  }
+}
+
+// MARK: - WaitingChatsNavigationDelegate
+extension ChatsViewController: WaitingChatsNavigationDelegate {
+  func removeWaitingChat(chat: ChatModel) {
+    presenter.waitingChat(remove: chat)
+  }
+  
+  func moveToActive(chat: ChatModel) {
+    presenter.waitingChat(moveToActive: chat)
   }
 }
 
@@ -214,7 +218,7 @@ private extension ChatsViewController {
     dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
       guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
-      else { fatalError("Cannot create nev section header") }
+      else { fatalError("Cannot create new section header") }
       
       guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
       sectionHeader.configure(text: section.description(),

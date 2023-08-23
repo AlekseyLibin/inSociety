@@ -11,14 +11,14 @@ extension UIViewController {
   
   func showAlert(with title: String, and message: String? = nil) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let sumbitButton = UIAlertAction(title: "Submit", style: .default)
+    let sumbitButton = UIAlertAction(title: ExtensionsString.submit.localized, style: .default)
     alert.addAction(sumbitButton)
     present(alert, animated: true)
   }
   
   func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let sumbitButton = UIAlertAction(title: "Submit", style: .default) { _ in
+    let sumbitButton = UIAlertAction(title: ExtensionsString.submit.localized, style: .default) { _ in
       completion()
     }
     alert.addAction(sumbitButton)
