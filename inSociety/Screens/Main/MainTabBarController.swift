@@ -28,18 +28,18 @@ final class MainTabBarController: UITabBarController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.backgroundColor = .mainDark()
+    tabBar.tintColor = .mainYellow()
     
     configurator.configure(viewController: self)
     let peopleViewController = PeopleViewController(currentUser: currentUser)
     let listViewController = ChatsViewController(currentUser: currentUser)
     let profileViewController = ProfileViewController(currentUser: currentUser)
     
-    tabBar.tintColor = .mainYellow()
-    
     guard
-      let peopleImage = UIImage(named: "PeopleTabBarLogo"),
-      let chatImage = UIImage(named: "ChatTabBarLogo"),
-      let profileImage = UIImage(named: "ProfileTabBarLogo")
+      let peopleImage = UIImage(named: "peopleTabBarImage"),
+      let chatImage = UIImage(named: "chatsTabBarImage"),
+      let profileImage = UIImage(named: "profileTabBarImage")
     else { return }
     
     viewControllers = [

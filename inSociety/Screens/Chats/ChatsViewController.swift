@@ -23,13 +23,13 @@ protocol ChatsViewControllerProtocol: BaseViewCotrollerProtocol {
 final class ChatsViewController: BaseViewController {
   
   enum Section: Int, CaseIterable {
-    case waitingChats, activeChats
+    case waitingChatsSection, activeChatsSection
     
     func description() -> String {
       switch self {
-      case .waitingChats:
+      case .waitingChatsSection:
         return ChatsString.waitingChats.localized
-      case .activeChats:
+      case .activeChatsSection:
         return ChatsString.activeChats.localized
       }
     }
@@ -44,6 +44,7 @@ final class ChatsViewController: BaseViewController {
   private var activeChatsListener: ListenerRegistration?
   
   private var collectionView: UICollectionView!
+  private let searchController: UISearchController
   private var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
   private let emptyWaitingChatsLabel = UILabel()
   private let emptyActiveChatsLabel = UILabel()
@@ -53,13 +54,13 @@ final class ChatsViewController: BaseViewController {
   
   init(currentUser: UserModel) {
     self.currentUser = currentUser
+    self.searchController = UISearchController(searchResultsController: nil)
     super.init(nibName: nil, bundle: nil)
     configurator.configure(viewController: self)
     presenter.setupListeners(&waitingChatsListener, &activeChatsListener)
     setupCollectionView()
     setupTopBar()
     createDataSource()
-    reloadData(with: nil)
     setupLabels()
   }
   
@@ -128,7 +129,6 @@ final class ChatsViewController: BaseViewController {
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
     
-    let searchController = UISearchController(searchResultsController: nil)
     navigationItem.searchController = searchController
     navigationItem.titleView = titleLabel
     
@@ -139,14 +139,12 @@ final class ChatsViewController: BaseViewController {
   }
   
   private func reloadData(with searchText: String?) {
-    let filteredActiveChats = activeChats.filter { (chat) -> Bool in
-      chat.contains(filter: searchText)
-    }
+    let filteredActiveChats = activeChats.filter { $0.contains(filter: searchText) }
     
     var snapshot = NSDiffableDataSourceSnapshot<Section, ChatModel>()
-    snapshot.appendSections([.waitingChats, .activeChats])
-    snapshot.appendItems(waitingChats, toSection: .waitingChats)
-    snapshot.appendItems(filteredActiveChats, toSection: .activeChats)
+    snapshot.appendSections([.waitingChatsSection, .activeChatsSection])
+    snapshot.appendItems(waitingChats, toSection: .waitingChatsSection)
+    snapshot.appendItems(filteredActiveChats, toSection: .activeChatsSection)
     dataSource?.apply(snapshot, animatingDifferences: true)
   }
   
@@ -158,17 +156,21 @@ final class ChatsViewController: BaseViewController {
 // MARK: - ChatsViewControllerProtocol
 extension ChatsViewController: ChatsViewControllerProtocol {
   func collectionView(updateCellValueBy indexPath: IndexPath, with message: String) {
-    guard let cell = self.collectionView.cellForItem(at: indexPath) as? ActiveChatCell else { return }
+    guard let cell = self.collectionView.cellForItem(at: indexPath) as? ActiveChatCell,
+          searchController.searchBar.text == ""
+    else { return }
     cell.updateLastMessage(with: message)
   }
   
   func changeValueFor(waitingChats: [ChatModel]) {
     self.waitingChats = waitingChats
+    emptyWaitingChatsLabel.isHidden = !waitingChats.isEmpty
     reloadData(with: nil)
   }
   
   func changeValueFor(activeChats: [ChatModel]) {
     self.activeChats = activeChats
+    emptyActiveChatsLabel.isHidden = !activeChats.isEmpty
     reloadData(with: nil)
   }
   
@@ -202,12 +204,12 @@ private extension ChatsViewController {
       }
       
       switch section {
-      case .waitingChats:
+      case .waitingChatsSection:
         return self.configure(collectionView: collectionView,
                               cellType: WaitingChatCell.self,
                               with: itemIdentifier,
                               for: indexPath)
-      case .activeChats:
+      case .activeChatsSection:
         return self.configure(collectionView: collectionView,
                               cellType: ActiveChatCell.self,
                               with: itemIdentifier,
@@ -235,6 +237,16 @@ extension ChatsViewController: UISearchBarDelegate {
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
     reloadData(with: searchText)
   }
+  
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    reloadData(with: nil)
+    updateLastMessage()
+  }
+  
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+    reloadData(with: searchBar.text ?? "")
+    updateLastMessage()
+  }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -246,11 +258,14 @@ extension ChatsViewController: UICollectionViewDelegate {
     else { return }
     
     switch section {
-    case .waitingChats:
+    case .waitingChatsSection:
       presenter.navigate(toChatRequestVC: chat)
-    case .activeChats:
+    case .activeChatsSection:
       presenter.navigate(toChatVC: currentUser, chat: chat)
     }
+  }
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    emptyWaitingChatsLabel.alpha = 0.5 - emptyWaitingChatsLabel.frame.midY/500
   }
 }
 
@@ -280,9 +295,9 @@ private extension ChatsViewController {
       }
       
       switch section {
-      case .waitingChats:
+      case .waitingChatsSection:
         return self.createWaitingChatsSection()
-      case .activeChats:
+      case .activeChatsSection:
         return self.createActiveChatsSection()
       }
     }

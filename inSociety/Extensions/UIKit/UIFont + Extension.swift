@@ -32,4 +32,7 @@ extension UIFont {
     static func laoSangamMN18() -> UIFont? {
         return UIFont(name: "Lao Sangam MN", size: 18)
     }
+  static func laoSangamMN14() -> UIFont? {
+      return UIFont(name: "Lao Sangam MN", size: 14)
+  }
 }

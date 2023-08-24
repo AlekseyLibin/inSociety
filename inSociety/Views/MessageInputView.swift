@@ -32,7 +32,7 @@ final class MessageInputView: UIView {
   func changeButtonType(to buttonType: ButtonType) {
     switch buttonType {
     case .send:
-      sendButton.setImage(UIImage(named: "sendButton"), for: .normal)
+      sendButton.setImage(UIImage(named: "activeSendButton"), for: .normal)
     case .done:
       sendButton.setImage(UIImage(named: "doneButton"), for: .normal)
     }
@@ -68,7 +68,7 @@ final class MessageInputView: UIView {
     textField.leftView = indentView
     textField.leftViewMode = .always
     
-    sendButton.setImage(UIImage(named: "sendButton"), for: .normal)
+    sendButton.setImage(UIImage(named: "activeSendButton"), for: .normal)
     sendButton.tintColor = .mainYellow()
     sendButton.isEnabled = false
     sendButton.imageView?.contentMode = .scaleAspectFit

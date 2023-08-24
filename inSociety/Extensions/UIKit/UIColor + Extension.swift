@@ -18,12 +18,12 @@ extension UIColor {
     return UIColor(red: 65/255, green: 65/255, blue: 65/255, alpha: 1)
   }
   
-  static func currentUserMessage() -> UIColor {
+  static func friendMessage() -> UIColor {
     return UIColor.systemGray
   }
   
-  static func friendMessage() -> UIColor {
-    return UIColor.systemYellow
+  static func currentUserMessage() -> UIColor {
+    return UIColor(red: 239/255, green: 223/255, blue: 37/255, alpha: 0.75)
   }
   
   static func mainDark() -> UIColor {
