@@ -23,6 +23,7 @@
  */
 
 import Foundation
+import UIKit
 
 /// Used to determine the `Horizontal` and `Vertical` position of
 // an `AvatarView` in a `MessageCollectionViewCell`.
@@ -38,12 +39,12 @@ public struct AvatarPosition: Equatable {
         case cellTrailing
         
         /// Positions the `AvatarView` based on whether the message is from the current Sender.
-        /// The cell is positioned `.cellTrailling` if `isFromCurrentSender` is true
+        /// The cell is positioned `.cellTrailing` if `isFromCurrentSender` is true
         /// and `.cellLeading` if false.
         case natural
     }
     
-    /// An enum representing the verical alignment for an `AvatarView`.
+    /// An enum representing the vertical alignment for an `AvatarView`.
     public enum Vertical {
         
         /// Aligns the `AvatarView`'s top edge to the cell's top edge.

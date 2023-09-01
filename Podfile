@@ -10,6 +10,7 @@ inhibit_all_warnings!
 
 pod 'FirebaseCore'
 pod 'FirebaseAnalytics'
+pod 'FirebaseCrashlytics'
 pod 'FirebaseAuth'
 pod 'FirebaseFirestore'
 pod 'FirebaseStorage'

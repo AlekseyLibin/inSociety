@@ -116,7 +116,7 @@
 "UserError_chatAlreadyExists" = "У вас вже є чат з цим користувачем";
 
 // UserModel
-"Sex_male" = "Чоловік";
-"Sex_female" = "Жінка";
+"Sex_male" = "Чоловічий";
+"Sex_female" = "Жіночий";
 "Sex_other" = "Інше";
 

@@ -94,7 +94,7 @@ private extension PeopleViewController {
   func setupCollectionView() {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
     collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    collectionView.backgroundColor = .mainDark()
+    collectionView.backgroundColor = .mainDark
     view.addSubview(collectionView)
     
     collectionView.register(SectionHeader.self,
@@ -156,7 +156,7 @@ private extension PeopleViewController {
         case .success(let allUsers):
           sectionHeader.configure(text: section.description(usersCount: allUsers.count),
                                   font: .systemFont(ofSize: 20, weight: .light),
-                                  textColor: .mainYellow())
+                                  textColor: .mainYellow)
         case .failure(let error):
           self.showAlert(with: PeopleString.error.localized, and: error.localizedDescription)
         }
@@ -175,7 +175,7 @@ extension PeopleViewController: PeopleViewControllerProtocol {
   }
   
   func playSuccessAnimation() {
-    let successAnimationView = LottieAnimationView(name: "Success")
+    let successAnimationView = LottieAnimationView(name: "SuccessAnimation")
     successAnimationView.frame = view.bounds
     successAnimationView.contentMode = .scaleAspectFit
     successAnimationView.loopMode = .playOnce
@@ -255,12 +255,12 @@ private extension PeopleViewController {
 // MARK: - SetupTopBar
 private extension PeopleViewController {
   func setupTopBar() {
-    let titleLogoImage = UIImage(named: "inSociety")?.withTintColor(.mainYellow())
+    let titleLogoImage = UIImage(named: "inSociety")?.withTintColor(.mainYellow)
     let titleLogoView = UIImageView(image: titleLogoImage)
     titleLogoView.contentMode = .scaleAspectFit
     
     let appearance = UINavigationBarAppearance()
-    appearance.backgroundColor = .mainDark()
+    appearance.backgroundColor = .mainDark
     
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -287,7 +287,7 @@ extension PeopleViewController: UISearchBarDelegate {
 private extension PeopleViewController {
   func setupTabBar() {
     let appearance = UITabBarAppearance()
-    appearance.backgroundColor = .mainDark()
+    appearance.backgroundColor = .mainDark
     
     self.tabBarController?.tabBar.standardAppearance = appearance
     self.tabBarController?.tabBar.scrollEdgeAppearance = appearance

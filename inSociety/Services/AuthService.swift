@@ -84,9 +84,10 @@ final class AuthService {
     func googleLogin(presentingVC: UIViewController, completion: @escaping (Result<User, Error>) -> Void) {
         guard let clientID = self.clientId else { return }
         
-        let config = GIDConfiguration(clientID: clientID)
+      let config = GIDConfiguration(clientID: clientID)
+      GIDSignIn.sharedInstance.configuration = config
         
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingVC) { [weak self] user, error in
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentingVC) { [weak self] result, error in
             guard let self = self else { return }
             
             if let error = error {
@@ -95,12 +96,12 @@ final class AuthService {
             }
             
             guard
-                let auth = user?.authentication,
-                let idToken = auth.idToken
+                let user = result?.user,
+                let idToken = user.idToken?.tokenString
             else { return }
             
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                           accessToken: auth.accessToken)
+                                                           accessToken: user.accessToken.tokenString)
             
             self.auth.signIn(with: credential) { result, error in
                 if let error = error {

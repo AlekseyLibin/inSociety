@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Lottie
 import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
@@ -17,14 +18,15 @@ protocol AuthViewControllerProtocol: BaseViewCotrollerProtocol {
 
 final class AuthViewController: BaseViewController {
   
+  private let backgroundAnimationView = LottieAnimationView(name: "BackgroundAnimation")
   private let logoImage = UIImageView(named: "inSociety", contentMode: .scaleAspectFit)
   private let googleLabel = UILabel(text: AuthString.getStartedWith.localized)
   private let emailLabel = UILabel(text: AuthString.orSignUpWith.localized)
   private let loginLabel = UILabel(text: AuthString.alreadyOnBoard.localized)
   
   private let googleButton = UIButton(title: AuthString.google.localized, titleColor: .black, backgroundColor: .white)
-  private let emailButton = UIButton(title: AuthString.email.localized, titleColor: .black, backgroundColor: .mainYellow())
-  private let loginButton = UIButton(title: AuthString.login.localized, titleColor: .mainYellow(), backgroundColor: nil)
+  private let emailButton = UIButton(title: AuthString.email.localized, titleColor: .black, backgroundColor: .mainYellow)
+  private let loginButton = UIButton(title: AuthString.login.localized, titleColor: .mainYellow, backgroundColor: nil)
   
   var presenter: AuthPresenterInputProtocol!
   
@@ -33,22 +35,23 @@ final class AuthViewController: BaseViewController {
     
     let configurator = AuthConfigurator()
     configurator.configure(with: self)
+    playBackgroundAnimation()
     setupViews()
+  }
+  
+  deinit {
+    stopBackgroundAnimation()
   }
   
 }
 
 private extension AuthViewController {
-  
   func setupViews() {
-    
-    view.backgroundColor = .mainDark()
-    
-    logoImage.setupColor(.mainYellow())
-    
+    view.backgroundColor = .mainDark
+    logoImage.setupColor(.mainYellow)
     emailButton.addBaseShadow()
     
-    loginButton.layer.borderColor = UIColor.mainYellow().cgColor
+    loginButton.layer.borderColor = UIColor.mainYellow.cgColor
     loginButton.addBaseShadow()
     loginButton.layer.borderWidth = 2
     
@@ -61,12 +64,10 @@ private extension AuthViewController {
     [googleLabel, emailLabel, loginLabel].forEach { label in
       label.textColor = .lightGray
     }
-    
     setupConstraints()
   }
   
   func setupConstraints() {
-    
     let googleView = LabelButtonView(label: googleLabel, button: googleButton)
     let emailView = LabelButtonView(label: emailLabel, button: emailButton)
     let loginView = LabelButtonView(label: loginLabel, button: loginButton)
@@ -74,31 +75,37 @@ private extension AuthViewController {
     let stackView = UIStackView(arrangedSubviews: [googleView, emailView, loginView],
                                 axis: .vertical, spacing: 50)
     
-    let secondaryView = UIView()
-    secondaryView.layer.cornerRadius = 20
-    secondaryView.backgroundColor = .secondaryDark()
-    
-    [logoImage, secondaryView, stackView].forEach { subView in
+    [logoImage, stackView].forEach { subView in
       view.addSubview(subView)
       subView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     NSLayoutConstraint.activate([
-      
-      logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+      logoImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
       logoImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       logoImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
       logoImage.heightAnchor.constraint(equalTo: logoImage.widthAnchor, multiplier: 0.34),
       
-      stackView.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 100),
       stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       stackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
-      
-      secondaryView.topAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor, constant: -35),
-      secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-      secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35)
+      stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -view.frame.width * 0.25)
     ])
+  }
+  
+  func playBackgroundAnimation() {
+    backgroundAnimationView.frame = view.bounds
+    backgroundAnimationView.alpha = 0.4
+    backgroundAnimationView.contentMode = .scaleAspectFit
+    backgroundAnimationView.loopMode = .autoReverse
+    backgroundAnimationView.animationSpeed = 0.3
+    view.addSubview(backgroundAnimationView)
+    backgroundAnimationView.play()
+  }
+  
+  func stopBackgroundAnimation() {
+    self.backgroundAnimationView.stop()
+    self.backgroundAnimationView.removeFromSuperview()
+    LottieAnimationCache.shared?.clearCache()
   }
   
   // MARK: - Actions

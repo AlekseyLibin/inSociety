@@ -49,14 +49,21 @@ final class ChatViewController: MessagesViewController {
     setupViews()
   }
   
+  override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    super.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
+    print(indexPath, "has been viewed")
+  }
+  
   private func setupMessageListener() {
     messageListener = presenter.messagesListener(by: chat) { [weak self] result in
       guard let self = self else { return}
       
       switch result {
       case .success(let message):
-        self.chat.lastMessageContent = message.content
         self.insertNewMessage(message: message)
+        if !chat.messages.contains(message) {
+          self.chat.messages.append(message)
+        }
       case .failure(let error):
         self.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
@@ -84,17 +91,17 @@ final class ChatViewController: MessagesViewController {
 extension ChatViewController: MessagesDisplayDelegate {
   func backgroundColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
     if isFromCurrentSender(message: message) {
-      return .currentUserMessage()
+      return .currentUserMessage
     } else {
-      return .friendMessage()
+      return .friendMessage
     }
   }
   
   func textColor(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
     if isFromCurrentSender(message: message) {
-      return .mainDark()
+      return .mainDark
     } else {
-      return .mainWhite()
+      return .white
     }
   }
   
@@ -105,6 +112,7 @@ extension ChatViewController: MessagesDisplayDelegate {
   func avatarSize(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGSize? {
     return .zero
   }
+  
   func messageStyle(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
     return .bubble
   }
@@ -144,12 +152,12 @@ extension ChatViewController {
     }
     
     let appearance = UINavigationBarAppearance()
-    appearance.backgroundColor = .mainDark()
+    appearance.backgroundColor = .mainDark
     
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
     
-    messagesCollectionView.backgroundColor = .secondaryDark()
+    messagesCollectionView.backgroundColor = .secondaryDark
     messagesCollectionView.showsVerticalScrollIndicator = false
     messagesCollectionView.hideKeyboardWhenTappedOrSwiped()
     
@@ -158,8 +166,8 @@ extension ChatViewController {
     messageInputBar.separatorLine.isHidden = false
     messageInputBar.padding.bottom = 5
     messageInputBar.padding.top = 5
-    messageInputBar.backgroundView.backgroundColor = .secondaryDark()
-    messageInputBar.inputTextView.backgroundColor = .mainDark()
+    messageInputBar.backgroundView.backgroundColor = .secondaryDark
+    messageInputBar.inputTextView.backgroundColor = .mainDark
     messageInputBar.inputTextView.layer.cornerRadius = 20
     messageInputBar.inputTextView.layer.masksToBounds = true
     messageInputBar.inputTextView.placeholderLabel.font = .systemFont(ofSize: 12)

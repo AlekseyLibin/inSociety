@@ -8,9 +8,9 @@
 import Foundation
 
 protocol ChatsInteractorProtocol: AnyObject {
-  func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void)
   func waitingChat(moveToActive chat: ChatModel, completion:  @escaping (Result<Void, Error>) -> Void)
   func waitingChat(remove chat: ChatModel, completion: @escaping (Result<Void, Error>) -> Void)
+  func updateActiveChats(completion: @escaping (Result<[ChatModel], Error>) -> Void)
 }
 
 final class ChatsInteractor {
@@ -26,8 +26,8 @@ extension ChatsInteractor: ChatsInteractorProtocol {
     FirestoreService.shared.deleteWaitingChat(chat: chat, completion: completion)
   }
   
-  func getLastMessage(chat: ChatModel, completion: @escaping (Result<MessageModel, Error>) -> Void) {
-    FirestoreService.shared.getLastMessage(chat: chat, completion: completion)
+  func updateActiveChats(completion: @escaping (Result<[ChatModel], Error>) -> Void) {
+    FirestoreService.shared.updateActiveChats(completion: completion)
   }
   
 }

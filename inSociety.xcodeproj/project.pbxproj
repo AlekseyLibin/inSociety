@@ -21,7 +21,7 @@
 		430623472A8CBD4A0016FAEF /* SendRequestString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430623462A8CBD4A0016FAEF /* SendRequestString.swift */; };
 		430623492A8CBE4E0016FAEF /* ActiveChatCellString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 430623482A8CBE4E0016FAEF /* ActiveChatCellString.swift */; };
 		4306234D2A8CBF470016FAEF /* ExtensionsString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4306234C2A8CBF470016FAEF /* ExtensionsString.swift */; };
-		4315F93F2A949D3400DEDD37 /* Success.json in Resources */ = {isa = PBXBuildFile; fileRef = 4315F93E2A949D3400DEDD37 /* Success.json */; };
+		4315F93F2A949D3400DEDD37 /* SuccessAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 4315F93E2A949D3400DEDD37 /* SuccessAnimation.json */; };
 		4318BFDD290C128300F8E8AB /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4318BFDC290C128300F8E8AB /* ChatViewController.swift */; };
 		43260B822938006A0008730C /* AuthConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B812938006A0008730C /* AuthConfigurator.swift */; };
 		43260B862938007F0008730C /* AuthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43260B852938007F0008730C /* AuthPresenter.swift */; };
@@ -51,6 +51,7 @@
 		43846B55298EACA200588F72 /* ChatsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B54298EACA200588F72 /* ChatsPresenter.swift */; };
 		43846B57298EACAB00588F72 /* ChatsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B56298EACAB00588F72 /* ChatsInteractor.swift */; };
 		43846B59298EACB100588F72 /* ChatsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43846B58298EACB100588F72 /* ChatsRouter.swift */; };
+		439029762A98FF1F00D5C28F /* BackgroundAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 439029752A98FF1F00D5C28F /* BackgroundAnimation.json */; };
 		4396F66D2914518F00BB988F /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4396F66C2914518F00BB988F /* UIView + Extension.swift */; };
 		4397FB2E290702BE00FED534 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4397FB2D290702BE00FED534 /* Assets.xcassets */; };
 		4397FB4D290704F600FED534 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4397FB4C290704F600FED534 /* AppDelegate.swift */; };
@@ -141,7 +142,7 @@
 		430623462A8CBD4A0016FAEF /* SendRequestString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendRequestString.swift; sourceTree = "<group>"; };
 		430623482A8CBE4E0016FAEF /* ActiveChatCellString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveChatCellString.swift; sourceTree = "<group>"; };
 		4306234C2A8CBF470016FAEF /* ExtensionsString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionsString.swift; sourceTree = "<group>"; };
-		4315F93E2A949D3400DEDD37 /* Success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Success.json; sourceTree = "<group>"; };
+		4315F93E2A949D3400DEDD37 /* SuccessAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SuccessAnimation.json; sourceTree = "<group>"; };
 		4318BFDC290C128300F8E8AB /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		43260B812938006A0008730C /* AuthConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfigurator.swift; sourceTree = "<group>"; };
 		43260B852938007F0008730C /* AuthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthPresenter.swift; sourceTree = "<group>"; };
@@ -171,6 +172,7 @@
 		43846B54298EACA200588F72 /* ChatsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsPresenter.swift; sourceTree = "<group>"; };
 		43846B56298EACAB00588F72 /* ChatsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsInteractor.swift; sourceTree = "<group>"; };
 		43846B58298EACB100588F72 /* ChatsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsRouter.swift; sourceTree = "<group>"; };
+		439029752A98FF1F00D5C28F /* BackgroundAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = BackgroundAnimation.json; sourceTree = "<group>"; };
 		4396F66C2914518F00BB988F /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		4397FB21290702BC00FED534 /* inSociety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inSociety.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4397FB2D290702BE00FED534 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -208,7 +210,7 @@
 		4397FB9F29070B0700FED534 /* SelfConfiguringCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfConfiguringCell.swift; sourceTree = "<group>"; };
 		4397FBA229070B4500FED534 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		4397FBA429070B5800FED534 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
-		4397FBA629070B7100FED534 /* ChatModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; };
+		4397FBA629070B7100FED534 /* ChatModel.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = ChatModel.swift; sourceTree = "<group>"; tabWidth = 2; };
 		4397FBA829070B8400FED534 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		4397FBAC29070F4600FED534 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		43AC54BB290C1AB200EF962C /* Sender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sender.swift; sourceTree = "<group>"; };
@@ -337,6 +339,15 @@
 			path = Chats;
 			sourceTree = "<group>";
 		};
+		439268EE2A98FDD500E30AFD /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				4315F93E2A949D3400DEDD37 /* SuccessAnimation.json */,
+				439029752A98FF1F00D5C28F /* BackgroundAnimation.json */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
 		4397FB18290702BC00FED534 = {
 			isa = PBXGroup;
 			children = (
@@ -365,10 +376,10 @@
 				4397FB602907062200FED534 /* Cell */,
 				43CDAA122927CEA400ECF127 /* Views */,
 				4397FB712907077D00FED534 /* Extensions */,
-				4306234C2A8CBF470016FAEF /* ExtensionsString.swift */,
 				4397FBA129070B2600FED534 /* Protocols */,
 				4397FB9629070A7B00FED534 /* Helpers */,
 				4397FBAA29070B8E00FED534 /* Entity */,
+				439268EE2A98FDD500E30AFD /* Animations */,
 				4397FBAB29070BB200FED534 /* Services */,
 				4397FB2D290702BE00FED534 /* Assets.xcassets */,
 				430282A12A8AB60C005E7410 /* Localizable.strings */,
@@ -413,6 +424,7 @@
 		4397FB712907077D00FED534 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4306234C2A8CBF470016FAEF /* ExtensionsString.swift */,
 				4397FB8C2907094500FED534 /* UIKit */,
 			);
 			path = Extensions;
@@ -476,7 +488,6 @@
 				4397FBA429070B5800FED534 /* FirestoreService.swift */,
 				4367D0AF2907F7100056C307 /* StorageService.swift */,
 				4367D0B3290849BE0056C307 /* ListenerService.swift */,
-				4315F93E2A949D3400DEDD37 /* Success.json */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -589,6 +600,7 @@
 				4397FB1F290702BC00FED534 /* Resources */,
 				A7064EDD98B9B4FEB21B1319 /* [CP] Embed Pods Frameworks */,
 				43D7410D2993E7D5005C0ADE /* Linter */,
+				43FAD1B02A98CC6C006BA3AD /* Firebase Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -643,11 +655,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				439029762A98FF1F00D5C28F /* BackgroundAnimation.json in Resources */,
 				430282882A8AB3CD005E7410 /* Launch Screen.storyboard in Resources */,
 				4302829F2A8AB60C005E7410 /* Localizable.strings in Resources */,
 				4397FB2E290702BE00FED534 /* Assets.xcassets in Resources */,
 				4397FBAD29070F4600FED534 /* GoogleService-Info.plist in Resources */,
-				4315F93F2A949D3400DEDD37 /* Success.json in Resources */,
+				4315F93F2A949D3400DEDD37 /* SuccessAnimation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +684,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"Warning no swiftlint\"\nfi\n";
+		};
+		43FAD1B02A98CC6C006BA3AD /* Firebase Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"$(SRCROOT)/${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Firebase Crashlytics";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
 		};
 		A7064EDD98B9B4FEB21B1319 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -888,7 +924,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

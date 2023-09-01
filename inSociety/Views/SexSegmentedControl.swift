@@ -15,9 +15,9 @@ final class SexSegmentedControl: UISegmentedControl {
     }
     selectedSegmentIndex = 2
     
-    let yellowAttribute = [NSAttributedString.Key.foregroundColor: UIColor.mainYellow()]
+    let yellowAttribute = [NSAttributedString.Key.foregroundColor: UIColor.mainYellow]
     let blackAttribute = [NSAttributedString.Key.foregroundColor: UIColor.black]
-    selectedSegmentTintColor = UIColor.mainYellow()
+    selectedSegmentTintColor = UIColor.mainYellow
     setTitleTextAttributes(yellowAttribute, for:.normal)
     setTitleTextAttributes(blackAttribute, for:.selected)
   }

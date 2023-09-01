@@ -11,7 +11,7 @@ import SDWebImage
 final class UserCell: UICollectionViewCell {
   
   private var userImageView = UIImageView()
-  private let userNameLabel = UILabel(text: "", font: .laoSangamMN20())
+  private let userNameLabel = UILabel(text: "", font: .light20)
   private let containerView = UIView()
   
   static var reuseID: String = "UserCell"
@@ -46,12 +46,12 @@ extension UserCell: SelfConfiguringCell {
   func configure<HCell>(with value: HCell) where HCell : Hashable {
     guard let user: UserModel = value as? UserModel else { return }
     userNameLabel.text = user.fullName
-    userNameLabel.textColor = .mainWhite()
-    userNameLabel.backgroundColor = .secondaryDark()
+    userNameLabel.textColor = .white
+    userNameLabel.backgroundColor = .secondaryDark
     userNameLabel.textAlignment = .center
     guard let url = URL(string: user.avatarString) else { return }
     userImageView.sd_setImage(with: url)
-    userImageView.backgroundColor = .secondaryDark()
+    userImageView.backgroundColor = .secondaryDark
     userImageView.contentMode = .scaleAspectFill
   }
 }
@@ -59,9 +59,9 @@ extension UserCell: SelfConfiguringCell {
 // MARK: Setup constraints
 private extension UserCell {
   func setupViews() {
-    backgroundColor = .mainDark()
+    backgroundColor = .mainDark
     
-    layer.shadowColor = UIColor.thirdDark().cgColor
+    layer.shadowColor = UIColor.mainDark.cgColor
     layer.cornerRadius = 5
     layer.shadowRadius = 5
     layer.shadowOpacity = 1

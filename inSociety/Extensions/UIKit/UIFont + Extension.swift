@@ -8,31 +8,28 @@
 import UIKit
 
 extension UIFont {
-    
-    static func galvji15() -> UIFont? {
-        return UIFont(name: "Galvji", size: 15)
-    }
-    
-    static func galvji20() -> UIFont? {
-        return UIFont(name: "Galvji", size: 20)
-    }
-    
-    static func galvji25() -> UIFont? {
-        return UIFont(name: "Galvji", size: 25)
-    }
-    
-    static func galvji30() -> UIFont? {
-        return UIFont(name: "Galvji", size: 30)
-    }
-    
-    static func laoSangamMN20() -> UIFont? {
-        return UIFont(name: "Lao Sangam MN", size: 20)
-    }
-    
-    static func laoSangamMN18() -> UIFont? {
-        return UIFont(name: "Lao Sangam MN", size: 18)
-    }
-  static func laoSangamMN14() -> UIFont? {
-      return UIFont(name: "Lao Sangam MN", size: 14)
+  
+  static var light14: UIFont {
+    return .systemFont(ofSize: 14, weight: .light)
+  }
+  
+  static var light15: UIFont {
+    return .systemFont(ofSize: 15, weight: .light)
+  }
+  
+  static var light18: UIFont {
+    return .systemFont(ofSize: 18, weight: .light)
+  }
+  
+  static var light20: UIFont {
+    return .systemFont(ofSize: 20, weight: .light)
+  }
+  
+  static var light25: UIFont {
+    return .systemFont(ofSize: 25, weight: .light)
+  }
+  
+  static var light30: UIFont {
+    return .systemFont(ofSize: 30, weight: .light)
   }
 }

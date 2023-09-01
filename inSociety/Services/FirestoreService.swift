@@ -149,7 +149,6 @@ extension FirestoreService {
 //    }
 //  }
   
-  
 //  func checkNoChats(with friend: UserModel, completion: @escaping (Result<Void, Error>) -> Void) {
 //    let activeChatMessages = activeChatsReference.document(friend.id).collection("messages")
 //    activeChatMessages.getDocuments { [weak self] snapshot, error in
@@ -189,8 +188,8 @@ extension FirestoreService {
     let message = MessageModel(user: currentUser, content: message)
     let chat = ChatModel(friendName: currentUser.fullName,
                          friendAvatarString: currentUser.avatarString,
-                         lastMessageContent: message.content,
-                         friendID: currentUser.id)
+                         friendID: currentUser.id,
+                         messages: [message])
     waitingChatsReference.document(currentUser.id).setData(chat.representation) { error in
       if let error = error {
         completion(.failure(error))
@@ -303,8 +302,9 @@ extension FirestoreService {
     
     let chatForFriend = ChatModel(friendName: currentUser.fullName,
                                   friendAvatarString: currentUser.avatarString,
-                                  lastMessageContent: message.content,
-                                  friendID: currentUser.id)
+                                  friendID: currentUser.id,
+                                  messages: chat.messages)
+        
     friendReference.setData(chatForFriend.representation) { error in
       if let error = error {
         completion(.failure(error))
@@ -364,6 +364,18 @@ extension FirestoreService {
       messages.sort()
       guard let lastMessage = messages.last else { return }
       completion(.success(lastMessage))
+    }
+  }
+  
+  func updateActiveChats(completion: @escaping (Result<[ChatModel], Error>) -> Void) {
+    activeChatsReference.getDocuments { snapshot, error in
+      guard let snapshot = snapshot else { completion(.failure(error!)); return }
+      var activeChats = [ChatModel]()
+      snapshot.documents.forEach { document in
+        guard let chat = ChatModel(document: document) else { return }
+        activeChats.append(chat)
+      }
+      completion(.success(activeChats))
     }
   }
   

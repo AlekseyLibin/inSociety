@@ -21,11 +21,12 @@ extension SendRequestInteractor: SendRequestInteractorProtocol {
       switch result {
       case .success:
         guard let currentUser = FirestoreService.shared.currentUser else { return }
+        let message = MessageModel(user: currentUser, content: message)
         let chat = ChatModel(friendName: receiver.fullName,
                              friendAvatarString: receiver.avatarString,
-                             lastMessageContent: message, friendID: receiver.id)
+                             friendID: receiver.id,
+                             messages: [message])
 
-        let message = MessageModel(user: currentUser, content: message)
         FirestoreService.shared.createActiveChat(chat: chat, messages: [message], completion: completion)
       case .failure(let error):
         errorComplition(error)

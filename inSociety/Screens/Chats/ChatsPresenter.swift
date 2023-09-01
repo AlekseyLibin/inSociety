@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 protocol ChatsPresenterProtocol: AnyObject {
   func setupListeners( _ waitingChatsListener: inout ListenerRegistration?, _ activeChatsListener: inout ListenerRegistration?)
-  func updateLastMessage()
+  func updateActiveChats(completion: @escaping (Result<[ChatModel], Error>) -> Void)
   func waitingChat(moveToActive chat: ChatModel)
   func waitingChat(remove chat: ChatModel)
   func navigate(toChatRequestVC chat: ChatModel)
@@ -59,18 +59,8 @@ extension ChatsPresenter: ChatsPresenterProtocol {
     }
   }
   
-  func updateLastMessage() {
-    for index in 0 ..< viewController.activeChats.count {
-      interactor.getLastMessage(chat: viewController.activeChats[index]) { result in
-
-        switch result {
-        case .success(let message):
-          self.viewController.collectionView(updateCellValueBy: [1, index], with: message.content)
-        case .failure(let error):
-          self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
-        }
-      }
-    }
+  func updateActiveChats(completion: @escaping (Result<[ChatModel], Error>) -> Void) {
+    interactor.updateActiveChats(completion: completion)
   }
   
   func setupListeners(_ waitingChatsListener: inout ListenerRegistration?, _ activeChatsListener: inout ListenerRegistration?) {

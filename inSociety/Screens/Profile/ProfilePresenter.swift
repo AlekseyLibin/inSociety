@@ -69,26 +69,21 @@ extension ProfilePresenter: ProfilePresenterProtocol {
   
   func logOutButtonPressed() {
     let alertController = UIAlertController(title: ProfileString.logOutWarning.localized, message: nil, preferredStyle: .actionSheet)
-    alertController.addAction(UIAlertAction(title: ProfileString.cancel.localized, style: .cancel))
-    alertController.addAction(UIAlertAction(title: ProfileString.logOut.localized, style: .destructive, handler: { _ in
+    
+    let logOutAction = UIAlertAction(title: ProfileString.logOut.localized, style: .destructive, handler: { _ in
       do {
         try self.interactor.logOut()
       } catch {
         self.viewController.showAlert(with: ProfileString.error.localized, and: error.localizedDescription)
       }
-    }))
+    })
+    let cancelAction = UIAlertAction(title: ProfileString.cancel.localized, style: .cancel)
+    cancelAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+    
+    alertController.addAction(logOutAction)
+    alertController.addAction(cancelAction)
     viewController.present(viewController: alertController)
   }
     
   }
-  /*
-   @objc private func logOutButtonPressed() {
-     let alertController = UIAlertController(title: ProfileString.logOutWarning.localized, message: nil, preferredStyle: .actionSheet)
-     alertController.addAction(UIAlertAction(title: ProfileString.cancel.localized, style: .cancel))
-     alertController.addAction(UIAlertAction(title: ProfileString.logOut.localized, style: .destructive, handler: { _ in
-       self.presenter.signOut()
-     }))
-     present(alertController, animated: true)
-   }
-   */
   

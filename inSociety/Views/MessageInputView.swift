@@ -58,7 +58,7 @@ final class MessageInputView: UIView {
     textField.font = UIFont.systemFont(ofSize: 14)
     textField.borderStyle = .none
     textField.clearButtonMode = .whileEditing
-    textField.backgroundColor = .secondaryDark()
+    textField.backgroundColor = .secondaryDark
     textField.layer.cornerRadius = 20
     textField.layer.masksToBounds = true
     textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
@@ -69,7 +69,7 @@ final class MessageInputView: UIView {
     textField.leftViewMode = .always
     
     sendButton.setImage(UIImage(named: "activeSendButton"), for: .normal)
-    sendButton.tintColor = .mainYellow()
+    sendButton.tintColor = .mainYellow
     sendButton.isEnabled = false
     sendButton.imageView?.contentMode = .scaleAspectFit
     sendButton.translatesAutoresizingMaskIntoConstraints = false

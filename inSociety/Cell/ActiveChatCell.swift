@@ -21,8 +21,8 @@ final class ActiveChatCell: UICollectionViewCell {
     self.userImageView = UIImageView()
     self.stripView = UIView()
     self.lastMessageBackgroundView = UIView()
-    self.userNameLabel = UILabel(text: ActiveChatCellString.userName.localized, font: .laoSangamMN20())
-    self.lastMessageLabel = UILabel(text: ActiveChatCellString.lastMessage.localized, font: .laoSangamMN14())
+    self.userNameLabel = UILabel(text: ActiveChatCellString.userName.localized, font: .systemFont(ofSize: 20, weight: .light))
+    self.lastMessageLabel = UILabel(text: ActiveChatCellString.lastMessage.localized, font: .italicSystemFont(ofSize: 14))
     super.init(frame: frame)
     setupViews()
   }
@@ -31,8 +31,9 @@ final class ActiveChatCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func updateLastMessage(with content: String) {
-    self.lastMessageLabel.text = content
+  func updateLastMessage(with message: MessageModel) {
+    self.lastMessageLabel.text = message.content
+    
   }
 }
 
@@ -43,7 +44,7 @@ extension ActiveChatCell: SelfConfiguringCell {
   func configure<HCell>(with value: HCell) where HCell : Hashable {
     guard let user: ChatModel = value as? ChatModel else { return }
     
-    backgroundColor = .secondaryDark()
+    backgroundColor = .secondaryDark
     userImageView.sd_setImage(with: URL(string: user.friendAvatarString))
     userImageView.contentMode = .scaleAspectFill
     userImageView.layer.masksToBounds = true
@@ -53,7 +54,7 @@ extension ActiveChatCell: SelfConfiguringCell {
       case .success(let lastMessage):
         self?.lastMessageLabel.text = lastMessage.content
       case .failure:
-        self?.lastMessageLabel.text = user.lastMessageContent
+        self?.lastMessageLabel.text = user.messages.sorted().last?.content ?? ""
       }
     }
   }
@@ -63,8 +64,8 @@ extension ActiveChatCell: SelfConfiguringCell {
 extension ActiveChatCell {
   private func setupViews() {
     
-    stripView.backgroundColor = .mainYellow()
-    lastMessageBackgroundView.backgroundColor = .mainDark()
+    stripView.backgroundColor = .mainYellow
+    lastMessageBackgroundView.backgroundColor = .mainDark
     lastMessageBackgroundView.alpha = 0.5
     lastMessageBackgroundView.layer.cornerRadius = 10
     
@@ -76,7 +77,7 @@ extension ActiveChatCell {
       view.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    userNameLabel.textColor = .mainWhite()
+    userNameLabel.textColor = .white
     lastMessageLabel.textColor = .lightGray
     
     NSLayoutConstraint.activate([

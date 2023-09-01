@@ -63,26 +63,26 @@ final class ChatRequestViewController: BaseViewController {
     imageView.contentMode = .scaleAspectFill
     
     containerView.layer.cornerRadius = 30
-    containerView.backgroundColor = .mainDark()
+    containerView.backgroundColor = .mainDark
     
-    nameLabel.textColor = .mainWhite()
+    nameLabel.textColor = .white
     
     descriptionLabel.text = "\(nameLabel.text ?? ChatRequestString.somebody.localized) \(ChatRequestString.wantsToChatWithYou.localized)"
-    descriptionLabel.textColor = .mainWhite()
+    descriptionLabel.textColor = .white
     descriptionLabel.numberOfLines = 0
     
     acceptButton.setTitle(ChatRequestString.accept.localized, for: .normal)
     acceptButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .light)
     acceptButton.layer.cornerRadius = 10
     acceptButton.titleLabel?.tintColor = .black
-    acceptButton.backgroundColor = .mainYellow()
+    acceptButton.backgroundColor = .mainYellow
     
     denyButton.setTitle(ChatRequestString.deny.localized, for: .normal)
     denyButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .light)
     denyButton.layer.borderWidth = 1.2
     denyButton.layer.cornerRadius = 10
-    denyButton.layer.borderColor = UIColor.secondaryDark().cgColor
-    denyButton.tintColor = .mainYellow()
+    denyButton.layer.borderColor = UIColor.secondaryDark.cgColor
+    denyButton.tintColor = .mainYellow
     
     denyButton.addTarget(self, action: #selector(deny), for: .touchUpInside)
     acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)

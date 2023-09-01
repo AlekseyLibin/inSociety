@@ -26,8 +26,8 @@ final class ProfileViewController: BaseViewController {
   private let aboutMeLabel = UILabel()
   private let activeChatsNumberLabel = UILabel(text: ProfileString.activeChats.localized)
   private let waitingChatsNumberLabel = UILabel(text: ProfileString.waitingChats.localized)
-  private let editButton = UIButton(title: ProfileString.edit.localized, titleColor: .systemBlue, backgroundColor: .secondaryDark())
-  private let logOutButton = UIButton(title: ProfileString.logOut.localized, titleColor: .systemRed, backgroundColor: .secondaryDark())
+  private let editButton = UIButton(title: ProfileString.edit.localized, titleColor: .systemBlue, backgroundColor: .secondaryDark)
+  private let logOutButton = UIButton(title: ProfileString.logOut.localized, titleColor: .systemRed, backgroundColor: .secondaryDark)
   private let configurator: ProfileConfiguratorProtocol = ProfileConfigurator()
   var presenter: ProfilePresenterProtocol!
   
@@ -41,7 +41,7 @@ final class ProfileViewController: BaseViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    presenter.fillUpActualInformation()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -57,8 +57,8 @@ final class ProfileViewController: BaseViewController {
 // MARK: - Setup Views
 private extension ProfileViewController {
   func setupViews() {
-    view.backgroundColor = .mainDark()
-    tabBarController?.tabBar.backgroundColor = .mainDark()
+    view.backgroundColor = .mainDark
+    tabBarController?.tabBar.backgroundColor = .mainDark
     presenter.fillChatsInformation(by: currentUser)
     
     editButton.addTarget(self, action: #selector(editButtonPressed), for: .touchUpInside)
@@ -67,23 +67,23 @@ private extension ProfileViewController {
     avatarView.sd_setImage(with: URL(string: currentUser.avatarString))
     avatarView.clipsToBounds = true
     avatarView.layer.masksToBounds = true
-    avatarView.layer.cornerRadius = 10
+    avatarView.layer.cornerRadius = 15
     avatarView.contentMode = .scaleAspectFill
     
     fullNameLabel.text = currentUser.fullName
-    fullNameLabel.font = .galvji25()
-    fullNameLabel.textColor = .mainYellow()
+    fullNameLabel.font = .light25
+    fullNameLabel.textColor = .mainYellow
 
     aboutMeLabel.text = currentUser.description
     aboutMeLabel.numberOfLines = 2
-    aboutMeLabel.font = .galvji15()
-    aboutMeLabel.textColor = .secondaryYellow()
+    aboutMeLabel.font = .systemFont(ofSize: 12, weight: .light)
+    aboutMeLabel.textColor = .mainYellow
     
-    activeChatsNumberLabel.font = .galvji25()
-    activeChatsNumberLabel.textColor = .mainYellow()
+    activeChatsNumberLabel.font = .light25
+    activeChatsNumberLabel.textColor = .mainYellow
     
-    waitingChatsNumberLabel.font = .galvji25()
-    waitingChatsNumberLabel.textColor = .mainYellow()
+    waitingChatsNumberLabel.font = .light25
+    waitingChatsNumberLabel.textColor = .mainYellow
     
     setupConstraints()
   }
@@ -98,10 +98,10 @@ private extension ProfileViewController {
   
   func setupTopBar() {
     let appearance = UINavigationBarAppearance()
-    appearance.backgroundColor = .mainDark()
+    appearance.backgroundColor = .mainDark
     
     let titleLabel = UILabel(text: ProfileString.profile.localized)
-    titleLabel.font = .systemFont(ofSize: 25)
+    titleLabel.font = .systemFont(ofSize: 23)
     titleLabel.textColor = .systemGray
     
     navigationController?.navigationBar.standardAppearance = appearance
@@ -110,20 +110,29 @@ private extension ProfileViewController {
   }
   
   func setupConstraints() {
+    
     let avatarBackgroudView = UIView()
-    avatarBackgroudView.layer.cornerRadius = 20
-    avatarBackgroudView.backgroundColor = .secondaryDark()
+    avatarBackgroudView.layer.cornerRadius = 15
+    avatarBackgroudView.backgroundColor = .secondaryDark
+    
+    let aboutMeLabelBackgroundView = UIView()
+    aboutMeLabelBackgroundView.layer.cornerRadius = 15
+    aboutMeLabelBackgroundView.backgroundColor = .mainDark
+    
     avatarBackgroudView.addSubview(avatarView)
     avatarBackgroudView.addSubview(fullNameLabel)
+    avatarBackgroudView.addSubview(aboutMeLabelBackgroundView)
     avatarBackgroudView.addSubview(aboutMeLabel)
+    
+    avatarBackgroudView.translatesAutoresizingMaskIntoConstraints = false
     avatarView.translatesAutoresizingMaskIntoConstraints = false
     fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
+    aboutMeLabelBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     aboutMeLabel.translatesAutoresizingMaskIntoConstraints = false
-    avatarBackgroudView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(avatarBackgroudView)
     
     let chatsInformationStackView = UIStackView(arrangedSubviews: [activeChatsNumberLabel, waitingChatsNumberLabel])
-    chatsInformationStackView.backgroundColor = .secondaryDark()
+    chatsInformationStackView.backgroundColor = .secondaryDark
     chatsInformationStackView.layer.cornerRadius = 20
     chatsInformationStackView.axis = .vertical
     chatsInformationStackView.distribution = .fillEqually
@@ -133,10 +142,14 @@ private extension ProfileViewController {
     view.addSubview(chatsInformationStackView)
     
     editButton.translatesAutoresizingMaskIntoConstraints = false
+    editButton.titleLabel?.font = .systemFont(ofSize: 17, weight: .light)
     view.addSubview(editButton)
     
     logOutButton.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(logOutButton)
+    
+    fullNameLabel.backgroundColor = .red
+    aboutMeLabel.backgroundColor = .green
     
     NSLayoutConstraint.activate([
       avatarBackgroudView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -149,14 +162,19 @@ private extension ProfileViewController {
       avatarView.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: -10),
       avatarView.widthAnchor.constraint(equalTo: avatarView.heightAnchor, multiplier: 1),
       
-      fullNameLabel.topAnchor.constraint(equalTo: avatarBackgroudView.topAnchor, constant: 20),
+      fullNameLabel.topAnchor.constraint(equalTo: avatarView.topAnchor),
       fullNameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 20),
       fullNameLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -20),
       
-      aboutMeLabel.topAnchor.constraint(equalTo: fullNameLabel.topAnchor, constant: 25),
-      aboutMeLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 10),
-      aboutMeLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -10),
-      aboutMeLabel.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor),
+      aboutMeLabelBackgroundView.widthAnchor.constraint(equalTo: aboutMeLabel.widthAnchor, constant: 20),
+      aboutMeLabelBackgroundView.heightAnchor.constraint(equalTo: aboutMeLabel.heightAnchor, constant: 20),
+      aboutMeLabelBackgroundView.centerXAnchor.constraint(equalTo: aboutMeLabel.centerXAnchor),
+      aboutMeLabelBackgroundView.centerYAnchor.constraint(equalTo: aboutMeLabel.centerYAnchor),
+
+      aboutMeLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 15),
+      aboutMeLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 20),
+      aboutMeLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -20),
+      aboutMeLabel.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: -15),
       
       editButton.topAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: 20),
       editButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),

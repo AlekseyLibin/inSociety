@@ -28,8 +28,8 @@ final class MainTabBarController: UITabBarController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .mainDark()
-    tabBar.tintColor = .mainYellow()
+    view.backgroundColor = .mainDark
+    tabBar.tintColor = .mainYellow
     
     configurator.configure(viewController: self)
     let peopleViewController = PeopleViewController(currentUser: currentUser)

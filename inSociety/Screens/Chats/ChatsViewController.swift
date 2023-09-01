@@ -12,7 +12,6 @@ protocol ChatsViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?)
   func changeValueFor(waitingChats: [ChatModel])
   func changeValueFor(activeChats: [ChatModel])
-  func collectionView(updateCellValueBy indexPath: IndexPath, with message: String)
   func emptyWaitingChatsLabel(isActive: Bool)
   func emptyActiveChatsLabel(isActive: Bool)
   
@@ -44,6 +43,7 @@ final class ChatsViewController: BaseViewController {
   private var activeChatsListener: ListenerRegistration?
   
   private var collectionView: UICollectionView!
+  private let refreshControl = UIRefreshControl()
   private let searchController: UISearchController
   private var dataSource: UICollectionViewDiffableDataSource<Section, ChatModel>?
   private let emptyWaitingChatsLabel = UILabel()
@@ -58,8 +58,8 @@ final class ChatsViewController: BaseViewController {
     super.init(nibName: nil, bundle: nil)
     configurator.configure(viewController: self)
     presenter.setupListeners(&waitingChatsListener, &activeChatsListener)
-    setupCollectionView()
     setupTopBar()
+    setupCollectionView()
     createDataSource()
     setupLabels()
   }
@@ -73,14 +73,33 @@ final class ChatsViewController: BaseViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    reloadData()
+    presenter.updateActiveChats { [weak self] result in
+      switch result {
+      case .success(let newActiveChats):
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1, execute: {
+          DispatchQueue.main.async {
+            if newActiveChats.sorted() != self?.activeChats.sorted() {
+              self?.changeValueFor(activeChats: newActiveChats)
+              self?.reloadData()
+            }
+          }
+        })
+      case .failure(let failure):
+        self?.showAlert(with: ChatsString.error.localized, and: failure.localizedDescription)
+      }
+    }
+  }
+  
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    updateLastMessage()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    reloadData(with: nil)
+    reloadData()
   }
   
   private func setupLabels() {
@@ -115,15 +134,14 @@ final class ChatsViewController: BaseViewController {
       emptyActiveChatsLabel.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
       emptyActiveChatsLabel.widthAnchor.constraint(equalTo: collectionView.widthAnchor, multiplier: 0.8)
     ])
-    
   }
   
   private func setupTopBar() {
     let appearance = UINavigationBarAppearance()
-    appearance.backgroundColor = .mainDark()
+    appearance.backgroundColor = .mainDark
     
     let titleLabel = UILabel(text: ChatsString.chats.localized)
-    titleLabel.font = .systemFont(ofSize: 25)
+    titleLabel.font = .systemFont(ofSize: 23)
     titleLabel.textColor = .systemGray
     
     navigationController?.navigationBar.standardAppearance = appearance
@@ -138,40 +156,55 @@ final class ChatsViewController: BaseViewController {
     searchController.searchBar.delegate = self
   }
   
-  private func reloadData(with searchText: String?) {
+  private func reloadData(with searchText: String? = "") {
     let filteredActiveChats = activeChats.filter { $0.contains(filter: searchText) }
-    
+    let sortedActiveChats = filteredActiveChats.sorted()
+
     var snapshot = NSDiffableDataSourceSnapshot<Section, ChatModel>()
     snapshot.appendSections([.waitingChatsSection, .activeChatsSection])
-    snapshot.appendItems(waitingChats, toSection: .waitingChatsSection)
-    snapshot.appendItems(filteredActiveChats, toSection: .activeChatsSection)
-    dataSource?.apply(snapshot, animatingDifferences: true)
+    snapshot.appendItems(self.waitingChats, toSection: .waitingChatsSection)
+    snapshot.appendItems(sortedActiveChats, toSection: .activeChatsSection)
+    self.dataSource?.apply(snapshot, animatingDifferences: true)
+
+    for (index, chat) in sortedActiveChats.enumerated() {
+      if let activeChatCell = collectionView?.cellForItem(at: IndexPath(item: index, section: 1)) as? ActiveChatCell,
+         let lastMessage = chat.messages.sorted().last {
+        activeChatCell.updateLastMessage(with: lastMessage)
+      }
+    }
   }
   
-  func updateLastMessage() {
-    presenter.updateLastMessage()
+  @objc private func refreshData() {
+    presenter.updateActiveChats { [weak self] result in
+      switch result {
+      case .success(let activeChats):
+        DispatchQueue.global().asyncAfter(deadline: .now() + 1, execute: {
+          DispatchQueue.main.async {
+            self?.changeValueFor(activeChats: activeChats)
+            self?.reloadData()
+            self?.refreshControl.endRefreshing()
+          }
+        })
+      case .failure(let failure):
+        self?.showAlert(with: ChatsString.error.localized, and: failure.localizedDescription)
+      }
+    }
   }
+  
 }
 
 // MARK: - ChatsViewControllerProtocol
 extension ChatsViewController: ChatsViewControllerProtocol {
-  func collectionView(updateCellValueBy indexPath: IndexPath, with message: String) {
-    guard let cell = self.collectionView.cellForItem(at: indexPath) as? ActiveChatCell,
-          searchController.searchBar.text == ""
-    else { return }
-    cell.updateLastMessage(with: message)
-  }
-  
   func changeValueFor(waitingChats: [ChatModel]) {
     self.waitingChats = waitingChats
     emptyWaitingChatsLabel.isHidden = !waitingChats.isEmpty
-    reloadData(with: nil)
+    collectionView.reloadData()
   }
   
   func changeValueFor(activeChats: [ChatModel]) {
     self.activeChats = activeChats
+    self.activeChats.sort()
     emptyActiveChatsLabel.isHidden = !activeChats.isEmpty
-    reloadData(with: nil)
   }
   
   func emptyWaitingChatsLabel(isActive: Bool) {
@@ -224,7 +257,7 @@ private extension ChatsViewController {
       
       guard let section = Section(rawValue: indexPath.section) else { fatalError("Uknown section kind") }
       sectionHeader.configure(text: section.description(),
-                              font: .laoSangamMN20(),
+                              font: .light20,
                               textColor: .systemGray)
       
       return sectionHeader
@@ -239,13 +272,11 @@ extension ChatsViewController: UISearchBarDelegate {
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    reloadData(with: nil)
-    updateLastMessage()
+    reloadData()
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
     reloadData(with: searchBar.text ?? "")
-    updateLastMessage()
   }
 }
 
@@ -274,7 +305,9 @@ private extension ChatsViewController {
   func setupCollectionView() {
     collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
     collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-    collectionView.backgroundColor = .mainDark()
+    refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+    collectionView.refreshControl = refreshControl
+    collectionView.backgroundColor = .mainDark
     view.addSubview(collectionView)
     
     collectionView.register(SectionHeader.self,

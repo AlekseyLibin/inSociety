@@ -10,6 +10,9 @@
 #endif
 #endif
 
+#import "FIRAggregateQuery.h"
+#import "FIRAggregateQuerySnapshot.h"
+#import "FIRAggregateSource.h"
 #import "FIRCollectionReference.h"
 #import "FIRDocumentChange.h"
 #import "FIRDocumentReference.h"
@@ -17,6 +20,7 @@
 #import "FirebaseFirestore.h"
 #import "FIRFieldPath.h"
 #import "FIRFieldValue.h"
+#import "FIRFilter.h"
 #import "FIRFirestore.h"
 #import "FIRFirestoreErrors.h"
 #import "FIRFirestoreSettings.h"
@@ -24,6 +28,7 @@
 #import "FIRGeoPoint.h"
 #import "FIRListenerRegistration.h"
 #import "FIRLoadBundleTask.h"
+#import "FIRLocalCacheSettings.h"
 #import "FIRQuery.h"
 #import "FIRQuerySnapshot.h"
 #import "FIRSnapshotMetadata.h"

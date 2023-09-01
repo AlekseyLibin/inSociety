@@ -22,13 +22,13 @@ final class FillImageView: UIView {
     super.init(frame: frame)
     
     profileImageView.clipsToBounds = true
-    profileImageView.layer.borderColor = UIColor.mainYellow().cgColor
+    profileImageView.layer.borderColor = UIColor.mainYellow.cgColor
     profileImageView.layer.borderWidth = 0.3
     profileImageView.layer.masksToBounds = true
     profileImageView.layer.cornerRadius = 60
     profileImageView.translatesAutoresizingMaskIntoConstraints = false
     
-    setImageButton.tintColor = .mainYellow()
+    setImageButton.tintColor = .mainYellow
     setImageButton.setImage(UIImage(named: "AddProfilePhoto"), for: .normal)
     setImageButton.translatesAutoresizingMaskIntoConstraints = false
     

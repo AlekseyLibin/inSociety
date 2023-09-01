@@ -30,11 +30,11 @@ final class SetupProfileViewController: BaseViewController {
   private let fullNameLabel = UILabel(text: SetupProfileString.fullName.localized)
   private let aboutMeLabel = UILabel(text: SetupProfileString.aboutMe.localized)
   private let sexLabel = UILabel(text: SetupProfileString.sex.localized)
-  private let fullNameTextField = UnderlinedTextField(font: .galvji20())
-  private let aboutMeTextField = UnderlinedTextField(font: .galvji20())
+  private let fullNameTextField = UnderlinedTextField(font: .light20)
+  private let aboutMeTextField = UnderlinedTextField(font: .light20)
   private let sexSegmentedControl = SexSegmentedControl()
   private let submitButton = UIButton(title: SetupProfileString.submit.localized, titleColor: .white,
-                                      backgroundColor: .thirdDark())
+                                      backgroundColor: .mainDark)
   
   var presenter: SetupProfilePresenterProtocol!
   private let configurator: SetupProfileConfiguratorProtocol = SetupProfileConfigurator()
@@ -67,7 +67,7 @@ final class SetupProfileViewController: BaseViewController {
   
   private func setupContentSize() {
     let setupViewHeight = setupView.frame.height
-    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + 30)
+    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + 50)
   }
   
   @objc private func addProfilePhoto() {
@@ -93,28 +93,27 @@ extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePic
     picker.dismiss(animated: true)
     guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
     fillImageView.setProfileImage(image)
-    
   }
 }
 
 // MARK: - Setup views
 private extension SetupProfileViewController {
   func setupViews() {
-    view.backgroundColor = .mainDark()
+    view.backgroundColor = .mainDark
     
     imagePickerController.delegate = self
     imagePickerController.sourceType = .photoLibrary
     
     scrollView.showsVerticalScrollIndicator = false
-//    scrollView.addKeyboardObservers()
+    scrollView.addKeyboardObservers(with: tabBarController?.tabBar.frame.height ?? 0.0)
     scrollView.hideKeyboardWhenTappedOrSwiped()
     
     submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchUpInside)
-    submitButton.setTitleColor(.mainYellow(), for: .normal)
+    submitButton.setTitleColor(.mainYellow, for: .normal)
     fillImageView.buttonPressed(target: self, action:  #selector(addProfilePhoto), for: .touchUpInside)
     
     [fullNameLabel, aboutMeLabel, sexLabel].forEach { label in
-      label.textColor = .mainYellow()
+      label.textColor = .mainYellow
     }
     
     fullNameTextField.autocapitalizationType = .none
@@ -128,15 +127,15 @@ private extension SetupProfileViewController {
   
   func setUpNavigationBar() {
     let appearance = UINavigationBarAppearance()
-    appearance.backgroundColor = .mainDark()
+    appearance.backgroundColor = .mainDark
     
     let titleLabel = UILabel(text: SetupProfileString.setupProfile.localized)
-    titleLabel.font = .systemFont(ofSize: 25)
-    titleLabel.textColor = .mainYellow()
+    titleLabel.font = .systemFont(ofSize: 23)
+    titleLabel.textColor = .systemGray
     
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
-    navigationController?.navigationBar.tintColor = .mainYellow()
+    navigationController?.navigationBar.tintColor = .mainYellow
     navigationItem.titleView = titleLabel
   }
   
@@ -151,7 +150,7 @@ private extension SetupProfileViewController {
                                 axis: .vertical, spacing: 60)
     
     setupView.layer.cornerRadius = 20
-    setupView.backgroundColor = .secondaryDark()
+    setupView.backgroundColor = .secondaryDark
     
     view.addSubview(scrollView)
     scrollView.addSubview(setupView)

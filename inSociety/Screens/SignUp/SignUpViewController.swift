@@ -15,18 +15,18 @@ final class SignUpViewController: BaseViewController {
   
   private let scrollView = UIScrollView()
   
-  private let greetingLabel = UILabel(text: SignUpString.pleasedToSeeYou.localized, font: .galvji30())
+  private let greetingLabel = UILabel(text: SignUpString.pleasedToSeeYou.localized, font: .light30)
   private let emailLabel = UILabel(text: SignUpString.email.localized)
   private let passwordLabel = UILabel(text: SignUpString.password.localized)
   private let confirmPasswordLabel = UILabel(text: SignUpString.confirmPassword.localized)
   private let alreadyWithUsLabel = UILabel(text: SignUpString.alreadyWithUs.localized)
   
-  private let emailextField = UnderlinedTextField(font: .galvji20())
-  private let passwordTextField = UnderlinedTextField(font: .galvji20())
-  private let confirmPasswordtextField = UnderlinedTextField(font: .galvji20())
+  private let emailextField = UnderlinedTextField(font: .light20)
+  private let passwordTextField = UnderlinedTextField(font: .light20)
+  private let confirmPasswordtextField = UnderlinedTextField(font: .light20)
   
-  private let signUpButton = UIButton(title: SignUpString.signUp.localized, titleColor: .white, backgroundColor: .darkButtonColor())
-  private let loginButton = UIButton(title: SignUpString.login.localized, titleColor: .mainYellow(), backgroundColor: nil)
+  private let signUpButton = UIButton(title: SignUpString.signUp.localized, titleColor: .white, backgroundColor: .mainDark)
+  private let loginButton = UIButton(title: SignUpString.login.localized, titleColor: .mainYellow, backgroundColor: nil)
   
   var presenter: SignUpPresenterProtocol!
   private let configurator: SignUpConfiguratorProtocol = SignUpConfigurator()
@@ -72,7 +72,7 @@ private extension SignUpViewController {
   
   func setUpViews() {
     
-    view.backgroundColor = .mainDark()
+    view.backgroundColor = .mainDark
     
     scrollView.hideKeyboardWhenTappedOrSwiped()
 //    scrollView.addKeyboardObservers()
@@ -82,7 +82,7 @@ private extension SignUpViewController {
     loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
     
     [greetingLabel, emailLabel, passwordLabel, confirmPasswordLabel].forEach { label in
-      label.textColor = .mainYellow()
+      label.textColor = .mainYellow
     }
     
     alreadyWithUsLabel.textColor = .lightGray
@@ -117,7 +117,7 @@ private extension SignUpViewController {
     
     let secondaryView = UIView()
     secondaryView.layer.cornerRadius = 20
-    secondaryView.backgroundColor = .secondaryDark()
+    secondaryView.backgroundColor = .secondaryDark
     
     view.addSubview(scrollView)
     scrollView.addSubview(greetingLabel)

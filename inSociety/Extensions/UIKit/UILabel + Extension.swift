@@ -9,7 +9,7 @@ import UIKit
 
 extension UILabel {
     
-    convenience init(text: String, font: UIFont? = .galvji20()) {
+    convenience init(text: String, font: UIFont? = .light20) {
         self.init()
         self.text = text
         self.font = font

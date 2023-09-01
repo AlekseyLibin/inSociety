@@ -20,7 +20,7 @@
 "LoginString_welcomeBack" = "С возвращением!";
 "LoginString_loginWith" = "Войти с помощью";
 "LoginString_orSignUpWithAnotherMethod" = "или";
-"Logintring_email" = "Email";
+"LoginString_email" = "Email";
 "LoginString_password" = "Пароль";
 "LoginString_google" = "Google";
 "LoginString_login" = "Войти";
@@ -43,7 +43,7 @@
 "SetupProfileString_aboutMe" = "Обо мне";
 "SetupProfileString_aboutMePlaceholder" = "Привет! меня зовут ...";
 "SetupProfileString_sex" = "Пол";
-"SetupProfileString_submit" = "Отправить";
+"SetupProfileString_submit" = "Сохранить";
 "SetupProfileString_setupProfile" = "Настроить профиль";
 "SetupProfileString_error" = "Ошибка";
 
@@ -96,7 +96,7 @@
 "ActiveChatCellString_lastMessage" = "Последнее сообщение";
 
 // Extensions
-"ExtensionsString_submit" = "Отправить";
+"ExtensionsString_submit" = "Принять";
 
 // AuthError
 "AuthError_fieldsAreNotFilled" = "Заполните все поля";
@@ -116,6 +116,6 @@
 "UserError_chatAlreadyExists" = "У вас уже есть чат с этим пользователем";
 
 // UserModel
-"Sex_male" = "Мужчина";
-"Sex_female" = "Женщина";
+"Sex_male" = "Мужской";
+"Sex_female" = "Женский";
 "Sex_other" = "Другое";

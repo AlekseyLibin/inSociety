@@ -1,7 +1,7 @@
 /*
  MIT License
  
- Copyright (c) 2017-2019 MessageKit
+ Copyright (c) 2017-2020 MessageKit
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -22,6 +22,7 @@
  SOFTWARE.
  */
 
+import Foundation
 import UIKit
 
 open class MessagesCollectionView: UICollectionView {
@@ -40,10 +41,21 @@ open class MessagesCollectionView: UICollectionView {
         return messagesCollectionViewFlowLayout.isTypingIndicatorViewHidden
     }
 
+    /// Display the date of message by swiping left.
+    /// The default value of this property is `false`.
+    internal var showMessageTimestampOnSwipeLeft: Bool = false
+
     private var indexPathForLastItem: IndexPath? {
-        let lastSection = numberOfSections - 1
-        guard lastSection >= 0, numberOfItems(inSection: lastSection) > 0 else { return nil }
-        return IndexPath(item: numberOfItems(inSection: lastSection) - 1, section: lastSection)
+        guard numberOfSections > 0 else { return nil }
+        
+        for offset in 1...numberOfSections {
+            let section = numberOfSections - offset
+            let lastItem = numberOfItems(inSection: section) - 1
+            if lastItem >= 0 {
+                return IndexPath(item: lastItem, section: section)
+            }
+        }
+        return nil
     }
 
     open var messagesCollectionViewFlowLayout: MessagesCollectionViewFlowLayout {
@@ -57,7 +69,7 @@ open class MessagesCollectionView: UICollectionView {
 
     public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
         super.init(frame: frame, collectionViewLayout: layout)
-        backgroundColor = .backgroundColor
+        backgroundColor = .collectionViewBackground
         registerReusableViews()
         setupGestureRecognizers()
     }
@@ -79,6 +91,7 @@ open class MessagesCollectionView: UICollectionView {
         register(AudioMessageCell.self)
         register(ContactMessageCell.self)
         register(TypingIndicatorCell.self)
+        register(LinkPreviewMessageCell.self)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
         register(MessageReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter)
     }
@@ -102,19 +115,14 @@ open class MessagesCollectionView: UICollectionView {
 
     // NOTE: It's possible for small content size this wouldn't work - https://github.com/MessageKit/MessageKit/issues/725
     public func scrollToLastItem(at pos: UICollectionView.ScrollPosition = .bottom, animated: Bool = true) {
-        guard numberOfSections > 0 else { return }
+        guard let indexPath = indexPathForLastItem else { return }
         
-        let lastSection = numberOfSections - 1
-        let lastItemIndex = numberOfItems(inSection: lastSection) - 1
-        
-        guard lastItemIndex >= 0 else { return }
-        
-        let indexPath = IndexPath(row: lastItemIndex, section: lastSection)
         scrollToItem(at: indexPath, at: pos, animated: animated)
     }
     
     // NOTE: This method seems to cause crash in certain cases - https://github.com/MessageKit/MessageKit/issues/725
     // Could try using `scrollToLastItem` above
+    @available(*, deprecated, message: "Scroll to bottom by using scrollToLastItem(:) instead", renamed: "scrollToLastItem")
     public func scrollToBottom(animated: Bool = false) {
         performBatchUpdates(nil) { [weak self] _ in
             guard let self = self else { return }
@@ -160,7 +168,7 @@ open class MessagesCollectionView: UICollectionView {
         return messagesCollectionViewFlowLayout.isSectionReservedForTypingIndicator(section)
     }
 
-    // MARK: View Register/Dequeue
+    // MARK: - View Register/Dequeue
 
     /// Registers a particular cell using its reuse-identifier
     public func register<T: UICollectionViewCell>(_ cellClass: T.Type) {

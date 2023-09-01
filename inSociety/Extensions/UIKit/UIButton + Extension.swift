@@ -11,7 +11,7 @@ import UIKit
 extension UIButton {
     convenience init(title: String,
                      titleColor: UIColor,
-                     font: UIFont? = .galvji20(),
+                     font: UIFont? = .light20,
                      backgroundColor: UIColor?,
                      cornerRadius: CGFloat = 20) {
         self.init(type: .system)
@@ -24,9 +24,9 @@ extension UIButton {
     }
     
     func addBaseShadow() {
-        self.layer.shadowColor = UIColor.buttonShadowColor().cgColor
+        self.layer.shadowColor = UIColor.mainDark.cgColor
         self.layer.shadowRadius = 4
-        self.layer.shadowOpacity = 0.4
+        self.layer.shadowOpacity = 0.2
         self.layer.shadowOffset = CGSize(width: 0, height: 4)
     }
     

@@ -21,7 +21,7 @@
 "LoginString_welcomeBack" = "Ben tornato!";
 "LoginString_loginWith" = "Accedi con";
 "LoginString_orSignUpWithAnotherMethod" = "o";
-"Logintring_email" = "E-mail";
+"LoginString_email" = "E-mail";
 "LoginString_password" = "Password";
 "LoginString_google" = "Google";
 "LoginString_login" = "Accedi";

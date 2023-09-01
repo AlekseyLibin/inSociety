@@ -17,22 +17,23 @@ protocol LoginViewControllerProtocol: BaseViewCotrollerProtocol {
 final class LoginViewController: BaseViewController {
   
   private let scrollView = UIScrollView()
+  private let setupView = UIView()
   
-  private let greetingLabel = UILabel(text: LoginString.welcomeBack.localized, font: .galvji30())
+  private let greetingLabel = UILabel(text: LoginString.welcomeBack.localized, font: .light30)
   private let loginWithLabel = UILabel(text: LoginString.loginWith.localized)
   private let orLabel = UILabel(text: LoginString.orSignUpWithAnotherMethod.localized)
   private let emailLabel = UILabel(text: LoginString.email.localized)
   private let passwordLabel = UILabel(text: LoginString.password.localized)
   
-  private let emailTextField = UnderlinedTextField(font: .galvji20())
-  private let passwordTextField = UnderlinedTextField(font: .galvji20())
+  private let emailTextField = UnderlinedTextField(font: .light20)
+  private let passwordTextField = UnderlinedTextField(font: .light20)
   
   private let loginButton = UIButton(title: LoginString.login.localized,
-                                     titleColor: .white, backgroundColor: .darkButtonColor())
+                                     titleColor: .mainYellow, backgroundColor: .mainDark)
   private let googleButton = UIButton(title: LoginString.google.localized,
                                       titleColor: .black, backgroundColor: .white)
   private let signUpButton = UIButton(title: LoginString.createNewAccount.localized,
-                                      titleColor: .mainYellow(), backgroundColor: nil)
+                                      titleColor: .mainYellow, backgroundColor: nil)
   
   var presenter: LoginPresenterProtocol!
   private let configurator: LoginConfiguratorProtocol = LoginConfigurator()
@@ -42,6 +43,7 @@ final class LoginViewController: BaseViewController {
   init(toSignUpClosure: (() -> Void)?) {
     self.toSignUpClosure = toSignUpClosure
     super.init(nibName: nil, bundle: nil)
+    configurator.configure(with: self)
   }
   
   required init?(coder: NSCoder) {
@@ -50,16 +52,12 @@ final class LoginViewController: BaseViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    configurator.configure(with: self)
     setUpViews()
-    
   }
   
-  override func viewWillAppear(_ animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
-    scrollView.contentSize = view.frame.size
+    setupContentViewSize()
   }
   
   @objc private func loginButtonPressed() {
@@ -78,26 +76,30 @@ final class LoginViewController: BaseViewController {
     }
   }
   
+  private func setupContentViewSize() {
+    let setupViewHeight = setupView.frame.height
+    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + 150)
+  }
+  
 }
 
 // MARK: - Setup views
 private extension LoginViewController {
   func setUpViews() {
-    
-    view.backgroundColor = .mainDark()
+    view.backgroundColor = .mainDark
     
     scrollView.hideKeyboardWhenTappedOrSwiped()
-//    scrollView.addKeyboardObservers()
+    scrollView.showsVerticalScrollIndicator = false
+    scrollView.addKeyboardObservers()
     
     [greetingLabel, emailLabel, passwordLabel].forEach { label in
-      label.textColor = .mainYellow()
+      label.textColor = .mainYellow
     }
     
     loginWithLabel.textColor = .lightGray
     orLabel.textColor = .lightGray
     
     googleButton.customizeGoogleButton()
-    
     signUpButton.addBaseShadow()
     
     loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
@@ -109,8 +111,6 @@ private extension LoginViewController {
     passwordTextField.autocapitalizationType = .none
     passwordTextField.autocorrectionType = .no
     passwordTextField.isSecureTextEntry = true
-    
-    view.addSubview(scrollView)
     
     setupConstraints()
   }
@@ -126,36 +126,35 @@ private extension LoginViewController {
                                   [ loginView, orLabel, emailStackView, passwordStackView, loginButton, signUpButton ],
                                 axis: .vertical, spacing: 40)
     
-    let secondaryView = UIView()
-    secondaryView.layer.cornerRadius = 20
-    secondaryView.backgroundColor = .secondaryDark()
+    setupView.layer.cornerRadius = 20
+    setupView.backgroundColor = .secondaryDark
     
+    view.addSubview(scrollView)
     scrollView.addSubview(greetingLabel)
-    scrollView.addSubview(secondaryView)
+    scrollView.addSubview(setupView)
     scrollView.addSubview(stackView)
     
-    [scrollView, greetingLabel, stackView, secondaryView].forEach { view in
+    [scrollView, greetingLabel, stackView, setupView].forEach { view in
       view.translatesAutoresizingMaskIntoConstraints = false
     }
     
     NSLayoutConstraint.activate([
-      
       scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       
-      greetingLabel.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor, constant: 75),
+      greetingLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50),
       greetingLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       
-      stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 100),
+      stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 75),
       stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
       
-      secondaryView.topAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor, constant: -30),
-      secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-      secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
+      setupView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -30),
+      setupView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+      setupView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.9),
+      setupView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
       
       loginButton.heightAnchor.constraint(equalToConstant: 60)
     ])

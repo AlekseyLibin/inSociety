@@ -20,7 +20,7 @@
 "LoginString_welcomeBack" = "Welcome back!";
 "LoginString_loginWith" = "Login with";
 "LoginString_orSignUpWithAnotherMethod" = "or";
-"Logintring_email" = "Email";
+"LoginString_email" = "Email";
 "LoginString_password" = "Password";
 "LoginString_google" = "Google";
 "LoginString_login" = "Login";
