@@ -38,23 +38,24 @@ extension ChatsPresenter: ChatsPresenterProtocol {
   }
   
   func waitingChat(remove chat: ChatModel) {
-    interactor.waitingChat(remove: chat) { result in
-      switch result {
-      case .success:
-        self.viewController.showAlert(with: ChatsString.success.localized, and: ChatsString.chatRequestDenied.localized)
-      case .failure(let error):
-        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+    interactor.waitingChat(remove: chat) { [weak self] error in
+      if let error = error {
+        self?.viewController.generateHapticFeedback(.error)
+        self?.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+      } else {
+        self?.viewController.generateHapticFeedback(.warning)
       }
     }
   }
   
   func waitingChat(moveToActive chat: ChatModel) {
-    interactor.waitingChat(moveToActive: chat) { result in
-      switch result {
-      case .success:
-        break
-      case .failure(let error):
-        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+    interactor.waitingChat(moveToActive: chat) { [weak self] error in
+      if let error = error {
+        self?.viewController.generateHapticFeedback(.error)
+        self?.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+      } else {
+        self?.viewController.updateActiveChats()
+        self?.viewController.generateHapticFeedback(.success)
       }
     }
   }
@@ -79,7 +80,7 @@ extension ChatsPresenter: ChatsPresenterProtocol {
       }
     }
     
-    waitingChatsListener = ListenerService.shared.waitingChatsObserve(chats: waitingChats, completion: { difference in
+    waitingChatsListener = ListenerService.shared.waitingChats(observe: waitingChats, { difference in
       switch difference {
       case .success(let updatedWaitingChats):
         self.viewController.changeValueFor(waitingChats: updatedWaitingChats)
@@ -88,8 +89,7 @@ extension ChatsPresenter: ChatsPresenterProtocol {
       }
     })
     
-    activeChatsListener = ListenerService.shared.activeChatsObserve(chats: activeChats, completion: { difference in
-      
+    activeChatsListener = ListenerService.shared.activeChats(observe: activeChats, { difference in
       switch difference {
       case .success(let updatedActiveChats):
         self.viewController.changeValueFor(activeChats: updatedActiveChats)

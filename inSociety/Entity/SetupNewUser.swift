@@ -8,10 +8,10 @@
 import UIKit
 
 struct SetupNewUser {
-  let name: String?
-  let avatarImage: UIImage?
-  let email: String
-  let desctiption: String?
-  let sex: String?
+  var name: String?
+  var avatarImage: UIImage?
+  var email: String
+  var aboutMe: String?
+  var sex: UserModel.Sex?
   let id: String
 }

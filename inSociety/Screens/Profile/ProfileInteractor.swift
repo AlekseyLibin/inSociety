@@ -13,6 +13,7 @@ protocol ProfileInteractorProtocol: AnyObject {
   func getNumberOfWaitingChats(for currentUser: UserModel, completion: @escaping (Result<Int, Error>) -> Void)
   func getDataForCurrentUser(completion: @escaping (Result<UserModel, Error>) -> Void)
   func logOut() throws
+  func deleteCurrentUser()
 }
 
 final class ProfileInteractor {
@@ -21,15 +22,15 @@ final class ProfileInteractor {
 
 extension ProfileInteractor: ProfileInteractorProtocol {
   func getDataForCurrentUser(completion: @escaping (Result<UserModel, Error>) -> Void) {
-    FirestoreService.shared.getDataForCurrentUser(completion: completion)
+    FirestoreService.shared.getCurrentUserModel(completion: completion)
   }
   
   func getNumberOfWaitingChats(for currentUser: UserModel, completion: @escaping (Result<Int, Error>) -> Void) {
-    FirestoreService.shared.getNumberOfWaitingChats(for: currentUser, completion: completion)
+    FirestoreService.shared.waitingChats(getAmountFor: currentUser, completion: completion)
   }
   
   func getNumberOfActiveChats(for currentUser: UserModel, completion: @escaping (Result<Int, Error>) -> Void) {
-    FirestoreService.shared.getNumberOfActiveChats(for: currentUser, completion: completion)
+    FirestoreService.shared.activeChats(getAmountFor: currentUser, completion: completion)
   }
   
   func logOut() throws {
@@ -37,5 +38,7 @@ extension ProfileInteractor: ProfileInteractorProtocol {
     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         windowScene.windows.first?.rootViewController = AuthViewController()
   }
+  
+  func deleteCurrentUser() { }
   
 }

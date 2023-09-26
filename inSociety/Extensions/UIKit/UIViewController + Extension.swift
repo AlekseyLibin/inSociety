@@ -11,14 +11,14 @@ extension UIViewController {
   
   func showAlert(with title: String, and message: String? = nil) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let sumbitButton = UIAlertAction(title: ExtensionsString.submit.localized, style: .default)
+    let sumbitButton = UIAlertAction(title: ExtensionsString.confirm.localized, style: .default)
     alert.addAction(sumbitButton)
     present(alert, animated: true)
   }
   
   func showAlert(with title: String, and message: String? = nil, completion: @escaping () -> Void) {
     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-    let sumbitButton = UIAlertAction(title: ExtensionsString.submit.localized, style: .default) { _ in
+    let sumbitButton = UIAlertAction(title: ExtensionsString.confirm.localized, style: .default) { _ in
       completion()
     }
     alert.addAction(sumbitButton)
@@ -30,12 +30,12 @@ extension UIViewController {
 extension UIViewController {
   func configure<T: SelfConfiguringCell, U: Hashable>(collectionView: UICollectionView,
                                                       cellType: T.Type,
-                                                      with value: U,
+                                                      with hCell: U,
                                                       for indexPath: IndexPath) -> T {
     
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellType.reuseID, for: indexPath) as? T else { fatalError("Unable to dequeue \(cellType)") }
     
-    cell.configure(with: value)
+    cell.configure(with: hCell)
     return cell
   }
 }

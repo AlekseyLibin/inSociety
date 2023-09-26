@@ -22,8 +22,8 @@ final class SignUpRouter {
 extension SignUpRouter: SignUpRouterProtocol {
     
     func toSetupProfileVC(with currentUser: User) {
-      let setupProfileVC = SetupProfileViewController(currentUser: currentUser, target: .create)
-        viewController.present(viewController: setupProfileVC)
+      let setupProfileVC = SetupProfileViewController(target: .create(firebaseUser: currentUser))
+        viewController.present(setupProfileVC, animated: true, completion: nil)
     }
     
 }

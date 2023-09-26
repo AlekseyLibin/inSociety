@@ -12,18 +12,21 @@ import SDWebImage
 protocol SetupProfileViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
   func updateViews(with userModel: UserModel)
-  var currentUser: User { get }
   var target: SetupProfileViewController.Target { get }
 }
 
 final class SetupProfileViewController: BaseViewController {
   
   enum Target {
-    case create
-    case modify
+    case create(firebaseUser: User, appleIdUserName: String? = "")
+    case modify(currentUserModel: UserModel)
   }
   
+  /// Indicates whether it has to be presented ProfileViewController(modify case) or MainViewController(create case) after setting up profile
+  let target: Target
+  
   private let fillImageView = FillImageView()
+  private var profileImageUrl: URL?
   private let scrollView = UIScrollView()
   private let imagePickerController = UIImagePickerController()
   private let setupView = UIView()
@@ -33,27 +36,42 @@ final class SetupProfileViewController: BaseViewController {
   private let fullNameTextField = UnderlinedTextField(font: .light20)
   private let aboutMeTextField = UnderlinedTextField(font: .light20)
   private let sexSegmentedControl = SexSegmentedControl()
-  private let submitButton = UIButton(title: SetupProfileString.submit.localized, titleColor: .white,
-                                      backgroundColor: .mainDark)
+  private let submitButton = CustomButton(title: SetupProfileString.confirm.localized, titleColor: .white,
+                                          mainBackgroundColor: .mainDark)
+  private var updatingUser: SetupNewUser
   
   var presenter: SetupProfilePresenterProtocol!
   private let configurator: SetupProfileConfiguratorProtocol = SetupProfileConfigurator()
   
-  let currentUser: User
-  let target: Target
-  
-  init(currentUser: User, target: SetupProfileViewController.Target) {
-    self.currentUser = currentUser
+  init(target: SetupProfileViewController.Target) {
     self.target = target
+    switch target {
+    case .create(let firebaseUser, let appleIdUserName):
+      self.profileImageUrl = firebaseUser.photoURL
+      self.updatingUser = SetupNewUser(name: firebaseUser.displayName ?? appleIdUserName,
+                                       avatarImage: nil,
+                                       email: firebaseUser.email ?? "no email",
+                                       aboutMe: "",
+                                       sex: nil,
+                                       id: firebaseUser.uid)
+    case .modify(let currentUserModel):
+      self.profileImageUrl = URL(string: currentUserModel.avatarString)
+      self.updatingUser = SetupNewUser(name: currentUserModel.fullName,
+                                       avatarImage: nil,
+                                       email: currentUserModel.email,
+                                       aboutMe: currentUserModel.description,
+                                       sex: currentUserModel.sex,
+                                       id: currentUserModel.id)
+    }
     super.init(nibName: nil, bundle: nil)
+    configurator.configure(viewController: self)
+    presenter.fillAvailableDataForCurrentUser(by: target)
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configurator.configure(viewController: self)
-    presenter.fillAvailableDataForCurrentUser()
-    setupViews()
     setUpNavigationBar()
+    setupViews()
   }
   
   override func viewDidLayoutSubviews() {
@@ -75,14 +93,11 @@ final class SetupProfileViewController: BaseViewController {
   }
   
   @objc private func submitButtonPressed() {
-    let newUser = SetupNewUser(name: fullNameTextField.text,
-                               avatarImage: fillImageView.profileImage,
-                               email: currentUser.email ?? "no email",
-                               desctiption: aboutMeTextField.text,
-                               sex: sexSegmentedControl.selectedSex.rawValue,
-                               id: currentUser.uid)
-    
-    presenter.submitButtonPressed(with: newUser)
+    updatingUser.name = fullNameTextField.text
+    updatingUser.avatarImage = fillImageView.profileImage
+    updatingUser.aboutMe = aboutMeTextField.text
+    updatingUser.sex = sexSegmentedControl.selectedSex
+    presenter.submitButtonPressed(with: updatingUser)
   }
 }
 
@@ -92,7 +107,7 @@ extension SetupProfileViewController: UINavigationControllerDelegate, UIImagePic
     
     picker.dismiss(animated: true)
     guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-    fillImageView.setProfileImage(image)
+    fillImageView.setProfileImage(by: image)
   }
 }
 
@@ -105,11 +120,14 @@ private extension SetupProfileViewController {
     imagePickerController.sourceType = .photoLibrary
     
     scrollView.showsVerticalScrollIndicator = false
+    scrollView.delaysContentTouches = false
     scrollView.addKeyboardObservers(with: tabBarController?.tabBar.frame.height ?? 0.0)
     scrollView.hideKeyboardWhenTappedOrSwiped()
     
     submitButton.addTarget(self, action: #selector(submitButtonPressed), for: .touchUpInside)
     submitButton.setTitleColor(.mainYellow, for: .normal)
+    
+    fillImageView.setProfileImage(by: profileImageUrl)
     fillImageView.buttonPressed(target: self, action:  #selector(addProfilePhoto), for: .touchUpInside)
     
     [fullNameLabel, aboutMeLabel, sexLabel].forEach { label in
@@ -118,9 +136,14 @@ private extension SetupProfileViewController {
     
     fullNameTextField.autocapitalizationType = .none
     fullNameTextField.autocorrectionType = .no
+    fullNameTextField.text = updatingUser.name ?? ""
+    
     aboutMeTextField.autocapitalizationType = .none
     aboutMeTextField.autocorrectionType = .no
+    aboutMeTextField.text = updatingUser.aboutMe ?? ""
     aboutMeTextField.placeholder = SetupProfileString.aboutMePlaceholder.localized
+    
+    if let updatingUserSex = updatingUser.sex { sexSegmentedControl.selectSex(updatingUserSex) }
     
     setupConstraints()
   }
@@ -130,7 +153,7 @@ private extension SetupProfileViewController {
     appearance.backgroundColor = .mainDark
     
     let titleLabel = UILabel(text: SetupProfileString.setupProfile.localized)
-    titleLabel.font = .systemFont(ofSize: 23)
+    titleLabel.font = .systemFont(ofSize: 20)
     titleLabel.textColor = .systemGray
     
     navigationController?.navigationBar.standardAppearance = appearance
@@ -178,7 +201,7 @@ private extension SetupProfileViewController {
       fillImageView.topAnchor.constraint(equalTo: setupView.topAnchor, constant: 40),
       fillImageView.centerXAnchor.constraint(equalTo: setupView.centerXAnchor),
       
-      stackView.topAnchor.constraint(equalTo: fillImageView.bottomAnchor, constant: 100),
+      stackView.topAnchor.constraint(equalTo: fillImageView.bottomAnchor, constant: 40),
       stackView.leadingAnchor.constraint(equalTo: setupView.leadingAnchor, constant: 25),
       stackView.trailingAnchor.constraint(equalTo: setupView.trailingAnchor, constant: -25),
       
@@ -190,15 +213,24 @@ private extension SetupProfileViewController {
 // MARK: - SetupProfileViewControllerProtocol
 extension SetupProfileViewController: SetupProfileViewControllerProtocol {
   func updateViews(with userModel: UserModel) {
-    
     let userImageURL = URL(string: userModel.avatarString)
     let newImageView = UIImageView()
     newImageView.sd_setImage(with: userImageURL)
     guard let image = newImageView.image else { return }
-    fillImageView.setProfileImage(image)
+    fillImageView.setProfileImage(by: image)
     
     fullNameTextField.text = userModel.fullName
     aboutMeTextField.text = userModel.description
     sexSegmentedControl.selectedSegmentIndex = UserModel.Sex.allCases.firstIndex(of: userModel.sex) ?? 2
+  }
+  
+  func updateViews(with user: User) {
+    let userImageURL = user.photoURL
+    UIImageView().sd_setImage(with: user.photoURL) { [weak self] image, _, _, _ in
+      self?.fillImageView.setProfileImage(by: image)
+    }
+    
+    fullNameTextField.text = user.displayName
+    aboutMeTextField.text = ""
   }
 }

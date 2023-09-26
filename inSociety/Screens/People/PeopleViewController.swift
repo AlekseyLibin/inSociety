@@ -14,6 +14,7 @@ protocol PeopleViewControllerProtocol: BaseViewCotrollerProtocol, WaitingChatsNa
   func showAlert(with title: String, and message: String?)
   func updateUsersValue(with updatedUsers: [UserModel])
   func playSuccessAnimation()
+  
   var presenter: PeoplePresenterProtocol! { get set }
   var tabBarController: UITabBarController? { get }
   var navigationController: UINavigationController? { get }
@@ -67,13 +68,9 @@ final class PeopleViewController: BaseViewController {
         self.users = updatedUsers
         self.reloadData(with: nil)
       case .failure(let error):
-        self.showAlert(with: "Error", and: error.localizedDescription)
+        self.showAlert(with: PeopleString.error.localized, and: error.localizedDescription)
       }
     })
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
   }
   
   deinit {
@@ -123,7 +120,7 @@ private extension PeopleViewController {
 extension PeopleViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     guard let selectedUser = self.dataSource.itemIdentifier(for: indexPath) else { return }
-    presenter.friendSelected(selectedUser)
+    presenter.friendSelected(selectedUser, by: currentUser)
   }
 }
 
@@ -131,9 +128,7 @@ extension PeopleViewController: UICollectionViewDelegate {
 private extension PeopleViewController {
   func createDataSource() {
     dataSource = UICollectionViewDiffableDataSource<Section, UserModel>(collectionView: collectionView, cellProvider: { (collectionView, indexPath, itemIdentifier) -> UICollectionViewCell? in
-      
       guard let section = Section(rawValue: indexPath.section) else { fatalError("Unknown section kind") }
-      
       switch  section {
       case .users:
         return self.configure(collectionView: collectionView,
@@ -144,7 +139,6 @@ private extension PeopleViewController {
     })
     
     dataSource?.supplementaryViewProvider = { collectionView, kind, indexPath in
-      
       guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                                                                                 withReuseIdentifier: SectionHeader.reuseId, for: indexPath) as? SectionHeader
       else { fatalError("Cannot create new section header") }
@@ -177,23 +171,21 @@ extension PeopleViewController: PeopleViewControllerProtocol {
   func playSuccessAnimation() {
     let successAnimationView = LottieAnimationView(name: "SuccessAnimation")
     successAnimationView.frame = view.bounds
+    successAnimationView.isUserInteractionEnabled = false
     successAnimationView.contentMode = .scaleAspectFit
     successAnimationView.loopMode = .playOnce
-    successAnimationView.animationSpeed = 1
+    successAnimationView.animationSpeed = 1.25
     view.addSubview(successAnimationView)
     successAnimationView.play(completion: { (finished) in
       if finished {
-        UIView.animate(withDuration: 0.3, animations: {
-          successAnimationView.alpha = 0
-        }, completion: { _ in
-          successAnimationView.stop()
-          successAnimationView.removeFromSuperview()
-          LottieAnimationCache.shared?.clearCache()
-        })
+        successAnimationView.stop()
+        successAnimationView.removeFromSuperview()
+        LottieAnimationCache.shared?.clearCache()
       }
     })
   }
   
+  // MARK: - WaitingChatsNavigationDelegate
   func removeWaitingChat(chat: ChatModel) {
     presenter.waitingChat(remove: chat)
   }

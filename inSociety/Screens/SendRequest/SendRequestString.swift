@@ -12,6 +12,10 @@ enum SendRequestString: String {
   case success
   case messageAndRequestSent
   case error
+  case about
+  case her
+  case him
+  case them
   
   var localized: String {
     NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")

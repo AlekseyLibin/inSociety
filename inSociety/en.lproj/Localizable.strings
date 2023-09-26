@@ -6,17 +6,28 @@
   
 */
 
-//Auth Screen
+// Loader Screen
+"LoaderString_greeting" = "\t\t\tWelcome to our app!\n\n We're thrilled to have you aboard.\n\n To get started, please carefully review our Privacy Policy and Terms of Use (EULA).\n\n Once you've read and agreed to them, you can fully enjoy all the features of our app.\n\n  Enjoy your exploration!\n\n  Best wishes!";
+"LoaderString_privacyPolicy" = "Privacy Policy";
+"LoaderString_termsOfUse" = "Terms of Use (EULA)";
+"LoaderString_continue" = "Continue";
+"LoaderString_iAgreeToConditions" = "I have read the Privacy Policy and agree to the Terms of Use (EULA)";
+
+// Document Screen
+"DocumentString_done" = "Done";
+
+// Auth Screen
 "AuthString_getStartedWith" = "Get started with";
-"AuthString_orSignUpWith" = "Or sign up with";
+"AuthString_orLabel" = "Or";
 "AuthString_alreadyOnBoard" = "Already on board?";
 "AuthString_google" = "Google";
+"AuthString_apple" = "Apple";
 "AuthString_login" = "Login";
 "AuthString_email" = "email";
 "AuthString_youHaveBeenRegistrated" = "You have been successfully registrated";
 "AuthString_error" = "Error";
 
-//Login Screen
+// Login Screen
 "LoginString_welcomeBack" = "Welcome back!";
 "LoginString_loginWith" = "Login with";
 "LoginString_orSignUpWithAnotherMethod" = "or";
@@ -39,11 +50,11 @@
 "SignUpString_error" = "Error";
 
 // SetupProfile Screen
-"SetupProfileString_fullName" = "Full name";
+"SetupProfileString_fullName" = "Your name";
 "SetupProfileString_aboutMe" = "About me";
-"SetupProfileString_aboutMePlaceholder" = "Hey! I am ...";
+"SetupProfileString_aboutMePlaceholder" = "I am ...";
 "SetupProfileString_sex" = "Sex";
-"SetupProfileString_submit" = "Submit";
+"SetupProfileString_confirm" = "Confirm";
 "SetupProfileString_setupProfile" = "Setup profile";
 "SetupProfileString_error" = "Error";
 
@@ -55,6 +66,10 @@
 // People Screen
 "PeopleString_peopleNearby" = "people nearby";
 "PeopleString_error" = "Error";
+"PeopleString_cancel" = "Cancel";
+"PeopleString_isBlocked" = "is blocked";
+"PeopleString_doYouWantToUnblock" = "Do you want to unblock";
+"PeopleString_unblock" = "Unblock";
 
 // Chats Screen
 "ChatsString_waitingChats" = "Waiting chats";
@@ -69,8 +84,13 @@
 // Profile Screen
 "ProfileString_activeChats" = "Active chats";
 "ProfileString_waitingChats" = "Waiting chats";
+"ProfileString_logOutOrDelete" = "Log out or Delete account";
 "ProfileString_logOut" = "Log out";
-"ProfileString_logOutWarning" = "Are you sure you want to log out?";
+"ProfileString_deleteAccount" = "Delete account";
+"ProfileString_deleteWarning" = "Are you sure you want to delete this account?";
+"ProfileString_delete" = "Delete";
+"ProfileString_logOutOrDeleteWarning" = "Are you sure you want to perform any of these actions?";
+"ProfileString_confirm" = "Confirm";
 "ProfileString_cancel" = "Cancel";
 "ProfileString_profile" = "Profile";
 "ProfileString_edit" = "Edit profile";
@@ -90,13 +110,39 @@
 "SendRequestString_success" = "Success";
 "SendRequestString_messageAndRequestSent" = "Your message and chat request have been sent to";
 "SendRequestString_error" = "Error";
+"SendRequestString_about" = "About";
+"SendRequestString_him" = "him";
+"SendRequestString_her" = "her";
+"SendRequestString_them" = "them";
+
+// Chat Screen
+"ChatString_message" = "Message";
+"ChatString_availableActions" = "Available actions";
+"ChatString_reportThisUser" = "Report this user";
+"ChatString_blockThisUser" = "Block this user";
+"ChatString_deleteThisChat" = "Delete this chat";
+"ChatString_success" = "Success";
+"ChatString_error" = "Error";
+"ChatString_confirm" = "Confirm";
+"ChatString_submit" = "Submit";
+"ChatString_cancel" = "Cancel";
+"ChatString_deleteChat" = "Delete chat";
+"ChatString_delete" = "Delete";
+"ChatString_deleteWarningPt1" = "Are you sure you want to delete your chat with";
+"ChatString_deleteWarningPt2" = "Chat will be deleted for both of us.";
+"ChatString_report" = "Report";
+"ChatString_reportSentSuccessfully" = "Report has been sent successfully and will be reviewed within 24 hours";
+"ChatString_describeTheProblem" = "Describe the problem you spotted";
 
 // ActiveChat Cell
 "ActiveChatCellString_userName" = "User name";
 "ActiveChatCellString_lastMessage" = "Last message";
+"ActiveChatCellString_yesterday" = "Yesterday";
 
 // Extensions
-"ExtensionsString_submit" = "Submit";
+"ExtensionsString_confirm" = "Confirm";
+"ExtensionsString_done" = "Done";
+"ExtensionsString_continueWithGoogle" = "Continue with Google";
 
 // AuthError
 "AuthError_fieldsAreNotFilled" = "Fill in all the fields";

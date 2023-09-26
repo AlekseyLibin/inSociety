@@ -15,8 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   let notificationCenter = UNUserNotificationCenter.current()
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    //        requestNotifications()
     FirebaseApp.configure()
+//    UserDefaults.standard.set(false, forKey: "isUserAgreedWithConditions")
     return true
   }
   
@@ -38,46 +38,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
   }
   
-}
-
-// MARK: - Notifications (prepare)
-import UserNotifications
-
-extension AppDelegate {
-  func requestNotifications() {
-    notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-      print("Permission granted", granted)
-      
-      guard granted else { return }
-      self.getNotificationSettings()
-    }
-  }
-  
-  func getNotificationSettings() {
-    notificationCenter.getNotificationSettings { settings in
-      print(settings)
-    }
-  }
-  
-  func createNotification(with title: String, subTitle: String?, body: String) {
-    let identifier = "Custom notification"
-    
-    let content = UNMutableNotificationContent()
-    content.title = title
-    if let subTitle = subTitle { content.subtitle = subTitle }
-    content.body = body
-    content.sound = UNNotificationSound.default
-    //        content.badge
-    
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0, repeats: false)
-    
-    let request = UNNotificationRequest(identifier: identifier,
-                                        content: content,
-                                        trigger: trigger)
-    notificationCenter.add(request) { error in
-      if let error = error {
-        print(error.localizedDescription)
-      }
-    }
-  }
 }

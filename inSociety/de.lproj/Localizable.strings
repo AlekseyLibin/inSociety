@@ -6,11 +6,22 @@
   
 */
 
+// Loader Sccreen
+"LoaderString_greeting" = "\t\t\tWillkommen in unserer App!\n\n Wir freuen uns, Sie an Bord zu haben.\n\n Um loszulegen, lesen Sie bitte sorgfältig unsere Datenschutzrichtlinie und unsere Nutzungsbedingungen (EULA).\n\n Sobald Sie diese gelesen und akzeptiert haben, können Sie alle Funktionen unserer App vollständig nutzen.\n\n Viel Spaß beim Erkunden!\n\n Beste Wünsche!";
+"LoaderString_privacyPolicy" = "Datenschutzrichtlinie";
+"LoaderString_termsOfUse" = "Nutzungsbedingungen (EULA)";
+"LoaderString_continue" = "Weiter";
+"LoaderString_iAgreeToConditions" = "Ich habe die Datenschutzrichtlinie gelesen und stimme den Nutzungsbedingungen (EULA) zu";
+
+// Document Screen
+"DocumentString_done" = "Fertig";
+
 //Auth Screen
 "AuthString_getStartedWith" = "Loslegen mit";
-"AuthString_orSignUpWith" = "Oder registriere dich mit";
+"AuthString_orLabel" = "Oder";
 "AuthString_alreadyOnBoard" = "Bereits angemeldet?";
 "AuthString_google" = "Google";
+"AuthString_apple" = "Apple";
 "AuthString_login" = "Anmelden";
 "AuthString_email" = "E-Mail";
 "AuthString_youHaveBeenRegistrated" = "Sie wurden erfolgreich registriert";
@@ -28,19 +39,6 @@
 "LoginString_youHaveBeenRegistrated" = "Sie wurden erfolgreich registriert";
 "LoginString_error" = "Fehler";
 
-//Profile Screen
-"ProfileString_activeChats" = "Aktive Chats";
-"ProfileString_waitingChats" = "Wartende Chats";
-"ProfileString_logOut" = "Abmelden";
-"ProfileString_logOutWarning" = "Sind Sie sicher, dass Sie sich abmelden möchten?";
-"ProfileString_cancel" = "Abbrechen";
-"ProfileString_profile" = "Profil";
-"ProfileString_edit" = "Bearbeiten";
-"ProfileString_noActiveChatsQuantity" = "Aktive Chats konnte nicht abgerufen werden";
-"ProfileString_noWaitingChatsQuantity" = "Wartende Chats konnte nicht abgerufen werden";
-"ProfileString_error" = "Fehler";
-"ProfileString_userNotFound" = "Benutzer nicht gefunden";
-
 // SignUp Screen
 "SignUpString_pleasedToSeeYou" = "Schön, dich zu sehen!";
 "SignUpString_email" = "E-Mail";
@@ -52,11 +50,11 @@
 "SignUpString_error" = "Fehler";
 
 // SetupProfile Screen
-"SetupProfileString_fullName" = "Vollständiger Name";
+"SetupProfileString_fullName" = "Dein Name";
 "SetupProfileString_aboutMe" = "Über mich";
-"SetupProfileString_aboutMePlaceholder" = "Hey! Ich bin ...";
+"SetupProfileString_aboutMePlaceholder" = "Ich bin ...";
 "SetupProfileString_sex" = "Geschlecht";
-"SetupProfileString_submit" = "Senden";
+"SetupProfileString_confirm" = "bestätigen";
 "SetupProfileString_setupProfile" = "Profil einrichten";
 "SetupProfileString_error" = "Fehler";
 
@@ -68,6 +66,10 @@
 // People Screen
 "PeopleString_peopleNearby" = "Personen in der Nähe";
 "PeopleString_error" = "Fehler";
+"PeopleString_cancel" = "Abbrechen";
+"PeopleString_isBlocked" = "ist blockiert";
+"PeopleString_doYouWantToUnblock" = "Möchten Sie entsperren?";
+"PeopleString_unblock" = "Entsperren";
 
 // Chats Screen
 "ChatsString_waitingChats" = "Wartende Chats";
@@ -79,14 +81,19 @@
 "ChatsString_chatRequestDenied" = "Chatanfrage wurde abgelehnt";
 "ChatsString_error" = "Fehler";
 
-// Profile Screen
+//Profile Screen
 "ProfileString_activeChats" = "Aktive Chats";
 "ProfileString_waitingChats" = "Wartende Chats";
+"ProfileString_logOutOrDelete" = "Abmelden oder Konto löschen";
 "ProfileString_logOut" = "Abmelden";
-"ProfileString_logOutWarning" = "Möchtest du dich wirklich abmelden?";
+"ProfileString_deleteAccount" = "Konto löschen";
+"ProfileString_deleteWarning" = "Sind Sie sicher, dass Sie dieses Konto löschen möchten?";
+"ProfileString_delete" = "Löschen";
+"ProfileString_logOutOrDeleteWarning" = "Sind Sie sicher, dass Sie eine dieser Aktionen durchführen möchten?";
+"ProfileString_confirm" = "Bestätigen";
 "ProfileString_cancel" = "Abbrechen";
 "ProfileString_profile" = "Profil";
-"ProfileString_edit" = "Profil bearbeiten";
+"ProfileString_edit" = "Bearbeiten";
 "ProfileString_noActiveChatsQuantity" = "Aktive Chats konnte nicht abgerufen werden";
 "ProfileString_noWaitingChatsQuantity" = "Wartende Chats konnte nicht abgerufen werden";
 "ProfileString_error" = "Fehler";
@@ -96,20 +103,46 @@
 "ChatRequestString_chatRequest" = "Chatanfrage";
 "ChatRequestString_somebody" = "Jemand";
 "ChatRequestString_wantsToChatWithYou" = "möchte mit dir chatten";
-"ChatRequestString_accept" = "AKZEPTIEREN";
+"ChatRequestString_accept" = "AKZEPT.";
 "ChatRequestString_deny" = "Ablehnen";
 
 // SendRequest Screen
 "SendRequestString_success" = "Erfolg";
 "SendRequestString_messageAndRequestSent" = "Deine Nachricht und Chatanfrage wurden gesendet an";
 "SendRequestString_error" = "Fehler";
+"SendRequestString_about" = "Über";
+"SendRequestString_him" = "ihn";
+"SendRequestString_her" = "sie";
+"SendRequestString_them" = "sie";
+
+// Chat Screen
+"ChatString_message" = "Nachricht";
+"ChatString_availableActions" = "Verfügbare Aktionen";
+"ChatString_reportThisUser" = "Diesen Benutzer melden";
+"ChatString_blockThisUser" = "Diesen Benutzer blockieren";
+"ChatString_deleteThisChat" = "Diesen Chat löschen";
+"ChatString_success" = "Erfolg";
+"ChatString_error" = "Fehler";
+"ChatString_confirm" = "Bestätigen";
+"ChatString_submit" = "Senden";
+"ChatString_cancel" = "Abbrechen";
+"ChatString_deleteChat" = "Chat löschen";
+"ChatString_delete" = "Löschen";
+"ChatString_deleteWarningPt1" = "Sind Sie sicher, dass Sie Ihren Chat mit";
+"ChatString_deleteWarningPt2" = "löschen möchten? Der Chat wird für beide gelöscht.";
+"ChatString_report" = "Melden";
+"ChatString_reportSentSuccessfully" = "Die Meldung wurde erfolgreich gesendet und wird innerhalb von 24 Stunden überprüft";
+"ChatString_describeTheProblem" = "Beschreiben Sie das Problem, das Sie bemerkt haben";
 
 // ActiveChat Cell
 "ActiveChatCellString_userName" = "Benutzername";
 "ActiveChatCellString_lastMessage" = "Letzte Nachricht";
+"ActiveChatCellString_yesterday" = "Gestern";
 
 // Extensions
-"ExtensionsString_submit" = "Senden";
+"ExtensionsString_confirm" = "Bestätigen";
+"ExtensionsString_done" = "Erledigt";
+"ExtensionsString_continueWithGoogle" = "Mit Google fortfahren";
 
 // AuthError
 "AuthError_fieldsAreNotFilled" = "Fülle alle Felder aus";

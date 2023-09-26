@@ -24,8 +24,8 @@ final class SetupProfileRouter {
 extension SetupProfileRouter: SetupProfileRouterProtocol {
   func toMainVC(currentUser: UserModel) {
     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        windowScene.windows.first?.rootViewController = MainTabBarController(currentUser: currentUser)
     viewController.navigationController?.setViewControllers([], animated: true)
+      windowScene.windows.first?.rootViewController = MainTabBarController(currentUser: currentUser)
   }
   
   func backToProfileVC() {

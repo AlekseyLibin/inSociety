@@ -11,8 +11,13 @@ enum ProfileString: String {
   
   case activeChats
   case waitingChats
+  case logOutOrDelete
   case logOut
-  case logOutWarning
+  case deleteAccount
+  case deleteWarning
+  case delete
+  case logOutOrDeleteWarning
+  case confirm
   case cancel
   case profile
   case edit

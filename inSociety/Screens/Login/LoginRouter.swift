@@ -23,13 +23,13 @@ final class LoginRouter {
 extension LoginRouter: LoginRouterProtocol {
   
   func toSetupProfileVC(currentUser: User) {
-    let setupProfileVC = SetupProfileViewController(currentUser: currentUser, target: .create)
-    viewController.present(viewController: setupProfileVC)
+    let setupProfileVC = SetupProfileViewController(target: .create(firebaseUser: currentUser))
+    viewController.present(setupProfileVC, animated: true, completion: nil)
   }
   
   func toMainVC(currentUser: UserModel) {
     guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
-        windowScene.windows.first?.rootViewController = MainTabBarController(currentUser: currentUser)
+    windowScene.windows.first?.rootViewController = MainTabBarController(currentUser: currentUser)
     viewController.navigationController?.setViewControllers([], animated: true)
   }
   

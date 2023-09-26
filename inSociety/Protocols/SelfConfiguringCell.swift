@@ -9,5 +9,5 @@ import Foundation
 
 protocol SelfConfiguringCell {
     static var reuseID: String { get }
-    func configure<HCell: Hashable>(with value: HCell)
+    func configure<HCell: Hashable>(with cell: HCell)
 }

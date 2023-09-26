@@ -18,7 +18,6 @@ enum ChatsString: String {
   case chatRequestDenied
   case error
   
-  
   var localized: String {
     NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")
   }

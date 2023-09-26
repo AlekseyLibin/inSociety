@@ -8,20 +8,22 @@
 import FirebaseAuth
 
 protocol ProfileRouterProtocol: AnyObject {
-  func toSetupProfileVC(with user: User)
+  func toSetupProfileVC(with currentUser: UserModel)
 }
 
 final class ProfileRouter {
   init(viewController: ProfileViewController) {
     self.viewController = viewController
+    self.setupProfileViewController = SetupProfileViewController(target: .modify(currentUserModel: viewController.currentUser))
   }
   
   private let viewController: ProfileViewController
+  private let setupProfileViewController: SetupProfileViewController
 }
 
 extension ProfileRouter: ProfileRouterProtocol {
-  func toSetupProfileVC(with user: User) {
-    let setupProfileViewController = SetupProfileViewController(currentUser: user, target: .modify)
+  
+  func toSetupProfileVC(with currentUser: UserModel) {
     viewController.navigationController?.pushViewController(setupProfileViewController, animated: true)
   }
   

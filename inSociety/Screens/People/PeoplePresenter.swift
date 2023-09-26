@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 protocol PeoplePresenterProtocol: AnyObject {
   func usersObserve(users: [UserModel], completion: @escaping(Result<[UserModel], Error>) -> Void) -> ListenerRegistration?
-  func friendSelected(_ userModel: UserModel)
+  func friendSelected(_ userModel: UserModel, by currentUser: UserModel)
   func waitingChat(moveToActive chat: ChatModel)
   func waitingChat(remove chat: ChatModel)
 }
@@ -20,6 +20,11 @@ final class PeoplePresenter {
   init(viewController: PeopleViewControllerProtocol) {
     self.viewController = viewController
     setupChatsListeners()
+  }
+  
+  deinit {
+    activeChatsListener?.remove()
+    waitingChatsListener?.remove()
   }
   
   private unowned let viewController: PeopleViewControllerProtocol
@@ -32,9 +37,8 @@ final class PeoplePresenter {
   private var activeChats = [ChatModel]()
   private var users = [UserModel]()
   
-  func setupChatsListeners() {
-    
-    waitingChatsListener = ListenerService.shared.waitingChatsObserve(chats: waitingChats, completion: { [weak self] difference in
+  private func setupChatsListeners() {
+    waitingChatsListener = ListenerService.shared.waitingChats(observe: waitingChats, { [weak self] difference in
       switch difference {
       case .success(let updatedWaitingChats):
         self?.waitingChats = updatedWaitingChats
@@ -43,7 +47,7 @@ final class PeoplePresenter {
       }
     })
     
-    activeChatsListener = ListenerService.shared.activeChatsObserve(chats: activeChats, completion: { [weak self] difference in
+    activeChatsListener = ListenerService.shared.activeChats(observe: activeChats, { [weak self] difference in
       switch difference {
       case .success(let updatedActiveChats):
         self?.activeChats = updatedActiveChats
@@ -52,16 +56,34 @@ final class PeoplePresenter {
       }
     })
   }
+  
+  private func suggestToUnblock(_ chat: ChatModel) {
+    let alertController = UIAlertController(title: "\(chat.friend.fullName) \(PeopleString.isBlocked)", message: "\(PeopleString.doYouWantToUnblock.localized) \(chat.friend.fullName)?", preferredStyle: .alert)
+    let unblock = UIAlertAction(title: PeopleString.unblock.localized, style: .default) { [weak self] _ in
+      guard let currentUser = self?.viewController.currentUser else { return }
+      self?.interactor.activeChat(chat, for: currentUser, block: false, failureCompletion: { error in
+        if let error { self?.viewController.showAlert(with: PeopleString.error.localized, and: error.localizedDescription) }
+        self?.router.toChatVC(with: chat.friend)
+      })
+    }
+    let cancel = UIAlertAction(title: PeopleString.cancel.localized, style: .default)
+    cancel.setValue(UIColor.white, forKey: "titleTextColor")
+    
+    alertController.addAction(cancel)
+    alertController.addAction(unblock)
+    viewController.present(alertController, animated: true, completion: nil)
+  }
+  
 }
 
 extension PeoplePresenter: PeoplePresenterProtocol {
-  func friendSelected(_ userModel: UserModel) {
-    if let waitingChat = waitingChats.filter({ $0.friendID == userModel.id }).first {
+  func friendSelected(_ userModel: UserModel, by currentUser: UserModel) {
+    if let waitingChat = waitingChats.filter({ $0.friend.id == userModel.id }).first {
       router.toChatRequestVC(with: waitingChat)
-    } else if let _ = activeChats.filter({ $0.friendID == userModel.id }).first {
-      router.toChatVC(with: userModel)
+    } else if let activeChat = activeChats.filter({ $0.friend.id == userModel.id }).first {
+      activeChat.blocked ? suggestToUnblock(activeChat) : router.toChatVC(with: userModel)
     } else {
-      router.toSendRequestVC(with: userModel, delegate: self)
+      router.toSendRequestVC(to: userModel, by: currentUser, delegate: self)
     }
   }
   
@@ -70,23 +92,23 @@ extension PeoplePresenter: PeoplePresenterProtocol {
   }
   
   func waitingChat(remove chat: ChatModel) {
-    interactor.waitingChat(remove: chat) { result in
-      switch result {
-      case .success:
-        self.viewController.showAlert(with: ChatsString.success.localized, and: ChatsString.chatRequestDenied.localized)
-      case .failure(let error):
-        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+    interactor.waitingChat(remove: chat) { [weak self] error in
+      if let error = error {
+        self?.viewController.generateHapticFeedback(.error)
+        self?.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+      } else {
+        self?.viewController.generateHapticFeedback(.warning)
       }
     }
   }
   
   func waitingChat(moveToActive chat: ChatModel) {
-    interactor.waitingChat(moveToActive: chat) { result in
-      switch result {
-      case .success:
-        break
-      case .failure(let error):
-        self.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+    interactor.waitingChat(moveToActive: chat) { [weak self] error in
+      if let error = error {
+        self?.viewController.generateHapticFeedback(.error)
+        self?.viewController.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+      } else {
+        self?.viewController.generateHapticFeedback(.success)
       }
     }
   }
@@ -96,9 +118,11 @@ extension PeoplePresenter: PeoplePresenterProtocol {
 extension PeoplePresenter: SendRequestPresenterDelegate {
   func requestSentSuccessfully() {
     viewController.playSuccessAnimation()
+    viewController.generateHapticFeedback(.success)
   }
   
   func requestHasNotBeenSent(with error: Error) {
+    viewController.generateHapticFeedback(.error)
     viewController.showAlert(with: PeopleString.error.localized, and: error.localizedDescription)
   }
   

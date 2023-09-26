@@ -43,8 +43,8 @@ final class UserCell: UICollectionViewCell {
 extension UserCell: SelfConfiguringCell {
   
   // HCell - Hashable cell.
-  func configure<HCell>(with value: HCell) where HCell : Hashable {
-    guard let user: UserModel = value as? UserModel else { return }
+  func configure<HCell>(with cell: HCell) where HCell : Hashable {
+    guard let user: UserModel = cell as? UserModel else { return }
     userNameLabel.text = user.fullName
     userNameLabel.textColor = .white
     userNameLabel.backgroundColor = .secondaryDark

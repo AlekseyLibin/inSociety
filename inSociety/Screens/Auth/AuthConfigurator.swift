@@ -8,11 +8,11 @@
 import UIKit
 
 protocol AuthConfiguratorProtocol: AnyObject {
-    func configure(with viewController: AuthViewController)
+    func configure(with viewController: AuthViewControllerProtocol)
 }
 
 final class AuthConfigurator: AuthConfiguratorProtocol {
-    func configure(with viewController: AuthViewController) {
+    func configure(with viewController: AuthViewControllerProtocol) {
         let presenter = AuthPresenter(viewController: viewController)
         let router = AuthRouter(viewController: viewController)
         let interactor = AuthInteractor()

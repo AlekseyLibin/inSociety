@@ -35,7 +35,7 @@ final class UnderlinedTextField: UITextField, UITextFieldDelegate {
     toolbar.sizeToFit()
     keyboardType = .default
     let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-    let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(doneButtonTapped))
+    let doneButton = UIBarButtonItem(title: ExtensionsString.done.localized, style: .plain, target: self, action: #selector(doneButtonTapped))
     toolbar.items = [flexibleSpace, doneButton]
     inputAccessoryView = toolbar
     delegate = self
@@ -50,3 +50,4 @@ final class UnderlinedTextField: UITextField, UITextFieldDelegate {
       return true
   }
 }
+

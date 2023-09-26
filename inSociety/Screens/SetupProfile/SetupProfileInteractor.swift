@@ -18,11 +18,11 @@ final class SetupProfileInteractor {
 
 extension SetupProfileInteractor: SetupProfileInteractorProtocol {
   func getDataForCurrentUser(completion: @escaping (Result<UserModel, Error>) -> Void) {
-    FirestoreService.shared.getDataForCurrentUser(completion: completion)
+    FirestoreService.shared.getCurrentUserModel(completion: completion)
   }
   
   func submitButtonPressed(with newUser: SetupNewUser, completion: @escaping (Result<UserModel, Error>) -> Void) {
-    FirestoreService.shared.saveProfile(with: newUser) { result in
+    FirestoreService.shared.profile(save: newUser) { result in
       switch result {
       case .success(let currentUserModel):
         completion(.success(currentUserModel))

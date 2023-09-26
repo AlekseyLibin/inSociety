@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Lottie
 import FirebaseCore
 import FirebaseAuth
 
 protocol LoginViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
   func showAlert(with title: String, and message: String?)
+  func stopLoadingAnimation()
 }
 
 final class LoginViewController: BaseViewController {
@@ -28,12 +30,11 @@ final class LoginViewController: BaseViewController {
   private let emailTextField = UnderlinedTextField(font: .light20)
   private let passwordTextField = UnderlinedTextField(font: .light20)
   
-  private let loginButton = UIButton(title: LoginString.login.localized,
-                                     titleColor: .mainYellow, backgroundColor: .mainDark)
-  private let googleButton = UIButton(title: LoginString.google.localized,
-                                      titleColor: .black, backgroundColor: .white)
-  private let signUpButton = UIButton(title: LoginString.createNewAccount.localized,
-                                      titleColor: .mainYellow, backgroundColor: nil)
+  private let loginButton = CustomButton(title: LoginString.login.localized,
+                                     titleColor: .mainYellow, mainBackgroundColor: .mainDark)
+  private let googleButton = GoogleButton()
+  private let signUpButton = CustomButton(title: LoginString.createNewAccount.localized,
+                                      titleColor: .mainYellow, highlight: false)
   
   var presenter: LoginPresenterProtocol!
   private let configurator: LoginConfiguratorProtocol = LoginConfigurator()
@@ -53,32 +54,38 @@ final class LoginViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setUpViews()
+    prepareLoadingAnimation()
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
     setupContentViewSize()
+  }
+  
+  deinit {
+    stopLoadingAnimation()
+  }
+  
+  // MARK: - Actions
+  @objc private func googleButtonPressed() {
+    AuthService.shared.enter(self) { [weak self] result in
+      self?.presenter.loginWithGoogle(with: result)
+    }
   }
   
   @objc private func loginButtonPressed() {
     presenter.loginWithEmail(email: emailTextField.text, password: passwordTextField.text)
   }
   
-  @objc private func signUpButtonPressed() {
+  @objc private func signUpButtonPressed(sender: UIButton) {
     dismiss(animated: true) {
       self.toSignUpClosure?()
     }
   }
   
-  @objc private func googleButtonPressed() {
-    AuthService.shared.googleLogin(presentingVC: self) { [weak self] result in
-      self?.presenter.loginWithGoogle(with: result)
-    }
-  }
-  
   private func setupContentViewSize() {
     let setupViewHeight = setupView.frame.height
-    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + 150)
+    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + 250)
   }
   
 }
@@ -88,8 +95,9 @@ private extension LoginViewController {
   func setUpViews() {
     view.backgroundColor = .mainDark
     
-    scrollView.hideKeyboardWhenTappedOrSwiped()
     scrollView.showsVerticalScrollIndicator = false
+    scrollView.delaysContentTouches = false
+    scrollView.hideKeyboardWhenTappedOrSwiped()
     scrollView.addKeyboardObservers()
     
     [greetingLabel, emailLabel, passwordLabel].forEach { label in
@@ -99,7 +107,6 @@ private extension LoginViewController {
     loginWithLabel.textColor = .lightGray
     orLabel.textColor = .lightGray
     
-    googleButton.customizeGoogleButton()
     signUpButton.addBaseShadow()
     
     loginButton.addTarget(self, action: #selector(loginButtonPressed), for: .touchUpInside)
@@ -116,25 +123,26 @@ private extension LoginViewController {
   }
   
   func setupConstraints() {
-    
     let loginView = LabelButtonView(label: loginWithLabel, button: googleButton)
     let emailStackView = UIStackView(arrangedSubviews: [emailLabel, emailTextField],
                                      axis: .vertical, spacing: 10)
     let passwordStackView = UIStackView(arrangedSubviews: [passwordLabel, passwordTextField],
                                         axis: .vertical, spacing: 10)
-    let stackView = UIStackView(arrangedSubviews:
-                                  [ loginView, orLabel, emailStackView, passwordStackView, loginButton, signUpButton ],
+    let setupStackView = UIStackView(arrangedSubviews:
+                                  [ loginView, orLabel, emailStackView, passwordStackView, loginButton],
                                 axis: .vertical, spacing: 40)
     
     setupView.layer.cornerRadius = 20
     setupView.backgroundColor = .secondaryDark
+    googleButton.layer.cornerRadius = 15
     
     view.addSubview(scrollView)
     scrollView.addSubview(greetingLabel)
     scrollView.addSubview(setupView)
-    scrollView.addSubview(stackView)
+    scrollView.addSubview(setupStackView)
+    scrollView.addSubview(signUpButton)
     
-    [scrollView, greetingLabel, stackView, setupView].forEach { view in
+    [scrollView, greetingLabel, setupStackView, setupView, signUpButton].forEach { view in
       view.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -147,14 +155,19 @@ private extension LoginViewController {
       greetingLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50),
       greetingLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       
-      stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 75),
-      stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-      stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
+      setupStackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 125),
+      setupStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+      setupStackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
       
-      setupView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -30),
+      setupView.topAnchor.constraint(equalTo: setupStackView.topAnchor, constant: -30),
       setupView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       setupView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.9),
-      setupView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
+      setupView.bottomAnchor.constraint(equalTo: setupStackView.bottomAnchor, constant: 30),
+      
+      googleButton.heightAnchor.constraint(equalToConstant: 50),
+      
+      signUpButton.topAnchor.constraint(equalTo: setupView.bottomAnchor, constant: 15),
+      signUpButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       
       loginButton.heightAnchor.constraint(equalToConstant: 60)
     ])
@@ -163,6 +176,4 @@ private extension LoginViewController {
 }
 
 // MARK: - LoginViewControllerProtocol
-extension LoginViewController: LoginViewControllerProtocol {
-  
-}
+extension LoginViewController: LoginViewControllerProtocol { }

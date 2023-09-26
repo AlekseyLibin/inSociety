@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SendRequestPresenterProtocol: AnyObject {
-  func sendChatRequest(to user: UserModel, with message: String)
+  func sendChatRequest(to user: UserModel, with message: MessageModel)
   var delegate: SendRequestPresenterDelegate? { get set }
 }
 
@@ -29,19 +29,14 @@ final class SendRequestPresenter {
 }
 
 extension SendRequestPresenter: SendRequestPresenterProtocol {
-  func sendChatRequest(to user: UserModel, with message: String) {
-    interactor.createActiveChat(message: message, receiver: user) { [weak self] result in
-      self?.viewController.dismiss()
-      switch result {
-      case .success:
-        self?.delegate?.requestSentSuccessfully()
-      case .failure(let error):
+  func sendChatRequest(to user: UserModel, with message: MessageModel) {
+    interactor.createActiveChat(message: message, receiver: user) { [weak self] error in
+      self?.viewController.dismiss(animated: true, completion: nil)
+      if let error = error {
         self?.delegate?.requestHasNotBeenSent(with: error)
+      } else {
+        self?.delegate?.requestSentSuccessfully()
       }
-    } errorComplition: { [weak self] error in
-      self?.delegate?.requestHasNotBeenSent(with: error)
     }
-
   }
-  
 }

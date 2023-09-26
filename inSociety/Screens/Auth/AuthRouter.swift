@@ -10,15 +10,15 @@ import FirebaseAuth
 protocol AuthRouterProtocol: AnyObject {
   func toSignUpVC()
   func toLoginVC()
-  func toSetupProfileVC(currentUser: User)
+	func toSetupProfileVC(currentUser: User, appleIdUserName: String?)
   func toMainVC(currentUser: UserModel)
 }
 
 final class AuthRouter {
   
-  private unowned let viewController: BaseViewController
+  private unowned let viewController: AuthViewControllerProtocol
   
-  required init(viewController: BaseViewController) {
+	init(viewController: AuthViewControllerProtocol) {
     self.viewController = viewController
   }
   
@@ -31,19 +31,19 @@ extension AuthRouter: AuthRouterProtocol {
     let signUpVC = SignUpViewController { [weak self] in
       self?.toLoginVC()
     }
-    viewController.present(viewController: signUpVC)
+    viewController.present(signUpVC, animated: true, completion: nil)
   }
   
   func toLoginVC() {
     let loginVC = LoginViewController { [weak self] in
       self?.toSignUpVC()
     }
-    viewController.present(viewController: loginVC)
+    viewController.present(loginVC, animated: true, completion: nil)
   }
   
-  func toSetupProfileVC(currentUser: User) {
-		let setupProfileVC = SetupProfileViewController(currentUser: currentUser, target: .create)
-    viewController.present(viewController: setupProfileVC)
+	func toSetupProfileVC(currentUser: User, appleIdUserName: String?) {
+		let setupProfileVC = SetupProfileViewController(target: .create(firebaseUser: currentUser, appleIdUserName: appleIdUserName))
+    viewController.present(setupProfileVC, animated: true, completion: nil)
   }
   
   func toMainVC(currentUser: UserModel) {

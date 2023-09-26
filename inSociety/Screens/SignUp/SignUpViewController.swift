@@ -14,6 +14,7 @@ protocol SignUpViewControllerProtocol: BaseViewCotrollerProtocol {
 final class SignUpViewController: BaseViewController {
   
   private let scrollView = UIScrollView()
+  private let setupView = UIView()
   
   private let greetingLabel = UILabel(text: SignUpString.pleasedToSeeYou.localized, font: .light30)
   private let emailLabel = UILabel(text: SignUpString.email.localized)
@@ -25,8 +26,10 @@ final class SignUpViewController: BaseViewController {
   private let passwordTextField = UnderlinedTextField(font: .light20)
   private let confirmPasswordtextField = UnderlinedTextField(font: .light20)
   
-  private let signUpButton = UIButton(title: SignUpString.signUp.localized, titleColor: .white, backgroundColor: .mainDark)
-  private let loginButton = UIButton(title: SignUpString.login.localized, titleColor: .mainYellow, backgroundColor: nil)
+  private let signUpButton = CustomButton(title: SignUpString.signUp.localized,
+                                          titleColor: .white, mainBackgroundColor: .mainDark)
+  private let loginButton = CustomButton(title: SignUpString.login.localized,
+                                         titleColor: .mainYellow, highlight: false)
   
   var presenter: SignUpPresenterProtocol!
   private let configurator: SignUpConfiguratorProtocol = SignUpConfigurator()
@@ -44,14 +47,13 @@ final class SignUpViewController: BaseViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     configurator.configure(viewController: self)
     setUpViews()
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    scrollView.contentSize = view.frame.size
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    setupContentViewSize()
   }
   
   @objc private func signUpButonPressed() {
@@ -60,7 +62,7 @@ final class SignUpViewController: BaseViewController {
                                   confirmPass: confirmPasswordtextField.text)
   }
   
-  @objc private func loginButtonPressed() {
+  @objc private func loginButtonPressed(sender: UIButton) {
     dismiss(animated: true) {
       self.toLoginClosure?()
     }
@@ -71,11 +73,12 @@ final class SignUpViewController: BaseViewController {
 private extension SignUpViewController {
   
   func setUpViews() {
-    
     view.backgroundColor = .mainDark
     
+    scrollView.showsVerticalScrollIndicator = false
+    scrollView.delaysContentTouches = false
     scrollView.hideKeyboardWhenTappedOrSwiped()
-//    scrollView.addKeyboardObservers()
+    scrollView.addKeyboardObservers()
     
     loginButton.addBaseShadow()
     signUpButton.addTarget(self, action: #selector(signUpButonPressed), for: .touchUpInside)
@@ -89,9 +92,11 @@ private extension SignUpViewController {
     
     emailextField.autocapitalizationType = .none
     emailextField.autocorrectionType = .no
+    
     passwordTextField.autocapitalizationType = .none
     passwordTextField.autocorrectionType = .no
     passwordTextField.isSecureTextEntry = true
+    
     confirmPasswordtextField.autocapitalizationType = .none
     confirmPasswordtextField.autocorrectionType = .no
     confirmPasswordtextField.isSecureTextEntry = true
@@ -99,8 +104,12 @@ private extension SignUpViewController {
     setupConstraints()
   }
   
+  func setupContentViewSize() {
+    let setupViewHeight = setupView.frame.height
+    scrollView.contentSize = CGSize(width: view.frame.width, height: setupViewHeight + 250)
+  }
+  
   func setupConstraints() {
-    
     let emailStackView = UIStackView(
       arrangedSubviews: [emailLabel, emailextField], axis: .vertical, spacing: 10)
     let passwordStackView = UIStackView(
@@ -115,17 +124,16 @@ private extension SignUpViewController {
     let bottomStackView = UIStackView(arrangedSubviews: [alreadyWithUsLabel, loginButton],
                                       axis: .horizontal, spacing: 0)
     
-    let secondaryView = UIView()
-    secondaryView.layer.cornerRadius = 20
-    secondaryView.backgroundColor = .secondaryDark
+    setupView.layer.cornerRadius = 20
+    setupView.backgroundColor = .secondaryDark
     
     view.addSubview(scrollView)
     scrollView.addSubview(greetingLabel)
-    scrollView.addSubview(secondaryView)
+    scrollView.addSubview(setupView)
     scrollView.addSubview(stackView)
     scrollView.addSubview(bottomStackView)
     
-    [scrollView, greetingLabel, stackView, signUpButton, bottomStackView,loginButton, secondaryView].forEach { view in
+    [scrollView, greetingLabel, stackView, signUpButton, bottomStackView,loginButton, setupView].forEach { view in
       view.translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -136,20 +144,20 @@ private extension SignUpViewController {
       scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       
-      greetingLabel.topAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.topAnchor, constant: 100),
+      greetingLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50),
       greetingLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       
-      stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 150),
+      stackView.topAnchor.constraint(equalTo: greetingLabel.bottomAnchor, constant: 125),
       stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8),
       
-      bottomStackView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 100),
-      bottomStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+      setupView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: -35),
+      setupView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+      setupView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.9),
+      setupView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35),
       
-      secondaryView.topAnchor.constraint(equalTo: stackView.safeAreaLayoutGuide.topAnchor, constant: -35),
-      secondaryView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      secondaryView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-      secondaryView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 35),
+      bottomStackView.topAnchor.constraint(equalTo: setupView.bottomAnchor, constant: 15),
+      bottomStackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
       
       signUpButton.heightAnchor.constraint(equalToConstant: 60),
       loginButton.widthAnchor.constraint(equalToConstant: 100)
@@ -158,6 +166,4 @@ private extension SignUpViewController {
 }
 
 // MARK: - SignUpViewControllerProtocol
-extension SignUpViewController: SignUpViewControllerProtocol {
-  
-}
+extension SignUpViewController: SignUpViewControllerProtocol { }

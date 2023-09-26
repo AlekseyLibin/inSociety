@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SendRequestInteractorProtocol: AnyObject {
-  func createActiveChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void, errorComplition: @escaping (Error) -> Void)
+  func createActiveChat(message: MessageModel, receiver: UserModel, completion failureCompletion: @escaping (Error?) -> Void)
 }
 
 final class SendRequestInteractor {
@@ -16,20 +16,15 @@ final class SendRequestInteractor {
 }
 
 extension SendRequestInteractor: SendRequestInteractorProtocol {
-  func createActiveChat(message: String, receiver: UserModel, completion: @escaping (Result<Void, Error>) -> Void, errorComplition: @escaping (Error) -> Void) {
-    FirestoreService.shared.createWaitingChat(message: message, receiver: receiver) { result in
+  func createActiveChat(message: MessageModel, receiver: UserModel, completion failureCompletion: @escaping (Error?) -> Void) {
+    FirestoreService.shared.waitingChat(createBy: message, receiver: receiver) { result in
       switch result {
       case .success:
         guard let currentUser = FirestoreService.shared.currentUser else { return }
-        let message = MessageModel(user: currentUser, content: message)
-        let chat = ChatModel(friendName: receiver.fullName,
-                             friendAvatarString: receiver.avatarString,
-                             friendID: receiver.id,
-                             messages: [message])
-
-        FirestoreService.shared.createActiveChat(chat: chat, messages: [message], completion: completion)
+        let chat = ChatModel(friend: receiver, messages: [message])
+        FirestoreService.shared.activeChat(createBy: chat, messages: [message], failureCompletion: failureCompletion)
       case .failure(let error):
-        errorComplition(error)
+        failureCompletion(error)
       }
     }
   }

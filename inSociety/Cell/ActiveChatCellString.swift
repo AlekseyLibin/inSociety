@@ -11,6 +11,7 @@ enum ActiveChatCellString: String {
   
   case userName
   case lastMessage
+  case yesterday
   
   var localized: String {
     NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")

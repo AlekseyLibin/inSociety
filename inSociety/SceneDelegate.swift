@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
@@ -19,23 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     window?.windowScene = windowScene
     window?.makeKeyAndVisible()
     window?.overrideUserInterfaceStyle = .dark
-    
     let navigationController = UINavigationController()
-    
-    if Auth.auth().currentUser != nil {
-      FirestoreService.shared.getDataForCurrentUser { [weak self] result in
-        switch result {
-        case .success(let currentUser):
-          self?.window?.rootViewController = MainTabBarController(currentUser: currentUser)
-        case .failure:
-          navigationController.setViewControllers([AuthViewController()], animated: true)
-          self?.window?.rootViewController = navigationController
-        }
-      }
-    } else {
-      navigationController.setViewControllers([AuthViewController()], animated: true)
-      self.window?.rootViewController = navigationController
-    }
+    navigationController.setViewControllers([LoaderViewController()], animated: false)
+    window?.rootViewController = navigationController
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {

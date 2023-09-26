@@ -9,7 +9,9 @@ import Foundation
 
 enum ExtensionsString: String {
   
-  case submit
+  case confirm
+  case done
+  case continueWithGoogle
   
   var localized: String {
     NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")

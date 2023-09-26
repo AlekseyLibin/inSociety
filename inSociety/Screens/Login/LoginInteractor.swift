@@ -16,7 +16,7 @@ final class LoginInteractor {
 extension LoginInteractor: LoginInteractorProtocol {
     
     func checkIfRegestrationCompleted(completion: @escaping (Result<UserModel, Error>) -> Void) {
-        FirestoreService.shared.getDataForCurrentUser { result in
+        FirestoreService.shared.getCurrentUserModel { result in
             
             switch result {
             case .success(let currentCompletedUser):

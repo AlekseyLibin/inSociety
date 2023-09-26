@@ -31,8 +31,8 @@ final class ChatRequestViewController: BaseViewController {
   
   init(chat: ChatModel) {
     self.chat = chat
-    imageView.sd_setImage(with: URL(string: chat.friendAvatarString))
-    nameLabel.text = chat.friendName
+    imageView.sd_setImage(with: URL(string: chat.friend.avatarString))
+    nameLabel.text = chat.friend.fullName
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -48,13 +48,15 @@ final class ChatRequestViewController: BaseViewController {
   }
   
   @objc private func deny() {
-    self.dismiss(animated: true) {
+    generateHapticFeedback(.warning)
+    dismiss(animated: true) {
       self.delegate?.removeWaitingChat(chat: self.chat)
     }
   }
   
   @objc private func accept() {
-    self.dismiss(animated: true) {
+    generateHapticFeedback(.success)
+    dismiss(animated: true) {
       self.delegate?.moveToActive(chat: self.chat)
     }
   }
@@ -112,12 +114,12 @@ final class ChatRequestViewController: BaseViewController {
       imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       imageView.bottomAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
       
-      containerView.heightAnchor.constraint(equalToConstant: 210),
+      containerView.heightAnchor.constraint(equalToConstant: 220),
       containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       
-      nameLabel.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 35),
+      nameLabel.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 30),
       nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       
       descriptionLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
@@ -127,7 +129,7 @@ final class ChatRequestViewController: BaseViewController {
       buttonStackView.heightAnchor.constraint(equalToConstant: 60),
       buttonStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       buttonStackView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
-      buttonStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30)
+      buttonStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
     ])
   }
 }

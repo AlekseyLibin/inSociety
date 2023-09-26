@@ -22,12 +22,13 @@ final class ProfileViewController: BaseViewController {
   let currentUser: UserModel
   
   private let avatarView = UIImageView()
+  private let avatarActivityIndicatorView = UIActivityIndicatorView()
   private let fullNameLabel = UILabel()
   private let aboutMeLabel = UILabel()
   private let activeChatsNumberLabel = UILabel(text: ProfileString.activeChats.localized)
   private let waitingChatsNumberLabel = UILabel(text: ProfileString.waitingChats.localized)
-  private let editButton = UIButton(title: ProfileString.edit.localized, titleColor: .systemBlue, backgroundColor: .secondaryDark)
-  private let logOutButton = UIButton(title: ProfileString.logOut.localized, titleColor: .systemRed, backgroundColor: .secondaryDark)
+  private let editButton = CustomButton(title: ProfileString.edit.localized, titleColor: .systemBlue, mainBackgroundColor: .secondaryDark)
+  private let logOutButton = CustomButton(title: ProfileString.logOutOrDelete.localized, titleColor: .systemRed, mainBackgroundColor: .secondaryDark)
   private let configurator: ProfileConfiguratorProtocol = ProfileConfigurator()
   var presenter: ProfilePresenterProtocol!
   
@@ -75,9 +76,9 @@ private extension ProfileViewController {
     fullNameLabel.textColor = .mainYellow
 
     aboutMeLabel.text = currentUser.description
-    aboutMeLabel.numberOfLines = 2
-    aboutMeLabel.font = .systemFont(ofSize: 12, weight: .light)
-    aboutMeLabel.textColor = .mainYellow
+    aboutMeLabel.numberOfLines = 0
+    aboutMeLabel.font = .italicSystemFont(ofSize: 15)
+    aboutMeLabel.textColor = .gray
     
     activeChatsNumberLabel.font = .light25
     activeChatsNumberLabel.textColor = .mainYellow
@@ -93,7 +94,7 @@ private extension ProfileViewController {
   }
   
   @objc private func logOutButtonPressed() {
-    presenter.logOutButtonPressed()
+    presenter.logOutOrDeleteButtonPressed(by: currentUser)
   }
   
   func setupTopBar() {
@@ -101,7 +102,7 @@ private extension ProfileViewController {
     appearance.backgroundColor = .mainDark
     
     let titleLabel = UILabel(text: ProfileString.profile.localized)
-    titleLabel.font = .systemFont(ofSize: 23)
+    titleLabel.font = .systemFont(ofSize: 20)
     titleLabel.textColor = .systemGray
     
     navigationController?.navigationBar.standardAppearance = appearance
@@ -110,26 +111,21 @@ private extension ProfileViewController {
   }
   
   func setupConstraints() {
+    let profileInformationBackgroudView = UIView()
+    profileInformationBackgroudView.layer.cornerRadius = 15
+    profileInformationBackgroudView.backgroundColor = .secondaryDark
     
-    let avatarBackgroudView = UIView()
-    avatarBackgroudView.layer.cornerRadius = 15
-    avatarBackgroudView.backgroundColor = .secondaryDark
+    profileInformationBackgroudView.addSubview(avatarView)
+    profileInformationBackgroudView.addSubview(avatarActivityIndicatorView)
+    profileInformationBackgroudView.addSubview(fullNameLabel)
+    profileInformationBackgroudView.addSubview(aboutMeLabel)
     
-    let aboutMeLabelBackgroundView = UIView()
-    aboutMeLabelBackgroundView.layer.cornerRadius = 15
-    aboutMeLabelBackgroundView.backgroundColor = .mainDark
-    
-    avatarBackgroudView.addSubview(avatarView)
-    avatarBackgroudView.addSubview(fullNameLabel)
-    avatarBackgroudView.addSubview(aboutMeLabelBackgroundView)
-    avatarBackgroudView.addSubview(aboutMeLabel)
-    
-    avatarBackgroudView.translatesAutoresizingMaskIntoConstraints = false
+    profileInformationBackgroudView.translatesAutoresizingMaskIntoConstraints = false
     avatarView.translatesAutoresizingMaskIntoConstraints = false
+    avatarActivityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
     fullNameLabel.translatesAutoresizingMaskIntoConstraints = false
-    aboutMeLabelBackgroundView.translatesAutoresizingMaskIntoConstraints = false
     aboutMeLabel.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(avatarBackgroudView)
+    view.addSubview(profileInformationBackgroudView)
     
     let chatsInformationStackView = UIStackView(arrangedSubviews: [activeChatsNumberLabel, waitingChatsNumberLabel])
     chatsInformationStackView.backgroundColor = .secondaryDark
@@ -148,48 +144,43 @@ private extension ProfileViewController {
     logOutButton.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(logOutButton)
     
-    fullNameLabel.backgroundColor = .red
-    aboutMeLabel.backgroundColor = .green
-    
     NSLayoutConstraint.activate([
-      avatarBackgroudView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-      avatarBackgroudView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-      avatarBackgroudView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-      avatarBackgroudView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+      profileInformationBackgroudView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+      profileInformationBackgroudView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+      profileInformationBackgroudView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+      profileInformationBackgroudView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
       
-      avatarView.topAnchor.constraint(equalTo: avatarBackgroudView.topAnchor, constant: 10),
-      avatarView.leadingAnchor.constraint(equalTo: avatarBackgroudView.leadingAnchor, constant: 10),
-      avatarView.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: -10),
+      avatarView.topAnchor.constraint(equalTo: profileInformationBackgroudView.topAnchor, constant: 10),
+      avatarView.leadingAnchor.constraint(equalTo: profileInformationBackgroudView.leadingAnchor, constant: 10),
+      avatarView.bottomAnchor.constraint(equalTo: profileInformationBackgroudView.bottomAnchor, constant: -10),
       avatarView.widthAnchor.constraint(equalTo: avatarView.heightAnchor, multiplier: 1),
+      
+      avatarActivityIndicatorView.centerXAnchor.constraint(equalTo: avatarView.centerXAnchor),
+      avatarActivityIndicatorView.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor),
       
       fullNameLabel.topAnchor.constraint(equalTo: avatarView.topAnchor),
       fullNameLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 20),
-      fullNameLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -20),
-      
-      aboutMeLabelBackgroundView.widthAnchor.constraint(equalTo: aboutMeLabel.widthAnchor, constant: 20),
-      aboutMeLabelBackgroundView.heightAnchor.constraint(equalTo: aboutMeLabel.heightAnchor, constant: 20),
-      aboutMeLabelBackgroundView.centerXAnchor.constraint(equalTo: aboutMeLabel.centerXAnchor),
-      aboutMeLabelBackgroundView.centerYAnchor.constraint(equalTo: aboutMeLabel.centerYAnchor),
+      fullNameLabel.trailingAnchor.constraint(equalTo: profileInformationBackgroudView.trailingAnchor, constant: -20),
 
       aboutMeLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor, constant: 15),
       aboutMeLabel.leadingAnchor.constraint(equalTo: avatarView.trailingAnchor, constant: 20),
-      aboutMeLabel.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor, constant: -20),
-      aboutMeLabel.bottomAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: -15),
+      aboutMeLabel.trailingAnchor.constraint(equalTo: profileInformationBackgroudView.trailingAnchor, constant: -20),
+      aboutMeLabel.bottomAnchor.constraint(equalTo: profileInformationBackgroudView.bottomAnchor, constant: -15),
       
-      editButton.topAnchor.constraint(equalTo: avatarBackgroudView.bottomAnchor, constant: 20),
+      editButton.topAnchor.constraint(equalTo: profileInformationBackgroudView.bottomAnchor, constant: 20),
       editButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      editButton.widthAnchor.constraint(equalTo: avatarBackgroudView.widthAnchor),
+      editButton.widthAnchor.constraint(equalTo: profileInformationBackgroudView.widthAnchor),
       editButton.heightAnchor.constraint(equalTo: editButton.widthAnchor, multiplier: 0.125),
       
       chatsInformationStackView.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: 50),
-      chatsInformationStackView.leadingAnchor.constraint(equalTo: avatarBackgroudView.leadingAnchor),
-      chatsInformationStackView.trailingAnchor.constraint(equalTo: avatarBackgroudView.trailingAnchor),
-      chatsInformationStackView.heightAnchor.constraint(equalTo: avatarBackgroudView.heightAnchor, multiplier: 1.2),
+      chatsInformationStackView.leadingAnchor.constraint(equalTo: profileInformationBackgroudView.leadingAnchor),
+      chatsInformationStackView.trailingAnchor.constraint(equalTo: profileInformationBackgroudView.trailingAnchor),
+      chatsInformationStackView.heightAnchor.constraint(equalTo: profileInformationBackgroudView.heightAnchor, multiplier: 1.2),
       activeChatsNumberLabel.leadingAnchor.constraint(equalTo: chatsInformationStackView.leadingAnchor, constant: 20),
       
       logOutButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
       logOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-      logOutButton.widthAnchor.constraint(equalTo: avatarBackgroudView.widthAnchor),
+      logOutButton.widthAnchor.constraint(equalTo: profileInformationBackgroudView.widthAnchor),
       logOutButton.heightAnchor.constraint(equalTo: logOutButton.widthAnchor, multiplier: 0.15)
     ])
   }
@@ -197,8 +188,14 @@ private extension ProfileViewController {
 
 extension ProfileViewController: ProfileViewControllerProtocol {
   func updateViews(with userModel: UserModel) {
+    avatarActivityIndicatorView.isHidden = false
+    avatarActivityIndicatorView.startAnimating()
+    
     let userImageURL = URL(string: userModel.avatarString)
-    avatarView.sd_setImage(with: userImageURL)
+    avatarView.sd_setImage(with: userImageURL) { [weak self] _, _, _, _ in
+      self?.avatarActivityIndicatorView.stopAnimating()
+      self?.avatarActivityIndicatorView.isHidden = true
+    }
     
     fullNameLabel.text = userModel.fullName
     aboutMeLabel.text = userModel.description

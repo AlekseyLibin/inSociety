@@ -18,7 +18,6 @@ enum SignUpString: String {
   case login
   case error
   
-  
   var localized: String {
     NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")
   }

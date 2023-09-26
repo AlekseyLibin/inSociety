@@ -11,6 +11,10 @@ enum PeopleString: String {
   
   case peopleNearby
   case error
+  case cancel
+  case isBlocked
+  case doYouWantToUnblock
+  case unblock
   
   var localized: String {
     NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")

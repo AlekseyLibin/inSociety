@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 struct MessageModel {
     
-    var sender: MessageKit.SenderType
+    var sender: SenderType
     let content: String
     var sentDate: Date
     var read: Bool
@@ -60,6 +60,7 @@ extension MessageModel: MessageType {
   var kind: MessageKit.MessageKind {
       return .text(content)
   }
+  
   var messageId: String {
       return id ?? UUID().uuidString
   }
@@ -72,7 +73,7 @@ extension MessageModel: Hashable {
   }
   
   static func == (lhs: MessageModel, rhs: MessageModel) -> Bool {
-      return lhs.messageId == rhs.messageId
+    return lhs.messageId == rhs.messageId && lhs.read == rhs.read
   }
 }
 

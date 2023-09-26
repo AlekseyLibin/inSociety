@@ -10,7 +10,7 @@ import Foundation
 enum UserError: String {
     
     case fieldsAreNotFilled
-    case noPhoto
+//    case noPhoto
     case cannotGetUserInfo
     case cannotUnwrapFBDataToUserModel
     case chatAlreadyExists

@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-struct UserModel: Hashable, Decodable {
+struct UserModel {
   
   enum Sex: String, Decodable, CaseIterable {
     case male
@@ -34,6 +34,18 @@ struct UserModel: Hashable, Decodable {
     var localized: String {
       NSLocalizedString(String(describing: Self.self) + "_\(rawValue)", comment: "")
     }
+    
+    /// Returns int value of the Enum
+    var intValue: Int {
+      switch self {
+      case .male:
+        return 0
+      case .female:
+        return 1
+      case .other:
+        return 2
+      }
+    }
   }
   
   var fullName: String
@@ -44,7 +56,6 @@ struct UserModel: Hashable, Decodable {
   var id: String
   
   init(userName: String, userAvatarString: String, email: String, description: String, sex: Sex, id: String) {
-    
     self.fullName = userName
     self.avatarString = userAvatarString
     self.email = email
@@ -57,10 +68,10 @@ struct UserModel: Hashable, Decodable {
     guard let data = document.data(),
           let userName = data["userName"] as? String,
           let userAvatarString = data["userAvatarString"] as? String,
-          let email = data["email"] as? String,
-          let description = data["description"] as? String,
-          let sexString = data["sex"] as? String,
-          let id = data["uid"] as? String
+          let email = data["userEmail"] as? String,
+          let description = data["userDescription"] as? String,
+          let sexString = data["userSex"] as? String,
+          let id = data["userID"] as? String
     else { return nil }
     
     self.fullName = userName
@@ -75,10 +86,10 @@ struct UserModel: Hashable, Decodable {
     let data = queryDocument.data()
     guard let userName = data["userName"] as? String,
           let userAvatarString = data["userAvatarString"] as? String,
-          let email = data["email"] as? String,
-          let description = data["description"] as? String,
-          let sexString = data["sex"] as? String, let sex = Sex(rawValue: sexString.lowercased()),
-          let id = data["uid"] as? String
+          let email = data["userEmail"] as? String,
+          let description = data["userDescription"] as? String,
+          let sexString = data["userSex"] as? String, let sex = Sex(rawValue: sexString.lowercased()),
+          let id = data["userID"] as? String
     else { return nil }
     
     self.fullName = userName
@@ -92,10 +103,10 @@ struct UserModel: Hashable, Decodable {
   var representationDict: [String: Any] {
     var rep = ["userName": fullName]
     rep["userAvatarString"] = avatarString
-    rep["email"] = email
-    rep["description"] = description
-    rep["sex"] = sex.rawValue
-    rep["uid"] = id
+    rep["userEmail"] = email
+    rep["userDescription"] = description
+    rep["userSex"] = sex.rawValue
+    rep["userID"] = id
     return rep
   }
   
@@ -105,7 +116,10 @@ struct UserModel: Hashable, Decodable {
     let lowercasedFilter = filter.lowercased()
     return fullName.lowercased().contains(lowercasedFilter)
   }
-  
+}
+
+// MARK: - Hashable, Decodable
+extension UserModel: Hashable, Decodable {
   func hash(into hasher: inout Hasher) {
     hasher.combine(id)
   }

@@ -9,28 +9,21 @@ import UIKit
 import FirebaseFirestore
 
 final class ChatModel {
-  var friendName: String
-  var friendAvatarString: String
-  var friendID: String
+  var friend: UserModel
+  var blocked: Bool = false
   var messages: [MessageModel]
   
-  init(friendName: String, friendAvatarString: String, friendID: String, messages: [MessageModel]) {
-    self.friendName = friendName
-    self.friendAvatarString = friendAvatarString
-    self.friendID = friendID
+  init(friend: UserModel, messages: [MessageModel]) {
+    self.friend = friend
     self.messages = messages
   }
   
   init?(document: QueryDocumentSnapshot) {
-    let data = document.data()
-    guard let friendName = data["friendName"] as? String,
-          let friendAvatarString = data["friendAvatarURL"] as? String,
-          let friendID = data["friendID"] as? String
-    else { return nil }
-
-    self.friendName = friendName
-    self.friendAvatarString = friendAvatarString
-    self.friendID = friendID
+    guard let friend = UserModel(document: document) else { return nil }
+    let blocked = document.data()["blocked"] as? Bool ?? false
+    
+    self.friend = friend
+    self.blocked = blocked
     self.messages = []
     fillUpMessages(by: document)
     return
@@ -46,48 +39,41 @@ final class ChatModel {
       }
     }
   }
-
+  
   var representation: [String: Any] {
-    let representation: [String: Any] = [
-      "friendName": friendName,
-      "friendAvatarURL": friendAvatarString,
-      "friendID": friendID
-    ]
-    return representation
+      let rep: [String: Any] = [
+        "userAvatarString": friend.avatarString,
+        "userName": friend.fullName,
+        "userDescription": friend.description,
+        "userEmail": friend.email,
+        "userSex": friend.sex.rawValue,
+        "userID": friend.id,
+        "blocked": blocked
+      ]
+      return rep
   }
   
   func contains(filter: String?) -> Bool {
     guard let filter = filter, filter.isEmpty == false else { return true }
     
     let lowercasedFilter = filter.lowercased()
-    return friendName.lowercased().contains(lowercasedFilter)
-  }
-
-// MARK: - Decodable
-  private enum CodingKeys: String, CodingKey {
-    case friendName
-    case friendAvatarString
-    case messages
-    case friendID
-  }
-
-  init(from decoder: Decoder) throws {
-    let container = try decoder.container(keyedBy: CodingKeys.self)
-    friendName = try container.decode(String.self, forKey: .friendName)
-    friendAvatarString = try container.decode(String.self, forKey: .friendAvatarString)
-    messages = try container.decode([MessageModel].self, forKey: .messages)
-    friendID = try container.decode(String.self, forKey: .friendID)
+    return friend.fullName.lowercased().contains(lowercasedFilter)
   }
 }
 
 // MARK: - Hashable
 extension ChatModel: Hashable {
   func hash(into hasher: inout Hasher) {
-    hasher.combine(friendID)
+    hasher.combine(friend.id)
   }
   
   static func == (lhs: ChatModel, rhs: ChatModel) -> Bool {
-    return lhs.friendID == rhs.friendID && lhs.messages.sorted() == rhs.messages.sorted()
+    guard lhs.friend.id == rhs.friend.id,
+          lhs.friend.fullName == rhs.friend.fullName,
+          lhs.friend.avatarString == rhs.friend.avatarString,
+          lhs.blocked == rhs.blocked,
+          lhs.messages.sorted() == rhs.messages.sorted() else { return false }
+    return true
   }
 }
 

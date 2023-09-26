@@ -11,13 +11,13 @@ import InputBarAccessoryView
 import FirebaseFirestore
 
 protocol ChatViewControllerProtocol: AnyObject {
-  
+  func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)?)
+  var navigationController: UINavigationController? { get }
 }
 
 final class ChatViewController: MessagesViewController {
   
-  private var messages: [MessageModel] = []
-  private var messageListener: ListenerRegistration?
+  private var messagesListener: ListenerRegistration?
   
   private let currentUser: UserModel
   private var chat: ChatModel
@@ -27,9 +27,10 @@ final class ChatViewController: MessagesViewController {
   init(currentUser: UserModel, chat: ChatModel) {
     self.currentUser = currentUser
     self.chat = chat
+    self.chat.messages.sort()
     super.init(nibName: nil, bundle: nil)
     configurator.cofigure(viewController: self)
-    setupMessageListener()
+    setupMessagesListener()
     messageInputBar.delegate = self
     messagesCollectionView.messagesDataSource = self
     messagesCollectionView.messagesLayoutDelegate = self
@@ -41,7 +42,7 @@ final class ChatViewController: MessagesViewController {
   }
   
   deinit {
-    messageListener?.remove()
+    messagesListener?.remove()
   }
   
   override func viewDidLoad() {
@@ -49,41 +50,80 @@ final class ChatViewController: MessagesViewController {
     setupViews()
   }
   
-  override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    super.collectionView(collectionView, willDisplay: cell, forItemAt: indexPath)
-    print(indexPath, "has been viewed")
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    messagesCollectionView.scrollToBottom()
   }
   
-  private func setupMessageListener() {
-    messageListener = presenter.messagesListener(by: chat) { [weak self] result in
-      guard let self = self else { return}
-      
+  private func setupMessagesListener() {
+    messagesListener = presenter.messagesListener(for: chat, observe: { [weak self] result in
       switch result {
-      case .success(let message):
-        self.insertNewMessage(message: message)
-        if !chat.messages.contains(message) {
-          self.chat.messages.append(message)
+      case .success(let updatedMessageStatus):
+        switch updatedMessageStatus {
+        case .added(let newMessage):
+          self?.message(new: newMessage)
+        case .modified(let modifiedMessage):
+          break //  TODO: modified
+        case .removed:
+          break // TODO: removed
         }
+        
       case .failure(let error):
-        self.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+        self?.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
       }
-    }
+    })
   }
   
-  private func insertNewMessage(message: MessageModel) {
-    guard !messages.contains(message) else { return }
-    messages.append(message)
-    messages.sort()
+  //  private func insertNewMessage(message: MessageModel) {
+  //    if chat.messages.contains(message) {
+  //      for (index, chatMessage) in chat.messages.enumerated()
+  //      where chatMessage.messageId == message.messageId {
+  //        chat.messages[index].read = true
+  //      }
+  //    } else {
+  //      chat.messages.append(message)
+  //    }
+  //
+  //    chat.messages.sort()
+  //    let isLastMessage = chat.messages.firstIndex(of: message) == (chat.messages.count - 1)
+  //    let shouldScrollToBottom = messagesCollectionView.isAtBottom && isLastMessage
+  //    if shouldScrollToBottom {
+  //      DispatchQueue.main.async {
+  //        self.messagesCollectionView.scrollToBottom(animated: true)
+  //      }
+  //    }
+  //    messagesCollectionView.reloadData()
+  //  }
+  
+  private func message(new newMessage: MessageModel) {
+    guard !chat.messages.contains(newMessage) else { return }
+    chat.messages.append(newMessage)
+    chat.messages.sort()
     
-    let isLastMessage = messages.firstIndex(of: message) == (messages.count - 1)
-    let shouldScrollToBottom = messagesCollectionView.isAtBottom && isLastMessage
-    if shouldScrollToBottom {
-      DispatchQueue.main.async {
-        self.messagesCollectionView.scrollToBottom()
-      }
+    DispatchQueue.main.async {
+      self.messagesCollectionView.scrollToBottom(animated: true)
     }
     messagesCollectionView.reloadData()
   }
+  
+  //  private func message(updateBy updatedMessage: MessageModel) {
+  //    if chat.messages.contains(updatedMessage) {
+  //      for (index, chatMessage) in chat.messages.enumerated()
+  //      where chatMessage.messageId == updatedMessage.messageId {
+  //        chat.messages[index].read = true
+  //        chat.messages.sort()
+  //      }
+  //    }
+  //
+  //    let isLastMessage = chat.messages.firstIndex(of: updatedMessage) == (chat.messages.count - 1)
+  //    let shouldScrollToBottom = messagesCollectionView.isAtBottom && isLastMessage
+  //    if shouldScrollToBottom {
+  //      DispatchQueue.main.async {
+  //        self.messagesCollectionView.scrollToBottom(animated: true)
+  //      }
+  //    }
+  //    messagesCollectionView.reloadData()
+  //  }
   
 }
 
@@ -129,22 +169,22 @@ extension ChatViewController: MessagesLayoutDelegate {
   // Distance between messages(Need to do it between rare messages, for instance)
   func cellTopLabelHeight(for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> CGFloat {
     if indexPath.item == 0 {
-      return 30
+      return 10
     }
     
-    let distanceBetweenMessages = messages[indexPath.item - 1].sentDate.distance(to: messages[indexPath.item].sentDate)
+    let distanceBetweenMessages = chat.messages[indexPath.item - 1].sentDate.distance(to: chat.messages[indexPath.item].sentDate)
     let requiredDistanceToDisplayDate = 3.0 * 60 * 60 // 3 hours
     
     if distanceBetweenMessages >= requiredDistanceToDisplayDate {
-      return 20
+      return 30
     } else { return 0 }
   }
 }
 
 // MARK: - ConfigureMessageInputBar
-extension ChatViewController {
+private extension ChatViewController {
   func setupViews() {
-    title = chat.friendName
+    title = chat.friend.fullName
     
     if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
       layout.textMessageSizeCalculator.outgoingAvatarSize = .zero
@@ -156,6 +196,8 @@ extension ChatViewController {
     
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    
+    setupFriendAvatarButton()
     
     messagesCollectionView.backgroundColor = .secondaryDark
     messagesCollectionView.showsVerticalScrollIndicator = false
@@ -171,7 +213,7 @@ extension ChatViewController {
     messageInputBar.inputTextView.layer.cornerRadius = 20
     messageInputBar.inputTextView.layer.masksToBounds = true
     messageInputBar.inputTextView.placeholderLabel.font = .systemFont(ofSize: 12)
-    messageInputBar.inputTextView.placeholder = "Сообщение"
+    messageInputBar.inputTextView.placeholder = ChatString.message.localized
     messageInputBar.inputTextView.font = .systemFont(ofSize: 14)
     messageInputBar.inputTextView.isImagePasteEnabled = false
     messageInputBar.inputTextView.autocorrectionType = .default
@@ -181,10 +223,55 @@ extension ChatViewController {
     configureSendButton()
   }
   
+  func setupFriendAvatarButton() {
+    var imageSize: CGFloat = navigationController?.navigationBar.frame.height ?? 0
+    if let searchController = navigationController?.navigationBar.topItem?.searchController {
+      imageSize -= searchController.searchBar.frame.height
+    }
+    imageSize *= 0.9
+    let avatarImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: imageSize, height: imageSize))
+    avatarImageView.contentMode = .scaleAspectFill
+    avatarImageView.layer.cornerRadius = imageSize/2
+    avatarImageView.clipsToBounds = true
+    
+    avatarImageView.sd_setImage(with: URL(string: chat.friend.avatarString)) { [weak self] image, _, _, _ in
+      guard image != nil else { return }
+      let customView = UIView(frame: avatarImageView.frame)
+      customView.addSubview(avatarImageView)
+      
+      let menuItems: [UIAction] = [
+        UIAction(title: ChatString.reportThisUser.localized, image: UIImage(systemName: "megaphone"), handler: reportFriendAction),
+        UIAction(title: ChatString.blockThisUser.localized, image: UIImage(systemName: "xmark.circle"), handler: blockFriendAction),
+        UIAction(title: ChatString.deleteThisChat.localized, image: UIImage(systemName: "trash"), attributes: .destructive, handler: deleteChatAction)
+      ]
+      
+      let actionsMenu = UIMenu(title: ChatString.availableActions.localized, image: nil, identifier: nil, options: [], children: menuItems)
+      
+      let avatarButton = UIButton(type: .system)
+      avatarButton.frame = customView.bounds
+      avatarButton.menu = actionsMenu
+      avatarButton.showsMenuAsPrimaryAction = true
+      customView.addSubview(avatarButton)
+      
+      let customBarButtonItem = UIBarButtonItem(customView: customView)
+      self?.navigationItem.rightBarButtonItem = customBarButtonItem
+    }
+    
+    func reportFriendAction(_ action: UIAction) {
+      presenter.report(chat.friend, by: currentUser)
+    }
+    func blockFriendAction(_ action: UIAction) {
+      presenter.block(chat, by: currentUser)
+    }
+    func deleteChatAction(_ action: UIAction) {
+      presenter.delete(chat, by: currentUser)
+    }
+  }
+  
   func configureSendButton() {
     messageInputBar.sendButton.setImage(UIImage(named: "activeSendButton"), for: .normal)
     messageInputBar.sendButton.setImage(UIImage(named: "inactiveSendButton"), for: .disabled)
-    messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3)
+    messageInputBar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
     messageInputBar.sendButton.setSize(CGSize(width: 40, height: 40), animated: false)
   }
 }
@@ -196,11 +283,11 @@ extension ChatViewController: MessagesDataSource {
   }
   
   func messageForItem(at indexPath: IndexPath, in messagesCollectionView: MessageKit.MessagesCollectionView) -> MessageKit.MessageType {
-    return messages[indexPath.item]
+    return chat.messages[indexPath.item]
   }
   
   func numberOfItems(inSection section: Int, in messagesCollectionView: MessagesCollectionView) -> Int {
-    messages.count
+    chat.messages.count
   }
   
   func numberOfSections(in messagesCollectionView: MessageKit.MessagesCollectionView) -> Int {
@@ -212,7 +299,7 @@ extension ChatViewController: MessagesDataSource {
       return displayDate(for: message)
     }
     
-    let distanceBetweenMessages = messages[indexPath.item - 1].sentDate.distance(to: messages[indexPath.item].sentDate)
+    let distanceBetweenMessages = chat.messages[indexPath.item - 1].sentDate.distance(to: chat.messages[indexPath.item].sentDate)
     let requiredDistanceToDisplayDate = 3.0 * 60 * 60 // 3 hours
     
     if distanceBetweenMessages >= requiredDistanceToDisplayDate {
@@ -234,13 +321,11 @@ extension ChatViewController: MessagesDataSource {
 extension ChatViewController: InputBarAccessoryViewDelegate {
   func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
     let message = MessageModel(user: currentUser, content: text)
-    FirestoreService.shared.sendMessage(chat: chat, message: message) { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .success:
-        self.messagesCollectionView.scrollToBottom(animated: true)
-      case .failure(let error):
-        self.showAlert(with: ChatsString.error.localized, and: error.localizedDescription)
+    FirestoreService.shared.message(send: message, by: currentUser, to: chat) { [weak self] error in
+      if let error = error {
+        self?.showAlert(with: ChatsString.error.localized, and: error)
+      } else {
+        self?.messagesCollectionView.scrollToBottom(animated: true)
       }
     }
     inputBar.inputTextView.text = ""
@@ -248,6 +333,4 @@ extension ChatViewController: InputBarAccessoryViewDelegate {
 }
 
 // MARK: - ChatViewControllerProtocol
-extension ChatViewController: ChatViewControllerProtocol {
-  
-}
+extension ChatViewController: ChatViewControllerProtocol { }

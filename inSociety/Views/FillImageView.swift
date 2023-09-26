@@ -12,10 +12,9 @@ final class FillImageView: UIView {
   private let profileImageView = UIImageView(named: "ProfilePhoto", contentMode: .scaleAspectFill)
   private let setImageButton = UIButton(type: .system)
   
-  var profileImage: UIImage {
-    get {
-      return profileImageView.image!
-    }
+  var profileImage: UIImage? {
+    guard profileImageView.image != UIImage(named: "ProfilePhoto") else { return nil }
+    return profileImageView.image
   }
   
   override init(frame: CGRect) {
@@ -37,9 +36,20 @@ final class FillImageView: UIView {
     setupConstraints()
   }
   
-  func setProfileImage(_ image: UIImage) {
+  func setProfileImage(by image: UIImage?) {
+    guard let image = image else { return }
     profileImageView.image = image
     setImageButton.setImage(UIImage(named: "ChangeProfilePhoto"), for: .normal)
+  }
+  
+  func setProfileImage(by url: URL?) {
+    profileImageView.sd_setImage(with: url) { image, _, _, _ in
+      if image !=  nil {
+        self.setImageButton.setImage(UIImage(named: "ChangeProfilePhoto"), for: .normal)
+      } else {
+        self.profileImageView.image = UIImage(named: "ProfilePhoto")
+      }
+    }
   }
   
   func buttonPressed(target: Any?, action: Selector, for event: UIControl.Event) {

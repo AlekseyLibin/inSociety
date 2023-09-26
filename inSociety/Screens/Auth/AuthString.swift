@@ -10,9 +10,10 @@ import Foundation
 enum AuthString: String {
   
   case getStartedWith
-  case orSignUpWith
+  case orLabel
   case alreadyOnBoard
   case google
+  case apple
   case login
   case email
   case youHaveBeenRegistrated

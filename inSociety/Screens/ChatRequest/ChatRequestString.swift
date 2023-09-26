@@ -12,7 +12,7 @@ enum ChatRequestString: String {
   case chatRequest
   case somebody
   case wantsToChatWithYou
-  case accept //caps
+  case accept
   case deny
   
   var localized: String {

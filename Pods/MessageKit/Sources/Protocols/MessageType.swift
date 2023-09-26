@@ -39,5 +39,8 @@ public protocol MessageType {
 
     /// The kind of message and its underlying kind.
     var kind: MessageKind { get }
+    
+    /// The indicator wether message has been read
+    var read: Bool { get set }
 
 }

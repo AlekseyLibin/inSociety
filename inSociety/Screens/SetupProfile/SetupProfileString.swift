@@ -13,7 +13,7 @@ enum SetupProfileString: String {
   case aboutMe
   case aboutMePlaceholder
   case sex
-  case submit
+  case confirm
   case setupProfile
   case error
   

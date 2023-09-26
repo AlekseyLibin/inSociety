@@ -9,7 +9,7 @@ inhibit_all_warnings!
   # Pods for inSociety
 
 pod 'FirebaseCore'
-pod 'FirebaseAnalytics'
+# pod 'FirebaseAnalytics'
 pod 'FirebaseCrashlytics'
 pod 'FirebaseAuth'
 pod 'FirebaseFirestore'

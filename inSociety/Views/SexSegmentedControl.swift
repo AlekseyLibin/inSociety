@@ -13,7 +13,7 @@ final class SexSegmentedControl: UISegmentedControl {
     for (index, element) in UserModel.Sex.allCases.enumerated() {
       insertSegment(withTitle: element.localized, at: index, animated: true)
     }
-    selectedSegmentIndex = 2
+//    selectedSegmentIndex = 2
     
     let yellowAttribute = [NSAttributedString.Key.foregroundColor: UIColor.mainYellow]
     let blackAttribute = [NSAttributedString.Key.foregroundColor: UIColor.black]
@@ -29,4 +29,9 @@ final class SexSegmentedControl: UISegmentedControl {
   var selectedSex: UserModel.Sex {
     UserModel.Sex(by: selectedSegmentIndex)
   }
+  
+  func selectSex(_ sex: UserModel.Sex) {
+    selectedSegmentIndex = sex.intValue
+  }
+  
 }

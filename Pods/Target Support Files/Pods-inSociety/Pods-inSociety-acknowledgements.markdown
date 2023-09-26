@@ -462,10 +462,6 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-## FirebaseAnalytics
-
-Copyright 2022 Google
-
 ## FirebaseAppCheckInterop
 
 
@@ -3414,10 +3410,6 @@ FirestoreEncoder
    See the License for the specific language governing permissions and
    limitations under the License.
 
-
-## GoogleAppMeasurement
-
-Copyright 2022 Google
 
 ## GoogleDataTransport
 

@@ -6,24 +6,36 @@
   
 */
 
-//Auth Screen
+// Loader Sccreen
+"LoaderString_greeting" = "\t\t\tBienvenue dans notre application !\n\n Nous sommes ravis de vous accueillir à bord.\n\n Pour commencer, veuillez consulter attentivement notre Politique de confidentialité et nos Conditions d'utilisation (CLUF).\n\n Une fois que vous les avez lus et acceptés, vous pouvez pleinement profiter de toutes les fonctionnalités de notre application.\n\n Profitez de votre exploration !\n\n Meilleurs vœux !";
+"LoaderString_privacyPolicy" = "Politique de confidentialité";
+"LoaderString_termsOfUse" = "Conditions d'utilisation (CLUF)";
+"LoaderString_continue" = "Continuer";
+"LoaderString_iAgreeToConditions" = "J'ai lu la Politique de confidentialité et j'accepte les Conditions d'utilisation (CLUF)";
+
+
+// Document Screen
+"DocumentString_done" = "Terminé";
+
+// Auth Screen
 "AuthString_getStartedWith" = "Commencer avec";
-"AuthString_orSignUpWith" = "Ou s'inscrire avec";
+"AuthString_orLabel" = "Ou";
 "AuthString_alreadyOnBoard" = "Déjà inscrit ?";
 "AuthString_google" = "Google";
-"AuthString_login" = "Se connecter";
-"AuthString_email" = "e-mail";
+"AuthString_apple" = "Apple";
+"AuthString_login" = "Connexion";
+"AuthString_email" = "E-mail";
 "AuthString_youHaveBeenRegistrated" = "Vous avez été enregistré avec succès";
 "AuthString_error" = "Erreur";
 
-//Login Screen
-"LoginString_welcomeBack" = "Bon retour!";
-"LoginString_loginWith" = "Se connecter avec";
+// Login Screen
+"LoginString_welcomeBack" = "Bienvenue de retour !";
+"LoginString_loginWith" = "Connexion avec";
 "LoginString_orSignUpWithAnotherMethod" = "ou";
-"LogiSntring_email" = "E-mail";
+"LoginString_email" = "E-mail";
 "LoginString_password" = "Mot de passe";
 "LoginString_google" = "Google";
-"LoginString_login" = "Se connecter";
+"LoginString_login" = "Connexion";
 "LoginString_createNewAccount" = "Créer un nouveau compte";
 "LoginString_youHaveBeenRegistrated" = "Vous avez été enregistré avec succès";
 "LoginString_error" = "Erreur";
@@ -35,15 +47,15 @@
 "SignUpString_confirmPassword" = "Confirmer le mot de passe";
 "SignUpString_alreadyWithUs" = "Déjà inscrit ?";
 "SignUpString_signUp" = "S'inscrire";
-"SignUpString_login" = "Se connecter";
+"SignUpString_login" = "Connexion";
 "SignUpString_error" = "Erreur";
 
 // SetupProfile Screen
-"SetupProfileString_fullName" = "Nom complet";
+"SetupProfileString_fullName" = "Votre nom";
 "SetupProfileString_aboutMe" = "À propos de moi";
-"SetupProfileString_aboutMePlaceholder" = "Hé! je suis ...";
+"SetupProfileString_aboutMePlaceholder" = "Je suis...";
 "SetupProfileString_sex" = "Sexe";
-"SetupProfileString_submit" = "Envoyer";
+"SetupProfileString_confirm" = "Confirmer";
 "SetupProfileString_setupProfile" = "Configurer le profil";
 "SetupProfileString_error" = "Erreur";
 
@@ -53,57 +65,92 @@
 "MainString_profile" = "Profil";
 
 // People Screen
-"PeopleString_peopleNearby" = "personnes à proximité";
+"PeopleString_peopleNearby" = "Personnes à proximité";
 "PeopleString_error" = "Erreur";
+"PeopleString_cancel" = "Annuler";
+"PeopleString_isBlocked" = "est bloqué";
+"PeopleString_doYouWantToUnblock" = "Voulez-vous débloquer ?";
+"PeopleString_unblock" = "Débloquer";
 
 // Chats Screen
 "ChatsString_waitingChats" = "Chats en attente";
 "ChatsString_activeChats" = "Chats actifs";
-"ChatsString_waitingChatsMessage" = "Ici seront indiquées les personnes attendant votre confirmation de demande de chat";
-"ChatsString_activeChatsMessage" = "Ici seront indiquées les personnes avec lesquelles vous chattez";
+"ChatsString_waitingChatsMessage" = "Ici sont affichées les personnes qui attendent votre confirmation de demande de chat.";
+"ChatsString_activeChatsMessage" = "Ici sont affichées les personnes avec lesquelles vous chattez.";
 "ChatsString_chats" = "Chats";
 "ChatsString_success" = "Succès";
-"ChatsString_chatRequestDenied" = "La demande de chat a été refusée";
+"ChatsString_chatRequestDenied" = "Demande de chat refusée";
 "ChatsString_error" = "Erreur";
 
 // Profile Screen
 "ProfileString_activeChats" = "Chats actifs";
 "ProfileString_waitingChats" = "Chats en attente";
+"ProfileString_logOutOrDelete" = "Déconnexion ou suppression du compte";
 "ProfileString_logOut" = "Déconnexion";
-"ProfileString_logOutWarning" = "Êtes-vous sûr de vouloir vous déconnecter ?";
+"ProfileString_deleteAccount" = "Supprimer le compte";
+"ProfileString_deleteWarning" = "Êtes-vous sûr de vouloir supprimer ce compte ?";
+"ProfileString_delete" = "Supprimer";
+"ProfileString_logOutOrDeleteWarning" = "Êtes-vous sûr de vouloir effectuer l'une de ces actions ?";
+"ProfileString_confirm" = "Envoyer";
 "ProfileString_cancel" = "Annuler";
 "ProfileString_profile" = "Profil";
 "ProfileString_edit" = "Modifier";
-"ProfileString_noActiveChatsQuantity" = "Impossible d'obtenir la quantité de chats actifs";
-"ProfileString_noWaitingChatsQuantity" = "Impossible d'obtenir la quantité de chats en attente";
+"ProfileString_noActiveChatsQuantity" = "Impossible de récupérer les chats actifs";
+"ProfileString_noWaitingChatsQuantity" = "Impossible de récupérer les chats en attente";
 "ProfileString_error" = "Erreur";
-"ProfileString_userNotFound" = "Utilisateur non trouvé";
+"ProfileString_userNotFound" = "Utilisateur introuvable";
 
 // ChatRequest Screen
 "ChatRequestString_chatRequest" = "Demande de chat";
 "ChatRequestString_somebody" = "Quelqu'un";
 "ChatRequestString_wantsToChatWithYou" = "veut discuter avec vous";
-"ChatRequestString_accept" = "ACCEPTER";
+"ChatRequestString_accept" = "Accepter";
 "ChatRequestString_deny" = "Refuser";
 
 // SendRequest Screen
 "SendRequestString_success" = "Succès";
-"SendRequestString_messageAndRequestSent" = "Votre message et votre demande de chat ont été envoyés à";
+"SendRequestString_messageAndRequestSent" = "Votre message et la demande de chat ont été envoyés à";
 "SendRequestString_error" = "Erreur";
+"SendRequestString_about" = "À propos de";
+"SendRequestString_him" = "lui";
+"SendRequestString_her" = "elle";
+"SendRequestString_them" = "eux";
+
+// Chat Screen
+"ChatString_message" = "Message";
+"ChatString_availableActions" = "Actions disponibles";
+"ChatString_reportThisUser" = "Signaler cet utilisateur";
+"ChatString_blockThisUser" = "Bloquer cet utilisateur";
+"ChatString_deleteThisChat" = "Supprimer ce chat";
+"ChatString_success" = "Succès";
+"ChatString_error" = "Erreur";
+"ChatString_confirm" = "Confirmer";
+"ChatString_submit" = "Envoyer";
+"ChatString_cancel" = "Annuler";
+"ChatString_deleteChat" = "Supprimer le chat";
+"ChatString_delete" = "Supprimer";
+"ChatString_deleteWarningPt1" = "Êtes-vous sûr de vouloir supprimer votre chat avec";
+"ChatString_deleteWarningPt2" = "? Le chat sera supprimé pour les deux parties.";
+"ChatString_report" = "Signaler";
+"ChatString_reportSentSuccessfully" = "Le signalement a été envoyé avec succès et sera examiné dans les 24 heures";
+"ChatString_describeTheProblem" = "Décrivez le problème que vous avez constaté";
 
 // ActiveChat Cell
 "ActiveChatCellString_userName" = "Nom d'utilisateur";
 "ActiveChatCellString_lastMessage" = "Dernier message";
+"ActiveChatCellString_yesterday" = "Hier";
 
 // Extensions
-"ExtensionsString_submit" = "Envoyer";
+"ExtensionsString_confirm" = "Confirmer";
+"ExtensionsString_done" = "Terminé";
+"ExtensionsString_continueWithGoogle" = "Continuer avec Google";
 
 // AuthError
 "AuthError_fieldsAreNotFilled" = "Remplissez tous les champs";
 "AuthError_emailFieldIsEmpty" = "Le champ e-mail est vide";
-"AuthError_invalidEmail" = "Type d'e-mail invalide";
-"AuthError_passwordFieldIsEmpty" = "Le champ du mot de passe est vide";
-"AuthError_confirmPasswordFieldIsEmpty" = "Le champ de confirmation du mot de passe est vide";
+"AuthError_invalidEmail" = "E-mail invalide";
+"AuthError_passwordFieldIsEmpty" = "Le champ de mot de passe est vide";
+"AuthError_confirmPasswordFieldIsEmpty" = "Le champ de confirmation de mot de passe est vide";
 "AuthError_passwordContainsSpecificSymbols" = "Le mot de passe contient des symboles spécifiques";
 "AuthError_passwordsDoNotMatch" = "Les mots de passe ne correspondent pas";
 "AuthError_couldNotAuthWithGoogle" = "Impossible de s'authentifier avec Google";
@@ -111,9 +158,9 @@
 // UserError
 "UserError_fieldsAreNotFilled" = "Remplissez tous les champs";
 "UserError_noPhoto" = "L'utilisateur n'a pas sélectionné de photo";
-"UserError_cannotGetUserInfo" = "Impossible d'obtenir les informations de l'utilisateur";
-"UserError_cannotUnwrapFBDataToUserModel" = "Impossible de déballer les données de la base de données dans un modèle local. Peut-être que tous les champs ne sont pas remplis";
-"UserError_chatAlreadyExists" = "Vous avez déjà un chat avec cet utilisateur";
+"UserError_cannotGetUserInfo" = "Impossible de récupérer les informations de l'utilisateur";
+"UserError_cannotUnwrapFBDataToUserModel" = "Impossible de déballer les données de la base de données vers un modèle local. Il se peut que tous les champs ne soient pas remplis";
+"UserError_chatAlreadyExists" = "Vous avez déjà une discussion avec cet utilisateur";
 
 // UserModel
 "UserModel_male" = "Homme";

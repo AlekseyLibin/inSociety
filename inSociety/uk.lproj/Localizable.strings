@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   inSociety
 
@@ -6,117 +6,163 @@
   
 */
 
-//Auth Screen
-"AuthString_getStartedWith" = "Увійти з";
-"AuthString_orSignUpWith" = "Або зареєструватися";
+// Екран завантаження
+"LoaderString_greeting" = "\t\t\tЛаскаво просимо до нашого додатку!\n\n Ми в ради бачити вас з нами.\n\n Для початку, будь ласка, уважно ознайомтеся з нашою Політикою конфіденційності та Умовами використання (EULA).\n\n Якщо ви їх прочитали і погодилися з ними, ви зможете повністю користуватися всіма можливостями нашого додатку.\n\n Насолоджуйтеся своїм відкриттям!\n\n Найкращі побажання!";
+"LoaderString_privacyPolicy" = "Політика конфіденційності";
+"LoaderString_termsOfUse" = "Умови використання (EULA)";
+"LoaderString_continue" = "Продовжити";
+"LoaderString_iAgreeToConditions" = "Я ознайомився з Політикою конфіденційності і погоджуюся з Умовами використання (EULA)";
+
+
+// Екран документів
+"DocumentString_done" = "Готово";
+
+// Екран авторизації
+"AuthString_getStartedWith" = "Зареєструватися";
+"AuthString_orLabel" = "Або";
 "AuthString_alreadyOnBoard" = "Вже зареєстровані?";
 "AuthString_google" = "Google";
+"AuthString_apple" = "Apple";
 "AuthString_login" = "Увійти";
-"AuthString_email" = "email";
-"AuthString_youHaveBeenRegistrated" = "Ви були успішно зареєстровані";
+"AuthString_email" = "Email";
+"AuthString_youHaveBeenRegistrated" = "Ви успішно зареєстровані";
 "AuthString_error" = "Помилка";
 
-//Login Screen
-"LoginString_welcomeBack" = "Давно не бачились!";
-"LoginString_loginWith" = "Увійти через";
+// Екран входу
+"LoginString_welcomeBack" = "З поверненням!";
+"LoginString_loginWith" = "Увійти за допомогою";
 "LoginString_orSignUpWithAnotherMethod" = "або";
 "LoginString_email" = "Email";
 "LoginString_password" = "Пароль";
 "LoginString_google" = "Google";
 "LoginString_login" = "Увійти";
-"LoginString_createNewAccount" = "Створити новий аккаунт";
-"LoginString_youHaveBeenRegistrated" = "Ви були успішно зареєстровані";
+"LoginString_createNewAccount" = "Створити новий обліковий запис";
+"LoginString_youHaveBeenRegistrated" = "Ви успішно зареєстровані";
 "LoginString_error" = "Помилка";
 
-// SignUp Screen
+// Екран реєстрації
 "SignUpString_pleasedToSeeYou" = "Раді бачити вас!";
-"SignUpString_email" = "Ел. пошта";
+"SignUpString_email" = "Email";
 "SignUpString_password" = "Пароль";
-"SignUpString_confirmPassword" = "Підтвердити пароль";
+"SignUpString_confirmPassword" = "Підтвердіть пароль";
 "SignUpString_alreadyWithUs" = "Вже з нами?";
 "SignUpString_signUp" = "Зареєструватися";
-"SignUpString_login" = "Увійти";
+"SignUpString_login" = "Вхід";
 "SignUpString_error" = "Помилка";
 
-// SetupProfile Screen
-"SetupProfileString_fullName" = "Ім'я або псевдонім";
-"SetupProfileString_aboutMe" = "Про себе";
-"SetupProfileString_aboutMePlaceholder" = "Привіт! мене звати ...";
+// Екран налаштування профілю
+"SetupProfileString_fullName" = "Ваше ім'я";
+"SetupProfileString_aboutMe" = "Про мене";
+"SetupProfileString_aboutMePlaceholder" = "Я ...";
 "SetupProfileString_sex" = "Стать";
-"SetupProfileString_submit" = "Підтвердити";
-"SetupProfileString_setupProfile" = "Налаштування профілю";
+"SetupProfileString_confirm" = "Підтвердити";
+"SetupProfileString_setupProfile" = "Налаштувати профіль";
 "SetupProfileString_error" = "Помилка";
 
-// Main Screen
-"MainString_people" = "Користувачі";
+// Головний екран
+"MainString_people" = "Люди";
 "MainString_chats" = "Чати";
 "MainString_profile" = "Профіль";
 
-// People Screen
+// Екран людей
 "PeopleString_peopleNearby" = "людей поблизу";
 "PeopleString_error" = "Помилка";
+"PeopleString_cancel" = "Скасувати";
+"PeopleString_isBlocked" = "заблокований";
+"PeopleString_doYouWantToUnblock" = "Бажаєте розблокувати";
+"PeopleString_unblock" = "Розблокувати";
 
-// Chats Screen
+// Екран чатів
 "ChatsString_waitingChats" = "Чати в очікуванні";
 "ChatsString_activeChats" = "Активні чати";
-"ChatsString_waitingChatsMessage" = "Тут будуть відображені люди, які чекають, поки ви підтвердите їх запит на чат";
-"ChatsString_activeChatsMessage" = "Тут будуть відображені люди, з якими ви спілкуєтеся";
+"ChatsString_waitingChatsMessage" = "Тут будуть відображатися люди, які чекають на ваше підтвердження запиту на чат";
+"ChatsString_activeChatsMessage" = "Тут будуть відображатися люди, з якими ви спілкуєтеся";
 "ChatsString_chats" = "Чати";
 "ChatsString_success" = "Успішно";
 "ChatsString_chatRequestDenied" = "Запит на чат відхилено";
 "ChatsString_error" = "Помилка";
 
-//Profile Screen
+// Екран профілю
 "ProfileString_activeChats" = "Активні чати";
 "ProfileString_waitingChats" = "Чати в очікуванні";
+"ProfileString_logOutOrDelete" = "Вийти або видалити обліковий запис";
 "ProfileString_logOut" = "Вийти";
-"ProfileString_logOutWarning" = "Ви впевнені, що хочете вийти?";
+"ProfileString_deleteAccount" = "Видалити обліковий запис";
+"ProfileString_deleteWarning" = "Ви впевнені, що хочете видалити цей обліковий запис?";
+"ProfileString_delete" = "Видалити";
+"ProfileString_logOutOrDeleteWarning" = "Ви впевнені, що хочете виконати одну з цих дій?";
+"ProfileString_confirm" = "Підтвердити";
 "ProfileString_cancel" = "Скасувати";
 "ProfileString_profile" = "Профіль";
 "ProfileString_edit" = "Редагувати профіль";
 "ProfileString_noActiveChatsQuantity" = "Не вдалося отримати кількість активних чатів";
 "ProfileString_noWaitingChatsQuantity" = "Не вдалося отримати кількість чатів в очікуванні";
 "ProfileString_error" = "Помилка";
-"ProfileString_userNotFound" = "Користувача не знайдено";
+"ProfileString_userNotFound" = "Користувач не знайдений";
 
-// ChatRequest Screen
+// Екран запиту на чат
 "ChatRequestString_chatRequest" = "Запит на чат";
 "ChatRequestString_somebody" = "Хтось";
-"ChatRequestString_wantsToChatWithYou" = "хоче спілкуватися з вами";
-"ChatRequestString_accept" = "ПРИЙНЯТИ";
-"ChatRequestString_deny" = "Відмовити";
+"ChatRequestString_wantsToChatWithYou" = "надіслав вам запит на чат";
+"ChatRequestString_accept" = "Прийняти";
+"ChatRequestString_deny" = "Відхилити";
 
-// SendRequest Screen
+// Екран відправки запиту
 "SendRequestString_success" = "Успішно";
-"SendRequestString_messageAndRequestSent" = "Ваше повідомлення та запит на чат відправлені";
+"SendRequestString_messageAndRequestSent" = "Ваше повідомлення та запит на чат надіслані";
 "SendRequestString_error" = "Помилка";
+"SendRequestString_about" = "Про";
+"SendRequestString_him" = "нього";
+"SendRequestString_her" = "неї";
+"SendRequestString_them" = "них";
 
-// ActiveChat Cell
+// Екран чату
+"ChatString_message" = "Повідомлення";
+"ChatString_availableActions" = "Доступні дії";
+"ChatString_reportThisUser" = "Поскаржитися на цього користувача";
+"ChatString_blockThisUser" = "Заблокувати цього користувача";
+"ChatString_deleteThisChat" = "Видалити цей чат";
+"ChatString_success" = "Успішно";
+"ChatString_error" = "Помилка";
+"ChatString_confirm" = "Підтвердити";
+"ChatString_submit" = "Надіслати";
+"ChatString_cancel" = "Скасувати";
+"ChatString_deleteChat" = "Видалити чат";
+"ChatString_delete" = "Видалити";
+"ChatString_deleteWarningPt1" = "Ви впевнені, що хочете видалити чат з";
+"ChatString_deleteWarningPt2" = "Чат буде видалено для обох учасників.";
+"ChatString_report" = "Поскаржитися";
+"ChatString_reportSentSuccessfully" = "Скарга успішно відправлена і буде розглянута протягом 24 годин";
+"ChatString_describeTheProblem" = "Опишіть проблему, яку ви помітили";
+
+// Активна комірка чату
 "ActiveChatCellString_userName" = "Ім'я користувача";
 "ActiveChatCellString_lastMessage" = "Останнє повідомлення";
+"ActiveChatCellString_yesterday" = "Вчора";
 
-// Extensions
-"ExtensionsString_submit" = "Прийняти";
+// Розширення
+"ExtensionsString_confirm" = "Підтвердити";
+"ExtensionsString_done" = "Готово";
+"ExtensionsString_continueWithGoogle" = "Продовжити з Google";
 
-// AuthError
+// Помилки авторизації
 "AuthError_fieldsAreNotFilled" = "Заповніть всі поля";
-"AuthError_emailFieldIsEmpty" = "Поле ел. пошти порожнє";
-"AuthError_invalidEmail" = "Недійсний тип ел. пошти";
+"AuthError_emailFieldIsEmpty" = "Поле Email порожнє";
+"AuthError_invalidEmail" = "Невірний формат Email";
 "AuthError_passwordFieldIsEmpty" = "Поле пароля порожнє";
 "AuthError_confirmPasswordFieldIsEmpty" = "Поле підтвердження пароля порожнє";
-"AuthError_passwordContainsSpecificSymbols" = "Пароль містить специфічні символи";
+"AuthError_passwordContainsSpecificSymbols" = "Пароль містить спеціальні символи";
 "AuthError_passwordsDoNotMatch" = "Паролі не співпадають";
-"AuthError_couldNotAuthWithGoogle" = "Не вдалося авторизуватися через Google";
+"AuthError_couldNotAuthWithGoogle" = "Не вдалося авторизуватися за допомогою Google";
 
-// UserError
+// Помилки користувача
 "UserError_fieldsAreNotFilled" = "Заповніть всі поля";
-"UserError_noPhoto" = "Оберіть фото";
+"UserError_noPhoto" = "Оберіть фотографію";
 "UserError_cannotGetUserInfo" = "Не вдалося отримати інформацію про користувача";
-"UserError_cannotUnwrapFBDataToUserModel" = "Не вдалося розгорнути дані з бази даних в локальну модель. Можливо, не всі поля заповнені";
+"UserError_cannotUnwrapFBDataToUserModel" = "Не вдалося витягнути дані з бази даних у локальну модель. Можливо, не всі поля заповнені";
 "UserError_chatAlreadyExists" = "У вас вже є чат з цим користувачем";
 
-// UserModel
-"Sex_male" = "Чоловічий";
-"Sex_female" = "Жіночий";
+// Модель користувача
+"Sex_male" = "Чоловік";
+"Sex_female" = "Жінка";
 "Sex_other" = "Інше";
-

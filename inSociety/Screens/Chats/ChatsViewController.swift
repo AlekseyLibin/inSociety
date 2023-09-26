@@ -6,15 +6,18 @@
 //
 
 import UIKit
+import Lottie
 import FirebaseFirestore
 
-protocol ChatsViewControllerProtocol: BaseViewCotrollerProtocol {
+protocol ChatsViewControllerProtocol: BaseViewCotrollerProtocol, WaitingChatsNavigationDelegate {
   func showAlert(with title: String, and message: String?)
   func changeValueFor(waitingChats: [ChatModel])
   func changeValueFor(activeChats: [ChatModel])
   func emptyWaitingChatsLabel(isActive: Bool)
   func emptyActiveChatsLabel(isActive: Bool)
-  
+  func reloadData(with searchText: String?)
+  func updateActiveChats()
+    
   var waitingChats: [ChatModel] { get }
   var activeChats: [ChatModel] { get }
 }
@@ -62,6 +65,7 @@ final class ChatsViewController: BaseViewController {
     setupCollectionView()
     createDataSource()
     setupLabels()
+    updateActiveChats()
   }
   
   deinit {
@@ -75,31 +79,14 @@ final class ChatsViewController: BaseViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    reloadData()
-    presenter.updateActiveChats { [weak self] result in
-      switch result {
-      case .success(let newActiveChats):
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1, execute: {
-          DispatchQueue.main.async {
-            if newActiveChats.sorted() != self?.activeChats.sorted() {
-              self?.changeValueFor(activeChats: newActiveChats)
-              self?.reloadData()
-            }
-          }
-        })
-      case .failure(let failure):
-        self?.showAlert(with: ChatsString.error.localized, and: failure.localizedDescription)
-      }
-    }
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
+    updateCollectionView()
+    updateActiveChats()
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    reloadData()
+    updateCollectionView()
+    updateActiveChats()
   }
   
   private func setupLabels() {
@@ -141,7 +128,7 @@ final class ChatsViewController: BaseViewController {
     appearance.backgroundColor = .mainDark
     
     let titleLabel = UILabel(text: ChatsString.chats.localized)
-    titleLabel.font = .systemFont(ofSize: 23)
+    titleLabel.font = .systemFont(ofSize: 20)
     titleLabel.textColor = .systemGray
     
     navigationController?.navigationBar.standardAppearance = appearance
@@ -156,32 +143,15 @@ final class ChatsViewController: BaseViewController {
     searchController.searchBar.delegate = self
   }
   
-  private func reloadData(with searchText: String? = "") {
-    let filteredActiveChats = activeChats.filter { $0.contains(filter: searchText) }
-    let sortedActiveChats = filteredActiveChats.sorted()
-
-    var snapshot = NSDiffableDataSourceSnapshot<Section, ChatModel>()
-    snapshot.appendSections([.waitingChatsSection, .activeChatsSection])
-    snapshot.appendItems(self.waitingChats, toSection: .waitingChatsSection)
-    snapshot.appendItems(sortedActiveChats, toSection: .activeChatsSection)
-    self.dataSource?.apply(snapshot, animatingDifferences: true)
-
-    for (index, chat) in sortedActiveChats.enumerated() {
-      if let activeChatCell = collectionView?.cellForItem(at: IndexPath(item: index, section: 1)) as? ActiveChatCell,
-         let lastMessage = chat.messages.sorted().last {
-        activeChatCell.updateLastMessage(with: lastMessage)
-      }
-    }
-  }
-  
   @objc private func refreshData() {
     presenter.updateActiveChats { [weak self] result in
       switch result {
       case .success(let activeChats):
+        let filteredActiveChats = activeChats.filter({ !$0.blocked })
         DispatchQueue.global().asyncAfter(deadline: .now() + 1, execute: {
           DispatchQueue.main.async {
             self?.changeValueFor(activeChats: activeChats)
-            self?.reloadData()
+            self?.updateCollectionView(animated: false)
             self?.refreshControl.endRefreshing()
           }
         })
@@ -191,20 +161,100 @@ final class ChatsViewController: BaseViewController {
     }
   }
   
+  private func updateCollectionView(with activeChats: [ChatModel]? = nil, _ waitingChats: [ChatModel]? = nil, animated flag: Bool = true) {
+    let activeChats = activeChats ?? self.activeChats.sorted()
+    let waitingChats = waitingChats ?? self.waitingChats.sorted()
+    
+    var snapshot = NSDiffableDataSourceSnapshot<Section, ChatModel>()
+    snapshot.appendSections([.waitingChatsSection, .activeChatsSection])
+    snapshot.appendItems(waitingChats, toSection: .waitingChatsSection)
+    snapshot.appendItems(activeChats, toSection: .activeChatsSection)
+    self.dataSource?.apply(snapshot, animatingDifferences: flag)
+    
+    for (index, chat) in activeChats.enumerated() {
+      guard let activeChatCell = collectionView?.cellForItem(at: IndexPath(item: index, section: 1)) as? ActiveChatCell else { return }
+      activeChatCell.reconfigure(with: chat)
+    }
+  }
+  
 }
 
 // MARK: - ChatsViewControllerProtocol
 extension ChatsViewController: ChatsViewControllerProtocol {
+  func playSuccessAnimation() {
+    let successAnimationView = LottieAnimationView(name: "SuccessAnimation")
+    successAnimationView.frame = view.bounds
+    successAnimationView.isUserInteractionEnabled = false
+    successAnimationView.contentMode = .scaleAspectFit
+    successAnimationView.loopMode = .playOnce
+    successAnimationView.animationSpeed = 1.25
+    view.addSubview(successAnimationView)
+    successAnimationView.play(completion: { (finished) in
+      if finished {
+        successAnimationView.stop()
+        successAnimationView.removeFromSuperview()
+        LottieAnimationCache.shared?.clearCache()
+      }
+    })
+  }
+  
+  func playCancelAnimation() {
+    let cancelAnimationView = LottieAnimationView(name: "CancelAnimation")
+    cancelAnimationView.frame = CGRect(x: 0, y: 0, width: view.frame.width * 0.7,
+                                                   height: view.frame.height * 0.7)
+    cancelAnimationView.center = view.center
+    cancelAnimationView.isUserInteractionEnabled = false
+    cancelAnimationView.contentMode = .scaleAspectFit
+    cancelAnimationView.loopMode = .playOnce
+    cancelAnimationView.animationSpeed = 2
+    view.addSubview(cancelAnimationView)
+    cancelAnimationView.play(completion: { (finished) in
+      if finished {
+        UIView.animate(withDuration: 0.2, animations: {
+          cancelAnimationView.alpha = 0
+        }, completion: { _ in
+          cancelAnimationView.stop()
+          cancelAnimationView.removeFromSuperview()
+          LottieAnimationCache.shared?.clearCache()
+        })
+      }
+    })
+  }
+  
   func changeValueFor(waitingChats: [ChatModel]) {
     self.waitingChats = waitingChats
     emptyWaitingChatsLabel.isHidden = !waitingChats.isEmpty
-    collectionView.reloadData()
+    updateCollectionView()
   }
   
   func changeValueFor(activeChats: [ChatModel]) {
-    self.activeChats = activeChats
-    self.activeChats.sort()
+    self.activeChats = activeChats.filter({ !$0.blocked })
     emptyActiveChatsLabel.isHidden = !activeChats.isEmpty
+    updateCollectionView(with: activeChats)
+  }
+  
+  func reloadData(with searchText: String? = "") {
+    let filteredActiveChats = activeChats.filter { $0.contains(filter: searchText) }.sorted()
+    
+    updateCollectionView(with: filteredActiveChats)
+  }
+  
+  func updateActiveChats() {
+    presenter.updateActiveChats { [weak self] result in
+      switch result {
+      case .success(let newActiveChats):
+        DispatchQueue.global().asyncAfter(deadline: .now() + 0.5, execute: {
+          DispatchQueue.main.async {
+            let filteredActiveChats = newActiveChats.filter({ !$0.blocked })
+            guard filteredActiveChats != self?.activeChats else { return }
+            self?.changeValueFor(activeChats: filteredActiveChats)
+            self?.updateCollectionView()
+          }
+        })
+      case .failure(let failure):
+        self?.showAlert(with: ChatsString.error.localized, and: failure.localizedDescription)
+      }
+    }
   }
   
   func emptyWaitingChatsLabel(isActive: Bool) {
@@ -214,10 +264,8 @@ extension ChatsViewController: ChatsViewControllerProtocol {
   func emptyActiveChatsLabel(isActive: Bool) {
     emptyActiveChatsLabel.isHidden = !isActive
   }
-}
-
-// MARK: - WaitingChatsNavigationDelegate
-extension ChatsViewController: WaitingChatsNavigationDelegate {
+  
+  // MARK: - WaitingChatsNavigationDelegate
   func removeWaitingChat(chat: ChatModel) {
     presenter.waitingChat(remove: chat)
   }
@@ -272,7 +320,7 @@ extension ChatsViewController: UISearchBarDelegate {
   }
   
   func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-    reloadData()
+    updateCollectionView()
   }
   
   func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -365,7 +413,6 @@ private extension ChatsViewController {
   }
   
   func createActiveChatsSection() -> NSCollectionLayoutSection {
-    
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                           heightDimension: .fractionalHeight(1))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)

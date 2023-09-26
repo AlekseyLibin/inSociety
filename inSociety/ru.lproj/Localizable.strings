@@ -6,17 +6,29 @@
   
 */
 
-//Auth Screen
-"AuthString_getStartedWith" = "Войти с помощью";
-"AuthString_orSignUpWith" = "Или зарегистрироваться";
+// Loader Screen
+"LoaderString_greeting" = "\t\t\tДобро пожаловать в наше приложение!\n\n Мы очень рады видеть вас с нами.\n\n Для начала, пожалуйста, внимательно ознакомьтесь с нашей Политикой конфиденциальности и Условиями использования (EULA).\n\n Как только вы прочтете и согласитесь с ними, вы сможете полноценно наслаждаться всеми функциями нашего приложения.\n\n Приятного использования!\n\n С наилучшими пожеланиями!";
+"LoaderString_privacyPolicy" = "Политика конфиденциальности";
+"LoaderString_termsOfUse" = "Условия использования (EULA)";
+"LoaderString_continue" = "Продолжить";
+"LoaderString_iAgreeToConditions" = "Я ознакомился с Политикой конфиденциальности и согласен с Условиями использования (EULA)";
+
+
+// Document Screen
+"DocumentString_done" = "Готово";
+
+// Auth Screen
+"AuthString_getStartedWith" = "Зарегестрироваться";
+"AuthString_orLabel" = "Или";
 "AuthString_alreadyOnBoard" = "Уже зарегистрированы?";
 "AuthString_google" = "Google";
+"AuthString_apple" = "Apple";
 "AuthString_login" = "Войти";
-"AuthString_email" = "email";
+"AuthString_email" = "Email";
 "AuthString_youHaveBeenRegistrated" = "Вы успешно зарегистрированы";
 "AuthString_error" = "Ошибка";
 
-//Login Screen
+// Login Screen
 "LoginString_welcomeBack" = "С возвращением!";
 "LoginString_loginWith" = "Войти с помощью";
 "LoginString_orSignUpWithAnotherMethod" = "или";
@@ -30,92 +42,127 @@
 
 // SignUp Screen
 "SignUpString_pleasedToSeeYou" = "Рады видеть вас!";
-"SignUpString_email" = "Эл. почта";
+"SignUpString_email" = "Email";
 "SignUpString_password" = "Пароль";
 "SignUpString_confirmPassword" = "Подтвердите пароль";
 "SignUpString_alreadyWithUs" = "Уже с нами?";
 "SignUpString_signUp" = "Зарегистрироваться";
-"SignUpString_login" = "Войти";
+"SignUpString_login" = "вход";
 "SignUpString_error" = "Ошибка";
 
 // SetupProfile Screen
-"SetupProfileString_fullName" = "Полное имя";
+"SetupProfileString_fullName" = "Ваше имя";
 "SetupProfileString_aboutMe" = "Обо мне";
-"SetupProfileString_aboutMePlaceholder" = "Привет! меня зовут ...";
+"SetupProfileString_aboutMePlaceholder" = "Я ...";
 "SetupProfileString_sex" = "Пол";
-"SetupProfileString_submit" = "Сохранить";
+"SetupProfileString_confirm" = "Принять";
 "SetupProfileString_setupProfile" = "Настроить профиль";
 "SetupProfileString_error" = "Ошибка";
 
 // Main Screen
-"MainString_people" = "Пользователи";
+"MainString_people" = "Люди";
 "MainString_chats" = "Чаты";
 "MainString_profile" = "Профиль";
 
 // People Screen
 "PeopleString_peopleNearby" = "людей поблизости";
 "PeopleString_error" = "Ошибка";
+"PeopleString_cancel" = "Отмена";
+"PeopleString_isBlocked" = "заблокирован";
+"PeopleString_doYouWantToUnblock" = "Хотите разблокировать";
+"PeopleString_unblock" = "Разблокировать";
 
 // Chats Screen
 "ChatsString_waitingChats" = "Чаты в ожидании";
 "ChatsString_activeChats" = "Активные чаты";
-"ChatsString_waitingChatsMessage" = "Здесь будут отображены люди, ожидающие вашего подтверждения запроса на чат";
-"ChatsString_activeChatsMessage" = "Здесь будут отображены люди, с которыми вы общаетесь";
+"ChatsString_waitingChatsMessage" = "Здесь будут отображаться люди, ожидающие вашего подтверждения запроса на чат";
+"ChatsString_activeChatsMessage" = "Здесь будут отображаться люди, с которыми вы общаетесь";
 "ChatsString_chats" = "Чаты";
 "ChatsString_success" = "Успешно";
 "ChatsString_chatRequestDenied" = "Запрос на чат отклонен";
 "ChatsString_error" = "Ошибка";
 
-//Profile Screen
+// Profile Screen
 "ProfileString_activeChats" = "Активные чаты";
-"ProfileString_waitingChats" = "Ожидающие чаты";
+"ProfileString_waitingChats" = "Чаты в ожидании";
+"ProfileString_logOutOrDelete" = "Выйти или удалить аккаунт";
 "ProfileString_logOut" = "Выйти";
-"ProfileString_logOutWarning" = "Вы уверены, что хотите выйти?";
+"ProfileString_deleteAccount" = "Удалить аккаунт";
+"ProfileString_deleteWarning" = "Вы уверены, что хотите удалить этот аккаунт?";
+"ProfileString_delete" = "Удалить";
+"ProfileString_logOutOrDeleteWarning" = "Вы уверены, что хотите выполнить одно из этих действий?";
+"ProfileString_confirm" = "Подтвердить";
 "ProfileString_cancel" = "Отмена";
 "ProfileString_profile" = "Профиль";
 "ProfileString_edit" = "Редактировать профиль";
 "ProfileString_noActiveChatsQuantity" = "Не удалось получить количество активных чатов";
-"ProfileString_noWaitingChatsQuantity" = "Не удалось получить количество ожидающих чатов";
+"ProfileString_noWaitingChatsQuantity" = "Не удалось получить количество чатов в ожидании";
 "ProfileString_error" = "Ошибка";
 "ProfileString_userNotFound" = "Пользователь не найден";
 
 // ChatRequest Screen
 "ChatRequestString_chatRequest" = "Запрос на чат";
 "ChatRequestString_somebody" = "Кто-то";
-"ChatRequestString_wantsToChatWithYou" = "хочет пообщаться с вами";
-"ChatRequestString_accept" = "ПРИНЯТЬ";
-"ChatRequestString_deny" = "Отказать";
+"ChatRequestString_wantsToChatWithYou" = "отправил вам запрос на чат";
+"ChatRequestString_accept" = "Принять";
+"ChatRequestString_deny" = "Отклонить";
 
 // SendRequest Screen
 "SendRequestString_success" = "Успешно";
 "SendRequestString_messageAndRequestSent" = "Ваше сообщение и запрос на чат отправлены";
 "SendRequestString_error" = "Ошибка";
+"SendRequestString_about" = "О";
+"SendRequestString_him" = "нем";
+"SendRequestString_her" = "ней";
+"SendRequestString_them" = "них";
+
+// Chat Screen
+"ChatString_message" = "Сообщение";
+"ChatString_availableActions" = "Доступные действия";
+"ChatString_reportThisUser" = "Пожаловаться на этого пользователя";
+"ChatString_blockThisUser" = "Заблокировать этого пользователя";
+"ChatString_deleteThisChat" = "Удалить этот чат";
+"ChatString_success" = "Успешно";
+"ChatString_error" = "Ошибка";
+"ChatString_confirm" = "Подтвердить";
+"ChatString_submit" = "Отправить";
+"ChatString_cancel" = "Отмена";
+"ChatString_deleteChat" = "Удалить чат";
+"ChatString_delete" = "Удалить";
+"ChatString_deleteWarningPt1" = "Вы уверены, что хотите удалить чат с";
+"ChatString_deleteWarningPt2" = "Чат будет удален для обоих участников.";
+"ChatString_report" = "Пожаловаться";
+"ChatString_reportSentSuccessfully" = "Жалоба успешно отправлена и будет рассмотрена в течение 24 часов";
+"ChatString_describeTheProblem" = "Опишите проблему, которую вы заметили";
 
 // ActiveChat Cell
 "ActiveChatCellString_userName" = "Имя пользователя";
 "ActiveChatCellString_lastMessage" = "Последнее сообщение";
+"ActiveChatCellString_yesterday" = "Вчера";
 
 // Extensions
-"ExtensionsString_submit" = "Принять";
+"ExtensionsString_confirm" = "Подтвердить";
+"ExtensionsString_done" = "Готово";
+"ExtensionsString_continueWithGoogle" = "Продолжить с Google";
 
 // AuthError
 "AuthError_fieldsAreNotFilled" = "Заполните все поля";
-"AuthError_emailFieldIsEmpty" = "Поле эл. почты пусто";
-"AuthError_invalidEmail" = "Недопустимый тип эл. почты";
+"AuthError_emailFieldIsEmpty" = "Поле Email пусто";
+"AuthError_invalidEmail" = "Неверный формат Email";
 "AuthError_passwordFieldIsEmpty" = "Поле пароля пусто";
 "AuthError_confirmPasswordFieldIsEmpty" = "Поле подтверждения пароля пусто";
 "AuthError_passwordContainsSpecificSymbols" = "Пароль содержит специальные символы";
 "AuthError_passwordsDoNotMatch" = "Пароли не совпадают";
-"AuthError_couldNotAuthWithGoogle" = "Не удалось авторизоваться через Google";
+"AuthError_couldNotAuthWithGoogle" = "Не удалось авторизоваться с помощью Google";
 
 // UserError
 "UserError_fieldsAreNotFilled" = "Заполните все поля";
-"UserError_noPhoto" = "Выберите фото";
+"UserError_noPhoto" = "Выберите фотографию";
 "UserError_cannotGetUserInfo" = "Не удалось получить информацию о пользователе";
-"UserError_cannotUnwrapFBDataToUserModel" = "Не удалось преобразовать данные из базы данных в локальную модель. Возможно, не все поля заполнены";
+"UserError_cannotUnwrapFBDataToUserModel" = "Не удалось извлечь данные из базы данных в локальную модель. Возможно, не все поля заполнены";
 "UserError_chatAlreadyExists" = "У вас уже есть чат с этим пользователем";
 
 // UserModel
 "Sex_male" = "Мужской";
 "Sex_female" = "Женский";
-"Sex_other" = "Другое";
+"Sex_other" = "Другой";

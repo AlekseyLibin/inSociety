@@ -11,7 +11,6 @@ import SDWebImage
 protocol SendRequestViewControllerProtocol: BaseViewCotrollerProtocol {
   func showAlert(with title: String, and message: String?, completion: @escaping () -> Void)
   func showAlert(with title: String, and message: String?)
-  func dismiss()
 }
 
 final class SendRequestViewController: BaseViewController {
@@ -25,34 +24,26 @@ final class SendRequestViewController: BaseViewController {
   private let messageInputView = MessageInputView()
   private let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
   
-  private let user: UserModel
+  private let receiver: UserModel
+  private let currentUser: UserModel
   private let configurator: SendRequestConfiguratorProtocol = SendRequestConfigurator()
   var presenter: SendRequestPresenterProtocol!
   
-  init(user: UserModel) {
-    self.user = user
+  init(to receiver: UserModel, by currentUser: UserModel) {
+    self.receiver = receiver
+    self.currentUser = currentUser
     
-    self.nameLabel.text = user.fullName
-    self.descriptionLabel.text = user.description
-    self.imageView.sd_setImage(with: URL(string: user.avatarString))
+    self.nameLabel.text = receiver.fullName
+    self.descriptionLabel.text = receiver.description
+    self.imageView.sd_setImage(with: URL(string: receiver.avatarString))
     super.init(nibName: nil, bundle: nil)
     configurator.configure(viewController: self)
-    self.fillAboutThemLabel(by: user.sex)
+    self.fillAboutThemLabel(by: receiver.sex)
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupViews()
-    let button = UIButton(type: .roundedRect)
-    button.frame = CGRect(x: 20, y: 50, width: 100, height: 30)
-    button.setTitle("Test Crash", for: [])
-    button.addTarget(self, action: #selector(self.crashButtonTapped(_:)), for: .touchUpInside)
-    view.addSubview(button)
-  }
-  
-  @objc private func crashButtonTapped(_ sender: AnyObject) {
-      let numbers = [0]
-      let _ = numbers[1]
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -68,7 +59,8 @@ final class SendRequestViewController: BaseViewController {
       let message = messageInputView.textField.text,
       !message.isEmpty
     else { return }
-    presenter.sendChatRequest(to: user, with: message)
+    let messageModel = MessageModel(user: currentUser, content: message)
+    presenter.sendChatRequest(to: receiver, with: messageModel)
     messageInputView.textField.text = ""
   }
 }
@@ -79,9 +71,6 @@ private extension SendRequestViewController {
     view.backgroundColor = .mainDark
     view.hideKeyboardWhenTappedOrSwiped()
     
-    imageView.layer.cornerRadius = 12
-    imageView.layer.borderWidth = 0.4
-    imageView.layer.borderColor = UIColor.mainYellow.cgColor
     imageView.contentMode = .scaleAspectFill
     imageView.layer.masksToBounds = true
     
@@ -159,14 +148,14 @@ private extension SendRequestViewController {
   }
   
   private func fillAboutThemLabel(by sex: UserModel.Sex) {
-    var text = "About "
+    var text = "\(SendRequestString.about.localized) "
     switch sex {
     case .male:
-      text += "him"
+      text += SendRequestString.him.localized
     case .female:
-      text += "her"
+      text += SendRequestString.her.localized
     case .other:
-      text += "them"
+      text += SendRequestString.them.localized
     }
     self.aboutThemLabel.text = text
   }

@@ -12,7 +12,7 @@ protocol ProfilePresenterProtocol: AnyObject {
   func fillChatsInformation(by currentUser: UserModel)
   func fillUpActualInformation()
   func editButtonPressed()
-  func logOutButtonPressed()
+  func logOutOrDeleteButtonPressed(by currentUser: UserModel)
   var interactor: ProfileInteractorProtocol! { get set }
   var router: ProfileRouterProtocol! { get set }
 }
@@ -34,6 +34,7 @@ extension ProfilePresenter: ProfilePresenterProtocol {
       switch result {
       case .success(let currentUserModel):
         self?.viewController.updateViews(with: currentUserModel)
+        self?.fillChatsInformation(by: currentUserModel)
       case .failure(let failure):
         self?.viewController.showAlert(with: ProfileString.error.localized, and: failure.localizedDescription)
       }
@@ -60,30 +61,53 @@ extension ProfilePresenter: ProfilePresenterProtocol {
   }
   
   func editButtonPressed() {
-    if let user = Auth.auth().currentUser {
-      router.toSetupProfileVC(with: user)
-    } else {
-      viewController.showAlert(with: ProfileString.error.localized, and: ProfileString.userNotFound.localized)
-    }
+    router.toSetupProfileVC(with: viewController.currentUser)
   }
   
-  func logOutButtonPressed() {
-    let alertController = UIAlertController(title: ProfileString.logOutWarning.localized, message: nil, preferredStyle: .actionSheet)
+  func logOutOrDeleteButtonPressed(by currentUser: UserModel) {
+    let alertController = UIAlertController(title: ProfileString.logOutOrDeleteWarning.localized, message: nil, preferredStyle: .actionSheet)
     
-    let logOutAction = UIAlertAction(title: ProfileString.logOut.localized, style: .destructive, handler: { _ in
+    let logOutAction = UIAlertAction(title: ProfileString.logOut.localized, style: .destructive) { _ in
       do {
         try self.interactor.logOut()
+        self.viewController.generateHapticFeedback(.success)
       } catch {
+        self.viewController.generateHapticFeedback(.error)
         self.viewController.showAlert(with: ProfileString.error.localized, and: error.localizedDescription)
       }
-    })
+    }
+    
+    let deleteAccountAction = UIAlertAction(title: ProfileString.deleteAccount.localized, style: .destructive) { _ in
+      let deleteAccountAlert = UIAlertController(title: ProfileString.deleteAccount.localized, message: ProfileString.deleteWarning.localized, preferredStyle: .alert)
+      
+      let deleteButton = UIAlertAction(title: ProfileString.confirm.localized, style: .destructive) { _ in
+        FirestoreService.shared.profile(delete: currentUser) { [weak self] error in
+          if let error = error {
+            self?.viewController.showAlert(with: ProfileString.error.localized, and: error.localizedDescription)
+          } else {
+            do {
+              try self?.interactor.logOut()
+            } catch {
+              self?.viewController.showAlert(with: ProfileString.error.localized, and: error.localizedDescription)
+            }
+          }
+        }
+      }
+      
+      let cancelAction = UIAlertAction(title: ProfileString.cancel.localized, style: .cancel)
+      cancelAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
+      
+      deleteAccountAlert.addAction(deleteButton)
+      deleteAccountAlert.addAction(cancelAction)
+      self.viewController.present(deleteAccountAlert, animated: true, completion: nil)
+    }
     let cancelAction = UIAlertAction(title: ProfileString.cancel.localized, style: .cancel)
     cancelAction.setValue(UIColor.systemBlue, forKey: "titleTextColor")
     
     alertController.addAction(logOutAction)
+    alertController.addAction(deleteAccountAction)
     alertController.addAction(cancelAction)
-    viewController.present(viewController: alertController)
-  }
-    
+    viewController.present(alertController, animated: true, completion: nil)
   }
   
+}
